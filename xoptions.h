@@ -22,15 +22,30 @@
 #define XOPTIONS_H
 
 #include <QObject>
+#include <QMap>
+#include <QSettings>
 
 class XOptions : public QObject
 {
     Q_OBJECT
 public:
-    explicit XOptions(QObject *parent = nullptr);
+    enum ID
+    {
+        ID_STAYONTOP=0,
+    };
 
-signals:
+    explicit XOptions(QObject *parent=nullptr);
+    void setFilePath(QString sFilePath);
+    void setVariantNames(QList<ID> listVariantIDs);
+    QMap<ID,QVariant> *getVariants();
+    void load();
+    void save();
+    static QString idToString(ID id);
 
+private:
+    QString sFilePath;
+    QList<ID> listVariantIDs;
+    QMap<ID,QVariant> mapVariants;
 };
 
 #endif // XOPTIONS_H

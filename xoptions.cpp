@@ -24,3 +24,58 @@ XOptions::XOptions(QObject *parent) : QObject(parent)
 {
 
 }
+
+void XOptions::setFilePath(QString sFilePath)
+{
+    this->sFilePath=sFilePath;
+}
+
+void XOptions::setVariantNames(QList<ID> listVariantIDs)
+{
+    this->listVariantIDs=listVariantIDs;
+}
+
+QMap<XOptions::ID, QVariant> *XOptions::getVariants()
+{
+    return &mapVariants;
+}
+
+void XOptions::load()
+{
+    QSettings settings(sFilePath,QSettings::IniFormat);
+
+    int nCount=listVariantIDs.count();
+
+    for(int i=0;i<nCount;i++)
+    {
+        ID id=listVariantIDs.at(i);
+        QString sName=idToString(id);
+        mapVariants.insert(id,settings.value(sName));
+    }
+}
+
+void XOptions::save()
+{
+    QSettings settings(sFilePath,QSettings::IniFormat);
+
+    int nCount=listVariantIDs.count();
+
+    for(int i=0;i<nCount;i++)
+    {
+        ID id=listVariantIDs.at(i);
+        QString sName=idToString(id);
+        settings.setValue(sName,mapVariants.value(id));
+    }
+}
+
+QString XOptions::idToString(ID id)
+{
+    QString sResult="Unknown";
+
+    switch(id)
+    {
+        case ID_STAYONTOP:          sResult=QString("StayOnTop");               break;
+    }
+
+    return sResult;
+}
