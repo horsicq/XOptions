@@ -60,9 +60,14 @@ void XOptions::load()
         mapValues.insert(id,settings.value(sName,varDefault));
     }
 
-    if(!QDir(mapValues.value(ID_LASTDIRECTORY).toString()).exists())
+    QString sLastDirectory=mapValues.value(ID_LASTDIRECTORY).toString();
+
+    if(sLastDirectory!="")
     {
-        mapValues.insert(ID_LASTDIRECTORY,"");
+        if(!QDir(sLastDirectory).exists())
+        {
+            mapValues.insert(ID_LASTDIRECTORY,"");
+        }
     }
 }
 
