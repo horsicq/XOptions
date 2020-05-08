@@ -23,7 +23,9 @@
 
 #include <QObject>
 #include <QMap>
+#include <QDir>
 #include <QSettings>
+#include <QWidget>
 
 class XOptions : public QObject
 {
@@ -32,20 +34,28 @@ public:
     enum ID
     {
         ID_STAYONTOP=0,
+        ID_SCANAFTEROPEN,
+        ID_SAVELASTDIRECTORY,
+        ID_LASTDIRECTORY,
+        ID_SAVEBACKUP
     };
 
     explicit XOptions(QObject *parent=nullptr);
     void setFilePath(QString sFilePath);
-    void setVariantNames(QList<ID> listVariantIDs);
-    QMap<ID,QVariant> *getVariants();
+    void setValueIDs(QList<ID> listValueIDs);
     void load();
     void save();
+    QVariant getValue(ID id);
+    void setValue(ID id,QVariant value);
     static QString idToString(ID id);
+    QString getLastDirectory();
+    void setLastDirectory(QString sValue);
+    void adjustStayOnTop(QWidget *pWidget); // TODO def GUI
 
 private:
     QString sFilePath;
-    QList<ID> listVariantIDs;
-    QMap<ID,QVariant> mapVariants;
+    QList<ID> listValueIDs;
+    QMap<ID,QVariant> mapValues;
 };
 
 #endif // XOPTIONS_H

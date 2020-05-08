@@ -30,27 +30,27 @@ void XOptions::setFilePath(QString sFilePath)
     this->sFilePath=sFilePath;
 }
 
-void XOptions::setVariantNames(QList<ID> listVariantIDs)
+void XOptions::setValueIDs(QList<ID> listVariantIDs)
 {
-    this->listVariantIDs=listVariantIDs;
-}
-
-QMap<XOptions::ID, QVariant> *XOptions::getVariants()
-{
-    return &mapVariants;
+    this->listValueIDs=listVariantIDs;
 }
 
 void XOptions::load()
 {
     QSettings settings(sFilePath,QSettings::IniFormat);
 
-    int nCount=listVariantIDs.count();
+    int nCount=listValueIDs.count();
 
     for(int i=0;i<nCount;i++)
     {
-        ID id=listVariantIDs.at(i);
+        ID id=listValueIDs.at(i);
         QString sName=idToString(id);
-        mapVariants.insert(id,settings.value(sName));
+        mapValues.insert(id,settings.value(sName));
+    }
+
+    if(!QDir(mapValues.value(ID_LASTDIRECTORY).toString()).exists())
+    {
+        mapValues.insert(ID_LASTDIRECTORY,"");
     }
 }
 
@@ -58,14 +58,24 @@ void XOptions::save()
 {
     QSettings settings(sFilePath,QSettings::IniFormat);
 
-    int nCount=listVariantIDs.count();
+    int nCount=listValueIDs.count();
 
     for(int i=0;i<nCount;i++)
     {
-        ID id=listVariantIDs.at(i);
+        ID id=listValueIDs.at(i);
         QString sName=idToString(id);
-        settings.setValue(sName,mapVariants.value(id));
+        settings.setValue(sName,mapValues.value(id));
     }
+}
+
+QVariant XOptions::getValue(XOptions::ID id)
+{
+    return mapValues.value(id);
+}
+
+void XOptions::setValue(XOptions::ID id, QVariant value)
+{
+    mapValues.insert(id,value);
 }
 
 QString XOptions::idToString(ID id)
@@ -74,8 +84,53 @@ QString XOptions::idToString(ID id)
 
     switch(id)
     {
-        case ID_STAYONTOP:          sResult=QString("StayOnTop");               break;
+        case ID_STAYONTOP:                  sResult=QString("StayOnTop");                   break;
+        case ID_SCANAFTEROPEN:              sResult=QString("ScanAfterOpen");               break;
+        case ID_SAVELASTDIRECTORY:          sResult=QString("SaveLastDirectory");           break;
+        case ID_LASTDIRECTORY:              sResult=QString("LastDirectory");               break;
+        case ID_SAVEBACKUP:                 sResult=QString("SaveBackup");                  break;
     }
 
     return sResult;
+}
+
+QString XOptions::getLastDirectory()
+{
+    QString sResult;
+
+    bool bSaveLastDirectory=getValue(ID_SAVELASTDIRECTORY).toBool();
+    QString sLastDirectory=getValue(ID_LASTDIRECTORY).toString();
+
+    if(bSaveLastDirectory&&QDir().exists(sLastDirectory))
+    {
+        sResult=sLastDirectory;
+    }
+
+    return sResult;
+}
+
+void XOptions::setLastDirectory(QString sValue)
+{
+    if(getValue(ID_SAVELASTDIRECTORY).toBool())
+    {
+        setValue(ID_LASTDIRECTORY,sValue);
+    }
+}
+
+void XOptions::adjustStayOnTop(QWidget *pWidget)
+{
+    Qt::WindowFlags wf=pWidget->windowFlags();
+
+    if(getValue(ID_STAYONTOP).toBool())
+    {
+        wf|=Qt::WindowStaysOnTopHint;
+    }
+    else
+    {
+        wf&=~(Qt::WindowStaysOnTopHint);
+    }
+
+    pWidget->setWindowFlags(wf);
+
+    pWidget->show();
 }
