@@ -25,9 +25,10 @@ XOptions::XOptions(QObject *parent) : QObject(parent)
 
 }
 
-void XOptions::setFilePath(QString sFilePath)
+void XOptions::setName(QString sName)
 {
-    this->sFilePath=sFilePath;
+    this->sName=sName;
+    this->sFilePath=QApplication::applicationDirPath()+QDir::separator()+QString("%1.ini").arg(sName);
 }
 
 void XOptions::setValueIDs(QList<ID> listVariantIDs)
@@ -45,7 +46,18 @@ void XOptions::load()
     {
         ID id=listValueIDs.at(i);
         QString sName=idToString(id);
-        mapValues.insert(id,settings.value(sName));
+        QVariant varDefault;
+
+        switch(id)
+        {
+            case ID_STAYONTOP:              varDefault=false;       break;
+            case ID_SCANAFTEROPEN:          varDefault=true;        break;
+            case ID_SAVELASTDIRECTORY:      varDefault=true;        break;
+            case ID_LASTDIRECTORY:          varDefault="";          break;
+            case ID_SAVEBACKUP:             varDefault=true;        break;
+        }
+
+        mapValues.insert(id,settings.value(sName,varDefault));
     }
 
     if(!QDir(mapValues.value(ID_LASTDIRECTORY).toString()).exists())

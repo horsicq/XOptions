@@ -27,6 +27,7 @@
 #include <QSettings>
 #include <QWidget>
 #include <QCheckBox>
+#include <QApplication>
 
 class XOptions : public QObject
 {
@@ -42,7 +43,7 @@ public:
     };
 
     explicit XOptions(QObject *parent=nullptr);
-    void setFilePath(QString sFilePath);
+    void setName(QString sName);
     void setValueIDs(QList<ID> listValueIDs);
     void load();
     void save();
@@ -56,6 +57,7 @@ public:
     void getCheckBox(QCheckBox *pCheckBox,ID id);
 
 private:
+    QString sName;
     QString sFilePath;
     QList<ID> listValueIDs;
     QMap<ID,QVariant> mapValues;
