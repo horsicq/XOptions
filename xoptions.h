@@ -26,6 +26,7 @@
 #include <QDir>
 #include <QSettings>
 #include <QWidget>
+#include <QCheckBox>
 
 class XOptions : public QObject
 {
@@ -51,6 +52,8 @@ public:
     QString getLastDirectory();
     void setLastDirectory(QString sValue);
     void adjustStayOnTop(QWidget *pWidget); // TODO def GUI
+    void setCheckBox(QCheckBox *pCheckBox,ID id);
+    void getCheckBox(QCheckBox *pCheckBox,ID id);
 
 private:
     QString sFilePath;

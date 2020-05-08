@@ -134,3 +134,13 @@ void XOptions::adjustStayOnTop(QWidget *pWidget)
 
     pWidget->show();
 }
+
+void XOptions::setCheckBox(QCheckBox *pCheckBox, XOptions::ID id)
+{
+    pCheckBox->setChecked(getValue(id).toBool());
+}
+
+void XOptions::getCheckBox(QCheckBox *pCheckBox, XOptions::ID id)
+{
+    setValue(id,pCheckBox->isChecked());
+}
