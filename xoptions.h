@@ -61,6 +61,8 @@ public:
     void setComboBox(QComboBox *pComboBox,ID id);
     void getComboBox(QComboBox *pComboBox,ID id);
 
+    bool isRestartNeeded();
+
     static void adjustApplicationView();
 
 private:
@@ -68,6 +70,7 @@ private:
     QString sFilePath;
     QList<ID> listValueIDs;
     QMap<ID,QVariant> mapValues;
+    bool bIsRestartNeeded;
 };
 
 #endif // XOPTIONS_H

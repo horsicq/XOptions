@@ -22,7 +22,7 @@
 
 XOptions::XOptions(QObject *parent) : QObject(parent)
 {
-
+    bIsRestartNeeded=false;
 }
 
 void XOptions::setName(QString sName)
@@ -92,6 +92,16 @@ QVariant XOptions::getValue(XOptions::ID id)
 
 void XOptions::setValue(XOptions::ID id, QVariant value)
 {
+    if(id==ID_STYLE)
+    {
+        QVariant varOld=mapValues.value(id);
+
+        if(value!=varOld)
+        {
+            bIsRestartNeeded=true;
+        }
+    }
+
     mapValues.insert(id,value);
 }
 
@@ -198,6 +208,11 @@ void XOptions::setComboBox(QComboBox *pComboBox, XOptions::ID id)
 void XOptions::getComboBox(QComboBox *pComboBox, XOptions::ID id)
 {
     setValue(id,pComboBox->currentData());
+}
+
+bool XOptions::isRestartNeeded()
+{
+    return bIsRestartNeeded;
 }
 
 void XOptions::adjustApplicationView()
