@@ -63,7 +63,7 @@ public:
 
     bool isRestartNeeded();
 
-    static void adjustApplicationView();
+    static void adjustApplicationView(QString sName);
 
 private:
     QString sName;

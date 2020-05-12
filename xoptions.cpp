@@ -215,9 +215,11 @@ bool XOptions::isRestartNeeded()
     return bIsRestartNeeded;
 }
 
-void XOptions::adjustApplicationView()
+void XOptions::adjustApplicationView(QString sName)
 {
     XOptions xOptions;
+
+    xOptions.setName(sName);
 
     QList<XOptions::ID> listIDs;
 
