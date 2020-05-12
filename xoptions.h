@@ -27,7 +27,9 @@
 #include <QSettings>
 #include <QWidget>
 #include <QCheckBox>
+#include <QComboBox>
 #include <QApplication>
+#include <QStyleFactory>
 
 class XOptions : public QObject
 {
@@ -56,6 +58,8 @@ public:
     void adjustStayOnTop(QWidget *pWidget); // TODO def GUI
     void setCheckBox(QCheckBox *pCheckBox,ID id);
     void getCheckBox(QCheckBox *pCheckBox,ID id);
+    void setComboBox(QComboBox *pComboBox,ID id);
+    void getComboBox(QComboBox *pComboBox,ID id);
 
 private:
     QString sName;

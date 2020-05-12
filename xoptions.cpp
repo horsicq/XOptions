@@ -162,3 +162,40 @@ void XOptions::getCheckBox(QCheckBox *pCheckBox, XOptions::ID id)
 {
     setValue(id,pCheckBox->isChecked());
 }
+
+void XOptions::setComboBox(QComboBox *pComboBox, XOptions::ID id)
+{
+    QSignalBlocker signalBlocker(pComboBox);
+
+    pComboBox->clear();
+    pComboBox->addItem("","");
+
+    QString sValue=getValue(id).toString();
+
+    QStringList sl=QStyleFactory::keys();
+
+    int nCount=sl.count();
+
+    int nIndex=-1;
+
+    for(int i=0;i<nCount;i++)
+    {
+        QString sRecord=sl.at(i);
+        pComboBox->addItem(sRecord,sRecord);
+
+        if(sValue==sRecord)
+        {
+            nIndex=i;
+        }
+    }
+
+    if(nIndex!=-1)
+    {
+        pComboBox->setCurrentIndex(nIndex);
+    }
+}
+
+void XOptions::getComboBox(QComboBox *pComboBox, XOptions::ID id)
+{
+    setValue(id,pComboBox->currentData());
+}
