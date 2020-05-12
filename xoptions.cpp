@@ -106,6 +106,7 @@ QString XOptions::idToString(ID id)
         case ID_SAVELASTDIRECTORY:          sResult=QString("SaveLastDirectory");           break;
         case ID_LASTDIRECTORY:              sResult=QString("LastDirectory");               break;
         case ID_SAVEBACKUP:                 sResult=QString("SaveBackup");                  break;
+        case ID_STYLE:                      sResult=QString("Style");                       break;
     }
 
     return sResult;

@@ -39,7 +39,8 @@ public:
         ID_SCANAFTEROPEN,
         ID_SAVELASTDIRECTORY,
         ID_LASTDIRECTORY,
-        ID_SAVEBACKUP
+        ID_SAVEBACKUP,
+        ID_STYLE
     };
 
     explicit XOptions(QObject *parent=nullptr);
