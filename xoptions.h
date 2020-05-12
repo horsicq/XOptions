@@ -61,6 +61,8 @@ public:
     void setComboBox(QComboBox *pComboBox,ID id);
     void getComboBox(QComboBox *pComboBox,ID id);
 
+    static void adjustApplicationView();
+
 private:
     QString sName;
     QString sFilePath;

@@ -185,7 +185,7 @@ void XOptions::setComboBox(QComboBox *pComboBox, XOptions::ID id)
 
         if(sValue==sRecord)
         {
-            nIndex=i;
+            nIndex=i+1;
         }
     }
 
@@ -198,4 +198,23 @@ void XOptions::setComboBox(QComboBox *pComboBox, XOptions::ID id)
 void XOptions::getComboBox(QComboBox *pComboBox, XOptions::ID id)
 {
     setValue(id,pComboBox->currentData());
+}
+
+void XOptions::adjustApplicationView()
+{
+    XOptions xOptions;
+
+    QList<XOptions::ID> listIDs;
+
+    listIDs.append(XOptions::ID_STYLE);
+
+    xOptions.setValueIDs(listIDs);
+    xOptions.load();
+
+    QString sStyle=xOptions.getValue(XOptions::ID_STYLE).toString();
+
+    if(sStyle!="")
+    {
+        QApplication::setStyle(QStyleFactory::create(sStyle));
+    }
 }
