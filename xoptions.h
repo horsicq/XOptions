@@ -65,6 +65,12 @@ public:
 
     static void adjustApplicationView(QString sName);
 
+#ifdef WIN32
+    static void registerContext(QString sApplication,QString sType);
+    static void clearContext(QString sApplication,QString sType);
+    static bool checkContext(QString sApplication,QString sType);
+#endif
+
 private:
     QString sName;
     QString sFilePath;

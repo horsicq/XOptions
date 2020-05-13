@@ -235,3 +235,22 @@ void XOptions::adjustApplicationView(QString sName)
         QApplication::setStyle(QStyleFactory::create(sStyle));
     }
 }
+#ifdef WIN32
+void XOptions::registerContext(QString sApplication, QString sType)
+{
+    // TODO
+}
+#endif
+#ifdef WIN32
+void XOptions::clearContext(QString sApplication, QString sType)
+{
+    // TODO
+}
+#endif
+#ifdef WIN32
+bool XOptions::checkContext(QString sApplication, QString sType)
+{
+    // TODO
+    return false;
+}
+#endif
