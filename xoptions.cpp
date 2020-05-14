@@ -234,6 +234,9 @@ void XOptions::adjustApplicationView(QString sName)
     {
         QApplication::setStyle(QStyleFactory::create(sStyle));
     }
+
+    // TODO qss
+    // TODO translation
 }
 #ifdef WIN32
 void XOptions::registerContext(QString sApplication, QString sType)
