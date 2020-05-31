@@ -6,4 +6,3 @@ HEADERS += \
 
 SOURCES += \
     $$PWD/xoptions.cpp
-
