@@ -34,6 +34,7 @@
 class XOptions : public QObject
 {
     Q_OBJECT
+
 public:
     enum ID
     {
