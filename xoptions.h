@@ -44,7 +44,8 @@ public:
         ID_LASTDIRECTORY,
         ID_SAVEBACKUP,
         ID_STYLE,
-        ID_QSS
+        ID_QSS,
+        ID_LANG
     };
 
     explicit XOptions(QObject *parent=nullptr);
