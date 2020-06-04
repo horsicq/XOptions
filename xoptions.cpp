@@ -55,6 +55,8 @@ void XOptions::load()
             case ID_SAVELASTDIRECTORY:      varDefault=true;        break;
             case ID_LASTDIRECTORY:          varDefault="";          break;
             case ID_SAVEBACKUP:             varDefault=true;        break;
+            case ID_STYLE:                  varDefault="Fusion";    break;
+            case ID_LANG:                   varDefault="System";    break;
         }
 
         mapValues.insert(id,settings.value(sName,varDefault));
@@ -117,6 +119,7 @@ QString XOptions::idToString(ID id)
         case ID_LASTDIRECTORY:              sResult=QString("LastDirectory");               break;
         case ID_SAVEBACKUP:                 sResult=QString("SaveBackup");                  break;
         case ID_STYLE:                      sResult=QString("Style");                       break;
+        case ID_LANG:                       sResult=QString("Lang");                        break;
     }
 
     return sResult;
@@ -193,6 +196,10 @@ void XOptions::setComboBox(QComboBox *pComboBox, XOptions::ID id)
             QString sRecord=sl.at(i);
             pComboBox->addItem(sRecord,sRecord);
         }
+    }
+    else if(id==ID_LANG)
+    {
+        pComboBox->addItem("System","System");
     }
 
     int nCount=pComboBox->count();
