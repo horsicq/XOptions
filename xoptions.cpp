@@ -224,6 +224,7 @@ void XOptions::adjustApplicationView(QString sName)
     QList<XOptions::ID> listIDs;
 
     listIDs.append(XOptions::ID_STYLE);
+    listIDs.append(XOptions::ID_LANG);
 
     xOptions.setValueIDs(listIDs);
     xOptions.load();
