@@ -182,20 +182,27 @@ void XOptions::setComboBox(QComboBox *pComboBox, XOptions::ID id)
 
     QString sValue=getValue(id).toString();
 
-    QStringList sl=QStyleFactory::keys();
+    if(id==ID_STYLE)
+    {
+        QStringList sl=QStyleFactory::keys();
 
-    int nCount=sl.count();
+        int nCount=sl.count();
 
+        for(int i=0;i<nCount;i++)
+        {
+            QString sRecord=sl.at(i);
+            pComboBox->addItem(sRecord,sRecord);
+        }
+    }
+
+    int nCount=pComboBox->count();
     int nIndex=-1;
 
     for(int i=0;i<nCount;i++)
     {
-        QString sRecord=sl.at(i);
-        pComboBox->addItem(sRecord,sRecord);
-
-        if(sValue==sRecord)
+        if(sValue==pComboBox->itemData(i,Qt::UserRole))
         {
-            nIndex=i+1;
+            nIndex=i;
         }
     }
 
