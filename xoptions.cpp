@@ -230,6 +230,7 @@ void XOptions::adjustApplicationView(QString sName)
     xOptions.load();
 
     QString sStyle=xOptions.getValue(XOptions::ID_STYLE).toString();
+    QString sLang=xOptions.getValue(XOptions::ID_LANG).toString();
 
     if(sStyle!="")
     {
