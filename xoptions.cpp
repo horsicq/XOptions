@@ -94,7 +94,8 @@ QVariant XOptions::getValue(XOptions::ID id)
 
 void XOptions::setValue(XOptions::ID id, QVariant value)
 {
-    if(id==ID_STYLE)
+    if( (id==ID_STYLE)||
+        (id==ID_LANG))
     {
         QVariant varOld=mapValues.value(id);
 
@@ -249,6 +250,11 @@ void XOptions::adjustApplicationView(QString sName)
     if(sStyle!="")
     {
         QApplication::setStyle(QStyleFactory::create(sStyle));
+    }
+
+    if(sLang=="System")
+    {
+        // TODO
     }
 
     // TODO qss
