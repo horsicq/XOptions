@@ -57,6 +57,7 @@ void XOptions::load()
             case ID_SAVEBACKUP:             varDefault=true;        break;
             case ID_STYLE:                  varDefault="Fusion";    break;
             case ID_LANG:                   varDefault="System";    break;
+            case ID_QSS:                    varDefault="orange";    break;
         }
 
         mapValues.insert(id,settings.value(sName,varDefault));
@@ -271,6 +272,8 @@ void XOptions::adjustApplicationView(QString sOptionName, QString sTranslationNa
     {
         qApp->installTranslator(&translator);
     }
+
+    QString sQSS=xOptions.getValue(XOptions::ID_QSS).toString();
 
     // TODO qss
 }
