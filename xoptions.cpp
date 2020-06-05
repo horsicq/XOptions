@@ -240,6 +240,7 @@ void XOptions::adjustApplicationView(QString sOptionName, QString sTranslationNa
 
     listIDs.append(XOptions::ID_STYLE);
     listIDs.append(XOptions::ID_LANG);
+    listIDs.append(XOptions::ID_QSS);
 
     xOptions.setValueIDs(listIDs);
     xOptions.load();
@@ -264,6 +265,11 @@ void XOptions::adjustApplicationView(QString sOptionName, QString sTranslationNa
     else if(sLang!="") // TODO English
     {
         bLoad=translator.load(sLang,sLangsPath);
+    }
+
+    if(bLoad)
+    {
+        qApp->installTranslator(&translator);
     }
 
     // TODO qss
