@@ -230,11 +230,11 @@ bool XOptions::isRestartNeeded()
     return bIsRestartNeeded;
 }
 
-void XOptions::adjustApplicationView(QString sName)
+void XOptions::adjustApplicationView(QString sOptionName, QString sTranslationName)
 {
     XOptions xOptions;
 
-    xOptions.setName(sName);
+    xOptions.setName(sOptionName);
 
     QList<XOptions::ID> listIDs;
 
@@ -245,20 +245,37 @@ void XOptions::adjustApplicationView(QString sName)
     xOptions.load();
 
     QString sStyle=xOptions.getValue(XOptions::ID_STYLE).toString();
-    QString sLang=xOptions.getValue(XOptions::ID_LANG).toString();
 
     if(sStyle!="")
     {
         QApplication::setStyle(QStyleFactory::create(sStyle));
     }
 
+    QTranslator translator;
+    QString sLang=xOptions.getValue(XOptions::ID_LANG).toString();
+    QString sLangsPath=getApplicationLangPath();
+
+    bool bLoad=false;
+
     if(sLang=="System")
     {
-        // TODO
+        bLoad=translator.load(QLocale::system(),sTranslationName,"_",sLangsPath,".qm");
+    }
+    else if(sLang!="") // TODO English
+    {
+        bLoad=translator.load(sLang,sLangsPath);
     }
 
     // TODO qss
-    // TODO translation
+}
+
+QString XOptions::getApplicationLangPath()
+{
+    QString sResult;
+
+    sResult=qApp->applicationDirPath()+QDir::separator()+"lang";
+
+    return sResult;
 }
 #ifdef WIN32
 void XOptions::registerContext(QString sApplication, QString sType)

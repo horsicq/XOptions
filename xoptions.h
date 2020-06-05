@@ -30,6 +30,7 @@
 #include <QComboBox>
 #include <QApplication>
 #include <QStyleFactory>
+#include <QTranslator>
 
 class XOptions : public QObject
 {
@@ -66,7 +67,8 @@ public:
 
     bool isRestartNeeded();
 
-    static void adjustApplicationView(QString sName);
+    static void adjustApplicationView(QString sOptionName,QString sTranslationName);
+    static QString getApplicationLangPath();
 
 #ifdef WIN32
     static void registerContext(QString sApplication,QString sType);
