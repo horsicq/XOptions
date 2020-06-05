@@ -70,6 +70,7 @@ public:
     static void adjustApplicationView(QString sOptionName,QString sTranslationName);
     static QString getApplicationLangPath();
     static QString getApplicationQssPath();
+    static QList<QString> getAllFilesFromDirectory(QString sDirectory,QString sExt);
 
 #ifdef WIN32
     static void registerContext(QString sApplication,QString sType);

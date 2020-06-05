@@ -204,10 +204,42 @@ void XOptions::setComboBox(QComboBox *pComboBox, XOptions::ID id)
     else if(id==ID_LANG)
     {
         pComboBox->addItem("System","System");
+
+        QList<QString> listRecords=getAllFilesFromDirectory(getApplicationLangPath(),"*.qm");
+
+        int nCount=listRecords.count();
+
+        for(int i=0;i<nCount;i++)
+        {
+            QFileInfo fi(listRecords.at(i));
+
+            QString sRecord=fi.baseName();
+
+            QLocale locale(sRecord.section("_",1,-1));
+            QString sLocale=locale.nativeLanguageName();
+
+            if(sRecord.count("_")==2)
+            {
+                sLocale+=QString("(%1)").arg(locale.nativeCountryName());
+            }
+
+            pComboBox->addItem(sLocale,sRecord);
+        }
     }
     else if(id==ID_QSS)
     {
+        QList<QString> listRecords=getAllFilesFromDirectory(getApplicationQssPath(),"*.qss");
 
+        int nCount=listRecords.count();
+
+        for(int i=0;i<nCount;i++)
+        {
+            QFileInfo fi(listRecords.at(i));
+
+            QString sRecord=fi.baseName();
+
+            pComboBox->addItem(sRecord,sRecord);
+        }
     }
 
     int nCount=pComboBox->count();
@@ -256,7 +288,7 @@ void XOptions::adjustApplicationView(QString sOptionName, QString sTranslationNa
 
     if(sStyle!="")
     {
-        QApplication::setStyle(QStyleFactory::create(sStyle));
+        qApp->setStyle(QStyleFactory::create(sStyle));
     }
 
     QTranslator translator;
@@ -317,6 +349,14 @@ QString XOptions::getApplicationQssPath()
 
     return sResult;
 }
+
+QList<QString> XOptions::getAllFilesFromDirectory(QString sDirectory, QString sExt)
+{
+    QDir directory(sDirectory);
+
+    return directory.entryList(QStringList()<<sExt,QDir::Files);
+}
+
 #ifdef WIN32
 void XOptions::registerContext(QString sApplication, QString sType)
 {
