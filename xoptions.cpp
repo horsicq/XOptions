@@ -273,9 +273,25 @@ void XOptions::adjustApplicationView(QString sOptionName, QString sTranslationNa
         qApp->installTranslator(&translator);
     }
 
-    QString sQSS=xOptions.getValue(XOptions::ID_QSS).toString();
+    QString sQss=xOptions.getValue(XOptions::ID_QSS).toString();
 
-    // TODO qss
+    if(sQss!="")
+    {
+        QString sQssFileName=getApplicationQssPath()+QDir::separator()+QString("%1.qss").arg(sQss);
+
+        if(QFile::exists(sQssFileName))
+        {
+            QFile file;
+            file.setFileName(sQssFileName);
+
+            if(file.open(QIODevice::ReadOnly))
+            {
+                QByteArray baQss=file.readAll();
+                qApp->setStyleSheet(baQss.data());
+                file.close();
+            }
+        }
+    }
 }
 
 QString XOptions::getApplicationLangPath()
@@ -283,6 +299,15 @@ QString XOptions::getApplicationLangPath()
     QString sResult;
 
     sResult=qApp->applicationDirPath()+QDir::separator()+"lang";
+
+    return sResult;
+}
+
+QString XOptions::getApplicationQssPath()
+{
+    QString sResult;
+
+    sResult=qApp->applicationDirPath()+QDir::separator()+"qss";
 
     return sResult;
 }
