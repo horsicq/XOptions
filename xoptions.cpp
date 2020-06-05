@@ -122,6 +122,7 @@ QString XOptions::idToString(ID id)
         case ID_SAVEBACKUP:                 sResult=QString("SaveBackup");                  break;
         case ID_STYLE:                      sResult=QString("Style");                       break;
         case ID_LANG:                       sResult=QString("Lang");                        break;
+        case ID_QSS:                        sResult=QString("Qss");                         break;
     }
 
     return sResult;
