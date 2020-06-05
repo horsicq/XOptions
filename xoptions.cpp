@@ -96,7 +96,8 @@ QVariant XOptions::getValue(XOptions::ID id)
 void XOptions::setValue(XOptions::ID id, QVariant value)
 {
     if( (id==ID_STYLE)||
-        (id==ID_LANG))
+        (id==ID_LANG)||
+        (id==ID_QSS))
     {
         QVariant varOld=mapValues.value(id);
 
@@ -203,6 +204,10 @@ void XOptions::setComboBox(QComboBox *pComboBox, XOptions::ID id)
     else if(id==ID_LANG)
     {
         pComboBox->addItem("System","System");
+    }
+    else if(id==ID_QSS)
+    {
+
     }
 
     int nCount=pComboBox->count();
