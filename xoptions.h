@@ -72,6 +72,8 @@ public:
     static QString getApplicationQssPath();
     static QList<QString> getAllFilesFromDirectory(QString sDirectory,QString sExt);
 
+    // TODO font
+
 #ifdef WIN32
     static void registerContext(QString sApplication,QString sType);
     static void clearContext(QString sApplication,QString sType);
