@@ -264,6 +264,11 @@ void XOptions::getComboBox(QComboBox *pComboBox, XOptions::ID id)
     setValue(id,pComboBox->currentData());
 }
 
+bool XOptions::isSaveBackup()
+{
+    return getValue(XOptions::ID_SAVEBACKUP).toBool();
+}
+
 bool XOptions::isRestartNeeded()
 {
     return bIsRestartNeeded;

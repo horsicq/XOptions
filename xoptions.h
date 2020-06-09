@@ -65,6 +65,8 @@ public:
     void setComboBox(QComboBox *pComboBox,ID id);
     void getComboBox(QComboBox *pComboBox,ID id);
 
+    bool isSaveBackup();
+
     bool isRestartNeeded();
 
     static void adjustApplicationView(QString sOptionName,QString sTranslationName);
