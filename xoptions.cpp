@@ -304,9 +304,13 @@ void XOptions::adjustApplicationView(QString sOptionName, QString sTranslationNa
 
     if(sLang=="System")
     {
-        bLoad=translator.load(QLocale::system(),sTranslationName,"_",sLangsPath,".qm");
+        QLocale locale=QLocale::system();
+        if(locale!=QLocale::English)
+        {
+            bLoad=translator.load(locale,sTranslationName,"_",sLangsPath,".qm");
+        }
     }
-    else if(sLang!="") // TODO English
+    else if(sLang!="")
     {
         bLoad=translator.load(sLang,sLangsPath);
     }
