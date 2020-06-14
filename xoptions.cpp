@@ -28,7 +28,7 @@ XOptions::XOptions(QObject *parent) : QObject(parent)
 void XOptions::setName(QString sName)
 {
     this->sName=sName;
-    this->sFilePath=getApplicationDataPath()+QDir::separator()+QString("%1.ini").arg(sName);
+    this->sFilePath=getApplicationDataPath()+QDir::separator()+QString("%1").arg(sName);
 }
 
 void XOptions::setValueIDs(QList<ID> listVariantIDs)
