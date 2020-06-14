@@ -28,7 +28,7 @@ XOptions::XOptions(QObject *parent) : QObject(parent)
 void XOptions::setName(QString sName)
 {
     this->sName=sName;
-    this->sFilePath=QApplication::applicationDirPath()+QDir::separator()+QString("%1.ini").arg(sName);
+    this->sFilePath=getApplicationDataPath()+QDir::separator()+QString("%1.ini").arg(sName);
 }
 
 void XOptions::setValueIDs(QList<ID> listVariantIDs)
@@ -345,7 +345,7 @@ QString XOptions::getApplicationLangPath()
 {
     QString sResult;
 
-    sResult=qApp->applicationDirPath()+QDir::separator()+"lang";
+    sResult=getApplicationDataPath()+QDir::separator()+"lang";
 
     return sResult;
 }
@@ -354,7 +354,7 @@ QString XOptions::getApplicationQssPath()
 {
     QString sResult;
 
-    sResult=qApp->applicationDirPath()+QDir::separator()+"qss";
+    sResult=getApplicationDataPath()+QDir::separator()+"qss";
 
     return sResult;
 }
@@ -364,6 +364,19 @@ QList<QString> XOptions::getAllFilesFromDirectory(QString sDirectory, QString sE
     QDir directory(sDirectory);
 
     return directory.entryList(QStringList()<<sExt,QDir::Files);
+}
+
+QString XOptions::getApplicationDataPath()
+{
+    QString sResult;
+
+#ifdef Q_OS_MAC
+    sResult=qApp->applicationDirPath()+"/../Resources";
+#else
+    sResult=qApp->applicationDirPath();
+#endif
+
+    return sResult;
 }
 
 #ifdef WIN32
