@@ -296,7 +296,7 @@ void XOptions::adjustApplicationView(QString sOptionName, QString sTranslationNa
         qApp->setStyle(QStyleFactory::create(sStyle));
     }
 
-    QTranslator translator;
+    QTranslator *pTranslator=new QTranslator; // Important
     QString sLang=xOptions.getValue(XOptions::ID_LANG).toString();
     QString sLangsPath=getApplicationLangPath();
 
@@ -307,17 +307,17 @@ void XOptions::adjustApplicationView(QString sOptionName, QString sTranslationNa
         QLocale locale=QLocale::system();
         if(locale!=QLocale::English)
         {
-            bLoad=translator.load(locale,sTranslationName,"_",sLangsPath,".qm");
+            bLoad=pTranslator->load(locale,sTranslationName,"_",sLangsPath,".qm");
         }
     }
     else if(sLang!="")
     {
-        bLoad=translator.load(sLang,sLangsPath);
+        bLoad=pTranslator->load(sLang,sLangsPath);
     }
 
     if(bLoad)
     {
-        qApp->installTranslator(&translator);
+        qApp->installTranslator(pTranslator);
     }
 
     QString sQss=xOptions.getValue(XOptions::ID_QSS).toString();
@@ -373,7 +373,8 @@ QString XOptions::getApplicationDataPath()
 #ifdef Q_OS_MAC
     sResult=qApp->applicationDirPath()+"/../Resources";
 #else
-    sResult=qApp->applicationDirPath();
+//    sResult=qApp->applicationDirPath();
+    sResult="E:\\ownCloud\\prepare\\release\\xpeviewer\\0.01\\xpeviewer_win32_portable\\base";
 #endif
 
     return sResult;
