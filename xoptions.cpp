@@ -369,14 +369,11 @@ QList<QString> XOptions::getAllFilesFromDirectory(QString sDirectory, QString sE
 QString XOptions::getApplicationDataPath()
 {
     QString sResult;
-
 #ifdef Q_OS_MAC
     sResult=qApp->applicationDirPath()+"/../Resources";
 #else
-//    sResult=qApp->applicationDirPath();
-    sResult="E:\\ownCloud\\prepare\\release\\xpeviewer\\0.01\\xpeviewer_win32_portable\\base";
+    sResult=qApp->applicationDirPath();
 #endif
-
     return sResult;
 }
 
