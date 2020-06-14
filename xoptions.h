@@ -74,6 +74,8 @@ public:
     static QString getApplicationQssPath();
     static QList<QString> getAllFilesFromDirectory(QString sDirectory,QString sExt);
 
+    static QString getApplicationDataPath();
+
     // TODO font
 
 #ifdef WIN32
