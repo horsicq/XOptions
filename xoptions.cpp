@@ -170,6 +170,13 @@ void XOptions::adjustStayOnTop(QWidget *pWidget)
     pWidget->show();
 }
 
+void XOptions::setMonoFont(QWidget *pWidget)
+{
+    QFont font=pWidget->font();
+    font.setFamily("Courier"); // TODO
+    pWidget->setFont(font);
+}
+
 void XOptions::setCheckBox(QCheckBox *pCheckBox, XOptions::ID id)
 {
     pCheckBox->setChecked(getValue(id).toBool());

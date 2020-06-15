@@ -60,6 +60,7 @@ public:
     QString getLastDirectory();
     void setLastDirectory(QString sValue);
     void adjustStayOnTop(QWidget *pWidget); // TODO def GUI
+    void static setMonoFont(QWidget *pWidget);
     void setCheckBox(QCheckBox *pCheckBox,ID id);
     void getCheckBox(QCheckBox *pCheckBox,ID id);
     void setComboBox(QComboBox *pComboBox,ID id);
