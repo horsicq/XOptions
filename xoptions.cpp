@@ -57,7 +57,7 @@ void XOptions::load()
             case ID_SAVEBACKUP:             varDefault=true;        break;
             case ID_STYLE:                  varDefault="Fusion";    break;
             case ID_LANG:                   varDefault="System";    break;
-            case ID_QSS:                    varDefault="orange";    break;
+            case ID_QSS:                    varDefault="";          break;
         }
 
         mapValues.insert(id,settings.value(sName,varDefault));
