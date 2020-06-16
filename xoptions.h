@@ -86,6 +86,9 @@ public:
     void static setMonoFont(QWidget *pWidget);
 #endif
 
+signals:
+    void errorMessage(QString sText);
+
 private:
     QString sName;
     QString sFilePath;
