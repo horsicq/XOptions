@@ -59,8 +59,7 @@ public:
     static QString idToString(ID id);
     QString getLastDirectory();
     void setLastDirectory(QString sValue);
-    void adjustStayOnTop(QWidget *pWidget); // TODO def GUI
-    void static setMonoFont(QWidget *pWidget);
+
     void setCheckBox(QCheckBox *pCheckBox,ID id);
     void getCheckBox(QCheckBox *pCheckBox,ID id);
     void setComboBox(QComboBox *pComboBox,ID id);
@@ -77,12 +76,14 @@ public:
 
     static QString getApplicationDataPath();
 
-    // TODO font
-
 #ifdef WIN32
     static void registerContext(QString sApplication,QString sType);
     static void clearContext(QString sApplication,QString sType);
     static bool checkContext(QString sApplication,QString sType);
+#endif
+#ifdef QT_GUI_LIB
+    void adjustStayOnTop(QWidget *pWidget); // TODO def GUI
+    void static setMonoFont(QWidget *pWidget);
 #endif
 
 private:

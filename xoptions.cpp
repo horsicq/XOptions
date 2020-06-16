@@ -151,7 +151,7 @@ void XOptions::setLastDirectory(QString sValue)
         setValue(ID_LASTDIRECTORY,sValue);
     }
 }
-
+#ifdef QT_GUI_LIB
 void XOptions::adjustStayOnTop(QWidget *pWidget)
 {
     Qt::WindowFlags wf=pWidget->windowFlags();
@@ -169,14 +169,15 @@ void XOptions::adjustStayOnTop(QWidget *pWidget)
 
     pWidget->show();
 }
-
+#endif
+#ifdef QT_GUI_LIB
 void XOptions::setMonoFont(QWidget *pWidget)
 {
     QFont font=pWidget->font();
     font.setFamily("Courier"); // TODO
     pWidget->setFont(font);
 }
-
+#endif
 void XOptions::setCheckBox(QCheckBox *pCheckBox, XOptions::ID id)
 {
     pCheckBox->setChecked(getValue(id).toBool());
