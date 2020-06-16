@@ -77,9 +77,9 @@ public:
     static QString getApplicationDataPath();
 
 #ifdef WIN32
-    static void registerContext(QString sApplication,QString sType);
-    static void clearContext(QString sApplication,QString sType);
-    static bool checkContext(QString sApplication,QString sType);
+    void registerContext(QString sApplication,QString sType);
+    void clearContext(QString sApplication,QString sType);
+    bool checkContext(QString sApplication,QString sType);
 #endif
 #ifdef QT_GUI_LIB
     void adjustStayOnTop(QWidget *pWidget); // TODO def GUI

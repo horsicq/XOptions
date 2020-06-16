@@ -395,12 +395,14 @@ void XOptions::registerContext(QString sApplication, QString sType)
 void XOptions::clearContext(QString sApplication, QString sType)
 {
     // TODO
+    // TODO Check if not send message
 }
 #endif
 #ifdef WIN32
 bool XOptions::checkContext(QString sApplication, QString sType)
 {
-    // TODO
-    return false;
+    QSettings settings(QString("HKEY_CLASSES_ROOT\\%1\\shell").arg(sType),QSettings::NativeFormat);
+
+    return (settings.value(QString("%1/command/Default").arg(sApplication)).toString()!="");
 }
 #endif
