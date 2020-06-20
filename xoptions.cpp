@@ -389,6 +389,7 @@ QString XOptions::getApplicationDataPath()
 void XOptions::registerContext(QString sApplication, QString sType)
 {
     // TODO
+    // TODO Check if not send message
 }
 #endif
 #ifdef WIN32
