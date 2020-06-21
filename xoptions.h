@@ -59,21 +59,16 @@ public:
     static QString idToString(ID id);
     QString getLastDirectory();
     void setLastDirectory(QString sValue);
-
     void setCheckBox(QCheckBox *pCheckBox,ID id);
     void getCheckBox(QCheckBox *pCheckBox,ID id);
     void setComboBox(QComboBox *pComboBox,ID id);
     void getComboBox(QComboBox *pComboBox,ID id);
-
     bool isSaveBackup();
-
     bool isRestartNeeded();
-
     static void adjustApplicationView(QString sOptionName,QString sTranslationName);
     static QString getApplicationLangPath();
     static QString getApplicationQssPath();
     static QList<QString> getAllFilesFromDirectory(QString sDirectory,QString sExt);
-
     static QString getApplicationDataPath();
 
 #ifdef WIN32
