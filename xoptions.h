@@ -70,7 +70,6 @@ public:
     static QString getApplicationQssPath();
     static QList<QString> getAllFilesFromDirectory(QString sDirectory,QString sExt);
     static QString getApplicationDataPath();
-
 #ifdef WIN32
     void registerContext(QString sApplication,QString sType);
     void clearContext(QString sApplication,QString sType);
