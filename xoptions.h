@@ -77,7 +77,7 @@ public:
     bool checkContext(QString sApplication,QString sType);
 #endif
 #ifdef QT_GUI_LIB
-    void adjustStayOnTop(QWidget *pWidget); // TODO def GUI
+    void adjustStayOnTop(QWidget *pWidget);
     void static setMonoFont(QWidget *pWidget);
 #endif
 
