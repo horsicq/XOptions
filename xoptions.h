@@ -71,9 +71,9 @@ public:
     static QList<QString> getAllFilesFromDirectory(QString sDirectory,QString sExt);
     static QString getApplicationDataPath();
 #ifdef WIN32
-    void registerContext(QString sApplication,QString sType);
-    void clearContext(QString sApplication,QString sType);
-    bool checkContext(QString sApplication,QString sType);
+    bool registerContext(QString sApplicationName,QString sType);
+    bool clearContext(QString sApplicationName,QString sType);
+    bool checkContext(QString sApplicationName,QString sType);
 #endif
 #ifdef QT_GUI_LIB
     void adjustStayOnTop(QWidget *pWidget);

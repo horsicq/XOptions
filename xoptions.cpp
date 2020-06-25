@@ -386,18 +386,21 @@ QString XOptions::getApplicationDataPath()
 }
 
 #ifdef WIN32
-void XOptions::registerContext(QString sApplicationName, QString sType)
+bool XOptions::registerContext(QString sApplicationName, QString sType)
 {
     // TODO
     // TODO Check if not send message
+    return checkContext(sApplicationName,sType);
 }
 #endif
 #ifdef WIN32
-void XOptions::clearContext(QString sApplicationName, QString sType)
+bool XOptions::clearContext(QString sApplicationName, QString sType)
 {
     QSettings settings(QString("HKEY_CLASSES_ROOT\\%1\\shell\\%2").arg(sType).arg(sApplicationName),QSettings::NativeFormat);
     settings.clear();
     // TODO Check if not send message
+
+    return !(checkContext(sApplicationName,sType));
 }
 #endif
 #ifdef WIN32
