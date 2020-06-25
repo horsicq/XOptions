@@ -174,7 +174,7 @@ void XOptions::adjustStayOnTop(QWidget *pWidget)
 void XOptions::setMonoFont(QWidget *pWidget)
 {
     QFont font=pWidget->font();
-    font.setFamily("Courier"); // TODO
+    font.setFamily("Courier"); // TODO OSX and Linux
     pWidget->setFont(font);
 }
 #endif
