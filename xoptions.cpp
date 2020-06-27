@@ -389,6 +389,7 @@ QString XOptions::getApplicationDataPath()
 bool XOptions::registerContext(QString sApplicationName, QString sType)
 {
     // TODO
+    // TODO icon
     // TODO Check if not send message
     return checkContext(sApplicationName,sType);
 }
