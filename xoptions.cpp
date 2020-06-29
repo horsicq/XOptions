@@ -277,6 +277,11 @@ bool XOptions::isSaveBackup()
     return getValue(XOptions::ID_SAVEBACKUP).toBool();
 }
 
+bool XOptions::isSaveLastDirectory()
+{
+    return getValue(XOptions::ID_SAVELASTDIRECTORY).toBool();
+}
+
 bool XOptions::isRestartNeeded()
 {
     return bIsRestartNeeded;
