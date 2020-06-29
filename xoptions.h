@@ -65,6 +65,7 @@ public:
     void getComboBox(QComboBox *pComboBox,ID id);
     bool isSaveBackup();
     // TODO isSaveLastDirectory
+    // TODO getLastDirectory
     bool isRestartNeeded();
     static void adjustApplicationView(QString sOptionName,QString sTranslationName);
     static QString getApplicationLangPath();
