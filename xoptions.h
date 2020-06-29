@@ -71,7 +71,7 @@ public:
     static QList<QString> getAllFilesFromDirectory(QString sDirectory,QString sExt);
     static QString getApplicationDataPath();
 #ifdef WIN32
-    bool registerContext(QString sApplicationName,QString sType);
+    bool registerContext(QString sApplicationName,QString sType,QString sApplicationFilePath);
     bool clearContext(QString sApplicationName,QString sType);
     bool checkContext(QString sApplicationName,QString sType);
 #endif

@@ -386,10 +386,15 @@ QString XOptions::getApplicationDataPath()
 }
 
 #ifdef WIN32
-bool XOptions::registerContext(QString sApplicationName, QString sType)
+bool XOptions::registerContext(QString sApplicationName, QString sType, QString sApplicationFilePath)
 {
-    // TODO
-    // TODO icon
+    // TODO Check
+    QSettings settings(QString("HKEY_CLASSES_ROOT\\%1\\shell\\%2\\command").arg(sType).arg(sApplicationName),QSettings::NativeFormat);
+    settings.setValue(".","\""+sApplicationFilePath.replace("/","\\")+"\" \"%1\"");
+
+    QSettings settingsIcon(QString("HKEY_CLASSES_ROOT\\%1\\shell\\%2").arg(sType).arg(sApplicationName),QSettings::NativeFormat);
+    settingsIcon.setValue("Icon","\""+sApplicationFilePath.replace("/","\\")+"\"");
+
     // TODO Check if not send message
     return checkContext(sApplicationName,sType);
 }
