@@ -178,16 +178,19 @@ void XOptions::setMonoFont(QWidget *pWidget)
     pWidget->setFont(font);
 }
 #endif
+#ifdef QT_GUI_LIB
 void XOptions::setCheckBox(QCheckBox *pCheckBox, XOptions::ID id)
 {
     pCheckBox->setChecked(getValue(id).toBool());
 }
-
+#endif
+#ifdef QT_GUI_LIB
 void XOptions::getCheckBox(QCheckBox *pCheckBox, XOptions::ID id)
 {
     setValue(id,pCheckBox->isChecked());
 }
-
+#endif
+#ifdef QT_GUI_LIB
 void XOptions::setComboBox(QComboBox *pComboBox, XOptions::ID id)
 {
     QSignalBlocker signalBlocker(pComboBox);
@@ -266,12 +269,13 @@ void XOptions::setComboBox(QComboBox *pComboBox, XOptions::ID id)
         pComboBox->setCurrentIndex(nIndex);
     }
 }
-
+#endif
+#ifdef QT_GUI_LIB
 void XOptions::getComboBox(QComboBox *pComboBox, XOptions::ID id)
 {
     setValue(id,pComboBox->currentData());
 }
-
+#endif
 bool XOptions::isSaveBackup()
 {
     return getValue(XOptions::ID_SAVEBACKUP).toBool();

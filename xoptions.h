@@ -59,10 +59,12 @@ public:
     static QString idToString(ID id);
     QString getLastDirectory();
     void setLastDirectory(QString sValue);
+#ifdef QT_GUI_LIB
     void setCheckBox(QCheckBox *pCheckBox,ID id);
     void getCheckBox(QCheckBox *pCheckBox,ID id);
     void setComboBox(QComboBox *pComboBox,ID id);
     void getComboBox(QComboBox *pComboBox,ID id);
+#endif
     bool isSaveBackup();
     bool isSaveLastDirectory();
     bool isRestartNeeded();
