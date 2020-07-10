@@ -46,7 +46,8 @@ public:
         ID_SAVEBACKUP,
         ID_STYLE,
         ID_QSS,
-        ID_LANG
+        ID_LANG,
+        ID_DBPATH
     };
 
     explicit XOptions(QObject *parent=nullptr);

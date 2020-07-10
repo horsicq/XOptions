@@ -58,6 +58,7 @@ void XOptions::load()
             case ID_STYLE:                  varDefault="Fusion";    break;
             case ID_LANG:                   varDefault="System";    break;
             case ID_QSS:                    varDefault="";          break;
+            case ID_DBPATH:                 varDefault="$app/db";   break;
         }
 
         mapValues.insert(id,settings.value(sName,varDefault));
@@ -124,6 +125,7 @@ QString XOptions::idToString(ID id)
         case ID_STYLE:                      sResult=QString("Style");                       break;
         case ID_LANG:                       sResult=QString("Lang");                        break;
         case ID_QSS:                        sResult=QString("Qss");                         break;
+        case ID_DBPATH:                     sResult=QString("DbPath");                      break;
     }
 
     return sResult;
