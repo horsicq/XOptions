@@ -153,6 +153,11 @@ void XOptions::setLastDirectory(QString sValue)
         setValue(ID_LASTDIRECTORY,sValue);
     }
 }
+
+QString XOptions::getDbPath()
+{
+    return getValue(ID_DBPATH).toString();
+}
 #ifdef QT_GUI_LIB
 void XOptions::adjustStayOnTop(QWidget *pWidget)
 {

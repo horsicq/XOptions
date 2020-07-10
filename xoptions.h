@@ -61,6 +61,7 @@ public:
     static QString idToString(ID id);
     QString getLastDirectory();
     void setLastDirectory(QString sValue);
+    QString getDbPath();
 #ifdef QT_GUI_LIB
     void setCheckBox(QCheckBox *pCheckBox,ID id);
     void getCheckBox(QCheckBox *pCheckBox,ID id);
