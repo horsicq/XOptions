@@ -278,6 +278,18 @@ void XOptions::getComboBox(QComboBox *pComboBox, XOptions::ID id)
     setValue(id,pComboBox->currentData());
 }
 #endif
+#ifdef QT_GUI_LIB
+void XOptions::setLineEdit(QLineEdit *pLineEdit, XOptions::ID id)
+{
+    pLineEdit->setText(getValue(id).toString());
+}
+#endif
+#ifdef QT_GUI_LIB
+void XOptions::getLineEdit(QLineEdit *pLineEdit, XOptions::ID id)
+{
+    setValue(id,pLineEdit->text());
+}
+#endif
 bool XOptions::isSaveBackup()
 {
     return getValue(XOptions::ID_SAVEBACKUP).toBool();

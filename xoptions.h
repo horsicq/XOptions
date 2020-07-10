@@ -28,6 +28,7 @@
 #include <QWidget>
 #include <QCheckBox>
 #include <QComboBox>
+#include <QLineEdit>
 #include <QApplication>
 #include <QStyleFactory>
 #include <QTranslator>
@@ -65,6 +66,8 @@ public:
     void getCheckBox(QCheckBox *pCheckBox,ID id);
     void setComboBox(QComboBox *pComboBox,ID id);
     void getComboBox(QComboBox *pComboBox,ID id);
+    void setLineEdit(QLineEdit *pLineEdit,ID id);
+    void getLineEdit(QLineEdit *pLineEdit,ID id);
 #endif
     bool isSaveBackup();
     bool isSaveLastDirectory();
