@@ -148,6 +148,13 @@ QString XOptions::getLastDirectory()
 
 void XOptions::setLastDirectory(QString sValue)
 {
+    QFileInfo fi(sValue);
+
+    if(fi.isFile())
+    {
+        sValue=fi.absoluteFilePath();
+    }
+
     if(getValue(ID_SAVELASTDIRECTORY).toBool())
     {
         setValue(ID_LASTDIRECTORY,sValue);
