@@ -69,6 +69,8 @@ public:
     void getComboBox(QComboBox *pComboBox,ID id);
     void setLineEdit(QLineEdit *pLineEdit,ID id);
     void getLineEdit(QLineEdit *pLineEdit,ID id);
+    void adjustStayOnTop(QWidget *pWidget);
+    void static setMonoFont(QWidget *pWidget);
 #endif
     bool isSaveBackup();
     bool isSaveLastDirectory();
@@ -83,10 +85,6 @@ public:
     bool registerContext(QString sApplicationName,QString sType,QString sApplicationFilePath);
     bool clearContext(QString sApplicationName,QString sType);
     bool checkContext(QString sApplicationName,QString sType);
-#endif
-#ifdef QT_GUI_LIB
-    void adjustStayOnTop(QWidget *pWidget);
-    void static setMonoFont(QWidget *pWidget);
 #endif
 
 signals:
