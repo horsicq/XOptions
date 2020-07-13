@@ -73,6 +73,7 @@ public:
     bool isSaveBackup();
     bool isSaveLastDirectory();
     bool isRestartNeeded();
+    bool isScanAfterOpen();
     static void adjustApplicationView(QString sOptionName,QString sTranslationName);
     static QString getApplicationLangPath();
     static QString getApplicationQssPath();

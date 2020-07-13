@@ -310,6 +310,11 @@ bool XOptions::isRestartNeeded()
     return bIsRestartNeeded;
 }
 
+bool XOptions::isScanAfterOpen()
+{
+    return getValue(XOptions::ID_SCANAFTEROPEN).toBool();
+}
+
 void XOptions::adjustApplicationView(QString sOptionName, QString sTranslationName)
 {
     XOptions xOptions;
