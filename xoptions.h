@@ -76,7 +76,7 @@ public:
     bool isSaveLastDirectory();
     bool isRestartNeeded();
     bool isScanAfterOpen();
-    static void adjustApplicationView(QString sOptionName,QString sTranslationName);
+    static void adjustApplicationView(QString sOptionFileName,QString sTranslationName);
     static QString getApplicationLangPath();
     static QString getApplicationQssPath();
     static QList<QString> getAllFilesFromDirectory(QString sDirectory,QString sExtension);

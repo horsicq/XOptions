@@ -327,11 +327,11 @@ bool XOptions::isScanAfterOpen()
     return getValue(XOptions::ID_SCANAFTEROPEN).toBool();
 }
 
-void XOptions::adjustApplicationView(QString sOptionName, QString sTranslationName)
+void XOptions::adjustApplicationView(QString sOptionFileName, QString sTranslationName)
 {
     XOptions xOptions;
 
-    xOptions.setName(sOptionName);
+    xOptions.setName(sOptionFileName);
 
     QList<XOptions::ID> listIDs;
 
