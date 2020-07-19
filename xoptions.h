@@ -62,6 +62,15 @@ public:
     QString getLastDirectory();
     void setLastDirectory(QString sValue);
     QString getDbPath();
+    bool isSaveBackup();
+    bool isSaveLastDirectory();
+    bool isRestartNeeded();
+    bool isScanAfterOpen();
+    static void adjustApplicationView(QString sOptionFileName,QString sTranslationName);
+    static QString getApplicationLangPath();
+    static QString getApplicationQssPath();
+    static QList<QString> getAllFilesFromDirectory(QString sDirectory,QString sExtension);
+    static QString getApplicationDataPath();
 #ifdef QT_GUI_LIB
     void setCheckBox(QCheckBox *pCheckBox,ID id);
     void getCheckBox(QCheckBox *pCheckBox,ID id);
@@ -72,15 +81,6 @@ public:
     void adjustStayOnTop(QWidget *pWidget);
     void static setMonoFont(QWidget *pWidget);
 #endif
-    bool isSaveBackup();
-    bool isSaveLastDirectory();
-    bool isRestartNeeded();
-    bool isScanAfterOpen();
-    static void adjustApplicationView(QString sOptionFileName,QString sTranslationName);
-    static QString getApplicationLangPath();
-    static QString getApplicationQssPath();
-    static QList<QString> getAllFilesFromDirectory(QString sDirectory,QString sExtension);
-    static QString getApplicationDataPath();
 #ifdef WIN32
     bool registerContext(QString sApplicationName,QString sType,QString sApplicationFilePath);
     bool clearContext(QString sApplicationName,QString sType);
