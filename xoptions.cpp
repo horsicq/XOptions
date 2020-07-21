@@ -59,6 +59,7 @@ void XOptions::load()
             case ID_LANG:                   varDefault="System";    break;
             case ID_QSS:                    varDefault="";          break;
             case ID_DBPATH:                 varDefault="$app/db";   break;
+            case ID_INFOPATH:               varDefault="$app/info"; break;
         }
 
         mapValues.insert(id,settings.value(sName,varDefault));
