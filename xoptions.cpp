@@ -126,6 +126,7 @@ QString XOptions::idToString(ID id)
         case ID_LANG:                       sResult=QString("Lang");                        break;
         case ID_QSS:                        sResult=QString("Qss");                         break;
         case ID_DBPATH:                     sResult=QString("DbPath");                      break;
+        case ID_INFOPATH:                   sResult=QString("InfoPath");                    break;
     }
 
     return sResult;

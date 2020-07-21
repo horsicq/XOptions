@@ -48,7 +48,8 @@ public:
         ID_STYLE,
         ID_QSS,
         ID_LANG,
-        ID_DBPATH
+        ID_DBPATH,
+        ID_INFOPATH
     };
 
     explicit XOptions(QObject *parent=nullptr);
