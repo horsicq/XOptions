@@ -52,7 +52,7 @@ public:
         ID_INFOPATH
     };
 
-    explicit XOptions(QObject *parent=nullptr);
+    explicit XOptions(QObject *pParent=nullptr);
     void setName(QString sName);
     void setValueIDs(QList<ID> listValueIDs);
     void load();

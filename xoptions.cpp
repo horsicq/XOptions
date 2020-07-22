@@ -20,7 +20,7 @@
 //
 #include "xoptions.h"
 
-XOptions::XOptions(QObject *parent) : QObject(parent)
+XOptions::XOptions(QObject *pParent) : QObject(pParent)
 {
     bIsRestartNeeded=false;
 }
