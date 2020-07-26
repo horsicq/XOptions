@@ -95,21 +95,21 @@ QVariant XOptions::getValue(XOptions::ID id)
     return mapValues.value(id);
 }
 
-void XOptions::setValue(XOptions::ID id, QVariant value)
+void XOptions::setValue(XOptions::ID id, QVariant vValue)
 {
     if( (id==ID_STYLE)||
         (id==ID_LANG)||
         (id==ID_QSS))
     {
-        QVariant varOld=mapValues.value(id);
+        QVariant vOld=mapValues.value(id);
 
-        if(value!=varOld)
+        if(vValue!=vOld)
         {
             bIsRestartNeeded=true;
         }
     }
 
-    mapValues.insert(id,value);
+    mapValues.insert(id,vValue);
 }
 
 QString XOptions::idToString(ID id)
