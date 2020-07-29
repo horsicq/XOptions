@@ -49,7 +49,8 @@ public:
         ID_QSS,
         ID_LANG,
         ID_DBPATH,
-        ID_INFOPATH
+        ID_INFOPATH,
+        ID_SCANENGINE
     };
 
     explicit XOptions(QObject *pParent=nullptr);
