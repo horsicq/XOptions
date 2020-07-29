@@ -174,6 +174,11 @@ QString XOptions::getDbPath()
 {
     return getValue(ID_DBPATH).toString();
 }
+
+QString XOptions::getScanEngine()
+{
+    return getValue(ID_SCANENGINE).toString();
+}
 #ifdef QT_GUI_LIB
 void XOptions::adjustStayOnTop(QWidget *pWidget)
 {
@@ -274,6 +279,11 @@ void XOptions::setComboBox(QComboBox *pComboBox, XOptions::ID id)
 
             pComboBox->addItem(sRecord,sRecord);
         }
+    }
+    else if(id==ID_SCANENGINE)
+    {
+        pComboBox->addItem(QString("Detect It Easy(DiE)"),"die");
+        pComboBox->addItem(QString("Nauz File Detector(NFD)"),"nfd");
     }
 
     int nCount=pComboBox->count();
