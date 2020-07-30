@@ -64,6 +64,7 @@ public:
     QString getLastDirectory();
     void setLastDirectory(QString sValue);
     QString getDbPath();
+    QString getInfoPath();
     QString getScanEngine();
     bool isSaveBackup();
     bool isSaveLastDirectory();

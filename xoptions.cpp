@@ -175,6 +175,11 @@ QString XOptions::getDbPath()
     return getValue(ID_DBPATH).toString();
 }
 
+QString XOptions::getInfoPath()
+{
+    return getValue(ID_INFOPATH).toString();
+}
+
 QString XOptions::getScanEngine()
 {
     return getValue(ID_SCANENGINE).toString();
