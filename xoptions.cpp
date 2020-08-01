@@ -50,17 +50,17 @@ void XOptions::load()
 
         switch(id)
         {
-            case ID_STAYONTOP:              varDefault=false;       break;
-            case ID_SCANAFTEROPEN:          varDefault=true;        break;
-            case ID_SAVELASTDIRECTORY:      varDefault=true;        break;
-            case ID_LASTDIRECTORY:          varDefault="";          break;
-            case ID_SAVEBACKUP:             varDefault=true;        break;
-            case ID_STYLE:                  varDefault="Fusion";    break;
-            case ID_LANG:                   varDefault="System";    break;
-            case ID_QSS:                    varDefault="";          break;
-            case ID_DBPATH:                 varDefault="$app/db";   break;
-            case ID_INFOPATH:               varDefault="$app/info"; break;
-            case ID_SCANENGINE:             varDefault="die";       break;
+            case ID_STAYONTOP:              varDefault=false;           break;
+            case ID_SCANAFTEROPEN:          varDefault=true;            break;
+            case ID_SAVELASTDIRECTORY:      varDefault=true;            break;
+            case ID_LASTDIRECTORY:          varDefault="";              break;
+            case ID_SAVEBACKUP:             varDefault=true;            break;
+            case ID_STYLE:                  varDefault="Fusion";        break;
+            case ID_LANG:                   varDefault="System";        break;
+            case ID_QSS:                    varDefault="";              break;
+            case ID_DBPATH:                 varDefault="$data/db";      break;
+            case ID_INFOPATH:               varDefault="$data/info";    break;
+            case ID_SCANENGINE:             varDefault="die";           break;
         }
 
         mapValues.insert(id,settings.value(sName,varDefault));
