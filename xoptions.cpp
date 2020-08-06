@@ -61,6 +61,9 @@ void XOptions::load()
             case ID_DBPATH:                 varDefault="$data/db";      break;
             case ID_INFOPATH:               varDefault="$data/info";    break;
             case ID_SCANENGINE:             varDefault="die";           break;
+            case ID_ROOTPATH:               varDefault="";              break;
+            case ID_DATAPATH:               varDefault="$data/data";    break;
+            case ID_JSON:                   varDefault="";              break;
         }
 
         mapValues.insert(id,settings.value(sName,varDefault));
@@ -130,6 +133,9 @@ QString XOptions::idToString(ID id)
         case ID_DBPATH:                     sResult=QString("DbPath");                      break;
         case ID_INFOPATH:                   sResult=QString("InfoPath");                    break;
         case ID_SCANENGINE:                 sResult=QString("ScanEngine");                  break;
+        case ID_ROOTPATH:                   sResult=QString("RootPath");                    break;
+        case ID_DATAPATH:                   sResult=QString("DataPath");                    break;
+        case ID_JSON:                       sResult=QString("Json");                        break;
     }
 
     return sResult;

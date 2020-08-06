@@ -50,7 +50,10 @@ public:
         ID_LANG,
         ID_DBPATH,
         ID_INFOPATH,
-        ID_SCANENGINE
+        ID_SCANENGINE,
+        ID_ROOTPATH,
+        ID_DATAPATH,
+        ID_JSON
     };
 
     explicit XOptions(QObject *pParent=nullptr);
