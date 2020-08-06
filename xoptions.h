@@ -63,6 +63,7 @@ public:
     explicit XOptions(QObject *pParent=nullptr);
     void setName(QString sName);
     void setValueIDs(QList<ID> listValueIDs);
+    void setDefaultValues(QMap<ID,QVariant> mapDefaultValues);
     void load();
     void save();
     QVariant getValue(ID id);
@@ -109,6 +110,7 @@ private:
     QString sFilePath;
     QList<ID> listValueIDs;
     QMap<ID,QVariant> mapValues;
+    QMap<ID,QVariant> mapDefaultValues;
     bool bIsRestartNeeded;
 };
 

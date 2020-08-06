@@ -36,6 +36,11 @@ void XOptions::setValueIDs(QList<ID> listVariantIDs)
     this->listValueIDs=listVariantIDs;
 }
 
+void XOptions::setDefaultValues(QMap<XOptions::ID, QVariant> mapDefaultValues)
+{
+    this->mapDefaultValues=mapDefaultValues;
+}
+
 void XOptions::load()
 {
     QSettings settings(sFilePath,QSettings::IniFormat);
@@ -48,22 +53,29 @@ void XOptions::load()
         QString sName=idToString(id);
         QVariant varDefault;
 
-        switch(id)
+        if(mapDefaultValues.contains(id))
         {
-            case ID_STAYONTOP:              varDefault=false;           break;
-            case ID_SCANAFTEROPEN:          varDefault=true;            break;
-            case ID_SAVELASTDIRECTORY:      varDefault=true;            break;
-            case ID_LASTDIRECTORY:          varDefault="";              break;
-            case ID_SAVEBACKUP:             varDefault=true;            break;
-            case ID_STYLE:                  varDefault="Fusion";        break;
-            case ID_LANG:                   varDefault="System";        break;
-            case ID_QSS:                    varDefault="";              break;
-            case ID_DBPATH:                 varDefault="$data/db";      break;
-            case ID_INFOPATH:               varDefault="$data/info";    break;
-            case ID_SCANENGINE:             varDefault="die";           break;
-            case ID_ROOTPATH:               varDefault="";              break;
-            case ID_DATAPATH:               varDefault="$data/data";    break;
-            case ID_JSON:                   varDefault="";              break;
+            varDefault=mapDefaultValues.value(id);
+        }
+        else
+        {
+            switch(id)
+            {
+                case ID_STAYONTOP:              varDefault=false;           break;
+                case ID_SCANAFTEROPEN:          varDefault=true;            break;
+                case ID_SAVELASTDIRECTORY:      varDefault=true;            break;
+                case ID_LASTDIRECTORY:          varDefault="";              break;
+                case ID_SAVEBACKUP:             varDefault=true;            break;
+                case ID_STYLE:                  varDefault="Fusion";        break;
+                case ID_LANG:                   varDefault="System";        break;
+                case ID_QSS:                    varDefault="";              break;
+                case ID_DBPATH:                 varDefault="$data/db";      break;
+                case ID_INFOPATH:               varDefault="$data/info";    break;
+                case ID_SCANENGINE:             varDefault="die";           break;
+                case ID_ROOTPATH:               varDefault="";              break;
+                case ID_DATAPATH:               varDefault="$data/data";    break;
+                case ID_JSON:                   varDefault="";              break;
+            }
         }
 
         mapValues.insert(id,settings.value(sName,varDefault));
