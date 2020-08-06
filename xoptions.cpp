@@ -51,6 +51,7 @@ void XOptions::load()
     {
         ID id=listValueIDs.at(i);
         QString sName=idToString(id);
+
         QVariant varDefault;
 
         if(mapDefaultValues.contains(id))
