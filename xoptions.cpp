@@ -351,7 +351,7 @@ bool XOptions::isScanAfterOpen()
 {
     return getValue(XOptions::ID_SCANAFTEROPEN).toBool();
 }
-
+#ifdef QT_GUI_LIB
 void XOptions::adjustApplicationView(QString sOptionFileName, QString sTranslationName)
 {
     XOptions xOptions;
@@ -418,7 +418,7 @@ void XOptions::adjustApplicationView(QString sOptionFileName, QString sTranslati
         }
     }
 }
-
+#endif
 QString XOptions::getApplicationLangPath()
 {
     QString sResult;

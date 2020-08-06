@@ -25,13 +25,17 @@
 #include <QMap>
 #include <QDir>
 #include <QSettings>
+#include <QTranslator>
+#ifdef QT_GUI_LIB
 #include <QWidget>
 #include <QCheckBox>
 #include <QComboBox>
 #include <QLineEdit>
 #include <QApplication>
 #include <QStyleFactory>
-#include <QTranslator>
+#else
+#include <QCoreApplication>
+#endif
 
 class XOptions : public QObject
 {
@@ -73,7 +77,6 @@ public:
     bool isSaveLastDirectory();
     bool isRestartNeeded();
     bool isScanAfterOpen();
-    static void adjustApplicationView(QString sOptionFileName,QString sTranslationName);
     static QString getApplicationLangPath();
     static QString getApplicationQssPath();
     static QList<QString> getAllFilesFromDirectory(QString sDirectory,QString sExtension);
@@ -87,6 +90,7 @@ public:
     void getLineEdit(QLineEdit *pLineEdit,ID id);
     void adjustStayOnTop(QWidget *pWidget);
     void static setMonoFont(QWidget *pWidget);
+    static void adjustApplicationView(QString sOptionFileName,QString sTranslationName);
 #endif
 #ifdef WIN32
     bool registerContext(QString sApplicationName,QString sType,QString sApplicationFilePath);
