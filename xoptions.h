@@ -73,6 +73,9 @@ public:
     QString getDbPath();
     QString getInfoPath();
     QString getScanEngine();
+    QString getRootPath();
+    QString getDataPath();
+    QString getJson();
     bool isSaveBackup();
     bool isSaveLastDirectory();
     bool isRestartNeeded();

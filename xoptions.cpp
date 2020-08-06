@@ -190,6 +190,21 @@ QString XOptions::getScanEngine()
 {
     return getValue(ID_SCANENGINE).toString();
 }
+
+QString XOptions::getRootPath()
+{
+    return getValue(ID_ROOTPATH).toString();
+}
+
+QString XOptions::getDataPath()
+{
+    return getValue(ID_DATAPATH).toString();
+}
+
+QString XOptions::getJson()
+{
+    return getValue(ID_JSON).toString();
+}
 #ifdef QT_GUI_LIB
 void XOptions::adjustStayOnTop(QWidget *pWidget)
 {
