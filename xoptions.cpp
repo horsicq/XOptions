@@ -173,7 +173,6 @@ void XOptions::setLastDirectory(QString sValue)
 {
     QFileInfo fi(sValue);
 
-    // TODO Check
     if(fi.isFile())
     {
         sValue=fi.absolutePath();
