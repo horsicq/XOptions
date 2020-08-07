@@ -76,6 +76,7 @@ void XOptions::load()
                 case ID_ROOTPATH:               varDefault="";              break;
                 case ID_DATAPATH:               varDefault="$data/data";    break;
                 case ID_JSON:                   varDefault="";              break;
+                default:                        varDefault="";
             }
         }
 
