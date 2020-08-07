@@ -68,6 +68,7 @@ public:
     void save();
     QVariant getValue(ID id);
     void setValue(ID id,QVariant vValue);
+    void clearValue(ID id);
     static QString idToString(ID id);
     QString getLastDirectory();
     void setLastDirectory(QString sValue);

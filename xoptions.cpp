@@ -129,6 +129,11 @@ void XOptions::setValue(XOptions::ID id, QVariant vValue)
     mapValues.insert(id,vValue);
 }
 
+void XOptions::clearValue(XOptions::ID id)
+{
+    mapValues.insert(id,0);
+}
+
 QString XOptions::idToString(ID id)
 {
     QString sResult="Unknown";
