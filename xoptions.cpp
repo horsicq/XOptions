@@ -132,7 +132,7 @@ void XOptions::setValue(XOptions::ID id, QVariant vValue)
 
 void XOptions::clearValue(XOptions::ID id)
 {
-    mapValues.insert(id,0);
+    mapValues.insert(id,"");
 }
 
 QString XOptions::idToString(ID id)
