@@ -274,13 +274,13 @@ void XOptions::setComboBox(QComboBox *pComboBox, XOptions::ID id)
 
     if(id==ID_STYLE)
     {
-        QStringList sl=QStyleFactory::keys();
+        QStringList listKeys=QStyleFactory::keys();
 
-        int nCount=sl.count();
+        int nCount=listKeys.count();
 
         for(int i=0;i<nCount;i++)
         {
-            QString sRecord=sl.at(i);
+            QString sRecord=listKeys.at(i);
             pComboBox->addItem(sRecord,sRecord);
         }
     }
