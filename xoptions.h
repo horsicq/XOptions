@@ -34,7 +34,7 @@
 #include <QApplication>
 #include <QStyleFactory>
 #else
-#include <QCoreApplication>
+#include <QCoreApplication> // TODO Check
 #endif
 
 class XOptions : public QObject
