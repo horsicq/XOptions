@@ -112,7 +112,7 @@ private:
     QList<ID> listValueIDs;
     QMap<ID,QVariant> mapValues;
     QMap<ID,QVariant> mapDefaultValues;
-    bool bIsRestartNeeded;
+    bool bIsNeedRestart;
 };
 
 #endif // XOPTIONS_H

@@ -22,7 +22,7 @@
 
 XOptions::XOptions(QObject *pParent) : QObject(pParent)
 {
-    bIsRestartNeeded=false;
+    bIsNeedRestart=false;
 }
 
 void XOptions::setName(QString sName)
@@ -123,7 +123,7 @@ void XOptions::setValue(XOptions::ID id, QVariant vValue)
 
         if(vValue!=vOld)
         {
-            bIsRestartNeeded=true;
+            bIsNeedRestart=true;
         }
     }
 
@@ -377,7 +377,7 @@ bool XOptions::isSaveLastDirectory()
 
 bool XOptions::isRestartNeeded()
 {
-    return bIsRestartNeeded;
+    return bIsNeedRestart;
 }
 
 bool XOptions::isScanAfterOpen()
