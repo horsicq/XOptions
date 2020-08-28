@@ -45,9 +45,9 @@ void XOptions::load()
 {
     QSettings settings(sFilePath,QSettings::IniFormat);
 
-    int nCount=listValueIDs.count();
+    int nNumberOfIDs=listValueIDs.count();
 
-    for(int i=0;i<nCount;i++)
+    for(int i=0;i<nNumberOfIDs;i++)
     {
         ID id=listValueIDs.at(i);
         QString sName=idToString(id);
