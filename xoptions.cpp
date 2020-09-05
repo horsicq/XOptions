@@ -276,9 +276,9 @@ void XOptions::setComboBox(QComboBox *pComboBox, XOptions::ID id)
     {
         QStringList listKeys=QStyleFactory::keys();
 
-        int nCount=listKeys.count();
+        int nNumberOfKeys=listKeys.count();
 
-        for(int i=0;i<nCount;i++)
+        for(int i=0;i<nNumberOfKeys;i++)
         {
             QString sRecord=listKeys.at(i);
             pComboBox->addItem(sRecord,sRecord);
