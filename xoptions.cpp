@@ -290,9 +290,9 @@ void XOptions::setComboBox(QComboBox *pComboBox, XOptions::ID id)
 
         QList<QString> listRecords=getAllFilesFromDirectory(getApplicationLangPath(),"*.qm");
 
-        int nCount=listRecords.count();
+        int nNumberOfRecords=listRecords.count();
 
-        for(int i=0;i<nCount;i++)
+        for(int i=0;i<nNumberOfRecords;i++)
         {
             QFileInfo fi(listRecords.at(i));
 
