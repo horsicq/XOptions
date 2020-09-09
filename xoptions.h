@@ -46,6 +46,9 @@ public:
     {
         ID_STAYONTOP=0,
         ID_SCANAFTEROPEN,
+        ID_RECURSIVESCAN,
+        ID_DEEPSCAN,
+        ID_HERISTICSCAN,
         ID_SAVELASTDIRECTORY,
         ID_LASTDIRECTORY,
         ID_SAVEBACKUP,
@@ -82,6 +85,9 @@ public:
     bool isSaveLastDirectory();
     bool isRestartNeeded();
     bool isScanAfterOpen();
+    bool isRecursiveScan();
+    bool isDeepScan();
+    bool isHeuristicScan();
     static QString getApplicationLangPath();
     static QString getApplicationQssPath();
     static QList<QString> getAllFilesFromDirectory(QString sDirectory,QString sExtension);
