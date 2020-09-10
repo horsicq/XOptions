@@ -274,7 +274,7 @@ void XOptions::setComboBox(QComboBox *pComboBox, XOptions::ID id)
     QSignalBlocker signalBlocker(pComboBox);
 
     pComboBox->clear();
-    pComboBox->addItem("","");
+    pComboBox->addItem(tr("Default"),"");
 
     QString sValue=getValue(id).toString();
 
