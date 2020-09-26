@@ -294,13 +294,13 @@ void XOptions::setComboBox(QComboBox *pComboBox, XOptions::ID id)
     {
         pComboBox->addItem("System","System");
 
-        QList<QString> listRecords=getAllFilesFromDirectory(getApplicationLangPath(),"*.qm");
+        QList<QString> listFileNames=getAllFilesFromDirectory(getApplicationLangPath(),"*.qm");
 
-        int nNumberOfRecords=listRecords.count();
+        int nNumberOfRecords=listFileNames.count();
 
         for(int i=0;i<nNumberOfRecords;i++)
         {
-            QFileInfo fi(listRecords.at(i));
+            QFileInfo fi(listFileNames.at(i));
 
             QString sRecord=fi.baseName();
 
