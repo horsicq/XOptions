@@ -317,13 +317,13 @@ void XOptions::setComboBox(QComboBox *pComboBox, XOptions::ID id)
     }
     else if(id==ID_QSS)
     {
-        QList<QString> listRecords=getAllFilesFromDirectory(getApplicationQssPath(),"*.qss");
+        QList<QString> listFileNames=getAllFilesFromDirectory(getApplicationQssPath(),"*.qss");
 
-        int nNumberOfRecords=listRecords.count();
+        int nNumberOfRecords=listFileNames.count();
 
         for(int i=0;i<nNumberOfRecords;i++)
         {
-            QFileInfo fi(listRecords.at(i));
+            QFileInfo fi(listFileNames.at(i));
 
             QString sRecord=fi.baseName();
 
