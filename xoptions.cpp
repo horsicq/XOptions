@@ -292,7 +292,7 @@ void XOptions::setComboBox(QComboBox *pComboBox, XOptions::ID id)
     }
     else if(id==ID_LANG)
     {
-        pComboBox->addItem("English","English");
+        pComboBox->addItem("English","");
         pComboBox->addItem("System","System");
 
         QList<QString> listFileNames=getAllFilesFromDirectory(getApplicationLangPath(),"*.qm");
