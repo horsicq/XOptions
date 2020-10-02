@@ -274,12 +274,12 @@ void XOptions::setComboBox(QComboBox *pComboBox, XOptions::ID id)
     QSignalBlocker signalBlocker(pComboBox);
 
     pComboBox->clear();
-    pComboBox->addItem("Default","");
 
     QString sValue=getValue(id).toString();
 
     if(id==ID_STYLE)
     {
+        pComboBox->addItem("Default","");
         QStringList listKeys=QStyleFactory::keys();
 
         int nNumberOfKeys=listKeys.count();
@@ -292,6 +292,7 @@ void XOptions::setComboBox(QComboBox *pComboBox, XOptions::ID id)
     }
     else if(id==ID_LANG)
     {
+        pComboBox->addItem("English","English");
         pComboBox->addItem("System","System");
 
         QList<QString> listFileNames=getAllFilesFromDirectory(getApplicationLangPath(),"*.qm");
@@ -317,6 +318,8 @@ void XOptions::setComboBox(QComboBox *pComboBox, XOptions::ID id)
     }
     else if(id==ID_QSS)
     {
+        pComboBox->addItem("Default","");
+
         QList<QString> listFileNames=getAllFilesFromDirectory(getApplicationQssPath(),"*.qss");
 
         int nNumberOfRecords=listFileNames.count();
