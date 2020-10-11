@@ -110,7 +110,7 @@ public:
 #endif
 
 signals:
-    void errorMessage(QString sText);
+    void errorMessage(QString sErrorMessage);
 
 private:
     QString sName;
