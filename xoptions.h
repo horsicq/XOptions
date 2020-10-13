@@ -113,12 +113,12 @@ signals:
     void errorMessage(QString sErrorMessage);
 
 private:
-    QString sName;
-    QString sFilePath;
-    QList<ID> listValueIDs;
-    QMap<ID,QVariant> mapValues;
-    QMap<ID,QVariant> mapDefaultValues;
-    bool bIsNeedRestart;
+    QString g_sName;
+    QString g_sFilePath;
+    QList<ID> g_listValueIDs;
+    QMap<ID,QVariant> g_mapValues;
+    QMap<ID,QVariant> g_mapDefaultValues;
+    bool g_bIsNeedRestart;
 };
 
 #endif // XOPTIONS_H

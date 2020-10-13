@@ -22,41 +22,41 @@
 
 XOptions::XOptions(QObject *pParent) : QObject(pParent)
 {
-    bIsNeedRestart=false;
+    g_bIsNeedRestart=false;
 }
 
 void XOptions::setName(QString sName)
 {
-    this->sName=sName;
-    this->sFilePath=getApplicationDataPath()+QDir::separator()+QString("%1").arg(sName);
+    this->g_sName=sName;
+    this->g_sFilePath=getApplicationDataPath()+QDir::separator()+QString("%1").arg(sName);
 }
 
 void XOptions::setValueIDs(QList<ID> listVariantIDs)
 {
-    this->listValueIDs=listVariantIDs;
+    this->g_listValueIDs=listVariantIDs;
 }
 
 void XOptions::setDefaultValues(QMap<XOptions::ID, QVariant> mapDefaultValues)
 {
-    this->mapDefaultValues=mapDefaultValues;
+    this->g_mapDefaultValues=mapDefaultValues;
 }
 
 void XOptions::load()
 {
-    QSettings settings(sFilePath,QSettings::IniFormat);
+    QSettings settings(g_sFilePath,QSettings::IniFormat);
 
-    int nNumberOfIDs=listValueIDs.count();
+    int nNumberOfIDs=g_listValueIDs.count();
 
     for(int i=0;i<nNumberOfIDs;i++)
     {
-        ID id=listValueIDs.at(i);
+        ID id=g_listValueIDs.at(i);
         QString sName=idToString(id);
 
         QVariant varDefault;
 
-        if(mapDefaultValues.contains(id))
+        if(g_mapDefaultValues.contains(id))
         {
-            varDefault=mapDefaultValues.value(id);
+            varDefault=g_mapDefaultValues.value(id);
         }
         else
         {
@@ -83,37 +83,37 @@ void XOptions::load()
             }
         }
 
-        mapValues.insert(id,settings.value(sName,varDefault));
+        g_mapValues.insert(id,settings.value(sName,varDefault));
     }
 
-    QString sLastDirectory=mapValues.value(ID_LASTDIRECTORY).toString();
+    QString sLastDirectory=g_mapValues.value(ID_LASTDIRECTORY).toString();
 
     if(sLastDirectory!="")
     {
         if(!QDir(sLastDirectory).exists())
         {
-            mapValues.insert(ID_LASTDIRECTORY,"");
+            g_mapValues.insert(ID_LASTDIRECTORY,"");
         }
     }
 }
 
 void XOptions::save()
 {
-    QSettings settings(sFilePath,QSettings::IniFormat);
+    QSettings settings(g_sFilePath,QSettings::IniFormat);
 
-    int nNumberOfIDs=listValueIDs.count();
+    int nNumberOfIDs=g_listValueIDs.count();
 
     for(int i=0;i<nNumberOfIDs;i++)
     {
-        ID id=listValueIDs.at(i);
+        ID id=g_listValueIDs.at(i);
         QString sName=idToString(id);
-        settings.setValue(sName,mapValues.value(id));
+        settings.setValue(sName,g_mapValues.value(id));
     }
 }
 
 QVariant XOptions::getValue(XOptions::ID id)
 {
-    return mapValues.value(id);
+    return g_mapValues.value(id);
 }
 
 void XOptions::setValue(XOptions::ID id, QVariant vValue)
@@ -122,20 +122,20 @@ void XOptions::setValue(XOptions::ID id, QVariant vValue)
         (id==ID_LANG)||
         (id==ID_QSS))
     {
-        QVariant vOld=mapValues.value(id);
+        QVariant vOld=g_mapValues.value(id);
 
         if(vValue!=vOld)
         {
-            bIsNeedRestart=true;
+            g_bIsNeedRestart=true;
         }
     }
 
-    mapValues.insert(id,vValue);
+    g_mapValues.insert(id,vValue);
 }
 
 void XOptions::clearValue(XOptions::ID id)
 {
-    mapValues.insert(id,"");
+    g_mapValues.insert(id,"");
 }
 
 QString XOptions::idToString(ID id)
@@ -386,7 +386,7 @@ bool XOptions::isSaveLastDirectory()
 
 bool XOptions::isRestartNeeded()
 {
-    return bIsNeedRestart;
+    return g_bIsNeedRestart;
 }
 
 bool XOptions::isScanAfterOpen()
