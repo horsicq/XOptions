@@ -335,6 +335,7 @@ void XOptions::setComboBox(QComboBox *pComboBox, XOptions::ID id)
     }
     else if(id==ID_SCANENGINE)
     {
+        pComboBox->addItem(QString("Auto"),"auto");
         pComboBox->addItem(QString("Detect It Easy(DiE)"),"die");
         pComboBox->addItem(QString("Nauz File Detector(NFD)"),"nfd");
     }
