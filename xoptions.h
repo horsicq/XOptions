@@ -61,6 +61,7 @@ public:
         ID_ROOTPATH,
         ID_DATAPATH,
         ID_JSON
+        // TODO Single application
     };
 
     explicit XOptions(QObject *pParent=nullptr);
