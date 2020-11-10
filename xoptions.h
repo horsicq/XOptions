@@ -60,8 +60,8 @@ public:
         ID_SCANENGINE,
         ID_ROOTPATH,
         ID_DATAPATH,
-        ID_JSON
-        // TODO Single application
+        ID_JSON,
+        ID_SINGLEAPPLICATION
     };
 
     explicit XOptions(QObject *pParent=nullptr);
@@ -89,6 +89,7 @@ public:
     bool isRecursiveScan();
     bool isDeepScan();
     bool isHeuristicScan();
+    bool isSingleApplication();
     static QString getApplicationLangPath();
     static QString getApplicationQssPath();
     static QList<QString> getAllFilesFromDirectory(QString sDirectory,QString sExtension);

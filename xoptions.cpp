@@ -66,7 +66,7 @@ void XOptions::load()
                 case ID_SCANAFTEROPEN:          varDefault=true;            break;
                 case ID_RECURSIVESCAN:          varDefault=true;            break;
                 case ID_DEEPSCAN:               varDefault=true;            break;
-                case ID_HEURISTICSCAN:           varDefault=true;            break;
+                case ID_HEURISTICSCAN:          varDefault=true;            break;
                 case ID_SAVELASTDIRECTORY:      varDefault=true;            break;
                 case ID_LASTDIRECTORY:          varDefault="";              break;
                 case ID_SAVEBACKUP:             varDefault=true;            break;
@@ -79,6 +79,7 @@ void XOptions::load()
                 case ID_ROOTPATH:               varDefault="";              break;
                 case ID_DATAPATH:               varDefault="$data/data";    break;
                 case ID_JSON:                   varDefault="";              break;
+                case ID_SINGLEAPPLICATION:      varDefault=false;           break;
                 default:                        varDefault="";
             }
         }
@@ -161,6 +162,7 @@ QString XOptions::idToString(ID id)
         case ID_ROOTPATH:                   sResult=QString("RootPath");                    break;
         case ID_DATAPATH:                   sResult=QString("DataPath");                    break;
         case ID_JSON:                       sResult=QString("Json");                        break;
+        case ID_SINGLEAPPLICATION:          sResult=QString("SingleApplication");           break;
     }
 
     return sResult;
@@ -408,6 +410,11 @@ bool XOptions::isDeepScan()
 bool XOptions::isHeuristicScan()
 {
     return getValue(XOptions::ID_HEURISTICSCAN).toBool();
+}
+
+bool XOptions::isSingleApplication()
+{
+    return getValue(XOptions::ID_SINGLEAPPLICATION).toBool();
 }
 #ifdef QT_GUI_LIB
 void XOptions::adjustApplicationView(QString sOptionFileName, QString sTranslationName)
