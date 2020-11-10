@@ -66,7 +66,7 @@ void XOptions::load()
                 case ID_SCANAFTEROPEN:          varDefault=true;            break;
                 case ID_RECURSIVESCAN:          varDefault=true;            break;
                 case ID_DEEPSCAN:               varDefault=true;            break;
-                case ID_HERISTICSCAN:           varDefault=true;            break;
+                case ID_HEURISTICSCAN:           varDefault=true;            break;
                 case ID_SAVELASTDIRECTORY:      varDefault=true;            break;
                 case ID_LASTDIRECTORY:          varDefault="";              break;
                 case ID_SAVEBACKUP:             varDefault=true;            break;
@@ -148,7 +148,7 @@ QString XOptions::idToString(ID id)
         case ID_SCANAFTEROPEN:              sResult=QString("ScanAfterOpen");               break;
         case ID_RECURSIVESCAN:              sResult=QString("RecursiveScan");               break;
         case ID_DEEPSCAN:                   sResult=QString("DeepScan");                    break;
-        case ID_HERISTICSCAN:               sResult=QString("HeuristicScan");               break;
+        case ID_HEURISTICSCAN:              sResult=QString("HeuristicScan");               break;
         case ID_SAVELASTDIRECTORY:          sResult=QString("SaveLastDirectory");           break;
         case ID_LASTDIRECTORY:              sResult=QString("LastDirectory");               break;
         case ID_SAVEBACKUP:                 sResult=QString("SaveBackup");                  break;
@@ -407,7 +407,7 @@ bool XOptions::isDeepScan()
 
 bool XOptions::isHeuristicScan()
 {
-    return getValue(XOptions::ID_HERISTICSCAN).toBool();
+    return getValue(XOptions::ID_HEURISTICSCAN).toBool();
 }
 #ifdef QT_GUI_LIB
 void XOptions::adjustApplicationView(QString sOptionFileName, QString sTranslationName)
