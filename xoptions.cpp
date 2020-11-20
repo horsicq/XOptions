@@ -80,6 +80,8 @@ void XOptions::load()
                 case ID_DATAPATH:               varDefault="$data/data";    break;
                 case ID_JSON:                   varDefault="";              break;
                 case ID_SINGLEAPPLICATION:      varDefault=false;           break;
+                case ID_AUTHUSER:               varDefault="";              break;
+                case ID_AUTHTOKEN:              varDefault="";              break;
                 default:                        varDefault="";
             }
         }
@@ -163,6 +165,8 @@ QString XOptions::idToString(ID id)
         case ID_DATAPATH:                   sResult=QString("DataPath");                    break;
         case ID_JSON:                       sResult=QString("Json");                        break;
         case ID_SINGLEAPPLICATION:          sResult=QString("SingleApplication");           break;
+        case ID_AUTHUSER:                   sResult=QString("AuthUser");                    break;
+        case ID_AUTHTOKEN:                  sResult=QString("AuthToken");                   break;
     }
 
     return sResult;

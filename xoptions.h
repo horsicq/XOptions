@@ -61,7 +61,9 @@ public:
         ID_ROOTPATH,
         ID_DATAPATH,
         ID_JSON,
-        ID_SINGLEAPPLICATION
+        ID_SINGLEAPPLICATION,
+        ID_AUTHUSER,
+        ID_AUTHTOKEN
     };
 
     explicit XOptions(QObject *pParent=nullptr);
