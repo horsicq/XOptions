@@ -250,7 +250,6 @@ void XOptions::adjustStayOnTop(QWidget *pWidget)
     }
 
     pWidget->setWindowFlags(wf);
-
     pWidget->show();
 }
 #endif
@@ -432,6 +431,7 @@ void XOptions::adjustApplicationView(QString sOptionFileName, QString sTranslati
     listIDs.append(XOptions::ID_STYLE);
     listIDs.append(XOptions::ID_LANG);
     listIDs.append(XOptions::ID_QSS);
+    // mb TODO SingleApplication
 
     xOptions.setValueIDs(listIDs);
     xOptions.load();
