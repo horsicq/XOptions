@@ -542,8 +542,8 @@ bool XOptions::clearContext(QString sApplicationName, QString sType)
 {
     QSettings settings(QString("HKEY_CLASSES_ROOT\\%1\\shell\\%2").arg(sType).arg(sApplicationName),QSettings::NativeFormat);
     settings.clear();
-    // TODO Check if not send message
 
+    // TODO Check if not send message
     return !(checkContext(sApplicationName,sType));
 }
 #endif
