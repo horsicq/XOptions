@@ -21,7 +21,6 @@
 #ifndef XOPTIONS_H
 #define XOPTIONS_H
 
-#include <QObject>
 #include <QMap>
 #include <QDir>
 #include <QSettings>
