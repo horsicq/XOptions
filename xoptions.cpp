@@ -420,23 +420,9 @@ bool XOptions::isSingleApplication()
     return getValue(XOptions::ID_SINGLEAPPLICATION).toBool();
 }
 #ifdef QT_GUI_LIB
-void XOptions::adjustApplicationView(QString sOptionFileName, QString sTranslationName)
+void XOptions::adjustApplicationView(QString sTranslationName, XOptions *pOptions)
 {
-    XOptions xOptions;
-
-    xOptions.setName(sOptionFileName);
-
-    QList<XOptions::ID> listIDs;
-
-    listIDs.append(XOptions::ID_STYLE);
-    listIDs.append(XOptions::ID_LANG);
-    listIDs.append(XOptions::ID_QSS);
-    // mb TODO SingleApplication
-
-    xOptions.setValueIDs(listIDs);
-    xOptions.load();
-
-    QString sStyle=xOptions.getValue(XOptions::ID_STYLE).toString();
+    QString sStyle=pOptions->getValue(XOptions::ID_STYLE).toString();
 
     if(sStyle!="")
     {
@@ -444,7 +430,7 @@ void XOptions::adjustApplicationView(QString sOptionFileName, QString sTranslati
     }
 
     QTranslator *pTranslator=new QTranslator; // Important
-    QString sLang=xOptions.getValue(XOptions::ID_LANG).toString();
+    QString sLang=pOptions->getValue(XOptions::ID_LANG).toString();
     QString sLangsPath=getApplicationLangPath();
 
     bool bLoad=false;
@@ -467,7 +453,7 @@ void XOptions::adjustApplicationView(QString sOptionFileName, QString sTranslati
         qApp->installTranslator(pTranslator);
     }
 
-    QString sQss=xOptions.getValue(XOptions::ID_QSS).toString();
+    QString sQss=pOptions->getValue(XOptions::ID_QSS).toString();
 
     if(sQss!="")
     {
@@ -486,6 +472,25 @@ void XOptions::adjustApplicationView(QString sOptionFileName, QString sTranslati
             }
         }
     }
+}
+#endif
+#ifdef QT_GUI_LIB
+void XOptions::adjustApplicationView(QString sOptionsFileName, QString sTranslationName)
+{
+    XOptions xOptions;
+
+    xOptions.setName(sOptionsFileName);
+
+    QList<XOptions::ID> listIDs;
+
+    listIDs.append(XOptions::ID_STYLE);
+    listIDs.append(XOptions::ID_LANG);
+    listIDs.append(XOptions::ID_QSS);
+
+    xOptions.setValueIDs(listIDs);
+    xOptions.load();
+
+    adjustApplicationView(sTranslationName,&xOptions);
 }
 #endif
 QString XOptions::getApplicationLangPath()

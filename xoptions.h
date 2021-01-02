@@ -104,7 +104,8 @@ public:
     void getLineEdit(QLineEdit *pLineEdit,ID id);
     void adjustStayOnTop(QWidget *pWidget);
     void static setMonoFont(QWidget *pWidget);
-    static void adjustApplicationView(QString sOptionFileName,QString sTranslationName);
+    static void adjustApplicationView(QString sTranslationName,XOptions *pOptions);
+    static void adjustApplicationView(QString sOptionsFileName, QString sTranslationName);
 #endif
 #ifdef WIN32
     bool registerContext(QString sApplicationName,QString sType,QString sApplicationFilePath);
