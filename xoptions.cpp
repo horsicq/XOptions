@@ -179,7 +179,7 @@ QString XOptions::getLastDirectory()
     bool bSaveLastDirectory=getValue(ID_SAVELASTDIRECTORY).toBool();
     QString sLastDirectory=getValue(ID_LASTDIRECTORY).toString();
 
-    if(bSaveLastDirectory&&QDir().exists(sLastDirectory))
+    if(bSaveLastDirectory&&(sLastDirectory!="")&&QDir().exists(sLastDirectory))
     {
         sResult=sLastDirectory;
     }
