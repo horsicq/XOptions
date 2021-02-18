@@ -61,7 +61,7 @@ public:
         ID_DATAPATH,
         ID_JSON,
         ID_SINGLEAPPLICATION,
-        ID_SIGNATURESFILE,
+        ID_SIGNATURESFILENAME,
         ID_AUTHUSER,
         ID_AUTHTOKEN
     };
@@ -92,7 +92,7 @@ public:
     bool isDeepScan();
     bool isHeuristicScan();
     bool isSingleApplication();
-    QString getSignaturesFile();
+    QString getSignaturesFileName();
     static QString getApplicationLangPath();
     static QString getApplicationQssPath();
     static QList<QString> getAllFilesFromDirectory(QString sDirectory,QString sExtension);
