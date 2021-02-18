@@ -61,6 +61,7 @@ public:
         ID_DATAPATH,
         ID_JSON,
         ID_SINGLEAPPLICATION,
+        ID_SIGNATURESFILE,
         ID_AUTHUSER,
         ID_AUTHTOKEN
     };
@@ -77,7 +78,7 @@ public:
     static QString idToString(ID id);
     QString getLastDirectory();
     void setLastDirectory(QString sValue);
-    QString getDbPath();
+    QString getDatabasePath();
     QString getInfoPath();
     QString getScanEngine();
     QString getRootPath();
@@ -91,6 +92,7 @@ public:
     bool isDeepScan();
     bool isHeuristicScan();
     bool isSingleApplication();
+    QString getSignaturesFile();
     static QString getApplicationLangPath();
     static QString getApplicationQssPath();
     static QList<QString> getAllFilesFromDirectory(QString sDirectory,QString sExtension);

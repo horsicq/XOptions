@@ -62,26 +62,27 @@ void XOptions::load()
         {
             switch(id)
             {
-                case ID_STAYONTOP:              varDefault=false;           break;
-                case ID_SCANAFTEROPEN:          varDefault=true;            break;
-                case ID_RECURSIVESCAN:          varDefault=true;            break;
-                case ID_DEEPSCAN:               varDefault=true;            break;
-                case ID_HEURISTICSCAN:          varDefault=true;            break;
-                case ID_SAVELASTDIRECTORY:      varDefault=true;            break;
-                case ID_LASTDIRECTORY:          varDefault="";              break;
-                case ID_SAVEBACKUP:             varDefault=true;            break;
-                case ID_STYLE:                  varDefault="Fusion";        break;
-                case ID_LANG:                   varDefault="System";        break;
-                case ID_QSS:                    varDefault="veles";         break;
-                case ID_DATABASEPATH:           varDefault="$data/db";      break;
-                case ID_INFOPATH:               varDefault="$data/info";    break;
-                case ID_SCANENGINE:             varDefault="die";           break;
-                case ID_ROOTPATH:               varDefault="";              break;
-                case ID_DATAPATH:               varDefault="$data/data";    break;
-                case ID_JSON:                   varDefault="";              break;
-                case ID_SINGLEAPPLICATION:      varDefault=false;           break;
-                case ID_AUTHUSER:               varDefault="";              break;
-                case ID_AUTHTOKEN:              varDefault="";              break;
+                case ID_STAYONTOP:              varDefault=false;                   break;
+                case ID_SCANAFTEROPEN:          varDefault=true;                    break;
+                case ID_RECURSIVESCAN:          varDefault=true;                    break;
+                case ID_DEEPSCAN:               varDefault=true;                    break;
+                case ID_HEURISTICSCAN:          varDefault=true;                    break;
+                case ID_SAVELASTDIRECTORY:      varDefault=true;                    break;
+                case ID_LASTDIRECTORY:          varDefault="";                      break;
+                case ID_SAVEBACKUP:             varDefault=true;                    break;
+                case ID_STYLE:                  varDefault="Fusion";                break;
+                case ID_LANG:                   varDefault="System";                break;
+                case ID_QSS:                    varDefault="veles";                 break;
+                case ID_DATABASEPATH:           varDefault="$data/db";              break;
+                case ID_INFOPATH:               varDefault="$data/info";            break;
+                case ID_SCANENGINE:             varDefault="die";                   break;
+                case ID_ROOTPATH:               varDefault="";                      break;
+                case ID_DATAPATH:               varDefault="$data/data";            break;
+                case ID_JSON:                   varDefault="";                      break;
+                case ID_SINGLEAPPLICATION:      varDefault=false;                   break;
+                case ID_SIGNATURESFILE:         varDefault="$data/crypto.db";       break;
+                case ID_AUTHUSER:               varDefault="";                      break;
+                case ID_AUTHTOKEN:              varDefault="";                      break;
                 default:                        varDefault="";
             }
         }
@@ -165,6 +166,7 @@ QString XOptions::idToString(ID id)
         case ID_DATAPATH:                   sResult=QString("DataPath");                    break;
         case ID_JSON:                       sResult=QString("Json");                        break;
         case ID_SINGLEAPPLICATION:          sResult=QString("SingleApplication");           break;
+        case ID_SIGNATURESFILE:             sResult=QString("SignaturesFile");              break;
         case ID_AUTHUSER:                   sResult=QString("AuthUser");                    break;
         case ID_AUTHTOKEN:                  sResult=QString("AuthToken");                   break;
     }
@@ -206,7 +208,7 @@ void XOptions::setLastDirectory(QString sValue)
     }
 }
 
-QString XOptions::getDbPath()
+QString XOptions::getDatabasePath()
 {
     return getValue(ID_DATABASEPATH).toString();
 }
@@ -418,6 +420,11 @@ bool XOptions::isHeuristicScan()
 bool XOptions::isSingleApplication()
 {
     return getValue(XOptions::ID_SINGLEAPPLICATION).toBool();
+}
+
+QString XOptions::getSignaturesFile()
+{
+    return getValue(XOptions::ID_SIGNATURESFILE).toString();
 }
 #ifdef QT_GUI_LIB
 void XOptions::adjustApplicationView(QString sTranslationName, XOptions *pOptions)
