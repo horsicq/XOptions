@@ -73,7 +73,7 @@ void XOptions::load()
                 case ID_STYLE:                  varDefault="Fusion";        break;
                 case ID_LANG:                   varDefault="System";        break;
                 case ID_QSS:                    varDefault="veles";         break;
-                case ID_DBPATH:                 varDefault="$data/db";      break;
+                case ID_DATABASEPATH:           varDefault="$data/db";      break;
                 case ID_INFOPATH:               varDefault="$data/info";    break;
                 case ID_SCANENGINE:             varDefault="die";           break;
                 case ID_ROOTPATH:               varDefault="";              break;
@@ -158,7 +158,7 @@ QString XOptions::idToString(ID id)
         case ID_STYLE:                      sResult=QString("Style");                       break;
         case ID_LANG:                       sResult=QString("Lang");                        break;
         case ID_QSS:                        sResult=QString("Qss");                         break;
-        case ID_DBPATH:                     sResult=QString("DbPath");                      break;
+        case ID_DATABASEPATH:               sResult=QString("DatabasePath");                break;
         case ID_INFOPATH:                   sResult=QString("InfoPath");                    break;
         case ID_SCANENGINE:                 sResult=QString("ScanEngine");                  break;
         case ID_ROOTPATH:                   sResult=QString("RootPath");                    break;
@@ -208,7 +208,7 @@ void XOptions::setLastDirectory(QString sValue)
 
 QString XOptions::getDbPath()
 {
-    return getValue(ID_DBPATH).toString();
+    return getValue(ID_DATABASEPATH).toString();
 }
 
 QString XOptions::getInfoPath()

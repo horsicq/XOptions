@@ -54,7 +54,7 @@ public:
         ID_STYLE,
         ID_QSS,
         ID_LANG,
-        ID_DBPATH,
+        ID_DATABASEPATH,
         ID_INFOPATH,
         ID_SCANENGINE,
         ID_ROOTPATH,
