@@ -80,7 +80,7 @@ void XOptions::load()
                 case ID_DATAPATH:               varDefault="$data/data";            break;
                 case ID_JSON:                   varDefault="";                      break;
                 case ID_SINGLEAPPLICATION:      varDefault=false;                   break;
-                case ID_SIGNATURESFILENAME:     varDefault="$data/crypto.db";       break;
+                case ID_SIGNATURESFILENAME:     varDefault="$data/crypto.db";       break; // TODO Check
                 case ID_AUTHUSER:               varDefault="";                      break;
                 case ID_AUTHTOKEN:              varDefault="";                      break;
                 default:                        varDefault="";
