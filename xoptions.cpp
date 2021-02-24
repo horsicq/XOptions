@@ -80,7 +80,7 @@ void XOptions::load()
                 case ID_DATAPATH:               varDefault="$data/data";            break;
                 case ID_JSON:                   varDefault="";                      break;
                 case ID_SINGLEAPPLICATION:      varDefault=false;                   break;
-                case ID_SIGNATURESFILENAME:     varDefault="$data/crypto.db";       break; // TODO Check
+                case ID_SEARCHSIGNATURESPATH:   varDefault="$data/signatures";      break;
                 case ID_AUTHUSER:               varDefault="";                      break;
                 case ID_AUTHTOKEN:              varDefault="";                      break;
                 default:                        varDefault="";
@@ -166,7 +166,7 @@ QString XOptions::idToString(ID id)
         case ID_DATAPATH:                   sResult=QString("DataPath");                    break;
         case ID_JSON:                       sResult=QString("Json");                        break;
         case ID_SINGLEAPPLICATION:          sResult=QString("SingleApplication");           break;
-        case ID_SIGNATURESFILENAME:         sResult=QString("SignaturesFileName");          break;
+        case ID_SEARCHSIGNATURESPATH:       sResult=QString("SearchSignaturesPath");        break;
         case ID_AUTHUSER:                   sResult=QString("AuthUser");                    break;
         case ID_AUTHTOKEN:                  sResult=QString("AuthToken");                   break;
     }
@@ -422,9 +422,9 @@ bool XOptions::isSingleApplication()
     return getValue(XOptions::ID_SINGLEAPPLICATION).toBool();
 }
 
-QString XOptions::getSignaturesFileName()
+QString XOptions::getSearchSignaturesPath()
 {
-    return getValue(XOptions::ID_SIGNATURESFILENAME).toString();
+    return getValue(XOptions::ID_SEARCHSIGNATURESPATH).toString();
 }
 #ifdef QT_GUI_LIB
 void XOptions::adjustApplicationView(QString sTranslationName, XOptions *pOptions)
