@@ -33,6 +33,29 @@ void XOptions::setName(QString sName)
 
 void XOptions::setValueIDs(QList<ID> listVariantIDs)
 {
+    int nNumberOfIds=listVariantIDs.count();
+
+    bool bSaveLastDirectory=false;
+    bool bLastDirectory=false;
+
+    for(int i=0;i<nNumberOfIds;i++)
+    {
+        if(listVariantIDs.at(i)==ID_SAVELASTDIRECTORY)
+        {
+            bSaveLastDirectory=true;
+        }
+
+        if(listVariantIDs.at(i)==ID_LASTDIRECTORY)
+        {
+            bLastDirectory=true;
+        }
+    }
+
+    if(bSaveLastDirectory&&(!bLastDirectory))
+    {
+        listVariantIDs.append(ID_LASTDIRECTORY);
+    }
+
     this->g_listValueIDs=listVariantIDs;
 }
 
