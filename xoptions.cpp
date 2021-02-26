@@ -147,7 +147,8 @@ void XOptions::setValue(XOptions::ID id, QVariant vValue)
 {
     if( (id==ID_STYLE)||
         (id==ID_LANG)||
-        (id==ID_QSS))
+        (id==ID_QSS)||
+        (id==ID_SEARCHSIGNATURESPATH)) // TODO remove
     {
         QVariant vOld=g_mapValues.value(id);
 
