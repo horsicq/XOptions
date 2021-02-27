@@ -105,7 +105,7 @@ public:
     void setLineEdit(QLineEdit *pLineEdit,ID id);
     void getLineEdit(QLineEdit *pLineEdit,ID id);
     void adjustStayOnTop(QWidget *pWidget);
-    void static setMonoFont(QWidget *pWidget);
+    void static setMonoFont(QWidget *pWidget); // TODO mb more options, fontSize?
     static void adjustApplicationView(QString sTranslationName,XOptions *pOptions);
     static void adjustApplicationView(QString sOptionsFileName,QString sTranslationName);
 #endif
