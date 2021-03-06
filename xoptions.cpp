@@ -280,14 +280,14 @@ void XOptions::adjustStayOnTop(QWidget *pWidget)
 }
 #endif
 #ifdef QT_GUI_LIB
-void XOptions::setMonoFont(QWidget *pWidget,qint64 nSize)
+void XOptions::setMonoFont(QWidget *pWidget,qint32 nSize)
 {
     QFont font=pWidget->font();
     font.setFamily("Courier"); // TODO OSX and Linux
 
     if(nSize!=-1)
     {
-        // TODO set font size
+        font.setPointSize(nSize);
     }
 
     pWidget->setFont(font);
