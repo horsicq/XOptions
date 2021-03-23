@@ -285,6 +285,16 @@ void XOptions::setMonoFont(QWidget *pWidget,qint32 nSize)
     QFont font=pWidget->font();
     font.setFamily("Courier"); // TODO OSX and Linux
 
+#ifdef Q_OS_WIN
+    font.setFamily("Courier");
+#endif
+#ifdef Q_OS_LINUX
+    font.setFamily("Monospace");
+#endif
+#ifdef Q_OS_OSX
+    font.setFamily("Menlo");
+#endif
+
     if(nSize!=-1)
     {
         font.setPointSize(nSize);
