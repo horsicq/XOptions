@@ -23,12 +23,9 @@
 XOptions::XOptions(QObject *pParent) : QObject(pParent)
 {
     g_bIsNeedRestart=false;
-}
+    g_bIsNative=isReadonly();
 
-void XOptions::setName(QString sName)
-{
-    this->g_sName=sName;
-    this->g_sFilePath=getApplicationDataPath()+QDir::separator()+QString("%1").arg(sName);
+    g_sName=QString("%1.ini").arg(qApp->applicationName());
 }
 
 void XOptions::setValueIDs(QList<ID> listVariantIDs)
@@ -64,9 +61,33 @@ void XOptions::setDefaultValues(QMap<XOptions::ID, QVariant> mapDefaultValues)
     this->g_mapDefaultValues=mapDefaultValues;
 }
 
+void XOptions::setNative(bool bValue)
+{
+    g_bIsNative=bValue;
+}
+
+bool XOptions::isNative()
+{
+    return g_bIsNative;
+}
+
+void XOptions::setName(QString sValue)
+{
+    g_sName=sValue;
+}
+
 void XOptions::load()
 {
-    QSettings settings(g_sFilePath,QSettings::IniFormat);
+    QSettings *pSettings=nullptr;
+
+    if(g_bIsNative)
+    {
+        pSettings=new QSettings;
+    }
+    else
+    {
+        pSettings=new QSettings(getApplicationDataPath()+QDir::separator()+QString("%1").arg(g_sName),QSettings::IniFormat);
+    }
 
     int nNumberOfIDs=g_listValueIDs.count();
 
@@ -110,7 +131,7 @@ void XOptions::load()
             }
         }
 
-        g_mapValues.insert(id,settings.value(sName,varDefault));
+        g_mapValues.insert(id,pSettings->value(sName,varDefault));
     }
 
     QString sLastDirectory=g_mapValues.value(ID_LASTDIRECTORY).toString();
@@ -122,11 +143,22 @@ void XOptions::load()
             g_mapValues.insert(ID_LASTDIRECTORY,"");
         }
     }
+
+    delete pSettings;
 }
 
 void XOptions::save()
 {
-    QSettings settings(g_sFilePath,QSettings::IniFormat);
+    QSettings *pSettings=nullptr;
+
+    if(g_bIsNative)
+    {
+        pSettings=new QSettings;
+    }
+    else
+    {
+        pSettings=new QSettings(getApplicationDataPath()+QDir::separator()+QString("%1").arg(g_sName),QSettings::IniFormat);
+    }
 
     int nNumberOfIDs=g_listValueIDs.count();
 
@@ -134,8 +166,10 @@ void XOptions::save()
     {
         ID id=g_listValueIDs.at(i);
         QString sName=idToString(id);
-        settings.setValue(sName,g_mapValues.value(id));
+        pSettings->setValue(sName,g_mapValues.value(id));
     }
+
+    delete pSettings;
 }
 
 QVariant XOptions::getValue(XOptions::ID id)
@@ -478,7 +512,7 @@ void XOptions::adjustApplicationView(QString sTranslationName, XOptions *pOption
 
     QTranslator *pTranslator=new QTranslator; // Important
     QString sLang=pOptions->getValue(XOptions::ID_LANG).toString();
-    QString sLangsPath=getApplicationLangPath();
+    QString sLangsPath=pOptions->getApplicationLangPath();
 
     bool bLoad=false;
 
@@ -504,7 +538,7 @@ void XOptions::adjustApplicationView(QString sTranslationName, XOptions *pOption
 
     if(sQss!="")
     {
-        QString sQssFileName=getApplicationQssPath()+QDir::separator()+QString("%1.qss").arg(sQss);
+        QString sQssFileName=pOptions->getApplicationQssPath()+QDir::separator()+QString("%1.qss").arg(sQss);
 
         if(QFile::exists(sQssFileName))
         {
@@ -522,11 +556,11 @@ void XOptions::adjustApplicationView(QString sTranslationName, XOptions *pOption
 }
 #endif
 #ifdef QT_GUI_LIB
-void XOptions::adjustApplicationView(QString sOptionsFileName, QString sTranslationName)
+void XOptions::adjustApplicationView(QString sApplicationFileName,QString sTranslationName)
 {
     XOptions xOptions;
 
-    xOptions.setName(sOptionsFileName);
+    xOptions.setName(sApplicationFileName);
 
     QList<XOptions::ID> listIDs;
 
@@ -537,7 +571,7 @@ void XOptions::adjustApplicationView(QString sOptionsFileName, QString sTranslat
     xOptions.setValueIDs(listIDs);
     xOptions.load();
 
-    adjustApplicationView(sTranslationName,&xOptions);
+    xOptions.adjustApplicationView(sTranslationName,&xOptions);
 }
 #endif
 QString XOptions::getApplicationLangPath()
@@ -565,14 +599,50 @@ QList<QString> XOptions::getAllFilesFromDirectory(QString sDirectory, QString sE
     return directory.entryList(QStringList()<<sExtension,QDir::Files);
 }
 
+bool XOptions::isReadonly()
+{
+    bool bResult=false;
+#ifdef Q_OS_MAC
+    bResult=true;
+#elif Q_OS_LINUX
+    QString sApplicationDirPath=qApp->applicationDirPath();
+
+    if( (sApplicationDirPath=="/bin")||
+        (sApplicationDirPath=="/usr/bin")||
+        (sApplicationDirPath=="/usr/local/bin"))
+    {
+        bResult=true;
+    }
+    else
+    {
+        bResult=false;
+    }
+#else
+    bResult=false;
+#endif
+
+    return bResult;
+}
+
 QString XOptions::getApplicationDataPath()
 {
     QString sResult;
+
 #ifdef Q_OS_MAC
     sResult=qApp->applicationDirPath()+"/../Resources";
+#elif Q_OS_LINUX
+    if(g_bIsNative)
+    {
+        sResult=QString("/usr/lib/%1").arg(qApp->applicationName());
+    }
+    else
+    {
+        sResult=qApp->applicationDirPath();
+    }
 #else
     sResult=qApp->applicationDirPath();
 #endif
+
     return sResult;
 }
 

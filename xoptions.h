@@ -67,9 +67,11 @@ public:
     };
 
     explicit XOptions(QObject *pParent=nullptr);
-    void setName(QString sName);
     void setValueIDs(QList<ID> listValueIDs);
     void setDefaultValues(QMap<ID,QVariant> mapDefaultValues);
+    void setNative(bool bValue);
+    bool isNative();
+    void setName(QString sValue);
     void load();
     void save();
     QVariant getValue(ID id);
@@ -93,10 +95,11 @@ public:
     bool isHeuristicScan();
     bool isSingleApplication();
     QString getSearchSignaturesPath();
-    static QString getApplicationLangPath();
-    static QString getApplicationQssPath();
+    QString getApplicationLangPath();
+    QString getApplicationQssPath();
     static QList<QString> getAllFilesFromDirectory(QString sDirectory,QString sExtension);
-    static QString getApplicationDataPath();
+    static bool isReadonly();
+    QString getApplicationDataPath();
 #ifdef QT_GUI_LIB
     void setCheckBox(QCheckBox *pCheckBox,ID id);
     void getCheckBox(QCheckBox *pCheckBox,ID id);
@@ -107,7 +110,7 @@ public:
     void adjustStayOnTop(QWidget *pWidget);
     void static setMonoFont(QWidget *pWidget,qint32 nSize=-1);
     static void adjustApplicationView(QString sTranslationName,XOptions *pOptions);
-    static void adjustApplicationView(QString sOptionsFileName,QString sTranslationName);
+    static void adjustApplicationView(QString sApplicationFileName, QString sTranslationName);
 #endif
 #ifdef WIN32
     bool registerContext(QString sApplicationName,QString sType,QString sApplicationFilePath);
@@ -120,7 +123,7 @@ signals:
 
 private:
     QString g_sName;
-    QString g_sFilePath;
+    bool g_bIsNative;
     QList<ID> g_listValueIDs;
     QMap<ID,QVariant> g_mapValues;
     QMap<ID,QVariant> g_mapDefaultValues;
