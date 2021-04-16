@@ -604,7 +604,7 @@ bool XOptions::isReadonly()
     bool bResult=false;
 #ifdef Q_OS_MAC
     bResult=true;
-#elif Q_OS_LINUX
+#elif defined(Q_OS_LINUX)
     QString sApplicationDirPath=qApp->applicationDirPath();
 
     if( (sApplicationDirPath=="/bin")||
@@ -630,7 +630,7 @@ QString XOptions::getApplicationDataPath()
 
 #ifdef Q_OS_MAC
     sResult=qApp->applicationDirPath()+"/../Resources";
-#elif Q_OS_LINUX
+#elif defined(Q_OS_LINUX)
     if(g_bIsNative)
     {
         sResult=QString("/usr/lib/%1").arg(qApp->applicationName());
