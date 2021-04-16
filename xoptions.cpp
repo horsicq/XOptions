@@ -131,6 +131,17 @@ void XOptions::load()
             }
         }
 
+        if(g_bIsNative)
+        {
+            QString sValue=varDefault.toString();
+
+            if(sValue.contains("$data"))
+            {
+                sValue=sValue.replace("$data",getApplicationDataPath());
+                varDefault=sValue;
+            }
+        }
+
         g_mapValues.insert(id,pSettings->value(sName,varDefault));
     }
 
