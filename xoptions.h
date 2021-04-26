@@ -110,7 +110,7 @@ public:
     void adjustStayOnTop(QWidget *pWidget);
     void static setMonoFont(QWidget *pWidget,qint32 nSize=-1);
     static void adjustApplicationView(QString sTranslationName,XOptions *pOptions);
-    static void adjustApplicationView(QString sApplicationFileName, QString sTranslationName);
+    static void adjustApplicationView(QString sApplicationFileName,QString sTranslationName);
 #endif
 #ifdef WIN32
     bool registerContext(QString sApplicationName,QString sType,QString sApplicationFilePath);
