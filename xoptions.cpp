@@ -363,7 +363,11 @@ void XOptions::getCheckBox(QCheckBox *pCheckBox, XOptions::ID id)
 #ifdef QT_GUI_LIB
 void XOptions::setComboBox(QComboBox *pComboBox, XOptions::ID id)
 {
-    QSignalBlocker signalBlocker(pComboBox);
+#if QT_VERSION >= 0x050300
+    const QSignalBlocker signalBlocker(pComboBox);
+#else
+    const bool bBlocked1=pComboBox->blockSignals(true);
+#endif
 
     pComboBox->clear();
 
@@ -447,6 +451,10 @@ void XOptions::setComboBox(QComboBox *pComboBox, XOptions::ID id)
     {
         pComboBox->setCurrentIndex(nIndex);
     }
+
+#if QT_VERSION < 0x050300
+    pComboBox->blockSignals(bBlocked1);
+#endif
 }
 #endif
 #ifdef QT_GUI_LIB

@@ -112,7 +112,7 @@ public:
     static void adjustApplicationView(QString sTranslationName,XOptions *pOptions);
     static void adjustApplicationView(QString sApplicationFileName,QString sTranslationName);
 #endif
-#ifdef WIN32
+#ifdef Q_OS_WIN
     bool registerContext(QString sApplicationName,QString sType,QString sApplicationFilePath);
     bool clearContext(QString sApplicationName,QString sType);
     bool checkContext(QString sApplicationName,QString sType);
