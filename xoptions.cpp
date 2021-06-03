@@ -644,10 +644,10 @@ bool XOptions::checkNative()
 #elif defined(Q_OS_LINUX)
     QString sApplicationDirPath=qApp->applicationDirPath();
 
-    // TODO squash
     if( (sApplicationDirPath=="/bin")||
         (sApplicationDirPath=="/usr/bin")||
-        (sApplicationDirPath=="/usr/local/bin"))
+        (sApplicationDirPath=="/usr/local/bin")||
+        (sApplicationDirPath.contains("/tmp/.mount_"))) // squash
     {
         bResult=true;
     }
@@ -666,26 +666,32 @@ QString XOptions::getApplicationDataPath()
 {
     QString sResult;
 
+    QString sApplicationDirPath=qApp->applicationDirPath();
+
 #ifdef Q_OS_MAC
-    sResult=qApp->applicationDirPath()+"/../Resources";
+    sResult=sApplicationDirPath+"/../Resources";
 #elif defined(Q_OS_LINUX)
     if(g_bIsNative)
     {
-        // TODO squash
-        sResult=QString("/usr/lib/%1").arg(qApp->applicationName());
+        if(sApplicationDirPath.contains("/tmp/.mount_"))
+        {
+            sResult=sApplicationDirPath.section("/",0,2);
+        }
+
+        sResult+=QString("/usr/lib/%1").arg(qApp->applicationName());
     }
     else
     {
-        sResult=qApp->applicationDirPath();
+        sResult=sApplicationDirPath;
     }
 #else
-    sResult=qApp->applicationDirPath();
+    sResult=sApplicationDirPath;
 #endif
 
     return sResult;
 }
 
-#ifdef WIN32
+#ifdef Q_OS_WIN
 bool XOptions::registerContext(QString sApplicationName, QString sType, QString sApplicationFilePath)
 {
     QSettings settings(QString("HKEY_CLASSES_ROOT\\%1\\shell\\%2\\command").arg(sType).arg(sApplicationName),QSettings::NativeFormat);
@@ -698,7 +704,7 @@ bool XOptions::registerContext(QString sApplicationName, QString sType, QString 
     return checkContext(sApplicationName,sType);
 }
 #endif
-#ifdef WIN32
+#ifdef Q_OS_WIN
 bool XOptions::clearContext(QString sApplicationName, QString sType)
 {
     QSettings settings(QString("HKEY_CLASSES_ROOT\\%1\\shell\\%2").arg(sType).arg(sApplicationName),QSettings::NativeFormat);
@@ -708,7 +714,7 @@ bool XOptions::clearContext(QString sApplicationName, QString sType)
     return !(checkContext(sApplicationName,sType));
 }
 #endif
-#ifdef WIN32
+#ifdef Q_OS_WIN
 bool XOptions::checkContext(QString sApplicationName, QString sType)
 {
     QSettings settings(QString("HKEY_CLASSES_ROOT\\%1\\shell").arg(sType),QSettings::NativeFormat);
