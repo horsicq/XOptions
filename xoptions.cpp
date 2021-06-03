@@ -133,28 +133,27 @@ void XOptions::load()
 
         QVariant variant=pSettings->value(sName,varDefault);
 
-        if(g_bIsNative)
+        if(!variant.toString().contains("$data"))
         {
-            QString sValue=variant.toString();
-
-            if(!sValue.contains("$data"))
+            if( (id==ID_DATABASEPATH)||
+                (id==ID_LANG)||
+                (id==ID_QSS)||
+                (id==ID_INFOPATH)||
+                (id==ID_DATAPATH)||
+                (id==ID_SEARCHSIGNATURESPATH))
             {
-                if( (id==ID_DATABASEPATH)||
-                    (id==ID_LANG)||
-                    (id==ID_QSS)||
-                    (id==ID_INFOPATH)||
-                    (id==ID_DATAPATH)||
-                    (id==ID_SEARCHSIGNATURESPATH))
+                if(!QDir(variant.toString()).exists())
                 {
-                    if(!QDir(sValue).exists())
-                    {
-                        g_mapValues.insert(id,varDefault.toString());
-                    }
+                    variant=varDefault;
                 }
             }
+        }
 
-            if(sValue.contains("$data"))
+        if(g_bIsNative)
+        {
+            if(variant.toString().contains("$data"))
             {
+                QString sValue=variant.toString();
                 sValue=sValue.replace("$data",getApplicationDataPath());
                 variant=sValue;
             }
