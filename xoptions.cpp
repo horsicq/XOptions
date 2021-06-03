@@ -23,7 +23,7 @@
 XOptions::XOptions(QObject *pParent) : QObject(pParent)
 {
     g_bIsNeedRestart=false;
-    g_bIsNative=isReadonly();
+    g_bIsNative=checkNative();
 
     g_sName=QString("%1.ini").arg(qApp->applicationName());
 }
@@ -618,7 +618,7 @@ QList<QString> XOptions::getAllFilesFromDirectory(QString sDirectory, QString sE
     return directory.entryList(QStringList()<<sExtension,QDir::Files);
 }
 
-bool XOptions::isReadonly()
+bool XOptions::checkNative()
 {
     bool bResult=false;
 #ifdef Q_OS_MAC
@@ -626,6 +626,7 @@ bool XOptions::isReadonly()
 #elif defined(Q_OS_LINUX)
     QString sApplicationDirPath=qApp->applicationDirPath();
 
+    // TODO squash
     if( (sApplicationDirPath=="/bin")||
         (sApplicationDirPath=="/usr/bin")||
         (sApplicationDirPath=="/usr/local/bin"))
@@ -652,6 +653,7 @@ QString XOptions::getApplicationDataPath()
 #elif defined(Q_OS_LINUX)
     if(g_bIsNative)
     {
+        // TODO squash
         sResult=QString("/usr/lib/%1").arg(qApp->applicationName());
     }
     else

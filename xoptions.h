@@ -98,7 +98,7 @@ public:
     QString getApplicationLangPath();
     QString getApplicationQssPath();
     static QList<QString> getAllFilesFromDirectory(QString sDirectory,QString sExtension);
-    static bool isReadonly();
+    static bool checkNative();
     QString getApplicationDataPath();
 #ifdef QT_GUI_LIB
     void setCheckBox(QCheckBox *pCheckBox,ID id);
