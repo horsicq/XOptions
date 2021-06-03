@@ -131,18 +131,36 @@ void XOptions::load()
             }
         }
 
+        QVariant variant=pSettings->value(sName,varDefault);
+
         if(g_bIsNative)
         {
-            QString sValue=varDefault.toString();
+            QString sValue=variant.toString();
+
+            if(!sValue.contains("$data"))
+            {
+                if( (id==ID_DATABASEPATH)||
+                    (id==ID_LANG)||
+                    (id==ID_QSS)||
+                    (id==ID_INFOPATH)||
+                    (id==ID_DATAPATH)||
+                    (id==ID_SEARCHSIGNATURESPATH))
+                {
+                    if(!QDir(sValue).exists())
+                    {
+                        g_mapValues.insert(id,varDefault.toString());
+                    }
+                }
+            }
 
             if(sValue.contains("$data"))
             {
                 sValue=sValue.replace("$data",getApplicationDataPath());
-                varDefault=sValue;
+                variant=sValue;
             }
         }
 
-        g_mapValues.insert(id,pSettings->value(sName,varDefault));
+        g_mapValues.insert(id,variant);
     }
 
     QString sLastDirectory=g_mapValues.value(ID_LASTDIRECTORY).toString();
