@@ -71,6 +71,7 @@ public:
     void setDefaultValues(QMap<ID,QVariant> mapDefaultValues);
     void setNative(bool bValue);
     bool isNative();
+    static bool isAppImage();
     void setName(QString sValue);
     void load();
     void save();

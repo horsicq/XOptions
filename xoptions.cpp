@@ -71,6 +71,17 @@ bool XOptions::isNative()
     return g_bIsNative;
 }
 
+bool XOptions::isAppImage()
+{
+    bool bResult=false;
+
+    QString sApplicationDirPath=qApp->applicationDirPath();
+
+    bResult=(sApplicationDirPath.contains("/tmp/.mount_"));
+
+    return bResult;
+}
+
 void XOptions::setName(QString sValue)
 {
     g_sName=sValue;
@@ -646,7 +657,7 @@ bool XOptions::checkNative()
     if( (sApplicationDirPath=="/bin")||
         (sApplicationDirPath=="/usr/bin")||
         (sApplicationDirPath=="/usr/local/bin")||
-        (sApplicationDirPath.contains("/tmp/.mount_"))) // squash
+        isAppImage())
     {
         bResult=true;
     }
@@ -672,7 +683,7 @@ QString XOptions::getApplicationDataPath()
 #elif defined(Q_OS_LINUX)
     if(g_bIsNative)
     {
-        if(sApplicationDirPath.contains("/tmp/.mount_"))
+        if(sApplicationDirPath.contains("/tmp/.mount_")) // AppImage
         {
             sResult=sApplicationDirPath.section("/",0,2);
         }
