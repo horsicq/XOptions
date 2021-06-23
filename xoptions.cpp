@@ -127,7 +127,7 @@ void XOptions::load()
                 case ID_SAVEBACKUP:             varDefault=true;                    break;
                 case ID_STYLE:                  varDefault="Fusion";                break;
                 case ID_LANG:                   varDefault="System";                break;
-                case ID_QSS:                    varDefault="veles";                 break;
+                case ID_QSS:                    varDefault="";                      break;
                 case ID_DATABASEPATH:           varDefault="$data/db";              break;
                 case ID_INFOPATH:               varDefault="$data/info";            break;
                 case ID_SCANENGINE:             varDefault="die";                   break;
