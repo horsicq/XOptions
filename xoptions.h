@@ -112,6 +112,8 @@ public:
     void static setMonoFont(QWidget *pWidget,qint32 nSize=-1);
     static void adjustApplicationView(QString sTranslationName,XOptions *pOptions);
     static void adjustApplicationView(QString sApplicationFileName,QString sTranslationName);
+    static QWidget *getMainWidget(QWidget *pWidget);
+    static bool saveTable(QAbstractItemModel *pModel,QString sFileName);
 #endif
 #ifdef Q_OS_WIN
     bool registerContext(QString sApplicationName,QString sType,QString sApplicationFilePath);

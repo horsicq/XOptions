@@ -621,6 +621,62 @@ void XOptions::adjustApplicationView(QString sApplicationFileName,QString sTrans
     xOptions.adjustApplicationView(sTranslationName,&xOptions);
 }
 #endif
+#ifdef QT_GUI_LIB
+QWidget *XOptions::getMainWidget(QWidget *pWidget)
+{
+    QWidget *pResult=pWidget;
+
+    while(pResult->parent())
+    {
+        pResult=qobject_cast<QWidget *>(pResult->parent());
+    }
+
+    return pResult;
+}
+#endif
+#ifdef QT_GUI_LIB
+bool XOptions::saveTable(QAbstractItemModel *pModel,QString sFileName)
+{
+    bool bResult=false;
+
+    QFile file;
+    file.setFileName(sFileName);
+
+    if(file.open(QIODevice::ReadWrite))
+    {
+        int nNumberOfRows=pModel->rowCount();
+        int nNumberOfColumns=pModel->columnCount();
+
+        QString sResult;
+
+        for(int i=0; i<nNumberOfRows; i++)
+        {
+            for(int j=0;j<nNumberOfColumns;j++)
+            {
+                QString sText=pModel->data(pModel->index(i,j)).toString();
+
+                if(j!=(nNumberOfColumns-1))
+                {
+                    sResult+=QString("%1\t").arg(sText);
+                }
+                else
+                {
+                    sResult+=QString("%1\r\n").arg(sText);
+                }
+            }
+        }
+
+        file.resize(0);
+        file.write(sResult.toLatin1().data());
+
+        file.close();
+
+        bResult=true;
+    }
+
+    return bResult;
+}
+#endif
 QString XOptions::getApplicationLangPath()
 {
     QString sResult;
