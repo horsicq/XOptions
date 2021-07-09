@@ -147,7 +147,6 @@ void XOptions::load()
         if(!variant.toString().contains("$data"))
         {
             if( (id==ID_DATABASEPATH)||
-                (id==ID_LANG)||
                 (id==ID_QSS)||
                 (id==ID_INFOPATH)||
                 (id==ID_DATAPATH)||
