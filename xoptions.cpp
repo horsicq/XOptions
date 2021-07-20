@@ -125,7 +125,7 @@ void XOptions::load()
                 case ID_SAVELASTDIRECTORY:      varDefault=true;                    break;
                 case ID_LASTDIRECTORY:          varDefault="";                      break;
                 case ID_SAVEBACKUP:             varDefault=true;                    break;
-                case ID_STYLE:                  varDefault="Fusion";                break;
+                case ID_STYLE:                  varDefault="Fusion";                break; // TODO Check OSX&Linux
                 case ID_LANG:                   varDefault="System";                break;
                 case ID_QSS:                    varDefault="";                      break;
                 case ID_DATABASEPATH:           varDefault="$data/db";              break;
