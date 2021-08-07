@@ -759,10 +759,10 @@ QString XOptions::getApplicationDataPath()
 #ifdef Q_OS_WIN
 bool XOptions::registerContext(QString sApplicationName, QString sType, QString sApplicationFilePath)
 {
-    QSettings settings(QString("HKEY_CLASSES_ROOT\\%1\\shell\\%2\\command").arg(sType).arg(sApplicationName),QSettings::NativeFormat);
+    QSettings settings(QString("HKEY_CLASSES_ROOT\\%1\\shell\\%2\\command").arg(sType,sApplicationName),QSettings::NativeFormat);
     settings.setValue(".","\""+sApplicationFilePath.replace("/","\\")+"\" \"%1\"");
 
-    QSettings settingsIcon(QString("HKEY_CLASSES_ROOT\\%1\\shell\\%2").arg(sType).arg(sApplicationName),QSettings::NativeFormat);
+    QSettings settingsIcon(QString("HKEY_CLASSES_ROOT\\%1\\shell\\%2").arg(sType,sApplicationName),QSettings::NativeFormat);
     settingsIcon.setValue("Icon","\""+sApplicationFilePath.replace("/","\\")+"\"");
 
     // TODO Check if not send message
@@ -772,7 +772,7 @@ bool XOptions::registerContext(QString sApplicationName, QString sType, QString 
 #ifdef Q_OS_WIN
 bool XOptions::clearContext(QString sApplicationName, QString sType)
 {
-    QSettings settings(QString("HKEY_CLASSES_ROOT\\%1\\shell\\%2").arg(sType).arg(sApplicationName),QSettings::NativeFormat);
+    QSettings settings(QString("HKEY_CLASSES_ROOT\\%1\\shell\\%2").arg(sType,sApplicationName),QSettings::NativeFormat);
     settings.clear();
 
     // TODO Check if not send message
