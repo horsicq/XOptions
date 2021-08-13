@@ -62,8 +62,8 @@ public:
         ID_JSON,
         ID_SINGLEAPPLICATION,
         ID_SEARCHSIGNATURESPATH,
-        ID_AUTHUSER,
-        ID_AUTHTOKEN
+        ID_AUTHUSER, // For Git mb rename! to ID_GITAUTHUSER
+        ID_AUTHTOKEN // For Git mb rename! to ID_GITAUTHTOKEN
     };
 
     explicit XOptions(QObject *pParent=nullptr);
