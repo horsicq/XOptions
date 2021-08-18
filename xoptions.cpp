@@ -720,8 +720,13 @@ bool XOptions::checkNative()
     {
         bResult=false;
     }
-#else
-    bResult=false;
+#elif defined(Q_OS_WIN)
+    QString sApplicationDirPath=qApp->applicationDirPath();
+
+    if(sApplicationDirPath.contains("C:\\Program Files\\")||sApplicationDirPath.contains("C:\\Program Files (x86)\\"))
+    {
+        bResult=true;
+    }
 #endif
 
     return bResult;
