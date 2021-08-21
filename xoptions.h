@@ -87,6 +87,8 @@ public:
     QString getRootPath();
     QString getDataPath();
     QString getJson();
+    QString getAuthUser();
+    QString getAuthToken();
     bool isSaveBackup();
     bool isSaveLastDirectory();
     bool isRestartNeeded();

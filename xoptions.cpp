@@ -333,6 +333,17 @@ QString XOptions::getJson()
 {
     return getValue(ID_JSON).toString();
 }
+
+QString XOptions::getAuthUser()
+{
+    return getValue(ID_AUTHUSER).toString();
+}
+
+QString XOptions::getAuthToken()
+{
+    return getValue(ID_AUTHTOKEN).toString();
+}
+
 #ifdef QT_GUI_LIB
 void XOptions::adjustStayOnTop(QWidget *pWidget)
 {
