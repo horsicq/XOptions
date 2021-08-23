@@ -100,6 +100,13 @@ void XOptions::load()
         pSettings=new QSettings(getApplicationDataPath()+QDir::separator()+QString("%1").arg(g_sName),QSettings::IniFormat);
     }
 
+#ifdef QT_DEBUG
+    if(pSettings)
+    {
+        qDebug("XOptions load %s",pSettings->fileName().toLatin1().data());
+    }
+#endif
+
     int nNumberOfIDs=g_listValueIDs.count();
 
     for(int i=0;i<nNumberOfIDs;i++)
@@ -197,6 +204,13 @@ void XOptions::save()
     {
         pSettings=new QSettings(getApplicationDataPath()+QDir::separator()+QString("%1").arg(g_sName),QSettings::IniFormat);
     }
+
+#ifdef QT_DEBUG
+    if(pSettings)
+    {
+        qDebug("XOptions save %s",pSettings->fileName().toLatin1().data());
+    }
+#endif
 
     int nNumberOfIDs=g_listValueIDs.count();
 
