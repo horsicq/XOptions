@@ -42,7 +42,7 @@ void XOptions::setValueIDs(QList<ID> listVariantIDs)
             bSaveLastDirectory=true;
         }
 
-        if(listVariantIDs.at(i)==ID_LASTDIRECTORY)
+        if(listVariantIDs.at(i)==ID_NU_LASTDIRECTORY)
         {
             bLastDirectory=true;
         }
@@ -50,7 +50,7 @@ void XOptions::setValueIDs(QList<ID> listVariantIDs)
 
     if(bSaveLastDirectory&&(!bLastDirectory))
     {
-        listVariantIDs.append(ID_LASTDIRECTORY);
+        listVariantIDs.append(ID_NU_LASTDIRECTORY);
     }
 
     this->g_listValueIDs=listVariantIDs;
@@ -130,7 +130,7 @@ void XOptions::load()
                 case ID_DEEPSCAN:               varDefault=true;                    break;
                 case ID_HEURISTICSCAN:          varDefault=true;                    break;
                 case ID_SAVELASTDIRECTORY:      varDefault=true;                    break;
-                case ID_LASTDIRECTORY:          varDefault="";                      break;
+                case ID_NU_LASTDIRECTORY:          varDefault="";                      break;
                 case ID_SAVEBACKUP:             varDefault=true;                    break;
                 case ID_STYLE:                  varDefault="Fusion";                break; // TODO Check OSX&Linux
                 case ID_LANG:                   varDefault="System";                break;
@@ -179,13 +179,13 @@ void XOptions::load()
         g_mapValues.insert(id,variant);
     }
 
-    QString sLastDirectory=g_mapValues.value(ID_LASTDIRECTORY).toString();
+    QString sLastDirectory=g_mapValues.value(ID_NU_LASTDIRECTORY).toString();
 
     if(sLastDirectory!="")
     {
         if(!QDir(sLastDirectory).exists())
         {
-            g_mapValues.insert(ID_LASTDIRECTORY,"");
+            g_mapValues.insert(ID_NU_LASTDIRECTORY,"");
         }
     }
 
@@ -264,7 +264,7 @@ QString XOptions::idToString(ID id)
         case ID_DEEPSCAN:                   sResult=QString("DeepScan");                    break;
         case ID_HEURISTICSCAN:              sResult=QString("HeuristicScan");               break;
         case ID_SAVELASTDIRECTORY:          sResult=QString("SaveLastDirectory");           break;
-        case ID_LASTDIRECTORY:              sResult=QString("LastDirectory");               break;
+        case ID_NU_LASTDIRECTORY:              sResult=QString("LastDirectory");               break;
         case ID_SAVEBACKUP:                 sResult=QString("SaveBackup");                  break;
         case ID_STYLE:                      sResult=QString("Style");                       break;
         case ID_LANG:                       sResult=QString("Lang");                        break;
@@ -289,7 +289,7 @@ QString XOptions::getLastDirectory()
     QString sResult;
 
     bool bSaveLastDirectory=getValue(ID_SAVELASTDIRECTORY).toBool();
-    QString sLastDirectory=getValue(ID_LASTDIRECTORY).toString();
+    QString sLastDirectory=getValue(ID_NU_LASTDIRECTORY).toString();
 
     if(bSaveLastDirectory&&(sLastDirectory!="")&&QDir().exists(sLastDirectory))
     {
@@ -314,7 +314,7 @@ void XOptions::setLastDirectory(QString sValue)
 
     if(getValue(ID_SAVELASTDIRECTORY).toBool())
     {
-        setValue(ID_LASTDIRECTORY,sValue);
+        setValue(ID_NU_LASTDIRECTORY,sValue);
     }
 }
 

@@ -49,7 +49,6 @@ public:
         ID_DEEPSCAN,
         ID_HEURISTICSCAN,
         ID_SAVELASTDIRECTORY,
-        ID_LASTDIRECTORY,
         ID_SAVEBACKUP,
         ID_STYLE,
         ID_QSS,
@@ -63,7 +62,8 @@ public:
         ID_SINGLEAPPLICATION,
         ID_SEARCHSIGNATURESPATH,
         ID_AUTHUSER,
-        ID_AUTHTOKEN
+        ID_AUTHTOKEN,
+        ID_NU_LASTDIRECTORY // Using if ID_SAVELASTDIRECTORY
     };
 
     explicit XOptions(QObject *pParent=nullptr);
