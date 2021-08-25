@@ -542,6 +542,11 @@ bool XOptions::isRestartNeeded()
     return g_bIsNeedRestart;
 }
 
+bool XOptions::isStayOnTop()
+{
+    return getValue(XOptions::ID_STAYONTOP).toBool();
+}
+
 bool XOptions::isScanAfterOpen()
 {
     return getValue(XOptions::ID_SCANAFTEROPEN).toBool();

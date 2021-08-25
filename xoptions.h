@@ -92,6 +92,7 @@ public:
     bool isSaveBackup();
     bool isSaveLastDirectory();
     bool isRestartNeeded();
+    bool isStayOnTop();
     bool isScanAfterOpen();
     bool isRecursiveScan();
     bool isDeepScan();
