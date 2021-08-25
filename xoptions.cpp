@@ -363,7 +363,7 @@ void XOptions::adjustStayOnTop(QWidget *pWidget)
 {
     Qt::WindowFlags wf=pWidget->windowFlags();
 
-    if(getValue(ID_STAYONTOP).toBool())
+    if(isStayOnTop())
     {
         wf|=Qt::WindowStaysOnTopHint;
     }
