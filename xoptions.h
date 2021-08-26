@@ -63,6 +63,7 @@ public:
         ID_SEARCHSIGNATURESPATH,
         ID_AUTHUSER,
         ID_AUTHTOKEN,
+        ID_SHOWLOGO,
         ID_NU_LASTDIRECTORY // Using if ID_SAVELASTDIRECTORY
     };
 
@@ -98,6 +99,7 @@ public:
     bool isDeepScan();
     bool isHeuristicScan();
     bool isSingleApplication();
+    bool isShowLogo();
     QString getSearchSignaturesPath();
     QString getApplicationLangPath();
     QString getApplicationQssPath();

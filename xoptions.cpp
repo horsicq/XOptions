@@ -145,6 +145,7 @@ void XOptions::load()
                 case ID_SEARCHSIGNATURESPATH:   varDefault="$data/signatures";      break;
                 case ID_AUTHUSER:               varDefault="";                      break;
                 case ID_AUTHTOKEN:              varDefault="";                      break;
+                case ID_SHOWLOGO:               varDefault=true;                    break;
                 default:                        varDefault="";
             }
         }
@@ -264,7 +265,7 @@ QString XOptions::idToString(ID id)
         case ID_DEEPSCAN:                   sResult=QString("DeepScan");                    break;
         case ID_HEURISTICSCAN:              sResult=QString("HeuristicScan");               break;
         case ID_SAVELASTDIRECTORY:          sResult=QString("SaveLastDirectory");           break;
-        case ID_NU_LASTDIRECTORY:              sResult=QString("LastDirectory");               break;
+        case ID_NU_LASTDIRECTORY:           sResult=QString("LastDirectory");               break;
         case ID_SAVEBACKUP:                 sResult=QString("SaveBackup");                  break;
         case ID_STYLE:                      sResult=QString("Style");                       break;
         case ID_LANG:                       sResult=QString("Lang");                        break;
@@ -279,6 +280,7 @@ QString XOptions::idToString(ID id)
         case ID_SEARCHSIGNATURESPATH:       sResult=QString("SearchSignaturesPath");        break;
         case ID_AUTHUSER:                   sResult=QString("AuthUser");                    break;
         case ID_AUTHTOKEN:                  sResult=QString("AuthToken");                   break;
+        case ID_SHOWLOGO:                   sResult=QString("ShowLogo");                    break;
     }
 
     return sResult;
@@ -570,6 +572,11 @@ bool XOptions::isHeuristicScan()
 bool XOptions::isSingleApplication()
 {
     return getValue(XOptions::ID_SINGLEAPPLICATION).toBool();
+}
+
+bool XOptions::isShowLogo()
+{
+    return getValue(XOptions::ID_SHOWLOGO).toBool();
 }
 
 QString XOptions::getSearchSignaturesPath()
