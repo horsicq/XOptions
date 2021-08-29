@@ -130,7 +130,7 @@ void XOptions::load()
                 case ID_DEEPSCAN:               varDefault=true;                    break;
                 case ID_HEURISTICSCAN:          varDefault=true;                    break;
                 case ID_SAVELASTDIRECTORY:      varDefault=true;                    break;
-                case ID_NU_LASTDIRECTORY:          varDefault="";                      break;
+                case ID_NU_LASTDIRECTORY:       varDefault="";                      break;
                 case ID_SAVEBACKUP:             varDefault=true;                    break;
                 case ID_STYLE:                  varDefault="Fusion";                break; // TODO Check OSX&Linux
                 case ID_LANG:                   varDefault="System";                break;
