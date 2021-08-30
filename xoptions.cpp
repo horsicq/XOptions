@@ -73,11 +73,12 @@ bool XOptions::isNative()
 
 bool XOptions::isAppImage()
 {
+    // TODO more checks
     bool bResult=false;
 
     QString sApplicationDirPath=qApp->applicationDirPath();
 
-    bResult=(sApplicationDirPath.contains("/tmp/.mount_")); // TODO More check
+    bResult=(sApplicationDirPath.contains("/tmp/.mount_")); // TODO check
 
     return bResult;
 }
