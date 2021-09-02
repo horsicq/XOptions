@@ -383,16 +383,15 @@ void XOptions::adjustStayOnTop(QWidget *pWidget)
 void XOptions::setMonoFont(QWidget *pWidget,qint32 nSize)
 {
     QFont font=pWidget->font();
-    font.setFamily("Courier"); // TODO OSX and Linux
 
 #ifdef Q_OS_WIN
     font.setFamily("Courier");
 #endif
 #ifdef Q_OS_LINUX
-    font.setFamily("Monospace");
+    font.setFamily("Monospace");    // TODO Check
 #endif
 #ifdef Q_OS_OSX
-    font.setFamily("Menlo");
+    font.setFamily("Menlo");        // TODO Check
 #endif
 
     if(nSize!=-1)
