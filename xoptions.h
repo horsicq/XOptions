@@ -64,6 +64,7 @@ public:
         ID_AUTHUSER,
         ID_AUTHTOKEN,
         ID_SHOWLOGO,
+        // Not using
         ID_NU_LASTDIRECTORY // Using if ID_SAVELASTDIRECTORY
     };
 
