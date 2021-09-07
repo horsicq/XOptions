@@ -56,6 +56,7 @@ public:
         ID_DATABASEPATH,
         ID_INFOPATH,
         ID_SCANENGINE,
+        ID_DISASMSYNTAX,
         ID_ROOTPATH,
         ID_DATAPATH,
         ID_JSON,
@@ -86,6 +87,7 @@ public:
     QString getDatabasePath();
     QString getInfoPath();
     QString getScanEngine();
+    QString getDisasmSyntax();
     QString getRootPath();
     QString getDataPath();
     QString getJson();

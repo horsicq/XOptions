@@ -139,6 +139,7 @@ void XOptions::load()
                 case ID_DATABASEPATH:           varDefault="$data/db";              break;
                 case ID_INFOPATH:               varDefault="$data/info";            break;
                 case ID_SCANENGINE:             varDefault="die";                   break;
+                case ID_DISASMSYNTAX:           varDefault="";                      break;
                 case ID_ROOTPATH:               varDefault="";                      break;
                 case ID_DATAPATH:               varDefault="$data/data";            break;
                 case ID_JSON:                   varDefault="";                      break;
@@ -274,6 +275,7 @@ QString XOptions::idToString(ID id)
         case ID_DATABASEPATH:               sResult=QString("DatabasePath");                break;
         case ID_INFOPATH:                   sResult=QString("InfoPath");                    break;
         case ID_SCANENGINE:                 sResult=QString("ScanEngine");                  break;
+        case ID_DISASMSYNTAX:               sResult=QString("DisasmSyntax");                break;
         case ID_ROOTPATH:                   sResult=QString("RootPath");                    break;
         case ID_DATAPATH:                   sResult=QString("DataPath");                    break;
         case ID_JSON:                       sResult=QString("Json");                        break;
@@ -334,6 +336,11 @@ QString XOptions::getInfoPath()
 QString XOptions::getScanEngine()
 {
     return getValue(ID_SCANENGINE).toString();
+}
+
+QString XOptions::getDisasmSyntax()
+{
+    return getValue(ID_DISASMSYNTAX).toString();
 }
 
 QString XOptions::getRootPath()
