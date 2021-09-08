@@ -257,7 +257,7 @@ void XOptions::clearValue(XOptions::ID id)
 
 QString XOptions::idToString(ID id)
 {
-    QString sResult="Unknown";
+    QString sResult=QString("Unknown");
 
     switch(id)
     {
