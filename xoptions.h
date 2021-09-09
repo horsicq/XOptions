@@ -32,6 +32,7 @@
 #include <QLineEdit>
 #include <QApplication>
 #include <QStyleFactory>
+#include <QSysInfo>
 #else
 #include <QCoreApplication> // TODO Check
 #endif
@@ -109,6 +110,7 @@ public:
     static QList<QString> getAllFilesFromDirectory(QString sDirectory,QString sExtension);
     static bool checkNative();
     QString getApplicationDataPath();
+    static QString getTitle(QString sName,QString sVersion);
 #ifdef QT_GUI_LIB
     void setCheckBox(QCheckBox *pCheckBox,ID id);
     void getCheckBox(QCheckBox *pCheckBox,ID id);

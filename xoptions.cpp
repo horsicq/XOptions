@@ -805,6 +805,15 @@ QString XOptions::getApplicationDataPath()
     return sResult;
 }
 
+QString XOptions::getTitle(QString sName, QString sVersion)
+{
+    QString sResult;
+
+    sResult=QString("%1 v%2 [%3](%4)").arg(sName,sVersion,QSysInfo::prettyProductName(),QSysInfo::buildCpuArchitecture());
+
+    return sResult;
+}
+
 #ifdef Q_OS_WIN
 bool XOptions::registerContext(QString sApplicationName, QString sType, QString sApplicationFilePath)
 {
