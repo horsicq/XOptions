@@ -50,6 +50,7 @@ public:
         ID_DEEPSCAN,
         ID_HEURISTICSCAN,
         ID_SAVELASTDIRECTORY,
+        ID_SAVERECENTFILES,
         ID_SAVEBACKUP,
         ID_STYLE,
         ID_QSS,
@@ -67,7 +68,8 @@ public:
         ID_AUTHTOKEN,
         ID_SHOWLOGO,
         // Not using
-        ID_NU_LASTDIRECTORY // Using if ID_SAVELASTDIRECTORY
+        ID_NU_LASTDIRECTORY, // Using if ID_SAVELASTDIRECTORY
+        ID_NU_RECENTFILES
     };
 
     explicit XOptions(QObject *pParent=nullptr);
@@ -85,6 +87,7 @@ public:
     static QString idToString(ID id);
     QString getLastDirectory();
     void setLastDirectory(QString sValue);
+    void setLastFile(QString sFileName);
     QString getDatabasePath();
     QString getInfoPath();
     QString getScanEngine();

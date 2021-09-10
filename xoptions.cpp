@@ -34,6 +34,8 @@ void XOptions::setValueIDs(QList<ID> listVariantIDs)
 
     bool bSaveLastDirectory=false;
     bool bLastDirectory=false;
+    bool bSaveRecentFiles=false;
+    bool bRecentFiles=false;
 
     for(int i=0;i<nNumberOfIds;i++)
     {
@@ -46,11 +48,26 @@ void XOptions::setValueIDs(QList<ID> listVariantIDs)
         {
             bLastDirectory=true;
         }
+
+        if(listVariantIDs.at(i)==ID_SAVERECENTFILES)
+        {
+            bSaveRecentFiles=true;
+        }
+
+        if(listVariantIDs.at(i)==ID_NU_RECENTFILES)
+        {
+            bRecentFiles=true;
+        }
     }
 
     if(bSaveLastDirectory&&(!bLastDirectory))
     {
         listVariantIDs.append(ID_NU_LASTDIRECTORY);
+    }
+
+    if(bSaveRecentFiles&&(!bRecentFiles))
+    {
+        listVariantIDs.append(ID_NU_RECENTFILES);
     }
 
     this->g_listValueIDs=listVariantIDs;
@@ -131,7 +148,7 @@ void XOptions::load()
                 case ID_DEEPSCAN:               varDefault=true;                    break;
                 case ID_HEURISTICSCAN:          varDefault=true;                    break;
                 case ID_SAVELASTDIRECTORY:      varDefault=true;                    break;
-                case ID_NU_LASTDIRECTORY:       varDefault="";                      break;
+                case ID_SAVERECENTFILES:        varDefault=true;                    break;
                 case ID_SAVEBACKUP:             varDefault=true;                    break;
                 case ID_STYLE:                  varDefault="Fusion";                break; // TODO Check OSX&Linux
                 case ID_LANG:                   varDefault="System";                break;
@@ -148,6 +165,8 @@ void XOptions::load()
                 case ID_AUTHUSER:               varDefault="";                      break;
                 case ID_AUTHTOKEN:              varDefault="";                      break;
                 case ID_SHOWLOGO:               varDefault=true;                    break;
+                case ID_NU_RECENTFILES:         varDefault=QList<QVariant>();       break;
+                case ID_NU_LASTDIRECTORY:       varDefault="";                      break;
                 default:                        varDefault="";
             }
         }
@@ -267,7 +286,7 @@ QString XOptions::idToString(ID id)
         case ID_DEEPSCAN:                   sResult=QString("DeepScan");                    break;
         case ID_HEURISTICSCAN:              sResult=QString("HeuristicScan");               break;
         case ID_SAVELASTDIRECTORY:          sResult=QString("SaveLastDirectory");           break;
-        case ID_NU_LASTDIRECTORY:           sResult=QString("LastDirectory");               break;
+        case ID_SAVERECENTFILES:            sResult=QString("SaveRecentFiles");             break;
         case ID_SAVEBACKUP:                 sResult=QString("SaveBackup");                  break;
         case ID_STYLE:                      sResult=QString("Style");                       break;
         case ID_LANG:                       sResult=QString("Lang");                        break;
@@ -284,6 +303,8 @@ QString XOptions::idToString(ID id)
         case ID_AUTHUSER:                   sResult=QString("AuthUser");                    break;
         case ID_AUTHTOKEN:                  sResult=QString("AuthToken");                   break;
         case ID_SHOWLOGO:                   sResult=QString("ShowLogo");                    break;
+        case ID_NU_RECENTFILES:             sResult=QString("RecentFiles");                 break;
+        case ID_NU_LASTDIRECTORY:           sResult=QString("LastDirectory");               break;
     }
 
     return sResult;
@@ -320,6 +341,41 @@ void XOptions::setLastDirectory(QString sValue)
     if(getValue(ID_SAVELASTDIRECTORY).toBool())
     {
         setValue(ID_NU_LASTDIRECTORY,sValue);
+    }
+}
+
+void XOptions::setLastFile(QString sFileName)
+{
+    QFileInfo fi(sFileName);
+
+    QString sDirectory;
+
+    if(fi.isFile())
+    {
+        sDirectory=fi.absolutePath();
+    }
+
+    if(getValue(ID_SAVELASTDIRECTORY).toBool())
+    {
+        setValue(ID_NU_LASTDIRECTORY,sDirectory);
+    }
+
+    if(getValue(ID_SAVERECENTFILES).toBool())
+    {
+        QString _sFileName=QString("\"%1\"").arg(fi.absoluteFilePath());
+
+        QList<QVariant> listFiles=getValue(ID_NU_RECENTFILES).toList();
+
+        listFiles.removeAll(_sFileName);
+
+        listFiles.append(QVariant(_sFileName));
+
+        if(listFiles.count()>10)
+        {
+            listFiles.removeLast();
+        }
+
+        g_mapValues.insert(ID_NU_RECENTFILES,listFiles);
     }
 }
 
