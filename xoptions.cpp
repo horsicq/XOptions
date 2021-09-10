@@ -424,7 +424,7 @@ void XOptions::getCheckBox(QCheckBox *pCheckBox, XOptions::ID id)
 #ifdef QT_GUI_LIB
 void XOptions::setComboBox(QComboBox *pComboBox, XOptions::ID id)
 {
-#if QT_VERSION >= 0x050300
+#if QT_VERSION >= QT_VERSION_CHECK(5,3,0)
     const QSignalBlocker signalBlocker(pComboBox);
 #else
     const bool bBlocked1=pComboBox->blockSignals(true);
@@ -513,7 +513,7 @@ void XOptions::setComboBox(QComboBox *pComboBox, XOptions::ID id)
         pComboBox->setCurrentIndex(nIndex);
     }
 
-#if QT_VERSION < 0x050300
+#if QT_VERSION < QT_VERSION_CHECK(5,3,0)
     pComboBox->blockSignals(bBlocked1);
 #endif
 }
@@ -808,8 +808,11 @@ QString XOptions::getApplicationDataPath()
 QString XOptions::getTitle(QString sName, QString sVersion)
 {
     QString sResult;
-
+#if QT_VERSION >= QT_VERSION_CHECK(5,4,0)
     sResult=QString("%1 v%2 [%3](%4)").arg(sName,sVersion,QSysInfo::prettyProductName(),QSysInfo::buildCpuArchitecture());
+#else
+    Result=QString("%1 v%2").arg(sName,sVersion);
+#endif
 
     return sResult;
 }
