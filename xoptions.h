@@ -87,7 +87,7 @@ public:
     static QString idToString(ID id);
     QString getLastDirectory();
     void setLastDirectory(QString sValue);
-    void setLastFile(QString sFileName);
+    void setLastFile(QString sFileName); // TODO rename
     QString getDatabasePath();
     QString getInfoPath();
     QString getScanEngine();
