@@ -344,7 +344,7 @@ void XOptions::setLastDirectory(QString sValue)
     }
 }
 
-void XOptions::setLastFile(QString sFileName)
+void XOptions::setLastFileName(QString sFileName)
 {
     QFileInfo fi(sFileName);
 
