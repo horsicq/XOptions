@@ -602,6 +602,11 @@ bool XOptions::isSaveLastDirectory()
     return getValue(XOptions::ID_SAVELASTDIRECTORY).toBool();
 }
 
+bool XOptions::isSaveRecentFiles()
+{
+    return getValue(XOptions::ID_SAVERECENTFILES).toBool();
+}
+
 bool XOptions::isRestartNeeded()
 {
     return g_bIsNeedRestart;

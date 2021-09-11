@@ -99,6 +99,7 @@ public:
     QString getAuthToken();
     bool isSaveBackup();
     bool isSaveLastDirectory();
+    bool isSaveRecentFiles();
     bool isRestartNeeded();
     bool isStayOnTop();
     bool isScanAfterOpen();
