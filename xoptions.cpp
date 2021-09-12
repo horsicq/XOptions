@@ -121,7 +121,7 @@ void XOptions::load()
 #ifdef QT_DEBUG
     if(pSettings)
     {
-        qDebug("XOptions load %s",pSettings->fileName().toLatin1().data());
+        qDebug("XOptions load file %s",pSettings->fileName().toLatin1().data());
     }
 #endif
 
@@ -230,7 +230,7 @@ void XOptions::save()
 #ifdef QT_DEBUG
     if(pSettings)
     {
-        qDebug("XOptions save %s",pSettings->fileName().toLatin1().data());
+        qDebug("XOptions save file %s",pSettings->fileName().toLatin1().data());
     }
 #endif
 
