@@ -88,6 +88,7 @@ public:
     QString getLastDirectory();
     void setLastDirectory(QString sValue);
     void setLastFileName(QString sFileName);
+    void clearRecentFiles();
     QString getDatabasePath();
     QString getInfoPath();
     QString getScanEngine();

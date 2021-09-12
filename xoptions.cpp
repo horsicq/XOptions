@@ -379,6 +379,11 @@ void XOptions::setLastFileName(QString sFileName)
     }
 }
 
+void XOptions::clearRecentFiles()
+{
+    g_mapValues.insert(ID_NU_RECENTFILES,QList<QVariant>());
+}
+
 QString XOptions::getDatabasePath()
 {
     return getValue(ID_DATABASEPATH).toString();
