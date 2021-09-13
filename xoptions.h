@@ -89,6 +89,7 @@ public:
     void setLastDirectory(QString sValue);
     void setLastFileName(QString sFileName);
     void clearRecentFiles();
+    QList<QString> getRecentFiles();
     QString getDatabasePath();
     QString getInfoPath();
     QString getScanEngine();

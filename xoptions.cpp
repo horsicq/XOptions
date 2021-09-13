@@ -384,6 +384,22 @@ void XOptions::clearRecentFiles()
     g_mapValues.insert(ID_NU_RECENTFILES,QList<QVariant>());
 }
 
+QList<QString> XOptions::getRecentFiles()
+{
+    QList<QString> listResult;
+
+    QList<QVariant> listFiles=getValue(ID_NU_RECENTFILES).toList();
+
+    int nNumberOfRecords=listFiles.size();
+
+    for(int i=0;i<nNumberOfRecords;i++)
+    {
+        listResult.append(listFiles.at(i).toString());
+    }
+
+    return listResult;
+}
+
 QString XOptions::getDatabasePath()
 {
     return getValue(ID_DATABASEPATH).toString();
