@@ -25,7 +25,7 @@ XOptions::XOptions(QObject *pParent) : QObject(pParent)
     g_bIsNeedRestart=false;
     g_bIsNative=checkNative();
 
-    g_sName=QString("%1.ini").arg(qApp->applicationName()); // If setName not used
+    g_sName=QString("%1.ini").arg(qApp->applicationName()); // defaul name
 }
 
 void XOptions::setValueIDs(QList<ID> listVariantIDs)
