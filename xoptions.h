@@ -33,6 +33,7 @@
 #include <QApplication>
 #include <QStyleFactory>
 #include <QSysInfo>
+#include <QTextEdit>
 #else
 #include <QCoreApplication> // TODO Check
 #endif
@@ -129,7 +130,8 @@ public:
     static void adjustApplicationView(QString sTranslationName,XOptions *pOptions);
     static void adjustApplicationView(QString sApplicationFileName,QString sTranslationName);
     static QWidget *getMainWidget(QWidget *pWidget);
-    static bool saveTable(QAbstractItemModel *pModel,QString sFileName);
+    static bool saveModel(QAbstractItemModel *pModel,QString sFileName);
+    static bool saveTextEdit(QTextEdit *pTextEdit,QString sFileName);
 #endif
 #ifdef Q_OS_WIN
     bool registerContext(QString sApplicationName,QString sType,QString sApplicationFilePath);

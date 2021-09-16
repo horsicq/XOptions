@@ -760,7 +760,7 @@ QWidget *XOptions::getMainWidget(QWidget *pWidget)
 }
 #endif
 #ifdef QT_GUI_LIB
-bool XOptions::saveTable(QAbstractItemModel *pModel,QString sFileName)
+bool XOptions::saveModel(QAbstractItemModel *pModel,QString sFileName)
 {
     bool bResult=false;
 
@@ -790,6 +790,29 @@ bool XOptions::saveTable(QAbstractItemModel *pModel,QString sFileName)
                 }
             }
         }
+
+        file.resize(0);
+        file.write(sResult.toLatin1().data());
+
+        file.close();
+
+        bResult=true;
+    }
+
+    return bResult;
+}
+#endif
+#ifdef QT_GUI_LIB
+bool XOptions::saveTextEdit(QTextEdit *pTextEdit, QString sFileName)
+{
+    bool bResult=false;
+
+    QFile file;
+    file.setFileName(sFileName);
+
+    if(file.open(QIODevice::ReadWrite))
+    {
+        QString sResult=pTextEdit->toPlainText();
 
         file.resize(0);
         file.write(sResult.toLatin1().data());
