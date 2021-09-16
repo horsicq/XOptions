@@ -34,6 +34,7 @@
 #include <QStyleFactory>
 #include <QSysInfo>
 #include <QTextEdit>
+#include <QPlainTextEdit>
 #else
 #include <QCoreApplication> // TODO Check
 #endif
@@ -132,6 +133,7 @@ public:
     static QWidget *getMainWidget(QWidget *pWidget);
     static bool saveModel(QAbstractItemModel *pModel,QString sFileName);
     static bool saveTextEdit(QTextEdit *pTextEdit,QString sFileName);
+    static bool savePlainTextEdit(QPlainTextEdit *pPlainTextEdit,QString sFileName);
 #endif
 #ifdef Q_OS_WIN
     bool registerContext(QString sApplicationName,QString sType,QString sApplicationFilePath);
