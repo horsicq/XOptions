@@ -36,7 +36,7 @@
 #include <QTextEdit>
 #include <QPlainTextEdit>
 #else
-#include <QCoreApplication> // TODO Check
+#include <QCoreApplication>
 #endif
 
 class XOptions : public QObject
