@@ -134,6 +134,7 @@ public:
     static bool saveModel(QAbstractItemModel *pModel,QString sFileName);
     static bool saveTextEdit(QTextEdit *pTextEdit,QString sFileName);
     static bool savePlainTextEdit(QPlainTextEdit *pPlainTextEdit,QString sFileName);
+    // TODO more saveFunctions
 #endif
 #ifdef Q_OS_WIN
     bool registerContext(QString sApplicationName,QString sType,QString sApplicationFilePath);
