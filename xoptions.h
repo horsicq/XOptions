@@ -70,8 +70,8 @@ public:
         ID_AUTHTOKEN,
         ID_SHOWLOGO,
         // Not using
-        ID_NU_LASTDIRECTORY, // Using if ID_SAVELASTDIRECTORY
-        ID_NU_RECENTFILES
+        ID_NU_LASTDIRECTORY,    // Using if ID_SAVELASTDIRECTORY
+        ID_NU_RECENTFILES       // Using if ID_SAVERECENTFILES
     };
 
     explicit XOptions(QObject *pParent=nullptr);
