@@ -66,6 +66,7 @@ public:
         ID_JSON,
         ID_SINGLEAPPLICATION,
         ID_SEARCHSIGNATURESPATH,
+        ID_STRUCTSPATH,
         ID_AUTHUSER,
         ID_AUTHTOKEN,
         ID_SHOWLOGO,
@@ -113,6 +114,7 @@ public:
     bool isSingleApplication();
     bool isShowLogo();
     QString getSearchSignaturesPath();
+    QString getStructsPath();
     QString getApplicationLangPath();
     QString getApplicationQssPath();
     static QList<QString> getAllFilesFromDirectory(QString sDirectory,QString sExtension);

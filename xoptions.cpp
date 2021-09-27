@@ -162,6 +162,7 @@ void XOptions::load()
                 case ID_JSON:                   varDefault="";                      break;
                 case ID_SINGLEAPPLICATION:      varDefault=false;                   break;
                 case ID_SEARCHSIGNATURESPATH:   varDefault="$data/signatures";      break;
+                case ID_STRUCTSPATH:            varDefault="$data/structs";         break;
                 case ID_AUTHUSER:               varDefault="";                      break;
                 case ID_AUTHTOKEN:              varDefault="";                      break;
                 case ID_SHOWLOGO:               varDefault=true;                    break;
@@ -179,7 +180,8 @@ void XOptions::load()
                 (id==ID_QSS)||
                 (id==ID_INFOPATH)||
                 (id==ID_DATAPATH)||
-                (id==ID_SEARCHSIGNATURESPATH))
+                (id==ID_SEARCHSIGNATURESPATH)||
+                (id==ID_STRUCTSPATH))
             {
                 if(!QDir(variant.toString()).exists())
                 {
@@ -256,7 +258,8 @@ void XOptions::setValue(XOptions::ID id, QVariant vValue)
     if( (id==ID_STYLE)||
         (id==ID_LANG)||
         (id==ID_QSS)||
-        (id==ID_SEARCHSIGNATURESPATH)) // TODO remove
+        (id==ID_SEARCHSIGNATURESPATH)||     // TODO remove
+        (id==ID_STRUCTSPATH))               // TODO remove
     {
         QVariant vOld=g_mapValues.value(id);
 
@@ -300,6 +303,7 @@ QString XOptions::idToString(ID id)
         case ID_JSON:                       sResult=QString("Json");                        break;
         case ID_SINGLEAPPLICATION:          sResult=QString("SingleApplication");           break;
         case ID_SEARCHSIGNATURESPATH:       sResult=QString("SearchSignaturesPath");        break;
+        case ID_STRUCTSPATH:                sResult=QString("StructsPath");                 break;
         case ID_AUTHUSER:                   sResult=QString("AuthUser");                    break;
         case ID_AUTHTOKEN:                  sResult=QString("AuthToken");                   break;
         case ID_SHOWLOGO:                   sResult=QString("ShowLogo");                    break;
@@ -671,6 +675,11 @@ bool XOptions::isShowLogo()
 QString XOptions::getSearchSignaturesPath()
 {
     return getValue(XOptions::ID_SEARCHSIGNATURESPATH).toString();
+}
+
+QString XOptions::getStructsPath()
+{
+    return getValue(XOptions::ID_STRUCTSPATH).toString();
 }
 #ifdef QT_GUI_LIB
 void XOptions::adjustApplicationView(QString sTranslationName, XOptions *pOptions)
