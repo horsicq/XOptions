@@ -35,6 +35,8 @@
 #include <QSysInfo>
 #include <QTextEdit>
 #include <QPlainTextEdit>
+#include <QTableWidget>
+#include <QTextBrowser>
 #else
 #include <QCoreApplication>
 #endif
@@ -136,6 +138,8 @@ public:
     static bool saveModel(QAbstractItemModel *pModel,QString sFileName);
     static bool saveTextEdit(QTextEdit *pTextEdit,QString sFileName);
     static bool savePlainTextEdit(QPlainTextEdit *pPlainTextEdit,QString sFileName);
+    static bool saveTableWidget(QTableWidget *pTableWidget,QString sFileName);
+    static bool saveTextBrowser(QTextBrowser *pTextBrowser,QString sFileName);
     // TODO more saveFunctions
 #endif
 #ifdef Q_OS_WIN

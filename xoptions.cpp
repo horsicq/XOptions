@@ -857,6 +857,35 @@ bool XOptions::savePlainTextEdit(QPlainTextEdit *pPlainTextEdit, QString sFileNa
     return bResult;
 }
 #endif
+#ifdef QT_GUI_LIB
+bool XOptions::saveTableWidget(QTableWidget *pTableWidget, QString sFileName)
+{
+    return saveModel(pTableWidget->model(),sFileName);
+}
+#endif
+#ifdef QT_GUI_LIB
+bool XOptions::saveTextBrowser(QTextBrowser *pTextBrowser, QString sFileName)
+{
+    bool bResult=false;
+
+    QFile file;
+    file.setFileName(sFileName);
+
+    if(file.open(QIODevice::ReadWrite))
+    {
+        QString sResult=pTextBrowser->toPlainText();
+
+        file.resize(0);
+        file.write(sResult.toLatin1().data());
+
+        file.close();
+
+        bResult=true;
+    }
+
+    return bResult;
+}
+#endif
 QString XOptions::getApplicationLangPath()
 {
     QString sResult;
