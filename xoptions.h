@@ -140,6 +140,7 @@ public:
     static bool savePlainTextEdit(QPlainTextEdit *pPlainTextEdit,QString sFileName);
     static bool saveTableWidget(QTableWidget *pTableWidget,QString sFileName);
     static bool saveTextBrowser(QTextBrowser *pTextBrowser,QString sFileName);
+    static bool saveTextBrowserHtml(QTextBrowser *pTextBrowser,QString sFileName);
     // TODO more saveFunctions
 #endif
 #ifdef Q_OS_WIN

@@ -886,6 +886,29 @@ bool XOptions::saveTextBrowser(QTextBrowser *pTextBrowser, QString sFileName)
     return bResult;
 }
 #endif
+#ifdef QT_GUI_LIB
+bool XOptions::saveTextBrowserHtml(QTextBrowser *pTextBrowser, QString sFileName)
+{
+    bool bResult=false;
+
+    QFile file;
+    file.setFileName(sFileName);
+
+    if(file.open(QIODevice::ReadWrite))
+    {
+        QString sResult=pTextBrowser->toHtml();
+
+        file.resize(0);
+        file.write(sResult.toLatin1().data());
+
+        file.close();
+
+        bResult=true;
+    }
+
+    return bResult;
+}
+#endif
 QString XOptions::getApplicationLangPath()
 {
     QString sResult;
