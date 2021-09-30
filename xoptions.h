@@ -38,6 +38,7 @@
 #include <QTableView>
 #include <QTableWidget>
 #include <QTextBrowser>
+#include <QListView>
 #else
 #include <QCoreApplication>
 #endif
@@ -141,6 +142,7 @@ public:
     static bool savePlainTextEdit(QPlainTextEdit *pPlainTextEdit,QString sFileName);
     static bool saveTableView(QTableView *pTableView,QString sFileName);
     static bool saveTableWidget(QTableWidget *pTableWidget,QString sFileName);
+    static bool saveListView(QListView *pListView,QString sFileName);
     static bool saveTextBrowser(QTextBrowser *pTextBrowser,QString sFileName);
     static bool saveTextBrowserHtml(QTextBrowser *pTextBrowser,QString sFileName);
     // TODO more saveFunctions
