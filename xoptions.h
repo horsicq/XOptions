@@ -40,6 +40,7 @@
 #include <QTextBrowser>
 #include <QListView>
 #include <QListWidget>
+#include <QTreeView>
 #else
 #include <QCoreApplication>
 #endif
@@ -145,6 +146,7 @@ public:
     static bool saveTableWidget(QTableWidget *pTableWidget,QString sFileName);
     static bool saveListView(QListView *pListView,QString sFileName);
     static bool saveListWidget(QListWidget *pListWidget,QString sFileName);
+    static bool saveTreeView(QTreeView *pTreeView,QString sFileName);
     static bool saveTextBrowser(QTextBrowser *pTextBrowser,QString sFileName);
     static bool saveTextBrowserHtml(QTextBrowser *pTextBrowser,QString sFileName);
     // TODO more saveFunctions

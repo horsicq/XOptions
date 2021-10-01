@@ -882,6 +882,12 @@ bool XOptions::saveListWidget(QListWidget *pListWidget, QString sFileName)
 }
 #endif
 #ifdef QT_GUI_LIB
+bool XOptions::saveTreeView(QTreeView *pTreeView, QString sFileName)
+{
+    return saveModel(pTreeView->model(),sFileName);
+}
+#endif
+#ifdef QT_GUI_LIB
 bool XOptions::saveTextBrowser(QTextBrowser *pTextBrowser, QString sFileName)
 {
     bool bResult=false;
@@ -1023,7 +1029,6 @@ QString XOptions::getTitle(QString sName, QString sVersion)
 
     return sResult;
 }
-
 #ifdef Q_OS_WIN
 bool XOptions::registerContext(QString sApplicationName, QString sType, QString sApplicationFilePath)
 {
