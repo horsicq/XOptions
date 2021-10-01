@@ -41,6 +41,7 @@
 #include <QListView>
 #include <QListWidget>
 #include <QTreeView>
+#include <QTreeWidget>
 #else
 #include <QCoreApplication>
 #endif
@@ -147,6 +148,7 @@ public:
     static bool saveListView(QListView *pListView,QString sFileName);
     static bool saveListWidget(QListWidget *pListWidget,QString sFileName);
     static bool saveTreeView(QTreeView *pTreeView,QString sFileName);
+    static bool saveTreeWidget(QTreeWidget *pTreeWidget,QString sFileName);
     static bool saveTextBrowser(QTextBrowser *pTextBrowser,QString sFileName);
     static bool saveTextBrowserHtml(QTextBrowser *pTextBrowser,QString sFileName);
     // TODO more saveFunctions
