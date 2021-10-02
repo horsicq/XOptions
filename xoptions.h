@@ -151,7 +151,6 @@ public:
     static bool saveTreeWidget(QTreeWidget *pTreeWidget,QString sFileName);
     static bool saveTextBrowser(QTextBrowser *pTextBrowser,QString sFileName);
     static bool saveTextBrowserHtml(QTextBrowser *pTextBrowser,QString sFileName);
-    // TODO more saveFunctions
 #endif
 #ifdef Q_OS_WIN
     bool registerContext(QString sApplicationName,QString sType,QString sApplicationFilePath);
