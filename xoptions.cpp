@@ -374,7 +374,7 @@ void XOptions::setLastFileName(QString sFileName)
 
         listFiles.append(QVariant(_sFileName));
 
-        if(listFiles.count()>10) // TODO Const
+        if(listFiles.count()>N_MAX_RECENTFILES)
         {
             listFiles.removeLast();
         }

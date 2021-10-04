@@ -50,6 +50,8 @@ class XOptions : public QObject
 {
     Q_OBJECT
 
+    const int N_MAX_RECENTFILES=10;
+
 public:
     enum ID
     {
