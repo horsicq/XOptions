@@ -25,6 +25,7 @@
 #include <QDir>
 #include <QSettings>
 #include <QTranslator>
+#include <QSysInfo>
 #ifdef QT_GUI_LIB
 #include <QWidget>
 #include <QCheckBox>
@@ -32,7 +33,6 @@
 #include <QLineEdit>
 #include <QApplication>
 #include <QStyleFactory>
-#include <QSysInfo>
 #include <QTextEdit>
 #include <QPlainTextEdit>
 #include <QTableView>
