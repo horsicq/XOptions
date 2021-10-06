@@ -27,21 +27,21 @@
 #include <QTranslator>
 #include <QSysInfo>
 #ifdef QT_GUI_LIB
-#include <QWidget>
+#include <QApplication>
 #include <QCheckBox>
 #include <QComboBox>
 #include <QLineEdit>
-#include <QApplication>
-#include <QStyleFactory>
-#include <QTextEdit>
+#include <QListView>
+#include <QListWidget>
 #include <QPlainTextEdit>
+#include <QStyleFactory>
 #include <QTableView>
 #include <QTableWidget>
 #include <QTextBrowser>
-#include <QListView>
-#include <QListWidget>
+#include <QTextEdit>
 #include <QTreeView>
 #include <QTreeWidget>
+#include <QWidget>
 #else
 #include <QCoreApplication>
 #endif
