@@ -30,9 +30,11 @@
 #include <QApplication>
 #include <QCheckBox>
 #include <QComboBox>
+#include <QFileDialog>
 #include <QLineEdit>
 #include <QListView>
 #include <QListWidget>
+#include <QMessageBox>
 #include <QPlainTextEdit>
 #include <QStyleFactory>
 #include <QTableView>
@@ -42,8 +44,6 @@
 #include <QTreeView>
 #include <QTreeWidget>
 #include <QWidget>
-#include <QMessageBox>
-#include <QFileDialog>
 #else
 #include <QCoreApplication>
 #endif
