@@ -42,6 +42,8 @@
 #include <QTreeView>
 #include <QTreeWidget>
 #include <QWidget>
+#include <QMessageBox>
+#include <QFileDialog>
 #else
 #include <QCoreApplication>
 #endif
