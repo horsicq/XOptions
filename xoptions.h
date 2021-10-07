@@ -100,7 +100,7 @@ public:
     void clearValue(ID id);
     static QString idToString(ID id);
     QString getLastDirectory();
-    void setLastDirectory(QString sValue);
+    void setLastDirectory(QString sPathName);
     void setLastFileName(QString sFileName);
     void clearRecentFiles();
     QList<QString> getRecentFiles();

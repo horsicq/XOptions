@@ -329,22 +329,22 @@ QString XOptions::getLastDirectory()
     return sResult;
 }
 
-void XOptions::setLastDirectory(QString sValue)
+void XOptions::setLastDirectory(QString sPathName)
 {
-    QFileInfo fi(sValue);
+    QFileInfo fi(sPathName);
 
     if(fi.isFile())
     {
-        sValue=fi.absolutePath();
+        sPathName=fi.absolutePath();
     }
     else if(fi.isDir())
     {
-        sValue=fi.absoluteFilePath();
+        sPathName=fi.absoluteFilePath();
     }
 
     if(getValue(ID_SAVELASTDIRECTORY).toBool())
     {
-        setValue(ID_NU_LASTDIRECTORY,sValue);
+        setValue(ID_NU_LASTDIRECTORY,sPathName);
     }
 }
 
