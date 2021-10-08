@@ -25,7 +25,7 @@ XOptions::XOptions(QObject *pParent) : QObject(pParent)
     g_bIsNeedRestart=false;
     g_bIsNative=checkNative();
 
-    g_sName=QString("%1.ini").arg(qApp->applicationName()); // defaul name
+    g_sName=QString("%1.ini").arg(qApp->applicationName()); // default name
 }
 
 void XOptions::setValueIDs(QList<ID> listVariantIDs)
@@ -541,7 +541,7 @@ void XOptions::setComboBox(QComboBox *pComboBox, XOptions::ID id)
         {
             QFileInfo fi(listFileNames.at(i));
 
-            QString sRecord=fi.baseName();
+            QString sRecord=fi.completeBaseName();
 
             QLocale locale(sRecord.section("_",1,-1));
             QString sLocale=locale.nativeLanguageName();
@@ -566,7 +566,7 @@ void XOptions::setComboBox(QComboBox *pComboBox, XOptions::ID id)
         {
             QFileInfo fi(listFileNames.at(i));
 
-            QString sRecord=fi.baseName();
+            QString sRecord=fi.completeBaseName();
 
             pComboBox->addItem(sRecord,sRecord);
         }
