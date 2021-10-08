@@ -21,11 +21,11 @@
 #ifndef XOPTIONS_H
 #define XOPTIONS_H
 
-#include <QMap>
 #include <QDir>
+#include <QMap>
 #include <QSettings>
-#include <QTranslator>
 #include <QSysInfo>
+#include <QTranslator>
 #ifdef QT_GUI_LIB
 #include <QApplication>
 #include <QCheckBox>
