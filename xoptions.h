@@ -81,7 +81,7 @@ public:
         ID_AUTHUSER,
         ID_AUTHTOKEN,
         ID_SHOWLOGO,
-        // Not using
+        // Internal
         ID_NU_LASTDIRECTORY,    // Using if ID_SAVELASTDIRECTORY
         ID_NU_RECENTFILES       // Using if ID_SAVERECENTFILES
     };
