@@ -783,7 +783,7 @@ bool XOptions::saveModel(QAbstractItemModel *pModel,QString sFileName)
 
         QString sResult;
 
-        for(int i=0; i<nNumberOfRows; i++)
+        for(int i=0;i<nNumberOfRows;i++)
         {
             for(int j=0;j<nNumberOfColumns;j++)
             {
