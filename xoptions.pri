@@ -6,3 +6,7 @@ HEADERS += \
 
 SOURCES += \
     $$PWD/xoptions.cpp
+
+DISTFILES += \
+    $$PWD/LICENSE \
+    $$PWD/README.md
