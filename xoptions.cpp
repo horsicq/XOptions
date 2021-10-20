@@ -37,7 +37,7 @@ void XOptions::setValueIDs(QList<ID> listVariantIDs)
     bool bSaveRecentFiles=false;
     bool bRecentFiles=false;
 
-    for(int i=0;i<nNumberOfIds;i++)
+    for(qint32 i=0;i<nNumberOfIds;i++)
     {
         if(listVariantIDs.at(i)==ID_SAVELASTDIRECTORY)
         {
