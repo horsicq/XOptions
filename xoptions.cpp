@@ -522,7 +522,7 @@ void XOptions::setComboBox(QComboBox *pComboBox, XOptions::ID id)
 
         int nNumberOfKeys=listKeys.count();
 
-        for(int i=0;i<nNumberOfKeys;i++)
+        for(qint32 i=0;i<nNumberOfKeys;i++)
         {
             QString sRecord=listKeys.at(i);
             pComboBox->addItem(sRecord,sRecord);
