@@ -520,7 +520,7 @@ void XOptions::setComboBox(QComboBox *pComboBox, XOptions::ID id)
         pComboBox->addItem("Default","");
         QStringList listKeys=QStyleFactory::keys();
 
-        int nNumberOfKeys=listKeys.count();
+        qint32 nNumberOfKeys=listKeys.count();
 
         for(qint32 i=0;i<nNumberOfKeys;i++)
         {
@@ -535,9 +535,9 @@ void XOptions::setComboBox(QComboBox *pComboBox, XOptions::ID id)
 
         QList<QString> listFileNames=getAllFilesFromDirectory(getApplicationLangPath(),"*.qm");
 
-        int nNumberOfRecords=listFileNames.count();
+        qint32 nNumberOfRecords=listFileNames.count();
 
-        for(int i=0;i<nNumberOfRecords;i++)
+        for(qint32 i=0;i<nNumberOfRecords;i++)
         {
             QFileInfo fi(listFileNames.at(i));
 
