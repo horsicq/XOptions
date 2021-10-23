@@ -578,10 +578,10 @@ void XOptions::setComboBox(QComboBox *pComboBox, XOptions::ID id)
         pComboBox->addItem(QString("Nauz File Detector(NFD)"),"nfd");
     }
 
-    int nNumberOfItems=pComboBox->count();
-    int nIndex=-1;
+    qint32 nNumberOfItems=pComboBox->count();
+    qint32 nIndex=-1;
 
-    for(int i=0;i<nNumberOfItems;i++)
+    for(qint32 i=0;i<nNumberOfItems;i++)
     {
         if(sValue==pComboBox->itemData(i,Qt::UserRole))
         {
