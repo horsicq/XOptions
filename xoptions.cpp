@@ -778,12 +778,12 @@ bool XOptions::saveModel(QAbstractItemModel *pModel,QString sFileName)
 
     if(file.open(QIODevice::ReadWrite))
     {
-        int nNumberOfRows=pModel->rowCount();
-        int nNumberOfColumns=pModel->columnCount();
+        qint32 nNumberOfRows=pModel->rowCount();
+        qint32 nNumberOfColumns=pModel->columnCount();
 
         QString sResult;
 
-        for(int i=0;i<nNumberOfRows;i++)
+        for(qint32 i=0;i<nNumberOfRows;i++)
         {
             for(int j=0;j<nNumberOfColumns;j++)
             {
