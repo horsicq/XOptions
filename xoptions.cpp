@@ -30,7 +30,7 @@ XOptions::XOptions(QObject *pParent) : QObject(pParent)
 
 void XOptions::setValueIDs(QList<ID> listVariantIDs)
 {
-    int nNumberOfIds=listVariantIDs.count();
+    qint32 nNumberOfIds=listVariantIDs.count();
 
     bool bSaveLastDirectory=false;
     bool bLastDirectory=false;
