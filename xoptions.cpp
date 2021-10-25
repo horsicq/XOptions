@@ -785,7 +785,7 @@ bool XOptions::saveModel(QAbstractItemModel *pModel,QString sFileName)
 
         for(qint32 i=0;i<nNumberOfRows;i++)
         {
-            for(int j=0;j<nNumberOfColumns;j++)
+            for(qint32 j=0;j<nNumberOfColumns;j++)
             {
                 QString sText=pModel->data(pModel->index(i,j)).toString();
 
