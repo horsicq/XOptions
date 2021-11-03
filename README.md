@@ -1,3 +1,3 @@
 # XOptions
 
-Options
+Generic options 
