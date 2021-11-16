@@ -30,52 +30,22 @@ XOptions::XOptions(QObject *pParent) : QObject(pParent)
 
 void XOptions::setValueIDs(QList<ID> listVariantIDs)
 {
-    qint32 nNumberOfIds=listVariantIDs.count();
-
-    bool bSaveLastDirectory=false;
-    bool bLastDirectory=false;
-    bool bSaveRecentFiles=false;
-    bool bRecentFiles=false;
-
-    for(qint32 i=0;i<nNumberOfIds;i++)
-    {
-        if(listVariantIDs.at(i)==ID_SAVELASTDIRECTORY)
-        {
-            bSaveLastDirectory=true;
-        }
-
-        if(listVariantIDs.at(i)==ID_NU_LASTDIRECTORY)
-        {
-            bLastDirectory=true;
-        }
-
-        if(listVariantIDs.at(i)==ID_SAVERECENTFILES)
-        {
-            bSaveRecentFiles=true;
-        }
-
-        if(listVariantIDs.at(i)==ID_NU_RECENTFILES)
-        {
-            bRecentFiles=true;
-        }
-    }
-
-    if(bSaveLastDirectory&&(!bLastDirectory))
-    {
-        listVariantIDs.append(ID_NU_LASTDIRECTORY);
-    }
-
-    if(bSaveRecentFiles&&(!bRecentFiles))
-    {
-        listVariantIDs.append(ID_NU_RECENTFILES);
-    }
-
     this->g_listValueIDs=listVariantIDs;
 }
 
 void XOptions::setDefaultValues(QMap<XOptions::ID, QVariant> mapDefaultValues)
 {
     this->g_mapDefaultValues=mapDefaultValues;
+}
+
+void XOptions::addID(ID id, QVariant varDefaultValue)
+{
+    g_listValueIDs.append(id);
+
+    if(varDefaultValue.isValid())
+    {
+        g_mapDefaultValues.insert(id,varDefaultValue);
+    }
 }
 
 void XOptions::setNative(bool bValue)
@@ -126,6 +96,46 @@ void XOptions::load()
 #endif
 
     qint32 nNumberOfIDs=g_listValueIDs.count();
+
+    bool bSaveLastDirectory=false;
+    bool bLastDirectory=false;
+    bool bSaveRecentFiles=false;
+    bool bRecentFiles=false;
+
+    for(qint32 i=0;i<nNumberOfIDs;i++)
+    {
+        if(g_listValueIDs.at(i)==ID_SAVELASTDIRECTORY)
+        {
+            bSaveLastDirectory=true;
+        }
+
+        if(g_listValueIDs.at(i)==ID_NU_LASTDIRECTORY)
+        {
+            bLastDirectory=true;
+        }
+
+        if(g_listValueIDs.at(i)==ID_SAVERECENTFILES)
+        {
+            bSaveRecentFiles=true;
+        }
+
+        if(g_listValueIDs.at(i)==ID_NU_RECENTFILES)
+        {
+            bRecentFiles=true;
+        }
+    }
+
+    if(bSaveLastDirectory&&(!bLastDirectory))
+    {
+        g_listValueIDs.append(ID_NU_LASTDIRECTORY);
+    }
+
+    if(bSaveRecentFiles&&(!bRecentFiles))
+    {
+        g_listValueIDs.append(ID_NU_RECENTFILES);
+    }
+
+    nNumberOfIDs=g_listValueIDs.count();
 
     for(qint32 i=0;i<nNumberOfIDs;i++)
     {
