@@ -81,6 +81,9 @@ public:
         ID_AUTHUSER,
         ID_AUTHTOKEN,
         ID_SHOWLOGO,
+        ID_BREAKPOINT_ENTRYPOINT,
+        ID_BREAKPOINT_DLLMAIN,
+        ID_BREAKPOINT_TLSFUNCTIONS,
         // for internal use.
         ID_NU_LASTDIRECTORY,    // Using if ID_SAVELASTDIRECTORY
         ID_NU_RECENTFILES       // Using if ID_SAVERECENTFILES
