@@ -52,7 +52,7 @@ class XOptions : public QObject
 {
     Q_OBJECT
 
-    const int N_MAX_RECENTFILES=10; // TODO Check
+    const qint32 N_MAX_RECENTFILES=10; // TODO Check
 
 public:
     enum ID
