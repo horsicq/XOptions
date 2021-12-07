@@ -84,6 +84,7 @@ public:
         ID_BREAKPOINT_ENTRYPOINT,
         ID_BREAKPOINT_DLLMAIN,
         ID_BREAKPOINT_TLSFUNCTIONS,
+        // TODO Breakpoints on systen breakpoints
         // for internal use.
         ID_NU_LASTDIRECTORY,    // Using if ID_SAVELASTDIRECTORY
         ID_NU_RECENTFILES       // Using if ID_SAVERECENTFILES
