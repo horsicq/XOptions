@@ -168,7 +168,8 @@ public:
 #endif
 
 signals:
-    void errorMessage(QString sErrorMessage);
+    void errorMessage(QString sText);
+    void infoMessage(QString sText);
 
 private:
     QString g_sName;
