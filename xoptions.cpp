@@ -784,6 +784,70 @@ QWidget *XOptions::getMainWidget(QWidget *pWidget)
 }
 #endif
 #ifdef QT_GUI_LIB
+QString XOptions::getModelText(QAbstractItemModel *pModel)
+{
+    QString sResult;
+
+    qint32 nNumberOfRows=pModel->rowCount();
+    qint32 nNumberOfColumns=pModel->columnCount();
+
+    QList<QString> listHeaders;
+    QList<QList<QString>> listListStrings;
+
+    for(qint32 i=0;i<nNumberOfColumns;i++)
+    {
+        QString sHeader=pModel->headerData(i,Qt::Horizontal,Qt::DisplayRole).toString();
+
+        listHeaders.append(sHeader);
+    }
+
+    for(qint32 i=0;i<nNumberOfRows;i++)
+    {
+        QList<QString> listStrings;
+
+        for(qint32 j=0;j<nNumberOfColumns;j++)
+        {
+            QString sString=pModel->data(pModel->index(i,j)).toString();
+
+            listStrings.append(sString);
+        }
+
+        listListStrings.append(listStrings);
+    }
+
+    for(qint32 i=0;i<nNumberOfColumns;i++)
+    {
+        if(i!=(nNumberOfColumns-1))
+        {
+            sResult+=QString("%1\t").arg(listHeaders.at(i));
+        }
+        else
+        {
+            sResult+=QString("%1\r\n").arg(listHeaders.at(i));
+        }
+    }
+
+    for(qint32 i=0;i<nNumberOfRows;i++)
+    {
+        for(qint32 j=0;j<nNumberOfColumns;j++)
+        {
+            QString sString=listListStrings.at(i).at(j);
+
+            if(j!=(nNumberOfColumns-1))
+            {
+                sResult+=QString("%1\t").arg(sString);
+            }
+            else
+            {
+                sResult+=QString("%1\r\n").arg(sString);
+            }
+        }
+    }
+
+    return sResult;
+}
+#endif
+#ifdef QT_GUI_LIB
 bool XOptions::saveModel(QAbstractItemModel *pModel,QString sFileName)
 {
     bool bResult=false;
@@ -793,30 +857,10 @@ bool XOptions::saveModel(QAbstractItemModel *pModel,QString sFileName)
 
     if(file.open(QIODevice::ReadWrite))
     {
-        qint32 nNumberOfRows=pModel->rowCount();
-        qint32 nNumberOfColumns=pModel->columnCount();
-
-        QString sResult;
-
-        for(qint32 i=0;i<nNumberOfRows;i++)
-        {
-            for(qint32 j=0;j<nNumberOfColumns;j++)
-            {
-                QString sText=pModel->data(pModel->index(i,j)).toString();
-
-                if(j!=(nNumberOfColumns-1))
-                {
-                    sResult+=QString("%1\t").arg(sText);
-                }
-                else
-                {
-                    sResult+=QString("%1\r\n").arg(sText);
-                }
-            }
-        }
+        QString sText=getModelText(pModel);
 
         file.resize(0);
-        file.write(sResult.toLatin1().data());
+        file.write(sText.toUtf8().data());
 
         file.close();
 

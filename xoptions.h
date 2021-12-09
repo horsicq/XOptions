@@ -52,7 +52,7 @@ class XOptions : public QObject
 {
     Q_OBJECT
 
-    const qint32 N_MAX_RECENTFILES=10; // TODO Check
+    const qint32 N_MAX_RECENTFILES=10; // TODO Check mb set/get functions
 
 public:
     enum ID
@@ -149,6 +149,7 @@ public:
     static void adjustApplicationView(QString sTranslationName,XOptions *pOptions);
     static void adjustApplicationView(QString sApplicationFileName,QString sTranslationName);
     static QWidget *getMainWidget(QWidget *pWidget);
+    static QString getModelText(QAbstractItemModel *pModel);
     static bool saveModel(QAbstractItemModel *pModel,QString sFileName);
     static bool saveTextEdit(QTextEdit *pTextEdit,QString sFileName);
     static bool savePlainTextEdit(QPlainTextEdit *pPlainTextEdit,QString sFileName);
