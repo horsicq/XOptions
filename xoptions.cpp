@@ -827,6 +827,8 @@ QString XOptions::getModelText(QAbstractItemModel *pModel)
         }
     }
 
+    // mb TODO csv,tsv,json,xml,json
+
     for(qint32 i=0;i<nNumberOfRows;i++)
     {
         for(qint32 j=0;j<nNumberOfColumns;j++)
