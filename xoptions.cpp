@@ -157,6 +157,7 @@ void XOptions::load()
                 case ID_RECURSIVESCAN:              varDefault=true;                    break;
                 case ID_DEEPSCAN:                   varDefault=true;                    break;
                 case ID_HEURISTICSCAN:              varDefault=true;                    break;
+                case ID_ALLTYPESSCAN:               varDefault=false;                   break;
                 case ID_SAVELASTDIRECTORY:          varDefault=true;                    break;
                 case ID_SAVERECENTFILES:            varDefault=true;                    break;
                 case ID_SAVEBACKUP:                 varDefault=true;                    break;
@@ -300,6 +301,7 @@ QString XOptions::idToString(ID id)
         case ID_RECURSIVESCAN:                  sResult=QString("RecursiveScan");               break;
         case ID_DEEPSCAN:                       sResult=QString("DeepScan");                    break;
         case ID_HEURISTICSCAN:                  sResult=QString("HeuristicScan");               break;
+        case ID_ALLTYPESSCAN:                   sResult=QString("AllTypesScan");                break;
         case ID_SAVELASTDIRECTORY:              sResult=QString("SaveLastDirectory");           break;
         case ID_SAVERECENTFILES:                sResult=QString("SaveRecentFiles");             break;
         case ID_SAVEBACKUP:                     sResult=QString("SaveBackup");                  break;
@@ -675,6 +677,11 @@ bool XOptions::isDeepScan()
 bool XOptions::isHeuristicScan()
 {
     return getValue(XOptions::ID_HEURISTICSCAN).toBool();
+}
+
+bool XOptions::isAllTypesScan()
+{
+    return getValue(XOptions::ID_ALLTYPESSCAN).toBool();
 }
 
 bool XOptions::isSingleApplication()

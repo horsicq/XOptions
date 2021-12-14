@@ -62,6 +62,7 @@ public:
         ID_RECURSIVESCAN,
         ID_DEEPSCAN,
         ID_HEURISTICSCAN,
+        ID_ALLTYPESSCAN,
         ID_SAVELASTDIRECTORY,
         ID_SAVERECENTFILES,
         ID_SAVEBACKUP,
@@ -128,6 +129,7 @@ public:
     bool isRecursiveScan();
     bool isDeepScan();
     bool isHeuristicScan();
+    bool isAllTypesScan();
     bool isSingleApplication();
     bool isShowLogo();
     QString getSearchSignaturesPath();
