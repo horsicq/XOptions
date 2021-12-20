@@ -65,7 +65,7 @@ bool XOptions::isAppImage()
 
     QString sApplicationDirPath=qApp->applicationDirPath();
 
-    bResult=(sApplicationDirPath.contains("/tmp/.mount_")); // TODO check
+    bResult=(sApplicationDirPath.contains("/tmp/.mount_")); // TODO more check
 
     return bResult;
 }
