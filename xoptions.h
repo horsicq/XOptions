@@ -93,6 +93,7 @@ public:
     };
 
     explicit XOptions(QObject *pParent=nullptr);
+
     void setValueIDs(QList<ID> listValueIDs);
     void setDefaultValues(QMap<ID,QVariant> mapDefaultValues);
     void addID(ID id, QVariant varDefaultValue=QVariant());
