@@ -411,9 +411,9 @@ QList<QString> XOptions::getRecentFiles()
 
     QList<QVariant> listFiles=getValue(ID_NU_RECENTFILES).toList();
 
-    qint32 nNumberOfRecords=listFiles.size();
+    qint32 nNumberOfFiles=listFiles.size();
 
-    for(qint32 i=0;i<nNumberOfRecords;i++)
+    for(qint32 i=0;i<nNumberOfFiles;i++)
     {
         listResult.append(listFiles.at(i).toString());
     }
