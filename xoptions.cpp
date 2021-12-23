@@ -152,37 +152,38 @@ void XOptions::load()
         {
             switch(id)
             {
-                case ID_STAYONTOP:                  varDefault=false;                   break;
-                case ID_SCANAFTEROPEN:              varDefault=true;                    break;
-                case ID_RECURSIVESCAN:              varDefault=true;                    break;
-                case ID_DEEPSCAN:                   varDefault=true;                    break;
-                case ID_HEURISTICSCAN:              varDefault=true;                    break;
-                case ID_ALLTYPESSCAN:               varDefault=false;                   break;
-                case ID_SAVELASTDIRECTORY:          varDefault=true;                    break;
-                case ID_SAVERECENTFILES:            varDefault=true;                    break;
-                case ID_SAVEBACKUP:                 varDefault=true;                    break;
-                case ID_STYLE:                      varDefault="Fusion";                break; // TODO Check styles in OSX and Linux
-                case ID_LANG:                       varDefault="System";                break;
-                case ID_QSS:                        varDefault="";                      break;
-                case ID_DATABASEPATH:               varDefault="$data/db";              break;
-                case ID_INFOPATH:                   varDefault="$data/info";            break;
-                case ID_SCANENGINE:                 varDefault="die";                   break;
-                case ID_DISASMSYNTAX:               varDefault="";                      break;
-                case ID_ROOTPATH:                   varDefault="";                      break;
-                case ID_DATAPATH:                   varDefault="$data/data";            break;
-                case ID_JSON:                       varDefault="";                      break;
-                case ID_SINGLEAPPLICATION:          varDefault=false;                   break;
-                case ID_SEARCHSIGNATURESPATH:       varDefault="$data/signatures";      break;
-                case ID_STRUCTSPATH:                varDefault="$data/structs";         break;
-                case ID_AUTHUSER:                   varDefault="";                      break;
-                case ID_AUTHTOKEN:                  varDefault="";                      break;
-                case ID_SHOWLOGO:                   varDefault=true;                    break;
-                case ID_BREAKPOINT_ENTRYPOINT:      varDefault=true;                    break;
-                case ID_BREAKPOINT_DLLMAIN:         varDefault=true;                    break;
-                case ID_BREAKPOINT_TLSFUNCTIONS:    varDefault=true;                    break;
-                case ID_NU_RECENTFILES:             varDefault=QList<QVariant>();       break;
-                case ID_NU_LASTDIRECTORY:           varDefault="";                      break;
-                default:                            varDefault="";
+                case ID_STAYONTOP:                              varDefault=false;                   break;
+                case ID_SCANAFTEROPEN:                          varDefault=true;                    break;
+                case ID_RECURSIVESCAN:                          varDefault=true;                    break;
+                case ID_DEEPSCAN:                               varDefault=true;                    break;
+                case ID_HEURISTICSCAN:                          varDefault=true;                    break;
+                case ID_ALLTYPESSCAN:                           varDefault=false;                   break;
+                case ID_SAVELASTDIRECTORY:                      varDefault=true;                    break;
+                case ID_SAVERECENTFILES:                        varDefault=true;                    break;
+                case ID_SAVEBACKUP:                             varDefault=true;                    break;
+                case ID_STYLE:                                  varDefault="Fusion";                break; // TODO Check styles in OSX and Linux
+                case ID_LANG:                                   varDefault="System";                break;
+                case ID_QSS:                                    varDefault="";                      break;
+                case ID_DATABASEPATH:                           varDefault="$data/db";              break;
+                case ID_INFOPATH:                               varDefault="$data/info";            break;
+                case ID_SCANENGINE:                             varDefault="die";                   break;
+                case ID_DISASMSYNTAX:                           varDefault="";                      break;
+                case ID_ROOTPATH:                               varDefault="";                      break;
+                case ID_DATAPATH:                               varDefault="$data/data";            break;
+                case ID_JSON:                                   varDefault="";                      break;
+                case ID_SINGLEAPPLICATION:                      varDefault=false;                   break;
+                case ID_SEARCHSIGNATURESPATH:                   varDefault="$data/signatures";      break;
+                case ID_STRUCTSPATH:                            varDefault="$data/structs";         break;
+                case ID_AUTHUSER:                               varDefault="";                      break;
+                case ID_AUTHTOKEN:                              varDefault="";                      break;
+                case ID_SHOWLOGO:                               varDefault=true;                    break;
+                case ID_DISASM_SYNTAX:                          varDefault="";                      break;
+                case ID_DEBUGGER_BREAKPOINT_ENTRYPOINT:         varDefault=true;                    break;
+                case ID_DEBUGGER_BREAKPOINT_DLLMAIN:            varDefault=true;                    break;
+                case ID_DEBUGGER_BREAKPOINT_TLSFUNCTIONS:       varDefault=true;                    break;
+                case ID_NU_RECENTFILES:                         varDefault=QList<QVariant>();       break;
+                case ID_NU_LASTDIRECTORY:                       varDefault="";                      break;
+                default:                                        varDefault="";
             }
         }
 
@@ -263,11 +264,15 @@ void XOptions::save()
 
 QVariant XOptions::getValue(XOptions::ID id)
 {
+    id=_fixID(id);
+
     return g_mapValues.value(id);
 }
 
 void XOptions::setValue(XOptions::ID id, QVariant vValue)
 {
+    id=_fixID(id);
+
     if( (id==ID_STYLE)||
         (id==ID_LANG)||
         (id==ID_QSS)||
@@ -296,36 +301,38 @@ QString XOptions::idToString(ID id)
 
     switch(id)
     {
-        case ID_STAYONTOP:                      sResult=QString("StayOnTop");                   break;
-        case ID_SCANAFTEROPEN:                  sResult=QString("ScanAfterOpen");               break;
-        case ID_RECURSIVESCAN:                  sResult=QString("RecursiveScan");               break;
-        case ID_DEEPSCAN:                       sResult=QString("DeepScan");                    break;
-        case ID_HEURISTICSCAN:                  sResult=QString("HeuristicScan");               break;
-        case ID_ALLTYPESSCAN:                   sResult=QString("AllTypesScan");                break;
-        case ID_SAVELASTDIRECTORY:              sResult=QString("SaveLastDirectory");           break;
-        case ID_SAVERECENTFILES:                sResult=QString("SaveRecentFiles");             break;
-        case ID_SAVEBACKUP:                     sResult=QString("SaveBackup");                  break;
-        case ID_STYLE:                          sResult=QString("Style");                       break;
-        case ID_LANG:                           sResult=QString("Lang");                        break;
-        case ID_QSS:                            sResult=QString("Qss");                         break;
-        case ID_DATABASEPATH:                   sResult=QString("DatabasePath");                break;
-        case ID_INFOPATH:                       sResult=QString("InfoPath");                    break;
-        case ID_SCANENGINE:                     sResult=QString("ScanEngine");                  break;
-        case ID_DISASMSYNTAX:                   sResult=QString("DisasmSyntax");                break;
-        case ID_ROOTPATH:                       sResult=QString("RootPath");                    break;
-        case ID_DATAPATH:                       sResult=QString("DataPath");                    break;
-        case ID_JSON:                           sResult=QString("Json");                        break;
-        case ID_SINGLEAPPLICATION:              sResult=QString("SingleApplication");           break;
-        case ID_SEARCHSIGNATURESPATH:           sResult=QString("SearchSignaturesPath");        break;
-        case ID_STRUCTSPATH:                    sResult=QString("StructsPath");                 break;
-        case ID_AUTHUSER:                       sResult=QString("AuthUser");                    break;
-        case ID_AUTHTOKEN:                      sResult=QString("AuthToken");                   break;
-        case ID_SHOWLOGO:                       sResult=QString("ShowLogo");                    break;
-        case ID_BREAKPOINT_ENTRYPOINT:          sResult=QString("Breakpoint/EntryPoint");       break;
-        case ID_BREAKPOINT_DLLMAIN:             sResult=QString("Breakpoint/DLLMain");          break;
-        case ID_BREAKPOINT_TLSFUNCTIONS:        sResult=QString("Breakpoint/TLSFunctions");     break;
-        case ID_NU_RECENTFILES:                 sResult=QString("RecentFiles");                 break;
-        case ID_NU_LASTDIRECTORY:               sResult=QString("LastDirectory");               break;
+        case ID_STAYONTOP:                                  sResult=QString("StayOnTop");                               break;
+        case ID_SCANAFTEROPEN:                              sResult=QString("ScanAfterOpen");                           break;
+        case ID_RECURSIVESCAN:                              sResult=QString("RecursiveScan");                           break;
+        case ID_DEEPSCAN:                                   sResult=QString("DeepScan");                                break;
+        case ID_HEURISTICSCAN:                              sResult=QString("HeuristicScan");                           break;
+        case ID_ALLTYPESSCAN:                               sResult=QString("AllTypesScan");                            break;
+        case ID_SAVELASTDIRECTORY:                          sResult=QString("SaveLastDirectory");                       break;
+        case ID_SAVERECENTFILES:                            sResult=QString("SaveRecentFiles");                         break;
+        case ID_SAVEBACKUP:                                 sResult=QString("SaveBackup");                              break;
+        case ID_STYLE:                                      sResult=QString("Style");                                   break;
+        case ID_LANG:                                       sResult=QString("Lang");                                    break;
+        case ID_QSS:                                        sResult=QString("Qss");                                     break;
+        case ID_DATABASEPATH:                               sResult=QString("DatabasePath");                            break;
+        case ID_INFOPATH:                                   sResult=QString("InfoPath");                                break;
+        case ID_SCANENGINE:                                 sResult=QString("ScanEngine");                              break;
+        case ID_DISASMSYNTAX:                               sResult=QString("DisasmSyntax");                            break;
+        case ID_ROOTPATH:                                   sResult=QString("RootPath");                                break;
+        case ID_DATAPATH:                                   sResult=QString("DataPath");                                break;
+        case ID_JSON:                                       sResult=QString("Json");                                    break;
+        case ID_SINGLEAPPLICATION:                          sResult=QString("SingleApplication");                       break;
+        case ID_SEARCHSIGNATURESPATH:                       sResult=QString("SearchSignaturesPath");                    break;
+        case ID_STRUCTSPATH:                                sResult=QString("StructsPath");                             break;
+        case ID_AUTHUSER:                                   sResult=QString("AuthUser");                                break;
+        case ID_AUTHTOKEN:                                  sResult=QString("AuthToken");                               break;
+        case ID_SHOWLOGO:                                   sResult=QString("ShowLogo");                                break;
+        // new
+        case ID_DISASM_SYNTAX:                              sResult=QString("Disasm/Syntax");                           break;
+        case ID_DEBUGGER_BREAKPOINT_ENTRYPOINT:             sResult=QString("Debugger/Breakpoint/EntryPoint");          break;
+        case ID_DEBUGGER_BREAKPOINT_DLLMAIN:                sResult=QString("Debugger/Breakpoint/DLLMain");             break;
+        case ID_DEBUGGER_BREAKPOINT_TLSFUNCTIONS:           sResult=QString("Debugger/Breakpoint/TLSFunctions");        break;
+        case ID_NU_RECENTFILES:                             sResult=QString("RecentFiles");                             break;
+        case ID_NU_LASTDIRECTORY:                           sResult=QString("LastDirectory");                           break;
     }
 
     return sResult;
@@ -1135,3 +1142,14 @@ bool XOptions::checkContext(QString sApplicationName, QString sType)
     return (settings.value(QString("%1/command/Default").arg(sApplicationName)).toString()!="");
 }
 #endif
+XOptions::ID XOptions::_fixID(ID id)
+{
+    ID result=id;
+
+    if((result==ID_DISASM_SYNTAX)&&(g_mapValues.contains(ID_DISASMSYNTAX)))
+    {
+        result=ID_DISASMSYNTAX;
+    }
+
+    return result;
+}

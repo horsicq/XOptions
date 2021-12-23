@@ -55,8 +55,16 @@ class XOptions : public QObject
     const qint32 N_MAX_RECENTFILES=10; // TODO set/get functions
 
 public:
+    enum GROUPID
+    {
+        GROUPID_DEBUGGER=0,
+        GROUPID_HEX,
+        GROUPID_DISASM
+    };
+
     enum ID
     {
+        // TODO remove
         ID_STAYONTOP=0,
         ID_SCANAFTEROPEN,
         ID_RECURSIVESCAN,
@@ -82,10 +90,13 @@ public:
         ID_AUTHUSER,
         ID_AUTHTOKEN,
         ID_SHOWLOGO,
-        ID_BREAKPOINT_ENTRYPOINT,
-        ID_BREAKPOINT_DLLMAIN,
-        ID_BREAKPOINT_TLSFUNCTIONS,
+        // new
+        ID_DISASM_SYNTAX,
+        ID_DEBUGGER_BREAKPOINT_ENTRYPOINT,
+        ID_DEBUGGER_BREAKPOINT_DLLMAIN,
+        ID_DEBUGGER_BREAKPOINT_TLSFUNCTIONS,
         // TODO Breakpoints on system breakpoints
+        // TODO colors for DISASM
         // TODO more
         // for internal use.
         ID_NU_LASTDIRECTORY,    // Using if ID_SAVELASTDIRECTORY
@@ -171,6 +182,9 @@ public:
     bool clearContext(QString sApplicationName,QString sType);
     bool checkContext(QString sApplicationName,QString sType);
 #endif
+
+private:
+    ID _fixID(ID id);
 
 signals:
     void errorMessage(QString sText);
