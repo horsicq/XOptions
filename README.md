@@ -1,3 +1,3 @@
 # XOptions
 
-Generic options for projects
+Options for projects
