@@ -57,7 +57,9 @@ class XOptions : public QObject
 public:
     enum GROUPID
     {
-        GROUPID_DEBUGGER=0,
+        GROUPID_VIEW=0,
+        GROUPID_FILE,
+        GROUPID_DEBUGGER,
         GROUPID_HEX,
         GROUPID_DISASM
     };
