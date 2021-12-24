@@ -90,7 +90,7 @@ public:
         ID_AUTHUSER,
         ID_AUTHTOKEN,
         ID_SHOWLOGO,
-        // new
+        // new TODO
         ID_DISASM_SYNTAX,
         ID_DEBUGGER_BREAKPOINT_ENTRYPOINT,
         ID_DEBUGGER_BREAKPOINT_DLLMAIN,
