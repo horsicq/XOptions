@@ -1,3 +1,1 @@
-# XOptions
-
 Options for projects
