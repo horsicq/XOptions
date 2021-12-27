@@ -36,10 +36,13 @@ public:
     explicit XOptionsWidget(QWidget *pParent=nullptr);
     ~XOptionsWidget();
 
-    void setOptions(XOptions *pOptions);
+    void setOptions(XOptions *pOptions,QString sApplicationDisplayName);
 
+    void addListRecord(QString sTitle,qint32 nIndex);
     void addPage(QWidget *pWidget,QString sTitle);
     void setCurrentPage(qint32 nPage);
+
+    void save();
 
 private slots:
     void on_listWidgetOptions_currentRowChanged(int nCurrentRow);
@@ -47,6 +50,7 @@ private slots:
 private:
     Ui::XOptionsWidget *ui;
     XOptions *g_pOptions;
+    QString g_sApplicationDisplayName;
 };
 
 #endif // XOPTIONSWIDGET_H

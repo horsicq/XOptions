@@ -48,6 +48,67 @@ void XOptions::addID(ID id, QVariant varDefaultValue)
     }
 }
 
+XOptions::GROUPID XOptions::getGroupID(ID id)
+{
+    GROUPID result=GROUPID_UNKNOWN;
+
+    switch(id)
+    {
+        case ID_VIEW_STAYONTOP:
+        case ID_VIEW_STYLE:
+        case ID_VIEW_QSS:
+        case ID_VIEW_LANG:
+        case ID_VIEW_SINGLEAPPLICATION:
+        case ID_VIEW_SHOWLOGO:
+            result=GROUPID_VIEW;
+            break;
+        case ID_FILE_SAVELASTDIRECTORY:
+        case ID_FILE_SAVERECENTFILES:
+        case ID_FILE_SAVEBACKUP:
+        case ID_FILE_CONTEXT:
+            result=GROUPID_FILE;
+            break;
+    }
+
+    return result;
+}
+
+bool XOptions::isIDPresent(ID id)
+{
+    bool bResult=false;
+
+    qint32 nNumberOfRecords=g_listValueIDs.count();
+
+    for(qint32 i=0;i<nNumberOfRecords;i++)
+    {
+        if(g_listValueIDs.at(i)==id)
+        {
+            bResult=true;
+            break;
+        }
+    }
+
+    return bResult;
+}
+
+bool XOptions::isGroupIDPresent(GROUPID groupID)
+{
+    bool bResult=false;
+
+    qint32 nNumberOfRecords=g_listValueIDs.count();
+
+    for(qint32 i=0;i<nNumberOfRecords;i++)
+    {
+        if(getGroupID(g_listValueIDs.at(i))==groupID)
+        {
+            bResult=true;
+            break;
+        }
+    }
+
+    return bResult;
+}
+
 void XOptions::setNative(bool bValue)
 {
     g_bIsNative=bValue;
@@ -104,7 +165,7 @@ void XOptions::load()
 
     for(qint32 i=0;i<nNumberOfIDs;i++)
     {
-        if(g_listValueIDs.at(i)==ID_SAVELASTDIRECTORY)
+        if(g_listValueIDs.at(i)==ID_FILE_SAVELASTDIRECTORY)
         {
             bSaveLastDirectory=true;
         }
@@ -114,7 +175,7 @@ void XOptions::load()
             bLastDirectory=true;
         }
 
-        if(g_listValueIDs.at(i)==ID_SAVERECENTFILES)
+        if(g_listValueIDs.at(i)==ID_FILE_SAVERECENTFILES)
         {
             bSaveRecentFiles=true;
         }
@@ -150,6 +211,7 @@ void XOptions::load()
         }
         else
         {
+            // TODO remove, use addID
             switch(id)
             {
                 case ID_STAYONTOP:                              varDefault=false;                   break;
@@ -273,9 +335,9 @@ void XOptions::setValue(XOptions::ID id, QVariant vValue)
 {
     id=_fixID(id);
 
-    if( (id==ID_STYLE)||
-        (id==ID_LANG)||
-        (id==ID_QSS)||
+    if( (id==ID_VIEW_STYLE)||
+        (id==ID_VIEW_LANG)||
+        (id==ID_VIEW_QSS)||
         (id==ID_SEARCHSIGNATURESPATH)||     // TODO remove
         (id==ID_STRUCTSPATH))               // TODO remove
     {
@@ -301,6 +363,7 @@ QString XOptions::idToString(ID id)
 
     switch(id)
     {
+        // TODO remove
         case ID_STAYONTOP:                                  sResult=QString("StayOnTop");                               break;
         case ID_SCANAFTEROPEN:                              sResult=QString("ScanAfterOpen");                           break;
         case ID_RECURSIVESCAN:                              sResult=QString("RecursiveScan");                           break;
@@ -327,6 +390,16 @@ QString XOptions::idToString(ID id)
         case ID_AUTHTOKEN:                                  sResult=QString("AuthToken");                               break;
         case ID_SHOWLOGO:                                   sResult=QString("ShowLogo");                                break;
         // new
+        case ID_VIEW_STAYONTOP:                             sResult=QString("View/StayOnTop");                          break;
+        case ID_VIEW_STYLE:                                 sResult=QString("View/Style");                              break;
+        case ID_VIEW_QSS:                                   sResult=QString("View/Qss");                                break;
+        case ID_VIEW_LANG:                                  sResult=QString("View/Lang");                               break;
+        case ID_VIEW_SINGLEAPPLICATION:                     sResult=QString("View/SingleApplication");                  break;
+        case ID_VIEW_SHOWLOGO:                              sResult=QString("View/ShowLogo");                           break;
+        case ID_FILE_SAVELASTDIRECTORY:                     sResult=QString("File/SaveLastDirectory");                  break;
+        case ID_FILE_SAVERECENTFILES:                       sResult=QString("File/SaveRecentFiles");                    break;
+        case ID_FILE_SAVEBACKUP:                            sResult=QString("File/SaveBackup");                         break;
+        case ID_FILE_CONTEXT:                               sResult=QString("File/Context");                            break;
         case ID_DISASM_SYNTAX:                              sResult=QString("Disasm/Syntax");                           break;
         case ID_DEBUGGER_BREAKPOINT_ENTRYPOINT:             sResult=QString("Debugger/Breakpoint/EntryPoint");          break;
         case ID_DEBUGGER_BREAKPOINT_DLLMAIN:                sResult=QString("Debugger/Breakpoint/DLLMain");             break;
@@ -342,7 +415,7 @@ QString XOptions::getLastDirectory()
 {
     QString sResult;
 
-    bool bSaveLastDirectory=getValue(ID_SAVELASTDIRECTORY).toBool();
+    bool bSaveLastDirectory=getValue(ID_FILE_SAVELASTDIRECTORY).toBool();
     QString sLastDirectory=getValue(ID_NU_LASTDIRECTORY).toString();
 
     if(bSaveLastDirectory&&(sLastDirectory!="")&&QDir().exists(sLastDirectory))
@@ -366,7 +439,7 @@ void XOptions::setLastDirectory(QString sPathName)
         sPathName=fi.absoluteFilePath();
     }
 
-    if(getValue(ID_SAVELASTDIRECTORY).toBool())
+    if(getValue(ID_FILE_SAVELASTDIRECTORY).toBool())
     {
         setValue(ID_NU_LASTDIRECTORY,sPathName);
     }
@@ -383,7 +456,7 @@ void XOptions::setLastFileName(QString sFileName)
         sDirectory=fi.absolutePath();
     }
 
-    if(getValue(ID_SAVELASTDIRECTORY).toBool())
+    if(getValue(ID_FILE_SAVELASTDIRECTORY).toBool())
     {
         setValue(ID_NU_LASTDIRECTORY,sDirectory);
     }
@@ -539,7 +612,7 @@ void XOptions::setComboBox(QComboBox *pComboBox, XOptions::ID id)
 
     QString sValue=getValue(id).toString();
 
-    if(id==ID_STYLE)
+    if(id==ID_VIEW_STYLE)
     {
         pComboBox->addItem("Default","");
         QStringList listKeys=QStyleFactory::keys();
@@ -552,7 +625,7 @@ void XOptions::setComboBox(QComboBox *pComboBox, XOptions::ID id)
             pComboBox->addItem(sRecord,sRecord);
         }
     }
-    else if(id==ID_LANG)
+    else if(id==ID_VIEW_LANG)
     {
         pComboBox->addItem("English","");
         pComboBox->addItem("System","System");
@@ -578,7 +651,7 @@ void XOptions::setComboBox(QComboBox *pComboBox, XOptions::ID id)
             pComboBox->addItem(sLocale,sRecord);
         }
     }
-    else if(id==ID_QSS)
+    else if(id==ID_VIEW_QSS)
     {
         pComboBox->addItem("Default","");
 
@@ -643,17 +716,17 @@ void XOptions::getLineEdit(QLineEdit *pLineEdit, XOptions::ID id)
 #endif
 bool XOptions::isSaveBackup()
 {
-    return getValue(XOptions::ID_SAVEBACKUP).toBool();
+    return getValue(XOptions::ID_FILE_SAVEBACKUP).toBool();
 }
 
 bool XOptions::isSaveLastDirectory()
 {
-    return getValue(XOptions::ID_SAVELASTDIRECTORY).toBool();
+    return getValue(XOptions::ID_FILE_SAVELASTDIRECTORY).toBool();
 }
 
 bool XOptions::isSaveRecentFiles()
 {
-    return getValue(XOptions::ID_SAVERECENTFILES).toBool();
+    return getValue(XOptions::ID_FILE_SAVERECENTFILES).toBool();
 }
 
 bool XOptions::isRestartNeeded()
@@ -663,7 +736,7 @@ bool XOptions::isRestartNeeded()
 
 bool XOptions::isStayOnTop()
 {
-    return getValue(XOptions::ID_STAYONTOP).toBool();
+    return getValue(XOptions::ID_VIEW_STAYONTOP).toBool();
 }
 
 bool XOptions::isScanAfterOpen()
@@ -693,12 +766,12 @@ bool XOptions::isAllTypesScan()
 
 bool XOptions::isSingleApplication()
 {
-    return getValue(XOptions::ID_SINGLEAPPLICATION).toBool();
+    return getValue(XOptions::ID_VIEW_SINGLEAPPLICATION).toBool();
 }
 
 bool XOptions::isShowLogo()
 {
-    return getValue(XOptions::ID_SHOWLOGO).toBool();
+    return getValue(XOptions::ID_VIEW_SHOWLOGO).toBool();
 }
 
 QString XOptions::getSearchSignaturesPath()
@@ -713,7 +786,7 @@ QString XOptions::getStructsPath()
 #ifdef QT_GUI_LIB
 void XOptions::adjustApplicationView(QString sTranslationName, XOptions *pOptions)
 {
-    QString sStyle=pOptions->getValue(XOptions::ID_STYLE).toString();
+    QString sStyle=pOptions->getValue(XOptions::ID_VIEW_STYLE).toString();
 
     if(sStyle!="")
     {
@@ -721,7 +794,7 @@ void XOptions::adjustApplicationView(QString sTranslationName, XOptions *pOption
     }
 
     QTranslator *pTranslator=new QTranslator; // Important
-    QString sLang=pOptions->getValue(XOptions::ID_LANG).toString();
+    QString sLang=pOptions->getValue(XOptions::ID_VIEW_LANG).toString();
     QString sLangsPath=pOptions->getApplicationLangPath();
 
     bool bLoad=false;
@@ -744,7 +817,7 @@ void XOptions::adjustApplicationView(QString sTranslationName, XOptions *pOption
         qApp->installTranslator(pTranslator);
     }
 
-    QString sQss=pOptions->getValue(XOptions::ID_QSS).toString();
+    QString sQss=pOptions->getValue(XOptions::ID_VIEW_QSS).toString();
 
     if(sQss!="")
     {
@@ -774,9 +847,9 @@ void XOptions::adjustApplicationView(QString sApplicationFileName,QString sTrans
 
     QList<XOptions::ID> listIDs;
 
-    listIDs.append(XOptions::ID_STYLE);
-    listIDs.append(XOptions::ID_LANG);
-    listIDs.append(XOptions::ID_QSS);
+    listIDs.append(XOptions::ID_VIEW_STYLE);
+    listIDs.append(XOptions::ID_VIEW_LANG);
+    listIDs.append(XOptions::ID_VIEW_QSS);
 
     xOptions.setValueIDs(listIDs);
     xOptions.load();
@@ -1146,10 +1219,16 @@ XOptions::ID XOptions::_fixID(ID id)
 {
     ID result=id;
 
-    if((result==ID_DISASM_SYNTAX)&&(g_mapValues.contains(ID_DISASMSYNTAX)))
-    {
-        result=ID_DISASMSYNTAX;
-    }
+    if      ((result==ID_VIEW_STAYONTOP)&&(g_mapValues.contains(ID_STAYONTOP)))                     result=ID_STAYONTOP;
+    else if ((result==ID_VIEW_STYLE)&&(g_mapValues.contains(ID_STYLE)))                             result=ID_STYLE;
+    else if ((result==ID_VIEW_QSS)&&(g_mapValues.contains(ID_QSS)))                                 result=ID_QSS;
+    else if ((result==ID_VIEW_LANG)&&(g_mapValues.contains(ID_LANG)))                               result=ID_LANG;
+    else if ((result==ID_VIEW_SINGLEAPPLICATION)&&(g_mapValues.contains(ID_SINGLEAPPLICATION)))     result=ID_SINGLEAPPLICATION;
+    else if ((result==ID_VIEW_SHOWLOGO)&&(g_mapValues.contains(ID_SHOWLOGO)))                       result=ID_SHOWLOGO;
+    else if ((result==ID_FILE_SAVELASTDIRECTORY)&&(g_mapValues.contains(ID_SAVELASTDIRECTORY)))     result=ID_SAVELASTDIRECTORY;
+    else if ((result==ID_FILE_SAVERECENTFILES)&&(g_mapValues.contains(ID_SAVERECENTFILES)))         result=ID_SAVERECENTFILES;
+    else if ((result==ID_FILE_SAVEBACKUP)&&(g_mapValues.contains(ID_SAVEBACKUP)))                   result=ID_SAVEBACKUP;
+    else if ((result==ID_DISASM_SYNTAX)&&(g_mapValues.contains(ID_DISASMSYNTAX)))                   result=ID_DISASMSYNTAX;
 
     return result;
 }

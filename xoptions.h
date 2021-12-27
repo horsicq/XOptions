@@ -57,7 +57,8 @@ class XOptions : public QObject
 public:
     enum GROUPID
     {
-        GROUPID_VIEW=0,
+        GROUPID_UNKNOWN=0,
+        GROUPID_VIEW,
         GROUPID_FILE,
         GROUPID_DEBUGGER,
         GROUPID_HEX,
@@ -68,17 +69,18 @@ public:
     {
         // TODO remove
         ID_STAYONTOP=0,
-        ID_SCANAFTEROPEN,
-        ID_RECURSIVESCAN,
-        ID_DEEPSCAN,
-        ID_HEURISTICSCAN,
-        ID_ALLTYPESSCAN,
         ID_SAVELASTDIRECTORY,
         ID_SAVERECENTFILES,
         ID_SAVEBACKUP,
         ID_STYLE,
         ID_QSS,
         ID_LANG,
+        ID_SHOWLOGO,
+        ID_SCANAFTEROPEN,
+        ID_RECURSIVESCAN,
+        ID_DEEPSCAN,
+        ID_HEURISTICSCAN,
+        ID_ALLTYPESSCAN,
         ID_DATABASEPATH,
         ID_INFOPATH,
         ID_SCANENGINE,
@@ -91,8 +93,18 @@ public:
         ID_STRUCTSPATH,
         ID_AUTHUSER,
         ID_AUTHTOKEN,
-        ID_SHOWLOGO,
+
         // new TODO
+        ID_VIEW_STAYONTOP,
+        ID_VIEW_STYLE,
+        ID_VIEW_QSS,
+        ID_VIEW_LANG,
+        ID_VIEW_SINGLEAPPLICATION,
+        ID_VIEW_SHOWLOGO,
+        ID_FILE_SAVELASTDIRECTORY,
+        ID_FILE_SAVERECENTFILES,
+        ID_FILE_SAVEBACKUP,
+        ID_FILE_CONTEXT,
         ID_DISASM_SYNTAX,
         ID_DEBUGGER_BREAKPOINT_ENTRYPOINT,
         ID_DEBUGGER_BREAKPOINT_DLLMAIN,
@@ -110,6 +122,9 @@ public:
     void setValueIDs(QList<ID> listValueIDs);
     void setDefaultValues(QMap<ID,QVariant> mapDefaultValues);
     void addID(ID id, QVariant varDefaultValue=QVariant());
+    GROUPID getGroupID(ID id);
+    bool isIDPresent(ID id);
+    bool isGroupIDPresent(GROUPID groupID);
     void setNative(bool bValue);
     bool isNative();
     static bool isAppImage();
@@ -186,7 +201,7 @@ public:
 #endif
 
 private:
-    ID _fixID(ID id);
+    ID _fixID(ID id); // TODO remove
 
 signals:
     void errorMessage(QString sText);

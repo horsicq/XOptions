@@ -33,18 +33,74 @@ XOptionsWidget::~XOptionsWidget()
     delete ui;
 }
 
-void XOptionsWidget::setOptions(XOptions *pOptions)
+void XOptionsWidget::setOptions(XOptions *pOptions, QString sApplicationDisplayName)
 {
     g_pOptions=pOptions;
+    g_sApplicationDisplayName=sApplicationDisplayName;
 
-    // TODO add View
-    // TODO add File
+    if(g_pOptions->isGroupIDPresent(XOptions::GROUPID_VIEW))
+    {
+        addListRecord(tr("View"),0);
+    }
+
+    if(g_pOptions->isGroupIDPresent(XOptions::GROUPID_FILE))
+    {
+        addListRecord(tr("File"),1);
+    }
+
+    if(g_pOptions->isIDPresent(XOptions::ID_VIEW_STAYONTOP))
+    {
+        g_pOptions->setCheckBox(ui->checkBoxViewStayOnTop,XOptions::ID_VIEW_STAYONTOP);
+    }
+    else
+    {
+        ui->checkBoxViewStayOnTop->hide();
+    }
+
+    if(g_pOptions->isIDPresent(XOptions::ID_VIEW_STYLE))
+    {
+        g_pOptions->setComboBox(ui->comboBoxViewStyle,XOptions::ID_VIEW_STYLE);
+    }
+    else
+    {
+        ui->groupBoxViewStyle->hide();
+    }
+
+    if(g_pOptions->isIDPresent(XOptions::ID_FILE_SAVELASTDIRECTORY))
+    {
+        g_pOptions->setCheckBox(ui->checkBoxFileSaveLastDirectory,XOptions::ID_FILE_SAVELASTDIRECTORY);
+    }
+    else
+    {
+        ui->checkBoxFileSaveLastDirectory->hide();
+    }
+
+    if(g_pOptions->isIDPresent(XOptions::ID_FILE_CONTEXT))
+    {
+    #ifdef Q_OS_WIN32
+        ui->checkBoxFileContext->setChecked(g_pOptions->checkContext(g_sApplicationDisplayName,g_pOptions->getValue(XOptions::ID_FILE_CONTEXT).toString()));
+    #endif
+    }
+    else
+    {
+        ui->checkBoxFileContext->hide();
+    }
+}
+
+void XOptionsWidget::addListRecord(QString sTitle, qint32 nIndex)
+{
+    QListWidgetItem *pItem=new QListWidgetItem;
+    pItem->setText(sTitle);
+    pItem->setData(Qt::UserRole,nIndex);
+
+    ui->listWidgetOptions->addItem(pItem);
 }
 
 void XOptionsWidget::addPage(QWidget *pWidget, QString sTitle)
 {
-    ui->listWidgetOptions->addItem(sTitle);
-    ui->stackedWidgetOptions->addWidget(pWidget);
+    qint32 nIndex=ui->stackedWidgetOptions->addWidget(pWidget);
+
+    addListRecord(sTitle,nIndex);
 }
 
 void XOptionsWidget::setCurrentPage(qint32 nPage)
@@ -55,10 +111,46 @@ void XOptionsWidget::setCurrentPage(qint32 nPage)
     }
 }
 
+void XOptionsWidget::save()
+{
+    if(g_pOptions->isIDPresent(XOptions::ID_VIEW_STAYONTOP))
+    {
+        g_pOptions->getCheckBox(ui->checkBoxViewStayOnTop,XOptions::ID_VIEW_STAYONTOP);
+    }
+
+    if(g_pOptions->isIDPresent(XOptions::ID_VIEW_STYLE))
+    {
+        g_pOptions->getComboBox(ui->comboBoxViewStyle,XOptions::ID_VIEW_STYLE);
+    }
+
+    if(g_pOptions->isIDPresent(XOptions::ID_FILE_SAVELASTDIRECTORY))
+    {
+        g_pOptions->getCheckBox(ui->checkBoxFileSaveLastDirectory,XOptions::ID_FILE_SAVELASTDIRECTORY);
+    }
+
+    if(g_pOptions->isIDPresent(XOptions::ID_FILE_CONTEXT))
+    {
+    #ifdef Q_OS_WIN32
+        if(g_pOptions->checkContext(g_sApplicationDisplayName,g_pOptions->getValue(XOptions::ID_FILE_CONTEXT).toString())!=ui->checkBoxFileContext->isChecked())
+        {
+            if(ui->checkBoxFileContext->isChecked())
+            {
+                g_pOptions->registerContext(g_sApplicationDisplayName,g_pOptions->getValue(XOptions::ID_FILE_CONTEXT).toString(),qApp->applicationFilePath());
+            }
+            else
+            {
+                g_pOptions->clearContext(g_sApplicationDisplayName,g_pOptions->getValue(XOptions::ID_FILE_CONTEXT).toString());
+            }
+        }
+    #endif
+    }
+}
+
 void XOptionsWidget::on_listWidgetOptions_currentRowChanged(int nCurrentRow)
 {
     if(nCurrentRow<ui->stackedWidgetOptions->count())
     {
-        ui->stackedWidgetOptions->setCurrentIndex(nCurrentRow);
+        qint32 nIndex=ui->listWidgetOptions->item(nCurrentRow)->data(Qt::UserRole).toInt();
+        ui->stackedWidgetOptions->setCurrentIndex(nIndex);
     }
 }
