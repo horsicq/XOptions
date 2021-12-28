@@ -40,7 +40,7 @@ void XOptionsWidget::setOptions(XOptions *pOptions, QString sApplicationDisplayN
 
     if(g_pOptions->isGroupIDPresent(XOptions::GROUPID_VIEW))
     {
-        addListRecord(tr("View"),0);
+        addListRecord(tr("Appearance"),0);
     }
 
     if(g_pOptions->isGroupIDPresent(XOptions::GROUPID_FILE))
@@ -66,6 +66,33 @@ void XOptionsWidget::setOptions(XOptions *pOptions, QString sApplicationDisplayN
         ui->groupBoxViewStyle->hide();
     }
 
+    if(g_pOptions->isIDPresent(XOptions::ID_VIEW_QSS))
+    {
+        g_pOptions->setComboBox(ui->comboBoxViewQss,XOptions::ID_VIEW_QSS);
+    }
+    else
+    {
+        ui->groupBoxViewQss->hide();
+    }
+
+    if(g_pOptions->isIDPresent(XOptions::ID_VIEW_LANG))
+    {
+        g_pOptions->setComboBox(ui->comboBoxViewLanguage,XOptions::ID_VIEW_LANG);
+    }
+    else
+    {
+        ui->groupBoxViewLanguage->hide();
+    }
+
+    if(g_pOptions->isIDPresent(XOptions::ID_VIEW_SHOWLOGO))
+    {
+        g_pOptions->setCheckBox(ui->checkBoxViewShowLogo,XOptions::ID_VIEW_SHOWLOGO);
+    }
+    else
+    {
+        ui->checkBoxViewShowLogo->hide();
+    }
+
     if(g_pOptions->isIDPresent(XOptions::ID_FILE_SAVELASTDIRECTORY))
     {
         g_pOptions->setCheckBox(ui->checkBoxFileSaveLastDirectory,XOptions::ID_FILE_SAVELASTDIRECTORY);
@@ -73,6 +100,15 @@ void XOptionsWidget::setOptions(XOptions *pOptions, QString sApplicationDisplayN
     else
     {
         ui->checkBoxFileSaveLastDirectory->hide();
+    }
+
+    if(g_pOptions->isIDPresent(XOptions::ID_FILE_SAVEBACKUP))
+    {
+        g_pOptions->setCheckBox(ui->checkBoxFileSaveBackup,XOptions::ID_FILE_SAVEBACKUP);
+    }
+    else
+    {
+        ui->checkBoxFileSaveBackup->hide();
     }
 
     if(g_pOptions->isIDPresent(XOptions::ID_FILE_CONTEXT))
@@ -90,6 +126,7 @@ void XOptionsWidget::setOptions(XOptions *pOptions, QString sApplicationDisplayN
 void XOptionsWidget::addListRecord(QString sTitle, qint32 nIndex)
 {
     QListWidgetItem *pItem=new QListWidgetItem;
+
     pItem->setText(sTitle);
     pItem->setData(Qt::UserRole,nIndex);
 
@@ -123,9 +160,29 @@ void XOptionsWidget::save()
         g_pOptions->getComboBox(ui->comboBoxViewStyle,XOptions::ID_VIEW_STYLE);
     }
 
+    if(g_pOptions->isIDPresent(XOptions::ID_VIEW_QSS))
+    {
+        g_pOptions->getComboBox(ui->comboBoxViewQss,XOptions::ID_VIEW_QSS);
+    }
+
+    if(g_pOptions->isIDPresent(XOptions::ID_VIEW_LANG))
+    {
+        g_pOptions->getComboBox(ui->comboBoxViewLanguage,XOptions::ID_VIEW_LANG);
+    }
+
+    if(g_pOptions->isIDPresent(XOptions::ID_VIEW_SHOWLOGO))
+    {
+        g_pOptions->getCheckBox(ui->checkBoxViewShowLogo,XOptions::ID_VIEW_SHOWLOGO);
+    }
+
     if(g_pOptions->isIDPresent(XOptions::ID_FILE_SAVELASTDIRECTORY))
     {
         g_pOptions->getCheckBox(ui->checkBoxFileSaveLastDirectory,XOptions::ID_FILE_SAVELASTDIRECTORY);
+    }
+
+    if(g_pOptions->isIDPresent(XOptions::ID_FILE_SAVEBACKUP))
+    {
+        g_pOptions->getCheckBox(ui->checkBoxFileSaveBackup,XOptions::ID_FILE_SAVEBACKUP);
     }
 
     if(g_pOptions->isIDPresent(XOptions::ID_FILE_CONTEXT))

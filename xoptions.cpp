@@ -68,6 +68,16 @@ XOptions::GROUPID XOptions::getGroupID(ID id)
         case ID_FILE_CONTEXT:
             result=GROUPID_FILE;
             break;
+        case ID_SCAN_SCANAFTEROPEN:
+        case ID_SCAN_RECURSIVE:
+        case ID_SCAN_DEEP:
+        case ID_SCAN_HEURISTIC:
+        case ID_SCAN_ALLTYPES:
+            result=GROUPID_SCAN;
+            break;
+        case ID_SIGNATURES_PATH:
+            result=GROUPID_SIGNATURES;
+            break;
     }
 
     return result;
@@ -170,12 +180,22 @@ void XOptions::load()
             bSaveLastDirectory=true;
         }
 
+        if(g_listValueIDs.at(i)==ID_SAVELASTDIRECTORY)
+        {
+            bSaveLastDirectory=true;
+        }
+
         if(g_listValueIDs.at(i)==ID_NU_LASTDIRECTORY)
         {
             bLastDirectory=true;
         }
 
         if(g_listValueIDs.at(i)==ID_FILE_SAVERECENTFILES)
+        {
+            bSaveRecentFiles=true;
+        }
+
+        if(g_listValueIDs.at(i)==ID_SAVERECENTFILES)
         {
             bSaveRecentFiles=true;
         }
@@ -400,6 +420,12 @@ QString XOptions::idToString(ID id)
         case ID_FILE_SAVERECENTFILES:                       sResult=QString("File/SaveRecentFiles");                    break;
         case ID_FILE_SAVEBACKUP:                            sResult=QString("File/SaveBackup");                         break;
         case ID_FILE_CONTEXT:                               sResult=QString("File/Context");                            break;
+        case ID_SCAN_SCANAFTEROPEN:                         sResult=QString("Scan/ScanAfterOpen");                      break;
+        case ID_SCAN_RECURSIVE:                             sResult=QString("Scan/Recursive");                          break;
+        case ID_SCAN_DEEP:                                  sResult=QString("Scan/Deep");                               break;
+        case ID_SCAN_HEURISTIC:                             sResult=QString("Scan/Heuristic");                          break;
+        case ID_SCAN_ALLTYPES:                              sResult=QString("Scan/AllTypes");                           break;
+        case ID_SIGNATURES_PATH:                            sResult=QString("Signatures/Path");                         break;
         case ID_DISASM_SYNTAX:                              sResult=QString("Disasm/Syntax");                           break;
         case ID_DEBUGGER_BREAKPOINT_ENTRYPOINT:             sResult=QString("Debugger/Breakpoint/EntryPoint");          break;
         case ID_DEBUGGER_BREAKPOINT_DLLMAIN:                sResult=QString("Debugger/Breakpoint/DLLMain");             break;
@@ -415,7 +441,7 @@ QString XOptions::getLastDirectory()
 {
     QString sResult;
 
-    bool bSaveLastDirectory=getValue(ID_FILE_SAVELASTDIRECTORY).toBool();
+    bool bSaveLastDirectory=getValue(ID_FILE_SAVELASTDIRECTORY).toBool()||getValue(ID_SAVELASTDIRECTORY).toBool();
     QString sLastDirectory=getValue(ID_NU_LASTDIRECTORY).toString();
 
     if(bSaveLastDirectory&&(sLastDirectory!="")&&QDir().exists(sLastDirectory))
@@ -439,7 +465,7 @@ void XOptions::setLastDirectory(QString sPathName)
         sPathName=fi.absoluteFilePath();
     }
 
-    if(getValue(ID_FILE_SAVELASTDIRECTORY).toBool())
+    if(getValue(ID_FILE_SAVELASTDIRECTORY).toBool()||getValue(ID_SAVELASTDIRECTORY).toBool())
     {
         setValue(ID_NU_LASTDIRECTORY,sPathName);
     }
@@ -456,7 +482,7 @@ void XOptions::setLastFileName(QString sFileName)
         sDirectory=fi.absolutePath();
     }
 
-    if(getValue(ID_FILE_SAVELASTDIRECTORY).toBool())
+    if(getValue(ID_FILE_SAVELASTDIRECTORY).toBool()||getValue(ID_SAVELASTDIRECTORY).toBool())
     {
         setValue(ID_NU_LASTDIRECTORY,sDirectory);
     }
@@ -741,27 +767,27 @@ bool XOptions::isStayOnTop()
 
 bool XOptions::isScanAfterOpen()
 {
-    return getValue(XOptions::ID_SCANAFTEROPEN).toBool();
+    return getValue(XOptions::ID_SCAN_SCANAFTEROPEN).toBool();
 }
 
 bool XOptions::isRecursiveScan()
 {
-    return getValue(XOptions::ID_RECURSIVESCAN).toBool();
+    return getValue(XOptions::ID_SCAN_RECURSIVE).toBool();
 }
 
 bool XOptions::isDeepScan()
 {
-    return getValue(XOptions::ID_DEEPSCAN).toBool();
+    return getValue(XOptions::ID_SCAN_DEEP).toBool();
 }
 
 bool XOptions::isHeuristicScan()
 {
-    return getValue(XOptions::ID_HEURISTICSCAN).toBool();
+    return getValue(XOptions::ID_SCAN_HEURISTIC).toBool();
 }
 
 bool XOptions::isAllTypesScan()
 {
-    return getValue(XOptions::ID_ALLTYPESSCAN).toBool();
+    return getValue(XOptions::ID_SCAN_ALLTYPES).toBool();
 }
 
 bool XOptions::isSingleApplication()
