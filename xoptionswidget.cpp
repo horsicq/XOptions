@@ -122,7 +122,7 @@ void XOptionsWidget::setOptions(XOptions *pOptions, QString sApplicationDisplayN
 
     if(g_pOptions->isIDPresent(XOptions::ID_FILE_CONTEXT))
     {
-    #ifdef Q_OS_WIN32
+    #ifdef Q_OS_WIN
         ui->checkBoxFileContext->setChecked(g_pOptions->checkContext(g_sApplicationDisplayName,g_pOptions->getValue(XOptions::ID_FILE_CONTEXT).toString()));
     #endif
     }
@@ -201,7 +201,7 @@ void XOptionsWidget::save()
 
     if(g_pOptions->isIDPresent(XOptions::ID_FILE_CONTEXT))
     {
-    #ifdef Q_OS_WIN32
+    #ifdef Q_OS_WIN
         if(g_pOptions->checkContext(g_sApplicationDisplayName,g_pOptions->getValue(XOptions::ID_FILE_CONTEXT).toString())!=ui->checkBoxFileContext->isChecked())
         {
             if(ui->checkBoxFileContext->isChecked())
