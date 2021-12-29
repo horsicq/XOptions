@@ -57,6 +57,15 @@ void XOptionsWidget::setOptions(XOptions *pOptions, QString sApplicationDisplayN
         ui->checkBoxViewStayOnTop->hide();
     }
 
+    if(g_pOptions->isIDPresent(XOptions::ID_VIEW_SINGLEAPPLICATION))
+    {
+        g_pOptions->setCheckBox(ui->checkBoxViewSingleApplication,XOptions::ID_VIEW_SINGLEAPPLICATION);
+    }
+    else
+    {
+        ui->checkBoxViewSingleApplication->hide();
+    }
+
     if(g_pOptions->isIDPresent(XOptions::ID_VIEW_STYLE))
     {
         g_pOptions->setComboBox(ui->comboBoxViewStyle,XOptions::ID_VIEW_STYLE);
@@ -153,6 +162,11 @@ void XOptionsWidget::save()
     if(g_pOptions->isIDPresent(XOptions::ID_VIEW_STAYONTOP))
     {
         g_pOptions->getCheckBox(ui->checkBoxViewStayOnTop,XOptions::ID_VIEW_STAYONTOP);
+    }
+
+    if(g_pOptions->isIDPresent(XOptions::ID_VIEW_SINGLEAPPLICATION))
+    {
+        g_pOptions->getCheckBox(ui->checkBoxViewSingleApplication,XOptions::ID_VIEW_SINGLEAPPLICATION);
     }
 
     if(g_pOptions->isIDPresent(XOptions::ID_VIEW_STYLE))

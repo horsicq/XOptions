@@ -73,6 +73,9 @@ XOptions::GROUPID XOptions::getGroupID(ID id)
         case ID_SCAN_DEEP:
         case ID_SCAN_HEURISTIC:
         case ID_SCAN_ALLTYPES:
+        case ID_SCAN_ENGINE:
+        case ID_SCAN_DATABASEPATH:
+        case ID_SCAN_INFOPATH:
             result=GROUPID_SCAN;
             break;
         case ID_SIGNATURES_PATH:
@@ -246,14 +249,10 @@ void XOptions::load()
                 case ID_STYLE:                                  varDefault="Fusion";                break; // TODO Check styles in OSX and Linux
                 case ID_LANG:                                   varDefault="System";                break;
                 case ID_QSS:                                    varDefault="";                      break;
-                case ID_DATABASEPATH:                           varDefault="$data/db";              break;
-                case ID_INFOPATH:                               varDefault="$data/info";            break;
-                case ID_SCANENGINE:                             varDefault="die";                   break;
                 case ID_DISASMSYNTAX:                           varDefault="";                      break;
                 case ID_ROOTPATH:                               varDefault="";                      break;
                 case ID_DATAPATH:                               varDefault="$data/data";            break;
                 case ID_JSON:                                   varDefault="";                      break;
-                case ID_SINGLEAPPLICATION:                      varDefault=false;                   break;
                 case ID_SEARCHSIGNATURESPATH:                   varDefault="$data/signatures";      break;
                 case ID_STRUCTSPATH:                            varDefault="$data/structs";         break;
                 case ID_AUTHUSER:                               varDefault="";                      break;
@@ -273,10 +272,10 @@ void XOptions::load()
 
         if(!variant.toString().contains("$data"))
         {
-            if( (id==ID_DATABASEPATH)||
-                (id==ID_INFOPATH)||
+            if( (id==ID_SCAN_DATABASEPATH)||
+                (id==ID_SCAN_INFOPATH)||
                 (id==ID_DATAPATH)||
-                (id==ID_SEARCHSIGNATURESPATH)||
+                (id==ID_SIGNATURES_PATH)||
                 (id==ID_STRUCTSPATH))
             {
                 if(!QDir(variant.toString()).exists())
@@ -358,8 +357,7 @@ void XOptions::setValue(XOptions::ID id, QVariant vValue)
     if( (id==ID_VIEW_STYLE)||
         (id==ID_VIEW_LANG)||
         (id==ID_VIEW_QSS)||
-        (id==ID_SEARCHSIGNATURESPATH)||     // TODO remove
-        (id==ID_STRUCTSPATH))               // TODO remove
+        (id==ID_HEX_FONT))
     {
         QVariant vOld=g_mapValues.value(id);
 
@@ -396,14 +394,10 @@ QString XOptions::idToString(ID id)
         case ID_STYLE:                                      sResult=QString("Style");                                   break;
         case ID_LANG:                                       sResult=QString("Lang");                                    break;
         case ID_QSS:                                        sResult=QString("Qss");                                     break;
-        case ID_DATABASEPATH:                               sResult=QString("DatabasePath");                            break;
-        case ID_INFOPATH:                                   sResult=QString("InfoPath");                                break;
-        case ID_SCANENGINE:                                 sResult=QString("ScanEngine");                              break;
         case ID_DISASMSYNTAX:                               sResult=QString("DisasmSyntax");                            break;
         case ID_ROOTPATH:                                   sResult=QString("RootPath");                                break;
         case ID_DATAPATH:                                   sResult=QString("DataPath");                                break;
         case ID_JSON:                                       sResult=QString("Json");                                    break;
-        case ID_SINGLEAPPLICATION:                          sResult=QString("SingleApplication");                       break;
         case ID_SEARCHSIGNATURESPATH:                       sResult=QString("SearchSignaturesPath");                    break;
         case ID_STRUCTSPATH:                                sResult=QString("StructsPath");                             break;
         case ID_AUTHUSER:                                   sResult=QString("AuthUser");                                break;
@@ -425,8 +419,12 @@ QString XOptions::idToString(ID id)
         case ID_SCAN_DEEP:                                  sResult=QString("Scan/Deep");                               break;
         case ID_SCAN_HEURISTIC:                             sResult=QString("Scan/Heuristic");                          break;
         case ID_SCAN_ALLTYPES:                              sResult=QString("Scan/AllTypes");                           break;
+        case ID_SCAN_ENGINE:                                sResult=QString("Scan/Engine");                             break;
+        case ID_SCAN_DATABASEPATH:                          sResult=QString("Scan/DatabasePath");                       break;
+        case ID_SCAN_INFOPATH:                              sResult=QString("Scan/InfoPath");                           break;
         case ID_SIGNATURES_PATH:                            sResult=QString("Signatures/Path");                         break;
         case ID_DISASM_SYNTAX:                              sResult=QString("Disasm/Syntax");                           break;
+        case ID_HEX_FONT:                                   sResult=QString("Hex/Font");                                break;
         case ID_DEBUGGER_BREAKPOINT_ENTRYPOINT:             sResult=QString("Debugger/Breakpoint/EntryPoint");          break;
         case ID_DEBUGGER_BREAKPOINT_DLLMAIN:                sResult=QString("Debugger/Breakpoint/DLLMain");             break;
         case ID_DEBUGGER_BREAKPOINT_TLSFUNCTIONS:           sResult=QString("Debugger/Breakpoint/TLSFunctions");        break;
@@ -487,7 +485,7 @@ void XOptions::setLastFileName(QString sFileName)
         setValue(ID_NU_LASTDIRECTORY,sDirectory);
     }
 
-    if(getValue(ID_SAVERECENTFILES).toBool())
+    if(getValue(ID_FILE_SAVERECENTFILES).toBool())
     {
         QString _sFileName=QString("\"%1\"").arg(fi.absoluteFilePath());
 
@@ -529,22 +527,22 @@ QList<QString> XOptions::getRecentFiles()
 
 QString XOptions::getDatabasePath()
 {
-    return getValue(ID_DATABASEPATH).toString();
+    return getValue(ID_SCAN_DATABASEPATH).toString();
 }
 
 QString XOptions::getInfoPath()
 {
-    return getValue(ID_INFOPATH).toString();
+    return getValue(ID_SCAN_INFOPATH).toString();
 }
 
 QString XOptions::getScanEngine()
 {
-    return getValue(ID_SCANENGINE).toString();
+    return getValue(ID_SCAN_ENGINE).toString();
 }
 
 QString XOptions::getDisasmSyntax()
 {
-    return getValue(ID_DISASMSYNTAX).toString();
+    return getValue(ID_DISASM_SYNTAX).toString();
 }
 
 QString XOptions::getRootPath()
@@ -694,7 +692,7 @@ void XOptions::setComboBox(QComboBox *pComboBox, XOptions::ID id)
             pComboBox->addItem(sRecord,sRecord);
         }
     }
-    else if(id==ID_SCANENGINE)
+    else if(id==ID_SCAN_ENGINE)
     {
         pComboBox->addItem(QString("Auto"),"auto");
         pComboBox->addItem(QString("Detect It Easy(DiE)"),"die");
@@ -802,7 +800,7 @@ bool XOptions::isShowLogo()
 
 QString XOptions::getSearchSignaturesPath()
 {
-    return getValue(XOptions::ID_SEARCHSIGNATURESPATH).toString();
+    return getValue(XOptions::ID_SIGNATURES_PATH).toString();
 }
 
 QString XOptions::getStructsPath()
@@ -1249,11 +1247,15 @@ XOptions::ID XOptions::_fixID(ID id)
     else if ((result==ID_VIEW_STYLE)&&(g_mapValues.contains(ID_STYLE)))                             result=ID_STYLE;
     else if ((result==ID_VIEW_QSS)&&(g_mapValues.contains(ID_QSS)))                                 result=ID_QSS;
     else if ((result==ID_VIEW_LANG)&&(g_mapValues.contains(ID_LANG)))                               result=ID_LANG;
-    else if ((result==ID_VIEW_SINGLEAPPLICATION)&&(g_mapValues.contains(ID_SINGLEAPPLICATION)))     result=ID_SINGLEAPPLICATION;
     else if ((result==ID_VIEW_SHOWLOGO)&&(g_mapValues.contains(ID_SHOWLOGO)))                       result=ID_SHOWLOGO;
     else if ((result==ID_FILE_SAVELASTDIRECTORY)&&(g_mapValues.contains(ID_SAVELASTDIRECTORY)))     result=ID_SAVELASTDIRECTORY;
     else if ((result==ID_FILE_SAVERECENTFILES)&&(g_mapValues.contains(ID_SAVERECENTFILES)))         result=ID_SAVERECENTFILES;
     else if ((result==ID_FILE_SAVEBACKUP)&&(g_mapValues.contains(ID_SAVEBACKUP)))                   result=ID_SAVEBACKUP;
+    else if ((result==ID_SCAN_SCANAFTEROPEN)&&(g_mapValues.contains(ID_SCANAFTEROPEN)))             result=ID_SCANAFTEROPEN;
+    else if ((result==ID_SCAN_RECURSIVE)&&(g_mapValues.contains(ID_RECURSIVESCAN)))                 result=ID_RECURSIVESCAN;
+    else if ((result==ID_SCAN_DEEP)&&(g_mapValues.contains(ID_DEEPSCAN)))                           result=ID_DEEPSCAN;
+    else if ((result==ID_SCAN_HEURISTIC)&&(g_mapValues.contains(ID_HEURISTICSCAN)))                 result=ID_HEURISTICSCAN;
+    else if ((result==ID_SCAN_ALLTYPES)&&(g_mapValues.contains(ID_ALLTYPESSCAN)))                   result=ID_ALLTYPESSCAN;
     else if ((result==ID_DISASM_SYNTAX)&&(g_mapValues.contains(ID_DISASMSYNTAX)))                   result=ID_DISASMSYNTAX;
 
     return result;
