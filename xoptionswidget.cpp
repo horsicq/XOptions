@@ -26,6 +26,8 @@ XOptionsWidget::XOptionsWidget(QWidget *pParent) :
     ui(new Ui::XOptionsWidget)
 {
     ui->setupUi(this);
+
+    g_pOptions=nullptr;
 }
 
 XOptionsWidget::~XOptionsWidget()

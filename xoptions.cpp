@@ -81,6 +81,13 @@ XOptions::GROUPID XOptions::getGroupID(ID id)
         case ID_SIGNATURES_PATH:
             result=GROUPID_SIGNATURES;
             break;
+        case ID_DISASM_FONT:
+        case ID_DISASM_SYNTAX:
+            result=GROUPID_DISASM;
+            break;
+        case ID_HEX_FONT:
+            result=GROUPID_HEX;
+            break;
     }
 
     return result;
@@ -356,8 +363,7 @@ void XOptions::setValue(XOptions::ID id, QVariant vValue)
 
     if( (id==ID_VIEW_STYLE)||
         (id==ID_VIEW_LANG)||
-        (id==ID_VIEW_QSS)||
-        (id==ID_HEX_FONT))
+        (id==ID_VIEW_QSS))
     {
         QVariant vOld=g_mapValues.value(id);
 
@@ -423,6 +429,7 @@ QString XOptions::idToString(ID id)
         case ID_SCAN_DATABASEPATH:                          sResult=QString("Scan/DatabasePath");                       break;
         case ID_SCAN_INFOPATH:                              sResult=QString("Scan/InfoPath");                           break;
         case ID_SIGNATURES_PATH:                            sResult=QString("Signatures/Path");                         break;
+        case ID_DISASM_FONT:                                sResult=QString("Disasm/Font");                             break;
         case ID_DISASM_SYNTAX:                              sResult=QString("Disasm/Syntax");                           break;
         case ID_HEX_FONT:                                   sResult=QString("Hex/Font");                                break;
         case ID_DEBUGGER_BREAKPOINT_ENTRYPOINT:             sResult=QString("Debugger/Breakpoint/EntryPoint");          break;
