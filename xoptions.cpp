@@ -1154,6 +1154,7 @@ bool XOptions::checkNative()
     if( (sApplicationDirPath=="/bin")||
         (sApplicationDirPath=="/usr/bin")||
         (sApplicationDirPath=="/usr/local/bin")||
+        (sApplicationDirPath.contains(QRegExp("/usr/local/bin$")))||
         isAppImage())
     {
         bResult=true;
@@ -1185,12 +1186,21 @@ QString XOptions::getApplicationDataPath()
 #elif defined(Q_OS_LINUX)
     if(g_bIsNative)
     {
-        if(sApplicationDirPath.contains("/tmp/.mount_")) // AppImage
+        if(sApplicationDirPath.contains(QRegExp("/usr/local/bin$")))
         {
-            sResult=sApplicationDirPath.section("/",0,2);
-        }
+            QString sPrefix=sApplicationDirPath.section("/usr/local/bin",0,0);
 
-        sResult+=QString("/usr/lib/%1").arg(qApp->applicationName());
+            sResult+=sPrefix+QString("/usr/local/lib/%1").arg(qApp->applicationName());
+        }
+        else
+        {
+            if(sApplicationDirPath.contains("/tmp/.mount_")) // AppImage
+            {
+                sResult=sApplicationDirPath.section("/",0,2);
+            }
+
+            sResult+=QString("/usr/lib/%1").arg(qApp->applicationName());
+        }
     }
     else
     {
