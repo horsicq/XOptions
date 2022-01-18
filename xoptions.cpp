@@ -153,6 +153,17 @@ bool XOptions::isAppImage()
 
 void XOptions::setName(QString sValue)
 {
+#ifdef QT_DEBUG
+#ifdef Q_OS_WIN
+    sValue+="win.debug.ini";
+#endif
+#ifdef Q_OS_LINUX
+    sValue+="linux.debug.ini";
+#endif
+#ifdef Q_OS_OSX
+    sValue+="osx.debug.ini";
+#endif
+#endif
     g_sName=sValue;
 }
 
