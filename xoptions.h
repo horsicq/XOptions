@@ -69,7 +69,7 @@ public:
 
     enum ID
     {
-        // TODO remove
+        // TODO remove !!!
         ID_STAYONTOP=0,
         ID_SAVELASTDIRECTORY,
         ID_SAVERECENTFILES,
