@@ -141,7 +141,7 @@ bool XOptions::isNative()
 
 bool XOptions::isAppImage()
 {
-    // TODO more checks
+    // TODO more checks !!!
     bool bResult=false;
 
     QString sApplicationDirPath=qApp->applicationDirPath();
