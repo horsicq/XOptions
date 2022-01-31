@@ -23,6 +23,7 @@
 XOptions::XOptions(QObject *pParent) : QObject(pParent)
 {
     g_bIsNeedRestart=false;
+    g_nMaxRecentFilesCount=10;
     g_bIsNative=checkNative();
 
     g_sName=QString("%1.ini").arg(qApp->applicationName()); // default name
@@ -512,7 +513,7 @@ void XOptions::setLastFileName(QString sFileName)
 
         listFiles.append(QVariant(_sFileName));
 
-        if(listFiles.count()>N_MAX_RECENTFILES)
+        if(listFiles.count()>g_nMaxRecentFilesCount)
         {
             listFiles.removeLast();
         }
@@ -1266,6 +1267,17 @@ bool XOptions::checkContext(QString sApplicationName, QString sType)
     return (settings.value(QString("%1/command/Default").arg(sApplicationName)).toString()!="");
 }
 #endif
+
+void XOptions::setMaxRecentFilesCount(qint32 nValue)
+{
+    g_nMaxRecentFilesCount=nValue;
+}
+
+qint32 XOptions::getMaxRecentFilesCount()
+{
+    return g_nMaxRecentFilesCount;
+}
+
 XOptions::ID XOptions::_fixID(ID id)
 {
     ID result=id;

@@ -52,8 +52,6 @@ class XOptions : public QObject
 {
     Q_OBJECT
 
-    const qint32 N_MAX_RECENTFILES=10; // TODO set/get functions
-
 public:
     enum GROUPID
     {
@@ -208,6 +206,9 @@ public:
     bool checkContext(QString sApplicationName,QString sType);
 #endif
 
+    void setMaxRecentFilesCount(qint32 nValue);
+    qint32 getMaxRecentFilesCount();
+
 private:
     ID _fixID(ID id); // TODO remove
 
@@ -222,6 +223,7 @@ private:
     QMap<ID,QVariant> g_mapValues;
     QMap<ID,QVariant> g_mapDefaultValues;
     bool g_bIsNeedRestart;
+    qint32 g_nMaxRecentFilesCount;
 };
 
 #endif // XOPTIONS_H
