@@ -89,7 +89,7 @@ public:
         ID_STRUCTSPATH,
         ID_AUTHUSER,
         ID_AUTHTOKEN,
-        // new TODO
+        // new
         ID_VIEW_STAYONTOP,
         ID_VIEW_STYLE,
         ID_VIEW_QSS,
