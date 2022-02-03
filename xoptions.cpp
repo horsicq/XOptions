@@ -84,6 +84,8 @@ XOptions::GROUPID XOptions::getGroupID(ID id)
             break;
         case ID_DISASM_FONT:
         case ID_DISASM_SYNTAX:
+        case ID_DISASM_COLOR_X86_CALL_TEXT:
+        case ID_DISASM_COLOR_X86_CALL_BACKGROUND:
             result=GROUPID_DISASM;
             break;
         case ID_HEX_FONT:
@@ -442,6 +444,8 @@ QString XOptions::idToString(ID id)
         case ID_SIGNATURES_PATH:                            sResult=QString("Signatures/Path");                         break;
         case ID_DISASM_FONT:                                sResult=QString("Disasm/Font");                             break;
         case ID_DISASM_SYNTAX:                              sResult=QString("Disasm/Syntax");                           break;
+        case ID_DISASM_COLOR_X86_CALL_TEXT:                 sResult=QString("Disasm/Color/x64/call/text");              break;
+        case ID_DISASM_COLOR_X86_CALL_BACKGROUND:           sResult=QString("Disasm/Color/x64/call/background");        break;
         case ID_HEX_FONT:                                   sResult=QString("Hex/Font");                                break;
         case ID_DEBUGGER_BREAKPOINT_ENTRYPOINT:             sResult=QString("Debugger/Breakpoint/EntryPoint");          break;
         case ID_DEBUGGER_BREAKPOINT_DLLMAIN:                sResult=QString("Debugger/Breakpoint/DLLMain");             break;
