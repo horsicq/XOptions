@@ -90,6 +90,12 @@ XOptions::GROUPID XOptions::getGroupID(ID id)
         case ID_DISASM_COLOR_X86_RET_BACKGROUND:
         case ID_DISASM_COLOR_X86_JCC_TEXT:
         case ID_DISASM_COLOR_X86_JCC_BACKGROUND:
+        case ID_DISASM_COLOR_X86_PUSH_TEXT:
+        case ID_DISASM_COLOR_X86_PUSH_BACKGROUND:
+        case ID_DISASM_COLOR_X86_POP_TEXT:
+        case ID_DISASM_COLOR_X86_POP_BACKGROUND:
+        case ID_DISASM_COLOR_X86_NOP_TEXT:
+        case ID_DISASM_COLOR_X86_NOP_BACKGROUND:
             result=GROUPID_DISASM;
             break;
         case ID_HEX_FONT:
@@ -458,6 +464,8 @@ QString XOptions::idToString(ID id)
         case ID_DISASM_COLOR_X86_PUSH_BACKGROUND:           sResult=QString("Disasm/Color/x64/push/text");              break;
         case ID_DISASM_COLOR_X86_POP_TEXT:                  sResult=QString("Disasm/Color/x64/pop/text");               break;
         case ID_DISASM_COLOR_X86_POP_BACKGROUND:            sResult=QString("Disasm/Color/x64/pop/text");               break;
+        case ID_DISASM_COLOR_X86_NOP_TEXT:                  sResult=QString("Disasm/Color/x64/nop/text");               break;
+        case ID_DISASM_COLOR_X86_NOP_BACKGROUND:            sResult=QString("Disasm/Color/x64/nop/text");               break;
         case ID_HEX_FONT:                                   sResult=QString("Hex/Font");                                break;
         case ID_DEBUGGER_BREAKPOINT_ENTRYPOINT:             sResult=QString("Debugger/Breakpoint/EntryPoint");          break;
         case ID_DEBUGGER_BREAKPOINT_DLLMAIN:                sResult=QString("Debugger/Breakpoint/DLLMain");             break;
