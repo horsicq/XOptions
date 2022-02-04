@@ -111,20 +111,13 @@ public:
         ID_SIGNATURES_PATH,
         ID_DISASM_FONT,
         ID_DISASM_SYNTAX,
-        ID_DISASM_COLOR_X86_CALL_TEXT,
-        ID_DISASM_COLOR_X86_CALL_BACKGROUND,
-        ID_DISASM_COLOR_X86_RET_TEXT,
-        ID_DISASM_COLOR_X86_RET_BACKGROUND,
-        ID_DISASM_COLOR_X86_JCC_TEXT,
-        ID_DISASM_COLOR_X86_JCC_BACKGROUND,
-        ID_DISASM_COLOR_X86_PUSH_TEXT,
-        ID_DISASM_COLOR_X86_PUSH_BACKGROUND,
-        ID_DISASM_COLOR_X86_POP_TEXT,
-        ID_DISASM_COLOR_X86_POP_BACKGROUND,
-        ID_DISASM_COLOR_X86_NOP_TEXT,
-        ID_DISASM_COLOR_X86_NOP_BACKGROUND,
-        ID_DISASM_COLOR_X86_JMP_TEXT,
-        ID_DISASM_COLOR_X86_JMP_BACKGROUND,
+        ID_DISASM_COLOR_CALL,
+        ID_DISASM_COLOR_RET,
+        ID_DISASM_COLOR_JCC,
+        ID_DISASM_COLOR_PUSH,
+        ID_DISASM_COLOR_POP,
+        ID_DISASM_COLOR_NOP,
+        ID_DISASM_COLOR_JMP,
         ID_HEX_FONT,
         ID_DEBUGGER_BREAKPOINT_ENTRYPOINT,
         ID_DEBUGGER_BREAKPOINT_DLLMAIN,
@@ -141,7 +134,7 @@ public:
 
     void setValueIDs(QList<ID> listValueIDs);
     void setDefaultValues(QMap<ID,QVariant> mapDefaultValues);
-    void addID(ID id, QVariant varDefaultValue=QVariant());
+    void addID(ID id,QVariant varDefaultValue=QVariant());
     GROUPID getGroupID(ID id);
     bool isIDPresent(ID id);
     bool isGroupIDPresent(GROUPID groupID);

@@ -84,20 +84,13 @@ XOptions::GROUPID XOptions::getGroupID(ID id)
             break;
         case ID_DISASM_FONT:
         case ID_DISASM_SYNTAX:
-        case ID_DISASM_COLOR_X86_CALL_TEXT:
-        case ID_DISASM_COLOR_X86_CALL_BACKGROUND:
-        case ID_DISASM_COLOR_X86_RET_TEXT:
-        case ID_DISASM_COLOR_X86_RET_BACKGROUND:
-        case ID_DISASM_COLOR_X86_JCC_TEXT:
-        case ID_DISASM_COLOR_X86_JCC_BACKGROUND:
-        case ID_DISASM_COLOR_X86_PUSH_TEXT:
-        case ID_DISASM_COLOR_X86_PUSH_BACKGROUND:
-        case ID_DISASM_COLOR_X86_POP_TEXT:
-        case ID_DISASM_COLOR_X86_POP_BACKGROUND:
-        case ID_DISASM_COLOR_X86_NOP_TEXT:
-        case ID_DISASM_COLOR_X86_NOP_BACKGROUND:
-        case ID_DISASM_COLOR_X86_JMP_TEXT:
-        case ID_DISASM_COLOR_X86_JMP_BACKGROUND:
+        case ID_DISASM_COLOR_CALL:
+        case ID_DISASM_COLOR_RET:
+        case ID_DISASM_COLOR_JCC:
+        case ID_DISASM_COLOR_PUSH:
+        case ID_DISASM_COLOR_POP:
+        case ID_DISASM_COLOR_NOP:
+        case ID_DISASM_COLOR_JMP:
             result=GROUPID_DISASM;
             break;
         case ID_HEX_FONT:
@@ -456,20 +449,13 @@ QString XOptions::idToString(ID id)
         case ID_SIGNATURES_PATH:                            sResult=QString("Signatures/Path");                         break;
         case ID_DISASM_FONT:                                sResult=QString("Disasm/Font");                             break;
         case ID_DISASM_SYNTAX:                              sResult=QString("Disasm/Syntax");                           break;
-        case ID_DISASM_COLOR_X86_CALL_TEXT:                 sResult=QString("Disasm/Color/x64/call/text");              break;
-        case ID_DISASM_COLOR_X86_CALL_BACKGROUND:           sResult=QString("Disasm/Color/x64/call/background");        break;
-        case ID_DISASM_COLOR_X86_RET_TEXT:                  sResult=QString("Disasm/Color/x64/ret/text");               break;
-        case ID_DISASM_COLOR_X86_RET_BACKGROUND:            sResult=QString("Disasm/Color/x64/ret/background");         break;
-        case ID_DISASM_COLOR_X86_JCC_TEXT:                  sResult=QString("Disasm/Color/x64/jcc/text");               break;
-        case ID_DISASM_COLOR_X86_JCC_BACKGROUND:            sResult=QString("Disasm/Color/x64/jcc/background");         break;
-        case ID_DISASM_COLOR_X86_PUSH_TEXT:                 sResult=QString("Disasm/Color/x64/push/text");              break;
-        case ID_DISASM_COLOR_X86_PUSH_BACKGROUND:           sResult=QString("Disasm/Color/x64/push/background");        break;
-        case ID_DISASM_COLOR_X86_POP_TEXT:                  sResult=QString("Disasm/Color/x64/pop/text");               break;
-        case ID_DISASM_COLOR_X86_POP_BACKGROUND:            sResult=QString("Disasm/Color/x64/pop/background");         break;
-        case ID_DISASM_COLOR_X86_NOP_TEXT:                  sResult=QString("Disasm/Color/x64/nop/text");               break;
-        case ID_DISASM_COLOR_X86_NOP_BACKGROUND:            sResult=QString("Disasm/Color/x64/nop/background");         break;
-        case ID_DISASM_COLOR_X86_JMP_TEXT:                  sResult=QString("Disasm/Color/x64/jmp/text");               break;
-        case ID_DISASM_COLOR_X86_JMP_BACKGROUND:            sResult=QString("Disasm/Color/x64/jmp/background");         break;
+        case ID_DISASM_COLOR_CALL:                          sResult=QString("Disasm/Color/call");                       break;
+        case ID_DISASM_COLOR_RET:                           sResult=QString("Disasm/Color/ret");                        break;
+        case ID_DISASM_COLOR_JCC:                           sResult=QString("Disasm/Color/jcc");                        break;
+        case ID_DISASM_COLOR_PUSH:                          sResult=QString("Disasm/Color/push");                       break;
+        case ID_DISASM_COLOR_POP:                           sResult=QString("Disasm/Color/pop");                        break;
+        case ID_DISASM_COLOR_NOP:                           sResult=QString("Disasm/Color/nop");                        break;
+        case ID_DISASM_COLOR_JMP:                           sResult=QString("Disasm/Color/jmp");                        break;
         case ID_HEX_FONT:                                   sResult=QString("Hex/Font");                                break;
         case ID_DEBUGGER_BREAKPOINT_ENTRYPOINT:             sResult=QString("Debugger/Breakpoint/EntryPoint");          break;
         case ID_DEBUGGER_BREAKPOINT_DLLMAIN:                sResult=QString("Debugger/Breakpoint/DLLMain");             break;
