@@ -375,7 +375,7 @@ QVariant XOptions::getValue(XOptions::ID id)
     return g_mapValues.value(id);
 }
 
-void XOptions::setValue(XOptions::ID id, QVariant vValue)
+void XOptions::setValue(XOptions::ID id,QVariant vValue)
 {
     id=_fixID(id);
 
