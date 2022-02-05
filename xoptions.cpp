@@ -644,7 +644,7 @@ void XOptions::setMonoFont(QWidget *pWidget,qint32 nSize)
 }
 #endif
 #ifdef QT_GUI_LIB
-void XOptions::setCheckBox(QCheckBox *pCheckBox, XOptions::ID id)
+void XOptions::setCheckBox(QCheckBox *pCheckBox,XOptions::ID id)
 {
     pCheckBox->setChecked(getValue(id).toBool());
 }
