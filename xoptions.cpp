@@ -650,7 +650,7 @@ void XOptions::setCheckBox(QCheckBox *pCheckBox,XOptions::ID id)
 }
 #endif
 #ifdef QT_GUI_LIB
-void XOptions::getCheckBox(QCheckBox *pCheckBox, XOptions::ID id)
+void XOptions::getCheckBox(QCheckBox *pCheckBox,XOptions::ID id)
 {
     setValue(id,pCheckBox->isChecked());
 }
