@@ -753,7 +753,7 @@ void XOptions::setComboBox(QComboBox *pComboBox,XOptions::ID id)
 }
 #endif
 #ifdef QT_GUI_LIB
-void XOptions::getComboBox(QComboBox *pComboBox, XOptions::ID id)
+void XOptions::getComboBox(QComboBox *pComboBox,XOptions::ID id)
 {
     setValue(id,pComboBox->currentData());
 }
