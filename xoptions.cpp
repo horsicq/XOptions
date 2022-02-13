@@ -656,7 +656,7 @@ void XOptions::getCheckBox(QCheckBox *pCheckBox,XOptions::ID id)
 }
 #endif
 #ifdef QT_GUI_LIB
-void XOptions::setComboBox(QComboBox *pComboBox, XOptions::ID id)
+void XOptions::setComboBox(QComboBox *pComboBox,XOptions::ID id)
 {
 #if QT_VERSION >= QT_VERSION_CHECK(5,3,0)
     const QSignalBlocker signalBlocker(pComboBox);
