@@ -41,7 +41,7 @@
      </widget>
      <widget class="QStackedWidget" name="stackedWidgetOptions">
       <property name="currentIndex">
-       <number>0</number>
+       <number>1</number>
       </property>
       <widget class="QWidget" name="pageView">
        <layout class="QVBoxLayout" name="verticalLayout_2">

@@ -200,23 +200,6 @@ void XOptionsWidget::save()
     {
         g_pOptions->getCheckBox(ui->checkBoxFileSaveBackup,XOptions::ID_FILE_SAVEBACKUP);
     }
-
-    if(g_pOptions->isIDPresent(XOptions::ID_FILE_CONTEXT))
-    {
-    #ifdef Q_OS_WIN
-        if(g_pOptions->checkContext(g_sApplicationDisplayName,g_pOptions->getValue(XOptions::ID_FILE_CONTEXT).toString())!=ui->checkBoxFileContext->isChecked())
-        {
-            if(ui->checkBoxFileContext->isChecked())
-            {
-                g_pOptions->registerContext(g_sApplicationDisplayName,g_pOptions->getValue(XOptions::ID_FILE_CONTEXT).toString(),qApp->applicationFilePath());
-            }
-            else
-            {
-                g_pOptions->clearContext(g_sApplicationDisplayName,g_pOptions->getValue(XOptions::ID_FILE_CONTEXT).toString());
-            }
-        }
-    #endif
-    }
 }
 
 void XOptionsWidget::on_listWidgetOptions_currentRowChanged(int nCurrentRow)
@@ -225,5 +208,34 @@ void XOptionsWidget::on_listWidgetOptions_currentRowChanged(int nCurrentRow)
     {
         qint32 nIndex=ui->listWidgetOptions->item(nCurrentRow)->data(Qt::UserRole).toInt();
         ui->stackedWidgetOptions->setCurrentIndex(nIndex);
+    }
+}
+
+void XOptionsWidget::on_checkBoxFileContext_toggled(bool bChecked)
+{
+    if(g_pOptions->isIDPresent(XOptions::ID_FILE_CONTEXT))
+    {
+    #ifdef Q_OS_WIN
+        if(g_pOptions->checkContext(g_sApplicationDisplayName,g_pOptions->getValue(XOptions::ID_FILE_CONTEXT).toString())!=bChecked)
+        {
+            bool bSuccess=false;
+
+            if(bChecked)
+            {
+                bSuccess=g_pOptions->registerContext(g_sApplicationDisplayName,g_pOptions->getValue(XOptions::ID_FILE_CONTEXT).toString(),qApp->applicationFilePath());
+            }
+            else
+            {
+                bSuccess=g_pOptions->clearContext(g_sApplicationDisplayName,g_pOptions->getValue(XOptions::ID_FILE_CONTEXT).toString());
+            }
+
+            if(!bSuccess)
+            {
+                QMessageBox::critical(this,tr("Error"),tr("Please run the program as an administrator"));
+
+                ui->checkBoxFileContext->setChecked(!bChecked);
+            }
+        }
+    #endif
     }
 }

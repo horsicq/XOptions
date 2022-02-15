@@ -46,6 +46,7 @@ public:
 
 private slots:
     void on_listWidgetOptions_currentRowChanged(int nCurrentRow);
+    void on_checkBoxFileContext_toggled(bool bChecked);
 
 private:
     Ui::XOptionsWidget *ui;
