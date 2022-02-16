@@ -39,7 +39,7 @@ void XOptions::setDefaultValues(QMap<XOptions::ID,QVariant> mapDefaultValues)
     this->g_mapDefaultValues=mapDefaultValues;
 }
 
-void XOptions::addID(ID id, QVariant varDefaultValue)
+void XOptions::addID(ID id,QVariant varDefaultValue)
 {
     g_listValueIDs.append(id);
 
