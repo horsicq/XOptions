@@ -759,7 +759,7 @@ void XOptions::getComboBox(QComboBox *pComboBox,XOptions::ID id)
 }
 #endif
 #ifdef QT_GUI_LIB
-void XOptions::setLineEdit(QLineEdit *pLineEdit, XOptions::ID id)
+void XOptions::setLineEdit(QLineEdit *pLineEdit,XOptions::ID id)
 {
     pLineEdit->setText(getValue(id).toString());
 }
