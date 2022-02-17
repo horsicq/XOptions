@@ -765,7 +765,7 @@ void XOptions::setLineEdit(QLineEdit *pLineEdit,XOptions::ID id)
 }
 #endif
 #ifdef QT_GUI_LIB
-void XOptions::getLineEdit(QLineEdit *pLineEdit, XOptions::ID id)
+void XOptions::getLineEdit(QLineEdit *pLineEdit,XOptions::ID id)
 {
     setValue(id,pLineEdit->text());
 }
