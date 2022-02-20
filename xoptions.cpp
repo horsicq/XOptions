@@ -1068,7 +1068,7 @@ bool XOptions::saveTableView(QTableView *pTableView, QString sFileName)
 }
 #endif
 #ifdef QT_GUI_LIB
-bool XOptions::saveTableWidget(QTableWidget *pTableWidget, QString sFileName)
+bool XOptions::saveTableWidget(QTableWidget *pTableWidget,QString sFileName)
 {
     return saveModel(pTableWidget->model(),sFileName);
 }
