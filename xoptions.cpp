@@ -840,7 +840,7 @@ QString XOptions::getStructsPath()
     return getValue(XOptions::ID_STRUCTSPATH).toString();
 }
 #ifdef QT_GUI_LIB
-void XOptions::adjustApplicationView(QString sTranslationName, XOptions *pOptions)
+void XOptions::adjustApplicationView(QString sTranslationName,XOptions *pOptions)
 {
     QString sStyle=pOptions->getValue(XOptions::ID_VIEW_STYLE).toString();
 
