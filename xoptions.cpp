@@ -1016,7 +1016,7 @@ bool XOptions::saveModel(QAbstractItemModel *pModel,QString sFileName)
 }
 #endif
 #ifdef QT_GUI_LIB
-bool XOptions::saveTextEdit(QTextEdit *pTextEdit, QString sFileName)
+bool XOptions::saveTextEdit(QTextEdit *pTextEdit,QString sFileName)
 {
     bool bResult=false;
 
