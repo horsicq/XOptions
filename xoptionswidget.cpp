@@ -35,7 +35,7 @@ XOptionsWidget::~XOptionsWidget()
     delete ui;
 }
 
-void XOptionsWidget::setOptions(XOptions *pOptions, QString sApplicationDisplayName)
+void XOptionsWidget::setOptions(XOptions *pOptions,QString sApplicationDisplayName)
 {
     g_pOptions=pOptions;
     g_sApplicationDisplayName=sApplicationDisplayName;
