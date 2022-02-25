@@ -1251,7 +1251,7 @@ QString XOptions::getTitle(QString sName, QString sVersion)
 }
 
 #ifdef Q_OS_WIN
-bool XOptions::registerContext(QString sApplicationName, QString sType, QString sApplicationFilePath)
+bool XOptions::registerContext(QString sApplicationName,QString sType,QString sApplicationFilePath)
 {
     QSettings settings(QString("HKEY_CLASSES_ROOT\\%1\\shell\\%2\\command").arg(sType,sApplicationName),QSettings::NativeFormat);
     settings.setValue(".","\""+sApplicationFilePath.replace("/","\\")+"\" \"%1\"");
