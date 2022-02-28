@@ -1274,7 +1274,7 @@ bool XOptions::clearContext(QString sApplicationName,QString sType)
 }
 #endif
 #ifdef Q_OS_WIN
-bool XOptions::checkContext(QString sApplicationName, QString sType)
+bool XOptions::checkContext(QString sApplicationName,QString sType)
 {
     QSettings settings(QString("HKEY_CLASSES_ROOT\\%1\\shell").arg(sType),QSettings::NativeFormat);
 
