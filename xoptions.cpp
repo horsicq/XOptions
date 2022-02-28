@@ -1238,7 +1238,7 @@ QString XOptions::getApplicationDataPath()
     return sResult;
 }
 
-QString XOptions::getTitle(QString sName, QString sVersion)
+QString XOptions::getTitle(QString sName,QString sVersion)
 {
     QString sResult;
 #if QT_VERSION >= QT_VERSION_CHECK(5,4,0)
