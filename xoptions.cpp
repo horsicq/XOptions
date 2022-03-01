@@ -1121,7 +1121,7 @@ bool XOptions::saveTextBrowser(QTextBrowser *pTextBrowser,QString sFileName)
 }
 #endif
 #ifdef QT_GUI_LIB
-bool XOptions::saveTextBrowserHtml(QTextBrowser *pTextBrowser, QString sFileName)
+bool XOptions::saveTextBrowserHtml(QTextBrowser *pTextBrowser,QString sFileName)
 {
     bool bResult=false;
 
