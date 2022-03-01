@@ -1039,7 +1039,7 @@ bool XOptions::saveTextEdit(QTextEdit *pTextEdit,QString sFileName)
 }
 #endif
 #ifdef QT_GUI_LIB
-bool XOptions::savePlainTextEdit(QPlainTextEdit *pPlainTextEdit, QString sFileName)
+bool XOptions::savePlainTextEdit(QPlainTextEdit *pPlainTextEdit,QString sFileName)
 {
     bool bResult=false;
 
