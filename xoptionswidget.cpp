@@ -134,7 +134,7 @@ void XOptionsWidget::setOptions(XOptions *pOptions,QString sApplicationDisplayNa
     }
 }
 
-void XOptionsWidget::addListRecord(QString sTitle, qint32 nIndex)
+void XOptionsWidget::addListRecord(QString sTitle,qint32 nIndex)
 {
     QListWidgetItem *pItem=new QListWidgetItem;
 
