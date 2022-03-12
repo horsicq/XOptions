@@ -217,7 +217,7 @@ public:
     qint32 getMaxRecentFilesCount();
 
 private:
-    ID _fixID(ID id); // TODO remove
+    ID _fixID(ID id); // TODO remove !!!
 
 signals:
     void errorMessage(QString sText);
