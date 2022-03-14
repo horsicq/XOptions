@@ -259,7 +259,7 @@ void XOptions::load()
         }
         else
         {
-            // TODO remove, use addID
+            // TODO remove,use addID
             switch(id)
             {
                 case ID_STAYONTOP:                              varDefault=false;                   break;
