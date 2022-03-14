@@ -1244,7 +1244,7 @@ QString XOptions::getTitle(QString sName,QString sVersion)
 #if QT_VERSION >= QT_VERSION_CHECK(5,4,0)
     sResult=QString("%1 v%2 [%3](%4)").arg(sName,sVersion,QSysInfo::prettyProductName(),QSysInfo::buildCpuArchitecture());
 #else
-    sResult=QString("%1 v%2").arg(sName,sVersion); // TODO OS Name, For Windows Arch GetVersionExA
+    sResult=QString("%1 v%2").arg(sName,sVersion); // TODO OS Name // For Windows Arch GetVersionExA
 #endif
 
     return sResult;
