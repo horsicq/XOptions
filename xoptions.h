@@ -34,6 +34,7 @@
 #include <QLineEdit>
 #include <QListView>
 #include <QListWidget>
+#include <QMenu>
 #include <QMessageBox>
 #include <QPlainTextEdit>
 #include <QStyleFactory>
@@ -206,6 +207,7 @@ public:
     static bool saveTreeWidget(QTreeWidget *pTreeWidget,QString sFileName);
     static bool saveTextBrowser(QTextBrowser *pTextBrowser,QString sFileName);
     static bool saveTextBrowserHtml(QTextBrowser *pTextBrowser,QString sFileName);
+    QMenu *createRecentFilesMenu(QWidget *pParent);
 #endif
 #ifdef Q_OS_WIN
     bool registerContext(QString sApplicationName,QString sType,QString sApplicationFilePath);

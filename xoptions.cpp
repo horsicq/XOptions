@@ -1142,6 +1142,17 @@ bool XOptions::saveTextBrowserHtml(QTextBrowser *pTextBrowser,QString sFileName)
 
     return bResult;
 }
+
+QMenu *XOptions::createRecentFilesMenu(QWidget *pParent)
+{
+    QMenu *pResult=new QMenu(tr("Recent files"),pParent);
+
+    // TODO openFile signal
+
+    pResult->setEnabled(false);
+
+    return pResult;
+}
 #endif
 QString XOptions::getApplicationLangPath()
 {
