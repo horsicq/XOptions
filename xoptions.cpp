@@ -22,8 +22,9 @@
 
 XOptions::XOptions(QObject *pParent) : QObject(pParent)
 {
+    g_pRecentFilesMenu=nullptr;
     g_bIsNeedRestart=false;
-    g_nMaxRecentFilesCount=10;
+    g_nMaxRecentFilesCount=10; // TODO const
     g_bIsNative=checkNative();
 
     g_sName=QString("%1.ini").arg(qApp->applicationName()); // default name
@@ -223,11 +224,6 @@ void XOptions::load()
             bSaveRecentFiles=true;
         }
 
-        if(g_listValueIDs.at(i)==ID_SAVERECENTFILES)
-        {
-            bSaveRecentFiles=true;
-        }
-
         if(g_listValueIDs.at(i)==ID_NU_RECENTFILES)
         {
             bRecentFiles=true;
@@ -269,7 +265,6 @@ void XOptions::load()
                 case ID_HEURISTICSCAN:                          varDefault=true;                    break;
                 case ID_ALLTYPESSCAN:                           varDefault=false;                   break;
                 case ID_SAVELASTDIRECTORY:                      varDefault=true;                    break;
-                case ID_SAVERECENTFILES:                        varDefault=true;                    break;
                 case ID_SAVEBACKUP:                             varDefault=true;                    break;
                 case ID_STYLE:                                  varDefault="Fusion";                break; // TODO Check styles in OSX and Linux
                 case ID_LANG:                                   varDefault="System";                break;
@@ -363,6 +358,15 @@ void XOptions::save()
         ID id=g_listValueIDs.at(i);
         QString sName=idToString(id);
         pSettings->setValue(sName,g_mapValues.value(id));
+
+        if((id==ID_FILE_SAVELASTDIRECTORY)&&(g_mapValues.value(id).toBool()==false))
+        {
+            pSettings->setValue(idToString(ID_NU_LASTDIRECTORY),"");
+        }
+        else if((id==ID_FILE_SAVERECENTFILES)&&(g_mapValues.value(id).toBool()==false))
+        {
+            clearRecentFiles();
+        }
     }
 
     delete pSettings;
@@ -413,7 +417,6 @@ QString XOptions::idToString(ID id)
         case ID_HEURISTICSCAN:                              sResult=QString("HeuristicScan");                           break;
         case ID_ALLTYPESSCAN:                               sResult=QString("AllTypesScan");                            break;
         case ID_SAVELASTDIRECTORY:                          sResult=QString("SaveLastDirectory");                       break;
-        case ID_SAVERECENTFILES:                            sResult=QString("SaveRecentFiles");                         break;
         case ID_SAVEBACKUP:                                 sResult=QString("SaveBackup");                              break;
         case ID_STYLE:                                      sResult=QString("Style");                                   break;
         case ID_LANG:                                       sResult=QString("Lang");                                    break;
@@ -519,7 +522,7 @@ void XOptions::setLastFileName(QString sFileName)
 
     if(getValue(ID_FILE_SAVERECENTFILES).toBool())
     {
-        QString _sFileName=QString("\"%1\"").arg(fi.absoluteFilePath());
+        QString _sFileName=fi.absoluteFilePath();
 
         QList<QVariant> listFiles=getValue(ID_NU_RECENTFILES).toList();
 
@@ -533,12 +536,34 @@ void XOptions::setLastFileName(QString sFileName)
         }
 
         g_mapValues.insert(ID_NU_RECENTFILES,listFiles);
+
+    #ifdef Q_OS_WIN
+        _updateRecentFilesMenu();
+    #endif
     }
 }
 
 void XOptions::clearRecentFiles()
 {
     g_mapValues.insert(ID_NU_RECENTFILES,QList<QVariant>());
+
+#ifdef Q_OS_WIN
+    _updateRecentFilesMenu();
+#endif
+}
+
+void XOptions::openRecentFile()
+{
+#ifdef Q_OS_WIN
+    QAction *pAction=qobject_cast<QAction *>(sender());
+
+    if(pAction)
+    {
+        QString sFileName=pAction->data().toString();
+
+        emit openFile(sFileName);
+    }
+#endif
 }
 
 QList<QString> XOptions::getRecentFiles()
@@ -1145,13 +1170,11 @@ bool XOptions::saveTextBrowserHtml(QTextBrowser *pTextBrowser,QString sFileName)
 
 QMenu *XOptions::createRecentFilesMenu(QWidget *pParent)
 {
-    QMenu *pResult=new QMenu(tr("Recent files"),pParent);
+    g_pRecentFilesMenu=new QMenu(tr("Recent files"),pParent);
 
-    // TODO openFile signal
+    _updateRecentFilesMenu();
 
-    pResult->setEnabled(false);
-
-    return pResult;
+    return g_pRecentFilesMenu;
 }
 #endif
 QString XOptions::getApplicationLangPath()
@@ -1313,7 +1336,6 @@ XOptions::ID XOptions::_fixID(ID id)
     else if ((result==ID_VIEW_LANG)&&(g_mapValues.contains(ID_LANG)))                               result=ID_LANG;
     else if ((result==ID_VIEW_SHOWLOGO)&&(g_mapValues.contains(ID_SHOWLOGO)))                       result=ID_SHOWLOGO;
     else if ((result==ID_FILE_SAVELASTDIRECTORY)&&(g_mapValues.contains(ID_SAVELASTDIRECTORY)))     result=ID_SAVELASTDIRECTORY;
-    else if ((result==ID_FILE_SAVERECENTFILES)&&(g_mapValues.contains(ID_SAVERECENTFILES)))         result=ID_SAVERECENTFILES;
     else if ((result==ID_FILE_SAVEBACKUP)&&(g_mapValues.contains(ID_SAVEBACKUP)))                   result=ID_SAVEBACKUP;
     else if ((result==ID_SCAN_SCANAFTEROPEN)&&(g_mapValues.contains(ID_SCANAFTEROPEN)))             result=ID_SCANAFTEROPEN;
     else if ((result==ID_SCAN_RECURSIVE)&&(g_mapValues.contains(ID_RECURSIVESCAN)))                 result=ID_RECURSIVESCAN;
@@ -1324,3 +1346,41 @@ XOptions::ID XOptions::_fixID(ID id)
 
     return result;
 }
+#ifdef Q_OS_WIN
+void XOptions::_updateRecentFilesMenu()
+{
+    if(g_pRecentFilesMenu)
+    {
+        g_pRecentFilesMenu->clear();
+
+        QList<QString> listRecentFiles=getRecentFiles();
+
+        qint32 nNumberOfRecentFiles=listRecentFiles.count();
+
+        for(qint32 i=nNumberOfRecentFiles-1;i>=0;i--)
+        {
+            QAction *pAction=new QAction(listRecentFiles.at(i),g_pRecentFilesMenu);
+            pAction->setData(listRecentFiles.at(i));
+
+            connect(pAction,SIGNAL(triggered()),this,SLOT(openRecentFile()));
+
+            g_pRecentFilesMenu->addAction(pAction);
+        }
+
+        if(nNumberOfRecentFiles)
+        {
+            g_pRecentFilesMenu->addSeparator();
+
+            QAction *pAction=new QAction(tr("Clear"),g_pRecentFilesMenu);
+
+            connect(pAction,SIGNAL(triggered()),this,SLOT(clearRecentFiles()));
+
+            g_pRecentFilesMenu->addAction(pAction);
+        }
+
+        // TODO openFile signal
+
+        g_pRecentFilesMenu->setEnabled(nNumberOfRecentFiles);
+    }
+}
+#endif

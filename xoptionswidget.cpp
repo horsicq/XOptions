@@ -122,6 +122,15 @@ void XOptionsWidget::setOptions(XOptions *pOptions,QString sApplicationDisplayNa
         ui->checkBoxFileSaveBackup->hide();
     }
 
+    if(g_pOptions->isIDPresent(XOptions::ID_FILE_SAVERECENTFILES))
+    {
+        g_pOptions->setCheckBox(ui->checkBoxFileSaveHistory,XOptions::ID_FILE_SAVERECENTFILES);
+    }
+    else
+    {
+        ui->checkBoxFileSaveHistory->hide();
+    }
+
     if(g_pOptions->isIDPresent(XOptions::ID_FILE_CONTEXT))
     {
     #ifdef Q_OS_WIN
@@ -200,6 +209,13 @@ void XOptionsWidget::save()
     {
         g_pOptions->getCheckBox(ui->checkBoxFileSaveBackup,XOptions::ID_FILE_SAVEBACKUP);
     }
+
+    if(g_pOptions->isIDPresent(XOptions::ID_FILE_SAVERECENTFILES))
+    {
+        g_pOptions->getCheckBox(ui->checkBoxFileSaveHistory,XOptions::ID_FILE_SAVERECENTFILES);
+    }
+
+    g_pOptions->save();
 }
 
 void XOptionsWidget::on_listWidgetOptions_currentRowChanged(int nCurrentRow)

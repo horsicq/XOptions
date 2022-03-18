@@ -71,7 +71,6 @@ public:
         // TODO remove !!!
         ID_STAYONTOP=0,
         ID_SAVELASTDIRECTORY,
-        ID_SAVERECENTFILES,
         ID_SAVEBACKUP,
         ID_STYLE,
         ID_QSS,
@@ -152,7 +151,6 @@ public:
     QString getLastDirectory();
     void setLastDirectory(QString sPathName);
     void setLastFileName(QString sFileName);
-    void clearRecentFiles();
     QList<QString> getRecentFiles();
     QString getDatabasePath();
     QString getInfoPath();
@@ -218,12 +216,20 @@ public:
     void setMaxRecentFilesCount(qint32 nValue);
     qint32 getMaxRecentFilesCount();
 
+public slots:
+    void clearRecentFiles();
+
+private slots:
+    void openRecentFile();
+
 private:
     ID _fixID(ID id); // TODO remove !!!
+    void _updateRecentFilesMenu();
 
 signals:
     void errorMessage(QString sText);
     void infoMessage(QString sText);
+    void openFile(QString sFileName);
 
 private:
     QString g_sName;
@@ -233,6 +239,9 @@ private:
     QMap<ID,QVariant> g_mapDefaultValues;
     bool g_bIsNeedRestart;
     qint32 g_nMaxRecentFilesCount;
+#ifdef QT_GUI_LIB
+    QMenu *g_pRecentFilesMenu;
+#endif
 };
 
 #endif // XOPTIONS_H
