@@ -537,7 +537,7 @@ void XOptions::setLastFileName(QString sFileName)
 
         g_mapValues.insert(ID_NU_RECENTFILES,listFiles);
 
-    #ifdef Q_OS_WIN
+    #ifdef QT_GUI_LIB
         _updateRecentFilesMenu();
     #endif
     }
@@ -547,14 +547,14 @@ void XOptions::clearRecentFiles()
 {
     g_mapValues.insert(ID_NU_RECENTFILES,QList<QVariant>());
 
-#ifdef Q_OS_WIN
+#ifdef QT_GUI_LIB
     _updateRecentFilesMenu();
 #endif
 }
 
 void XOptions::openRecentFile()
 {
-#ifdef Q_OS_WIN
+#ifdef QT_GUI_LIB
     QAction *pAction=qobject_cast<QAction *>(sender());
 
     if(pAction)
@@ -1167,7 +1167,8 @@ bool XOptions::saveTextBrowserHtml(QTextBrowser *pTextBrowser,QString sFileName)
 
     return bResult;
 }
-
+#endif
+#ifdef QT_GUI_LIB
 QMenu *XOptions::createRecentFilesMenu(QWidget *pParent)
 {
     g_pRecentFilesMenu=new QMenu(tr("Recent files"),pParent);
@@ -1346,7 +1347,7 @@ XOptions::ID XOptions::_fixID(ID id)
 
     return result;
 }
-#ifdef Q_OS_WIN
+#ifdef QT_GUI_LIB
 void XOptions::_updateRecentFilesMenu()
 {
     if(g_pRecentFilesMenu)
