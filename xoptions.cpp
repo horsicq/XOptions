@@ -22,7 +22,9 @@
 
 XOptions::XOptions(QObject *pParent) : QObject(pParent)
 {
+#ifdef QT_GUI_LIB
     g_pRecentFilesMenu=nullptr;
+#endif
     g_bIsNeedRestart=false;
     g_nMaxRecentFilesCount=10; // TODO const
     g_bIsNative=checkNative();
