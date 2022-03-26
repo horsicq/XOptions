@@ -84,7 +84,7 @@ public:
         ID_DISASMSYNTAX,
         ID_ROOTPATH,
         ID_DATAPATH,
-        ID_JSON,
+        ID_JSON,            // TODO Create group
         ID_SEARCHSIGNATURESPATH,
         ID_STRUCTSPATH,
         ID_AUTHUSER,
