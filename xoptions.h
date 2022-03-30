@@ -58,6 +58,7 @@ public:
     {
         GROUPID_UNKNOWN=0,
         GROUPID_VIEW,
+        GROUPID_EDIT,
         GROUPID_FILE,
         GROUPID_SCAN,
         GROUPID_SIGNATURES,
