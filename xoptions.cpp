@@ -99,6 +99,10 @@ XOptions::GROUPID XOptions::getGroupID(ID id)
         case ID_HEX_FONT:
             result=GROUPID_HEX;
             break;
+        case ID_IODRIVER_FILENAME:
+        case ID_IODRIVER_SERVICENAME:
+            result=GROUPID_IODRIVER;
+            break;
     }
 
     return result;
@@ -465,6 +469,8 @@ QString XOptions::idToString(ID id)
         case ID_DEBUGGER_BREAKPOINT_ENTRYPOINT:             sResult=QString("Debugger/Breakpoint/EntryPoint");          break;
         case ID_DEBUGGER_BREAKPOINT_DLLMAIN:                sResult=QString("Debugger/Breakpoint/DLLMain");             break;
         case ID_DEBUGGER_BREAKPOINT_TLSFUNCTIONS:           sResult=QString("Debugger/Breakpoint/TLSFunctions");        break;
+        case ID_IODRIVER_FILENAME:                          sResult=QString("IODriver/FileName");                       break;
+        case ID_IODRIVER_SERVICENAME:                       sResult=QString("IODriver/ServiceName");                    break;
         case ID_NU_RECENTFILES:                             sResult=QString("RecentFiles");                             break;
         case ID_NU_LASTDIRECTORY:                           sResult=QString("LastDirectory");                           break;
     }

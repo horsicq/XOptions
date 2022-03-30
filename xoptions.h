@@ -64,7 +64,8 @@ public:
         GROUPID_SIGNATURES,
         GROUPID_DEBUGGER,
         GROUPID_HEX,
-        GROUPID_DISASM
+        GROUPID_DISASM,
+        GROUPID_IODRIVER
     };
 
     enum ID
@@ -126,6 +127,8 @@ public:
         // TODO Breakpoints on system breakpoints
         // TODO colors for DISASM
         // TODO more
+        ID_IODRIVER_FILENAME,
+        ID_IODRIVER_SERVICENAME,
         // for internal use.
         ID_NU_LASTDIRECTORY,    // Using if ID_SAVELASTDIRECTORY
         ID_NU_RECENTFILES       // Using if ID_SAVERECENTFILES
