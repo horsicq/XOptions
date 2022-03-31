@@ -41,7 +41,6 @@ public:
     void addListRecord(QString sTitle,qint32 nIndex);
     void addPage(QWidget *pWidget,QString sTitle);
     void setCurrentPage(qint32 nPage);
-
     void save();
 
 private slots:
