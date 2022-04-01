@@ -85,7 +85,7 @@ public:
         ID_ALLTYPESSCAN,
         ID_DISASMSYNTAX,
         ID_ROOTPATH,
-        ID_DATAPATH,
+        ID_DATAPATH,        // TODO Create group
         ID_JSON,            // TODO Create group
         ID_SEARCHSIGNATURESPATH,
         ID_STRUCTSPATH,
