@@ -65,7 +65,8 @@ public:
         GROUPID_DEBUGGER,
         GROUPID_HEX,
         GROUPID_DISASM,
-        GROUPID_IODRIVER
+        GROUPID_IODRIVER,
+        GROUPID_STRUCTS
     };
 
     enum ID
@@ -129,6 +130,7 @@ public:
         // TODO more
         ID_IODRIVER_FILENAME,
         ID_IODRIVER_SERVICENAME,
+        ID_STRUCTS_PATH,
         // for internal use.
         ID_NU_LASTDIRECTORY,    // Using if ID_SAVELASTDIRECTORY
         ID_NU_RECENTFILES       // Using if ID_SAVERECENTFILES

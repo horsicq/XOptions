@@ -281,6 +281,7 @@ void XOptions::load()
                 case ID_JSON:                                   varDefault="";                      break;
                 case ID_SEARCHSIGNATURESPATH:                   varDefault="$data/signatures";      break;
                 case ID_STRUCTSPATH:                            varDefault="$data/structs";         break;
+                case ID_STRUCTS_PATH:                           varDefault="$data/structs";         break;
                 case ID_AUTHUSER:                               varDefault="";                      break;
                 case ID_AUTHTOKEN:                              varDefault="";                      break;
                 case ID_SHOWLOGO:                               varDefault=true;                    break;
@@ -302,6 +303,7 @@ void XOptions::load()
                 (id==ID_SCAN_INFOPATH)||
                 (id==ID_DATAPATH)||
                 (id==ID_SIGNATURES_PATH)||
+                (id==ID_STRUCTS_PATH)||
                 (id==ID_STRUCTSPATH))
             {
                 if(!QDir(variant.toString()).exists())
@@ -471,6 +473,7 @@ QString XOptions::idToString(ID id)
         case ID_DEBUGGER_BREAKPOINT_TLSFUNCTIONS:           sResult=QString("Debugger/Breakpoint/TLSFunctions");        break;
         case ID_IODRIVER_FILENAME:                          sResult=QString("IODriver/FileName");                       break;
         case ID_IODRIVER_SERVICENAME:                       sResult=QString("IODriver/ServiceName");                    break;
+        case ID_STRUCTS_PATH:                               sResult=QString("Structs/Path");                            break;
         case ID_NU_RECENTFILES:                             sResult=QString("RecentFiles");                             break;
         case ID_NU_LASTDIRECTORY:                           sResult=QString("LastDirectory");                           break;
     }
