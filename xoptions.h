@@ -212,6 +212,8 @@ public:
     static bool saveTextBrowser(QTextBrowser *pTextBrowser,QString sFileName);
     static bool saveTextBrowserHtml(QTextBrowser *pTextBrowser,QString sFileName);
     QMenu *createRecentFilesMenu(QWidget *pParent);
+    static qint32 getCharWidth(QWidget *pWidget);
+    static qint32 getCharHeight(QWidget *pWidget);
 #endif
 #ifdef Q_OS_WIN
     bool registerContext(QString sApplicationName,QString sType,QString sApplicationFilePath);

@@ -1189,6 +1189,22 @@ QMenu *XOptions::createRecentFilesMenu(QWidget *pParent)
     return g_pRecentFilesMenu;
 }
 #endif
+#ifdef QT_GUI_LIB
+qint32 XOptions::getCharWidth(QWidget *pWidget)
+{
+    const QFontMetricsF fm(pWidget->font());
+
+    return fm.maxWidth();
+}
+#endif
+#ifdef QT_GUI_LIB
+qint32 XOptions::getCharHeight(QWidget *pWidget)
+{
+    const QFontMetricsF fm(pWidget->font());
+
+    return fm.height();
+}
+#endif
 QString XOptions::getApplicationLangPath()
 {
     QString sResult;
