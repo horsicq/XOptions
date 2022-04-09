@@ -114,6 +114,7 @@ public:
         ID_SIGNATURES_PATH,
         ID_DISASM_FONT,
         ID_DISASM_SYNTAX,
+        // TODO more
         ID_DISASM_COLOR_CALL,
         ID_DISASM_COLOR_RET,
         ID_DISASM_COLOR_JCC,
