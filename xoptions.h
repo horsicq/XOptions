@@ -71,8 +71,7 @@ public:
 
     enum ID
     {
-        // TODO remove !!!
-        ID_STAYONTOP=0,
+        ID_STAYONTOP=0,         // TODO remove !!!
         ID_SAVELASTDIRECTORY,
         ID_SAVEBACKUP,
         ID_STYLE,
