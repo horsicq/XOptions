@@ -75,8 +75,8 @@ public:
         ID_SAVELASTDIRECTORY,
         ID_SAVEBACKUP,
         ID_STYLE,
-        ID_QSS,
-        ID_LANG,
+        ID_QSS,                 // TODO remove !!!
+        ID_LANG,                // TODO remove !!!
         ID_SHOWLOGO,
         ID_SCANAFTEROPEN,
         ID_RECURSIVESCAN,
