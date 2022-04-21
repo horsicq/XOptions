@@ -22,6 +22,7 @@
 #define XOPTIONSWIDGET_H
 
 #include <QWidget>
+#include <QFontDialog>
 #include "xoptions.h"
 
 namespace Ui {
@@ -46,6 +47,7 @@ public:
 private slots:
     void on_listWidgetOptions_currentRowChanged(int nCurrentRow);
     void on_checkBoxFileContext_toggled(bool bChecked);
+    void on_toolButtonViewFont_clicked();
 
 private:
     Ui::XOptionsWidget *ui;

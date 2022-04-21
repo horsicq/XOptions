@@ -64,6 +64,7 @@ XOptions::GROUPID XOptions::getGroupID(ID id)
         case ID_VIEW_LANG:
         case ID_VIEW_SINGLEAPPLICATION:
         case ID_VIEW_SHOWLOGO:
+        case ID_VIEW_FONT:
             result=GROUPID_VIEW;
             break;
         case ID_FILE_SAVELASTDIRECTORY:
@@ -87,6 +88,7 @@ XOptions::GROUPID XOptions::getGroupID(ID id)
             break;
         case ID_DISASM_FONT:
         case ID_DISASM_SYNTAX:
+        case ID_DISASM_HIGHLIGHT:
         case ID_DISASM_COLOR_CALL:
         case ID_DISASM_COLOR_RET:
         case ID_DISASM_COLOR_JCC:
@@ -98,6 +100,12 @@ XOptions::GROUPID XOptions::getGroupID(ID id)
             break;
         case ID_HEX_FONT:
             result=GROUPID_HEX;
+            break;
+        case ID_STACK_FONT:
+            result=GROUPID_STACK;
+            break;
+        case ID_REGISTERS_FONT:
+            result=GROUPID_REGISTERS;
             break;
         case ID_IODRIVER_FILENAME:
         case ID_IODRIVER_SERVICENAME:
@@ -445,6 +453,7 @@ QString XOptions::idToString(ID id)
         case ID_VIEW_LANG:                                  sResult=QString("View/Lang");                               break;
         case ID_VIEW_SINGLEAPPLICATION:                     sResult=QString("View/SingleApplication");                  break;
         case ID_VIEW_SHOWLOGO:                              sResult=QString("View/ShowLogo");                           break;
+        case ID_VIEW_FONT:                                  sResult=QString("View/Font");                               break;
         case ID_FILE_SAVELASTDIRECTORY:                     sResult=QString("File/SaveLastDirectory");                  break;
         case ID_FILE_SAVERECENTFILES:                       sResult=QString("File/SaveRecentFiles");                    break;
         case ID_FILE_SAVEBACKUP:                            sResult=QString("File/SaveBackup");                         break;
@@ -459,6 +468,7 @@ QString XOptions::idToString(ID id)
         case ID_SCAN_INFOPATH:                              sResult=QString("Scan/InfoPath");                           break;
         case ID_SIGNATURES_PATH:                            sResult=QString("Signatures/Path");                         break;
         case ID_DISASM_FONT:                                sResult=QString("Disasm/Font");                             break;
+        case ID_DISASM_HIGHLIGHT:                           sResult=QString("Disasm/Highlight");                        break;
         case ID_DISASM_SYNTAX:                              sResult=QString("Disasm/Syntax");                           break;
         case ID_DISASM_COLOR_CALL:                          sResult=QString("Disasm/Color/call");                       break;
         case ID_DISASM_COLOR_RET:                           sResult=QString("Disasm/Color/ret");                        break;
@@ -468,6 +478,8 @@ QString XOptions::idToString(ID id)
         case ID_DISASM_COLOR_NOP:                           sResult=QString("Disasm/Color/nop");                        break;
         case ID_DISASM_COLOR_JMP:                           sResult=QString("Disasm/Color/jmp");                        break;
         case ID_HEX_FONT:                                   sResult=QString("Hex/Font");                                break;
+        case ID_STACK_FONT:                                 sResult=QString("Stack/Font");                              break;
+        case ID_REGISTERS_FONT:                             sResult=QString("Registers/Font");                          break;
         case ID_DEBUGGER_BREAKPOINT_ENTRYPOINT:             sResult=QString("Debugger/Breakpoint/EntryPoint");          break;
         case ID_DEBUGGER_BREAKPOINT_DLLMAIN:                sResult=QString("Debugger/Breakpoint/DLLMain");             break;
         case ID_DEBUGGER_BREAKPOINT_TLSFUNCTIONS:           sResult=QString("Debugger/Breakpoint/TLSFunctions");        break;
@@ -657,6 +669,18 @@ void XOptions::adjustStayOnTop(QWidget *pWidget)
 }
 #endif
 #ifdef QT_GUI_LIB
+void XOptions::adjustFont(QWidget *pWidget)
+{
+    QFont _font;
+    QString sFont=getValue(XOptions::ID_VIEW_FONT).toString();
+
+    if((sFont!="")&&_font.fromString(sFont))
+    {
+        pWidget->setFont(_font);
+    }
+}
+#endif
+#ifdef QT_GUI_LIB
 void XOptions::setMonoFont(QWidget *pWidget,qint32 nSize)
 {
     QFont font=pWidget->font();
@@ -689,6 +713,18 @@ void XOptions::setCheckBox(QCheckBox *pCheckBox,XOptions::ID id)
 void XOptions::getCheckBox(QCheckBox *pCheckBox,XOptions::ID id)
 {
     setValue(id,pCheckBox->isChecked());
+}
+#endif
+#ifdef QT_GUI_LIB
+void XOptions::setCheckBox(QGroupBox *pGroupBox, ID id)
+{
+    pGroupBox->setChecked(getValue(id).toBool());
+}
+#endif
+#ifdef QT_GUI_LIB
+void XOptions::getCheckBox(QGroupBox *pGroupBox, ID id)
+{
+    setValue(id,pGroupBox->isChecked());
 }
 #endif
 #ifdef QT_GUI_LIB

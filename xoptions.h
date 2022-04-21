@@ -29,6 +29,7 @@
 #ifdef QT_GUI_LIB
 #include <QApplication>
 #include <QCheckBox>
+#include <QGroupBox>
 #include <QComboBox>
 #include <QFileDialog>
 #include <QLineEdit>
@@ -64,6 +65,8 @@ public:
         GROUPID_SIGNATURES,
         GROUPID_DEBUGGER,
         GROUPID_HEX,
+        GROUPID_STACK,
+        GROUPID_REGISTERS,
         GROUPID_DISASM,
         GROUPID_IODRIVER,
         GROUPID_STRUCTS
@@ -98,6 +101,7 @@ public:
         ID_VIEW_LANG,
         ID_VIEW_SINGLEAPPLICATION,
         ID_VIEW_SHOWLOGO,
+        ID_VIEW_FONT,
         ID_FILE_SAVELASTDIRECTORY,
         ID_FILE_SAVERECENTFILES,
         ID_FILE_SAVEBACKUP,
@@ -113,6 +117,7 @@ public:
         ID_SIGNATURES_PATH,
         ID_DISASM_FONT,
         ID_DISASM_SYNTAX,
+        ID_DISASM_HIGHLIGHT,
         // TODO more
         ID_DISASM_COLOR_CALL,
         ID_DISASM_COLOR_RET,
@@ -122,6 +127,8 @@ public:
         ID_DISASM_COLOR_NOP,
         ID_DISASM_COLOR_JMP,
         ID_HEX_FONT,
+        ID_STACK_FONT,
+        ID_REGISTERS_FONT,
         ID_DEBUGGER_BREAKPOINT_ENTRYPOINT,
         ID_DEBUGGER_BREAKPOINT_DLLMAIN,
         ID_DEBUGGER_BREAKPOINT_TLSFUNCTIONS,
@@ -190,11 +197,14 @@ public:
 #ifdef QT_GUI_LIB
     void setCheckBox(QCheckBox *pCheckBox,ID id);
     void getCheckBox(QCheckBox *pCheckBox,ID id);
+    void setCheckBox(QGroupBox *pGroupBox,ID id);
+    void getCheckBox(QGroupBox *pGroupBox,ID id);
     void setComboBox(QComboBox *pComboBox,ID id);
     void getComboBox(QComboBox *pComboBox,ID id);
     void setLineEdit(QLineEdit *pLineEdit,ID id);
     void getLineEdit(QLineEdit *pLineEdit,ID id);
     void adjustStayOnTop(QWidget *pWidget);
+    void adjustFont(QWidget *pWidget);
     void static setMonoFont(QWidget *pWidget,qint32 nSize=-1);
     static void adjustApplicationView(QString sTranslationName,XOptions *pOptions);
     static void adjustApplicationView(QString sApplicationFileName,QString sTranslationName);

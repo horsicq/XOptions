@@ -104,6 +104,15 @@ void XOptionsWidget::setOptions(XOptions *pOptions,QString sApplicationDisplayNa
         ui->checkBoxViewShowLogo->hide();
     }
 
+    if(g_pOptions->isIDPresent(XOptions::ID_VIEW_FONT))
+    {
+        g_pOptions->setLineEdit(ui->lineEditViewFont,XOptions::ID_VIEW_FONT);
+    }
+    else
+    {
+        ui->groupBoxViewFont->hide();
+    }
+
     if(g_pOptions->isIDPresent(XOptions::ID_FILE_SAVELASTDIRECTORY))
     {
         g_pOptions->setCheckBox(ui->checkBoxFileSaveLastDirectory,XOptions::ID_FILE_SAVELASTDIRECTORY);
@@ -200,6 +209,11 @@ void XOptionsWidget::save()
         g_pOptions->getCheckBox(ui->checkBoxViewShowLogo,XOptions::ID_VIEW_SHOWLOGO);
     }
 
+    if(g_pOptions->isIDPresent(XOptions::ID_VIEW_FONT))
+    {
+        g_pOptions->getLineEdit(ui->lineEditViewFont,XOptions::ID_VIEW_FONT);
+    }
+
     if(g_pOptions->isIDPresent(XOptions::ID_FILE_SAVELASTDIRECTORY))
     {
         g_pOptions->getCheckBox(ui->checkBoxFileSaveLastDirectory,XOptions::ID_FILE_SAVELASTDIRECTORY);
@@ -253,5 +267,19 @@ void XOptionsWidget::on_checkBoxFileContext_toggled(bool bChecked)
             }
         }
     #endif
+    }
+}
+
+void XOptionsWidget::on_toolButtonViewFont_clicked()
+{
+    QFont _font;
+    _font.fromString(ui->lineEditViewFont->text());
+
+    bool bOK=false;
+    _font=QFontDialog::getFont(&bOK,_font,this);
+
+    if(bOK)
+    {
+        ui->lineEditViewFont->setText(_font.toString());
     }
 }
