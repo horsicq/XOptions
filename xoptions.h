@@ -205,9 +205,10 @@ public:
     void getLineEdit(QLineEdit *pLineEdit,ID id);
     void adjustStayOnTop(QWidget *pWidget);
     void adjustFont(QWidget *pWidget);
+    void adjustWindow(QWidget *pWidget);
     void static setMonoFont(QWidget *pWidget,qint32 nSize=-1);
     static void adjustApplicationView(QString sTranslationName,XOptions *pOptions);
-    static void adjustApplicationView(QString sApplicationFileName,QString sTranslationName);
+//    static void adjustApplicationView(QString sApplicationFileName,QString sTranslationName);
     static QWidget *getMainWidget(QWidget *pWidget);
     static QString getModelText(QAbstractItemModel *pModel);
     static bool saveModel(QAbstractItemModel *pModel,QString sFileName);

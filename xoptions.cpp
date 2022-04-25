@@ -681,6 +681,20 @@ void XOptions::adjustFont(QWidget *pWidget)
 }
 #endif
 #ifdef QT_GUI_LIB
+void XOptions::adjustWindow(QWidget *pWidget)
+{
+    if(isIDPresent(XOptions::ID_VIEW_STAYONTOP))
+    {
+        adjustStayOnTop(pWidget);
+    }
+
+    if(isIDPresent(XOptions::ID_VIEW_FONT))
+    {
+        adjustFont(pWidget);
+    }
+}
+#endif
+#ifdef QT_GUI_LIB
 void XOptions::setMonoFont(QWidget *pWidget,qint32 nSize)
 {
     QFont font=pWidget->font();
@@ -914,77 +928,96 @@ QString XOptions::getStructsPath()
 #ifdef QT_GUI_LIB
 void XOptions::adjustApplicationView(QString sTranslationName,XOptions *pOptions)
 {
-    QString sStyle=pOptions->getValue(XOptions::ID_VIEW_STYLE).toString();
-
-    if(sStyle!="")
+    if(pOptions->isIDPresent(XOptions::ID_VIEW_STYLE))
     {
-        qApp->setStyle(QStyleFactory::create(sStyle));
-    }
+        QString sStyle=pOptions->getValue(XOptions::ID_VIEW_STYLE).toString();
 
-    QTranslator *pTranslator=new QTranslator; // Important
-    QString sLang=pOptions->getValue(XOptions::ID_VIEW_LANG).toString();
-    QString sLangsPath=pOptions->getApplicationLangPath();
-
-    bool bLoad=false;
-
-    if(sLang=="System")
-    {
-        QLocale locale=QLocale::system();
-        if(locale!=QLocale::English)
+        if(sStyle!="")
         {
-            bLoad=pTranslator->load(locale,sTranslationName,"_",sLangsPath,".qm");
+            qApp->setStyle(QStyleFactory::create(sStyle));
         }
     }
-    else if(sLang!="")
+
+    if(pOptions->isIDPresent(XOptions::ID_VIEW_LANG))
     {
-        bLoad=pTranslator->load(sLang,sLangsPath);
-    }
+        QTranslator *pTranslator=new QTranslator; // Important
+        QString sLang=pOptions->getValue(XOptions::ID_VIEW_LANG).toString();
+        QString sLangsPath=pOptions->getApplicationLangPath();
 
-    if(bLoad)
-    {
-        qApp->installTranslator(pTranslator);
-    }
+        bool bLoad=false;
 
-    QString sQss=pOptions->getValue(XOptions::ID_VIEW_QSS).toString();
-
-    if(sQss!="")
-    {
-        QString sQssFileName=pOptions->getApplicationQssPath()+QDir::separator()+QString("%1.qss").arg(sQss);
-
-        if(QFile::exists(sQssFileName))
+        if(sLang=="System")
         {
-            QFile file;
-            file.setFileName(sQssFileName);
-
-            if(file.open(QIODevice::ReadOnly))
+            QLocale locale=QLocale::system();
+            if(locale!=QLocale::English)
             {
-                QByteArray baQss=file.readAll();
-                qApp->setStyleSheet(baQss.data());
-                file.close();
+                bLoad=pTranslator->load(locale,sTranslationName,"_",sLangsPath,".qm");
+            }
+        }
+        else if(sLang!="")
+        {
+            bLoad=pTranslator->load(sLang,sLangsPath);
+        }
+
+        if(bLoad)
+        {
+            qApp->installTranslator(pTranslator);
+        }
+    }
+
+    if(pOptions->isIDPresent(XOptions::ID_VIEW_QSS))
+    {
+        QString sQss=pOptions->getValue(XOptions::ID_VIEW_QSS).toString();
+
+        if(sQss!="")
+        {
+            QString sQssFileName=pOptions->getApplicationQssPath()+QDir::separator()+QString("%1.qss").arg(sQss);
+
+            if(QFile::exists(sQssFileName))
+            {
+                QFile file;
+                file.setFileName(sQssFileName);
+
+                if(file.open(QIODevice::ReadOnly))
+                {
+                    QByteArray baQss=file.readAll();
+                    qApp->setStyleSheet(baQss.data());
+                    file.close();
+                }
             }
         }
     }
+
+    if(pOptions->isIDPresent(XOptions::ID_VIEW_FONT))
+    {
+        QString sFont=pOptions->getValue(XOptions::ID_VIEW_FONT).toString();
+
+        if(sFont!="")
+        {
+            qApp->setFont(sFont);
+        }
+    }
 }
 #endif
-#ifdef QT_GUI_LIB
-void XOptions::adjustApplicationView(QString sApplicationFileName,QString sTranslationName)
-{
-    XOptions xOptions;
+//#ifdef QT_GUI_LIB
+//void XOptions::adjustApplicationView(QString sApplicationFileName,QString sTranslationName)
+//{
+//    XOptions xOptions;
 
-    xOptions.setName(sApplicationFileName);
+//    xOptions.setName(sApplicationFileName);
 
-    QList<XOptions::ID> listIDs;
+//    QList<XOptions::ID> listIDs;
 
-    listIDs.append(XOptions::ID_VIEW_STYLE);
-    listIDs.append(XOptions::ID_VIEW_LANG);
-    listIDs.append(XOptions::ID_VIEW_QSS);
+//    listIDs.append(XOptions::ID_VIEW_STYLE);
+//    listIDs.append(XOptions::ID_VIEW_LANG);
+//    listIDs.append(XOptions::ID_VIEW_QSS);
 
-    xOptions.setValueIDs(listIDs);
-    xOptions.load();
+//    xOptions.setValueIDs(listIDs);
+//    xOptions.load();
 
-    xOptions.adjustApplicationView(sTranslationName,&xOptions);
-}
-#endif
+//    xOptions.adjustApplicationView(sTranslationName,&xOptions);
+//}
+//#endif
 #ifdef QT_GUI_LIB
 QWidget *XOptions::getMainWidget(QWidget *pWidget)
 {
