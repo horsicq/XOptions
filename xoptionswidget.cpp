@@ -27,7 +27,11 @@ XOptionsWidget::XOptionsWidget(QWidget *pParent) :
 {
     ui->setupUi(this);
 
+    g_pParent=pParent;
     g_pOptions=nullptr;
+
+    connect(this,SIGNAL(saveSignal()),this,SLOT(save()),Qt::DirectConnection);
+    connect(this,SIGNAL(reloadSignal()),this,SLOT(reload()),Qt::DirectConnection);
 }
 
 XOptionsWidget::~XOptionsWidget()
@@ -50,6 +54,94 @@ void XOptionsWidget::setOptions(XOptions *pOptions,QString sApplicationDisplayNa
         addListRecord(tr("File"),1);
     }
 
+    reload();
+}
+
+void XOptionsWidget::addListRecord(QString sTitle,qint32 nIndex)
+{
+    QListWidgetItem *pItem=new QListWidgetItem;
+
+    pItem->setText(sTitle);
+    pItem->setData(Qt::UserRole,nIndex);
+
+    ui->listWidgetOptions->addItem(pItem);
+}
+
+void XOptionsWidget::addPage(QWidget *pWidget,QString sTitle)
+{
+    qint32 nIndex=ui->stackedWidgetOptions->addWidget(pWidget);
+
+    addListRecord(sTitle,nIndex);
+
+    connect(this,SIGNAL(saveSignal()),pWidget,SLOT(save()),Qt::DirectConnection);
+    connect(this,SIGNAL(reloadSignal()),pWidget,SLOT(reload()),Qt::DirectConnection);
+}
+
+void XOptionsWidget::setCurrentPage(qint32 nPage)
+{
+    if(nPage<ui->listWidgetOptions->count())
+    {
+        ui->listWidgetOptions->setCurrentRow(nPage);
+    }
+}
+
+void XOptionsWidget::save()
+{
+    if(g_pOptions->isIDPresent(XOptions::ID_VIEW_STAYONTOP))
+    {
+        g_pOptions->getCheckBox(ui->checkBoxViewStayOnTop,XOptions::ID_VIEW_STAYONTOP);
+    }
+
+    if(g_pOptions->isIDPresent(XOptions::ID_VIEW_SINGLEAPPLICATION))
+    {
+        g_pOptions->getCheckBox(ui->checkBoxViewSingleApplication,XOptions::ID_VIEW_SINGLEAPPLICATION);
+    }
+
+    if(g_pOptions->isIDPresent(XOptions::ID_VIEW_STYLE))
+    {
+        g_pOptions->getComboBox(ui->comboBoxViewStyle,XOptions::ID_VIEW_STYLE);
+    }
+
+    if(g_pOptions->isIDPresent(XOptions::ID_VIEW_QSS))
+    {
+        g_pOptions->getComboBox(ui->comboBoxViewQss,XOptions::ID_VIEW_QSS);
+    }
+
+    if(g_pOptions->isIDPresent(XOptions::ID_VIEW_LANG))
+    {
+        g_pOptions->getComboBox(ui->comboBoxViewLanguage,XOptions::ID_VIEW_LANG);
+    }
+
+    if(g_pOptions->isIDPresent(XOptions::ID_VIEW_SHOWLOGO))
+    {
+        g_pOptions->getCheckBox(ui->checkBoxViewShowLogo,XOptions::ID_VIEW_SHOWLOGO);
+    }
+
+    if(g_pOptions->isIDPresent(XOptions::ID_VIEW_FONT))
+    {
+        g_pOptions->getLineEdit(ui->lineEditViewFont,XOptions::ID_VIEW_FONT);
+    }
+
+    if(g_pOptions->isIDPresent(XOptions::ID_FILE_SAVELASTDIRECTORY))
+    {
+        g_pOptions->getCheckBox(ui->checkBoxFileSaveLastDirectory,XOptions::ID_FILE_SAVELASTDIRECTORY);
+    }
+
+    if(g_pOptions->isIDPresent(XOptions::ID_FILE_SAVEBACKUP))
+    {
+        g_pOptions->getCheckBox(ui->checkBoxFileSaveBackup,XOptions::ID_FILE_SAVEBACKUP);
+    }
+
+    if(g_pOptions->isIDPresent(XOptions::ID_FILE_SAVERECENTFILES))
+    {
+        g_pOptions->getCheckBox(ui->checkBoxFileSaveHistory,XOptions::ID_FILE_SAVERECENTFILES);
+    }
+
+    g_pOptions->save();
+}
+
+void XOptionsWidget::reload()
+{
     if(g_pOptions->isIDPresent(XOptions::ID_VIEW_STAYONTOP))
     {
         g_pOptions->setCheckBox(ui->checkBoxViewStayOnTop,XOptions::ID_VIEW_STAYONTOP);
@@ -152,86 +244,6 @@ void XOptionsWidget::setOptions(XOptions *pOptions,QString sApplicationDisplayNa
     }
 }
 
-void XOptionsWidget::addListRecord(QString sTitle,qint32 nIndex)
-{
-    QListWidgetItem *pItem=new QListWidgetItem;
-
-    pItem->setText(sTitle);
-    pItem->setData(Qt::UserRole,nIndex);
-
-    ui->listWidgetOptions->addItem(pItem);
-}
-
-void XOptionsWidget::addPage(QWidget *pWidget,QString sTitle)
-{
-    qint32 nIndex=ui->stackedWidgetOptions->addWidget(pWidget);
-
-    addListRecord(sTitle,nIndex);
-}
-
-void XOptionsWidget::setCurrentPage(qint32 nPage)
-{
-    if(nPage<ui->listWidgetOptions->count())
-    {
-        ui->listWidgetOptions->setCurrentRow(nPage);
-    }
-}
-
-void XOptionsWidget::save()
-{
-    if(g_pOptions->isIDPresent(XOptions::ID_VIEW_STAYONTOP))
-    {
-        g_pOptions->getCheckBox(ui->checkBoxViewStayOnTop,XOptions::ID_VIEW_STAYONTOP);
-    }
-
-    if(g_pOptions->isIDPresent(XOptions::ID_VIEW_SINGLEAPPLICATION))
-    {
-        g_pOptions->getCheckBox(ui->checkBoxViewSingleApplication,XOptions::ID_VIEW_SINGLEAPPLICATION);
-    }
-
-    if(g_pOptions->isIDPresent(XOptions::ID_VIEW_STYLE))
-    {
-        g_pOptions->getComboBox(ui->comboBoxViewStyle,XOptions::ID_VIEW_STYLE);
-    }
-
-    if(g_pOptions->isIDPresent(XOptions::ID_VIEW_QSS))
-    {
-        g_pOptions->getComboBox(ui->comboBoxViewQss,XOptions::ID_VIEW_QSS);
-    }
-
-    if(g_pOptions->isIDPresent(XOptions::ID_VIEW_LANG))
-    {
-        g_pOptions->getComboBox(ui->comboBoxViewLanguage,XOptions::ID_VIEW_LANG);
-    }
-
-    if(g_pOptions->isIDPresent(XOptions::ID_VIEW_SHOWLOGO))
-    {
-        g_pOptions->getCheckBox(ui->checkBoxViewShowLogo,XOptions::ID_VIEW_SHOWLOGO);
-    }
-
-    if(g_pOptions->isIDPresent(XOptions::ID_VIEW_FONT))
-    {
-        g_pOptions->getLineEdit(ui->lineEditViewFont,XOptions::ID_VIEW_FONT);
-    }
-
-    if(g_pOptions->isIDPresent(XOptions::ID_FILE_SAVELASTDIRECTORY))
-    {
-        g_pOptions->getCheckBox(ui->checkBoxFileSaveLastDirectory,XOptions::ID_FILE_SAVELASTDIRECTORY);
-    }
-
-    if(g_pOptions->isIDPresent(XOptions::ID_FILE_SAVEBACKUP))
-    {
-        g_pOptions->getCheckBox(ui->checkBoxFileSaveBackup,XOptions::ID_FILE_SAVEBACKUP);
-    }
-
-    if(g_pOptions->isIDPresent(XOptions::ID_FILE_SAVERECENTFILES))
-    {
-        g_pOptions->getCheckBox(ui->checkBoxFileSaveHistory,XOptions::ID_FILE_SAVERECENTFILES);
-    }
-
-    g_pOptions->save();
-}
-
 void XOptionsWidget::on_listWidgetOptions_currentRowChanged(int nCurrentRow)
 {
     if(nCurrentRow<ui->stackedWidgetOptions->count())
@@ -282,4 +294,28 @@ void XOptionsWidget::on_toolButtonViewFont_clicked()
     {
         ui->lineEditViewFont->setText(_font.toString());
     }
+}
+
+void XOptionsWidget::on_pushButtonDefault_clicked()
+{
+    g_pOptions->resetToDefault();
+
+    emit reloadSignal();
+}
+
+void XOptionsWidget::on_pushButtonOK_clicked()
+{
+    emit saveSignal();
+
+    if(g_pOptions->isRestartNeeded())
+    {
+        QMessageBox::information(this,tr("Information"),tr("Please restart the application"));
+    }
+
+    g_pParent->close();
+}
+
+void XOptionsWidget::on_pushButtonCancel_clicked()
+{
+    g_pParent->close();
 }

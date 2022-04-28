@@ -38,19 +38,29 @@ public:
     ~XOptionsWidget();
 
     void setOptions(XOptions *pOptions,QString sApplicationDisplayName);
-
     void addListRecord(QString sTitle,qint32 nIndex);
     void addPage(QWidget *pWidget,QString sTitle);
     void setCurrentPage(qint32 nPage);
+
+public slots:
     void save();
+    void reload();
 
 private slots:
     void on_listWidgetOptions_currentRowChanged(int nCurrentRow);
     void on_checkBoxFileContext_toggled(bool bChecked);
     void on_toolButtonViewFont_clicked();
+    void on_pushButtonDefault_clicked();
+    void on_pushButtonOK_clicked();
+    void on_pushButtonCancel_clicked();
+
+signals:
+    void saveSignal();
+    void reloadSignal();
 
 private:
     Ui::XOptionsWidget *ui;
+    QWidget *g_pParent;
     XOptions *g_pOptions;
     QString g_sApplicationDisplayName;
 };

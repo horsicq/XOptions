@@ -32,6 +32,18 @@ XOptions::XOptions(QObject *pParent) : QObject(pParent)
     g_sName=QString("%1.ini").arg(qApp->applicationName()); // default name
 }
 
+void XOptions::resetToDefault()
+{
+    qint32 nNumberOfRecords=g_listValueIDs.count();
+
+    for(qint32 i=0;i<nNumberOfRecords;i++)
+    {
+        XOptions::ID id=g_listValueIDs.at(i);
+
+        g_mapValues.insert(id,g_mapDefaultValues.value(id));
+    }
+}
+
 void XOptions::setValueIDs(QList<ID> listVariantIDs)
 {
     this->g_listValueIDs=listVariantIDs;
@@ -89,13 +101,17 @@ XOptions::GROUPID XOptions::getGroupID(ID id)
         case ID_DISASM_FONT:
         case ID_DISASM_SYNTAX:
         case ID_DISASM_HIGHLIGHT:
-        case ID_DISASM_COLOR_CALL:
-        case ID_DISASM_COLOR_RET:
-        case ID_DISASM_COLOR_JCC:
-        case ID_DISASM_COLOR_PUSH:
-        case ID_DISASM_COLOR_POP:
-        case ID_DISASM_COLOR_NOP:
-        case ID_DISASM_COLOR_JMP:
+        case ID_DISASM_COLOR_X86_CALL:
+        case ID_DISASM_COLOR_X86_RET:
+        case ID_DISASM_COLOR_X86_JCC:
+        case ID_DISASM_COLOR_X86_PUSH:
+        case ID_DISASM_COLOR_X86_POP:
+        case ID_DISASM_COLOR_X86_NOP:
+        case ID_DISASM_COLOR_X86_JMP:
+        case ID_DISASM_COLOR_ARM_BL:
+        case ID_DISASM_COLOR_ARM_RET:
+        case ID_DISASM_COLOR_ARM_PUSH:
+        case ID_DISASM_COLOR_ARM_POP:
             result=GROUPID_DISASM;
             break;
         case ID_HEX_FONT:
@@ -470,16 +486,21 @@ QString XOptions::idToString(ID id)
         case ID_DISASM_FONT:                                sResult=QString("Disasm/Font");                             break;
         case ID_DISASM_HIGHLIGHT:                           sResult=QString("Disasm/Highlight");                        break;
         case ID_DISASM_SYNTAX:                              sResult=QString("Disasm/Syntax");                           break;
-        case ID_DISASM_COLOR_CALL:                          sResult=QString("Disasm/Color/call");                       break;
-        case ID_DISASM_COLOR_RET:                           sResult=QString("Disasm/Color/ret");                        break;
-        case ID_DISASM_COLOR_JCC:                           sResult=QString("Disasm/Color/jcc");                        break;
-        case ID_DISASM_COLOR_PUSH:                          sResult=QString("Disasm/Color/push");                       break;
-        case ID_DISASM_COLOR_POP:                           sResult=QString("Disasm/Color/pop");                        break;
-        case ID_DISASM_COLOR_NOP:                           sResult=QString("Disasm/Color/nop");                        break;
-        case ID_DISASM_COLOR_JMP:                           sResult=QString("Disasm/Color/jmp");                        break;
+        case ID_DISASM_COLOR_X86_CALL:                      sResult=QString("Disasm/Color/x86/call");                   break;
+        case ID_DISASM_COLOR_X86_RET:                       sResult=QString("Disasm/Color/x86/ret");                    break;
+        case ID_DISASM_COLOR_X86_JCC:                       sResult=QString("Disasm/Color/x86/jcc");                    break;
+        case ID_DISASM_COLOR_X86_PUSH:                      sResult=QString("Disasm/Color/x86/push");                   break;
+        case ID_DISASM_COLOR_X86_POP:                       sResult=QString("Disasm/Color/x86/pop");                    break;
+        case ID_DISASM_COLOR_X86_NOP:                       sResult=QString("Disasm/Color/x86/nop");                    break;
+        case ID_DISASM_COLOR_X86_JMP:                       sResult=QString("Disasm/Color/x86/jmp");                    break;
+        case ID_DISASM_COLOR_ARM_BL:                        sResult=QString("Disasm/Color/arm/bl");                     break;
+        case ID_DISASM_COLOR_ARM_RET:                       sResult=QString("Disasm/Color/arm/ret");                    break;
+        case ID_DISASM_COLOR_ARM_PUSH:                      sResult=QString("Disasm/Color/arm/push");                   break;
+        case ID_DISASM_COLOR_ARM_POP:                       sResult=QString("Disasm/Color/arm/pop");                    break;
         case ID_HEX_FONT:                                   sResult=QString("Hex/Font");                                break;
         case ID_STACK_FONT:                                 sResult=QString("Stack/Font");                              break;
         case ID_REGISTERS_FONT:                             sResult=QString("Registers/Font");                          break;
+        case ID_DEBUGGER_BREAKPOINT_SYSTEM:                 sResult=QString("Debugger/Breakpoint/System");              break;
         case ID_DEBUGGER_BREAKPOINT_ENTRYPOINT:             sResult=QString("Debugger/Breakpoint/EntryPoint");          break;
         case ID_DEBUGGER_BREAKPOINT_DLLMAIN:                sResult=QString("Debugger/Breakpoint/DLLMain");             break;
         case ID_DEBUGGER_BREAKPOINT_TLSFUNCTIONS:           sResult=QString("Debugger/Breakpoint/TLSFunctions");        break;

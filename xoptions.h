@@ -119,16 +119,21 @@ public:
         ID_DISASM_SYNTAX,
         ID_DISASM_HIGHLIGHT,
         // TODO more
-        ID_DISASM_COLOR_CALL,
-        ID_DISASM_COLOR_RET,
-        ID_DISASM_COLOR_JCC,
-        ID_DISASM_COLOR_PUSH,
-        ID_DISASM_COLOR_POP,
-        ID_DISASM_COLOR_NOP,
-        ID_DISASM_COLOR_JMP,
+        ID_DISASM_COLOR_X86_CALL,
+        ID_DISASM_COLOR_X86_RET,
+        ID_DISASM_COLOR_X86_JCC,
+        ID_DISASM_COLOR_X86_PUSH,
+        ID_DISASM_COLOR_X86_POP,
+        ID_DISASM_COLOR_X86_NOP,
+        ID_DISASM_COLOR_X86_JMP,
+        ID_DISASM_COLOR_ARM_BL,
+        ID_DISASM_COLOR_ARM_RET,
+        ID_DISASM_COLOR_ARM_PUSH,
+        ID_DISASM_COLOR_ARM_POP,
         ID_HEX_FONT,
         ID_STACK_FONT,
         ID_REGISTERS_FONT,
+        ID_DEBUGGER_BREAKPOINT_SYSTEM,
         ID_DEBUGGER_BREAKPOINT_ENTRYPOINT,
         ID_DEBUGGER_BREAKPOINT_DLLMAIN,
         ID_DEBUGGER_BREAKPOINT_TLSFUNCTIONS,
@@ -145,6 +150,7 @@ public:
 
     explicit XOptions(QObject *pParent=nullptr);
 
+    void resetToDefault();
     void setValueIDs(QList<ID> listValueIDs);
     void setDefaultValues(QMap<ID,QVariant> mapDefaultValues);
     void addID(ID id,QVariant varDefaultValue=QVariant());
