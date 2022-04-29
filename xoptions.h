@@ -86,7 +86,6 @@ public:
         ID_DEEPSCAN,
         ID_HEURISTICSCAN,
         ID_ALLTYPESSCAN,
-        ID_DISASMSYNTAX,
         ID_ROOTPATH,
         ID_DATAPATH,            // TODO Create group
         ID_JSON,                // TODO Create group
@@ -117,8 +116,8 @@ public:
         ID_SIGNATURES_PATH,
         ID_DISASM_FONT,
         ID_DISASM_SYNTAX,
+        ID_DISASM_ADDRESSCOLON,
         ID_DISASM_HIGHLIGHT,
-        // TODO more
         ID_DISASM_COLOR_X86_CALL,
         ID_DISASM_COLOR_X86_RET,
         ID_DISASM_COLOR_X86_JCC,

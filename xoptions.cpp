@@ -100,6 +100,7 @@ XOptions::GROUPID XOptions::getGroupID(ID id)
             break;
         case ID_DISASM_FONT:
         case ID_DISASM_SYNTAX:
+        case ID_DISASM_ADDRESSCOLON:
         case ID_DISASM_HIGHLIGHT:
         case ID_DISASM_COLOR_X86_CALL:
         case ID_DISASM_COLOR_X86_RET:
@@ -299,7 +300,6 @@ void XOptions::load()
                 case ID_STYLE:                                  varDefault="Fusion";                break; // TODO Check styles in OSX and Linux
                 case ID_LANG:                                   varDefault="System";                break;
                 case ID_QSS:                                    varDefault="";                      break;
-                case ID_DISASMSYNTAX:                           varDefault="";                      break;
                 case ID_ROOTPATH:                               varDefault="";                      break;
                 case ID_DATAPATH:                               varDefault="$data/data";            break;
                 case ID_JSON:                                   varDefault="";                      break;
@@ -453,7 +453,6 @@ QString XOptions::idToString(ID id)
         case ID_STYLE:                                      sResult=QString("Style");                                   break;
         case ID_LANG:                                       sResult=QString("Lang");                                    break;
         case ID_QSS:                                        sResult=QString("Qss");                                     break;
-        case ID_DISASMSYNTAX:                               sResult=QString("DisasmSyntax");                            break;
         case ID_ROOTPATH:                                   sResult=QString("RootPath");                                break;
         case ID_DATAPATH:                                   sResult=QString("DataPath");                                break;
         case ID_JSON:                                       sResult=QString("Json");                                    break;
@@ -484,6 +483,7 @@ QString XOptions::idToString(ID id)
         case ID_SCAN_INFOPATH:                              sResult=QString("Scan/InfoPath");                           break;
         case ID_SIGNATURES_PATH:                            sResult=QString("Signatures/Path");                         break;
         case ID_DISASM_FONT:                                sResult=QString("Disasm/Font");                             break;
+        case ID_DISASM_ADDRESSCOLON:                        sResult=QString("Disasm/AddressColon");                     break;
         case ID_DISASM_HIGHLIGHT:                           sResult=QString("Disasm/Highlight");                        break;
         case ID_DISASM_SYNTAX:                              sResult=QString("Disasm/Syntax");                           break;
         case ID_DISASM_COLOR_X86_CALL:                      sResult=QString("Disasm/Color/x86/call");                   break;
@@ -836,6 +836,14 @@ void XOptions::setComboBox(QComboBox *pComboBox,XOptions::ID id)
         pComboBox->addItem(tr("Automatic"),"auto");
         pComboBox->addItem(QString("Detect It Easy(DiE)"),"die");
         pComboBox->addItem(QString("Nauz File Detector(NFD)"),"nfd");
+    }
+    else if(id==ID_DISASM_SYNTAX)
+    {
+        pComboBox->addItem("Default","");
+        pComboBox->addItem(QString("ATT"),"ATT");
+        pComboBox->addItem(QString("INTEL"),"INTEL");
+        pComboBox->addItem(QString("MASM"),"MASM");
+        pComboBox->addItem(QString("MOTOROLA"),"MOTOROLA");
     }
 
     qint32 nNumberOfItems=pComboBox->count();
@@ -1460,7 +1468,6 @@ XOptions::ID XOptions::_fixID(ID id)
     else if ((result==ID_SCAN_DEEP)&&(g_mapValues.contains(ID_DEEPSCAN)))                           result=ID_DEEPSCAN;
     else if ((result==ID_SCAN_HEURISTIC)&&(g_mapValues.contains(ID_HEURISTICSCAN)))                 result=ID_HEURISTICSCAN;
     else if ((result==ID_SCAN_ALLTYPES)&&(g_mapValues.contains(ID_ALLTYPESSCAN)))                   result=ID_ALLTYPESSCAN;
-    else if ((result==ID_DISASM_SYNTAX)&&(g_mapValues.contains(ID_DISASMSYNTAX)))                   result=ID_DISASMSYNTAX;
 
     return result;
 }
