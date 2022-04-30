@@ -40,7 +40,18 @@ void XOptions::resetToDefault()
     {
         XOptions::ID id=g_listValueIDs.at(i);
 
-        g_mapValues.insert(id,g_mapDefaultValues.value(id));
+        bool bInsert=false;
+
+        if( (id!=ID_NU_LASTDIRECTORY)&&
+            (id!=ID_NU_RECENTFILES))
+        {
+            bInsert=true;
+        }
+
+        if(bInsert)
+        {
+            g_mapValues.insert(id,g_mapDefaultValues.value(id));
+        }
     }
 }
 
