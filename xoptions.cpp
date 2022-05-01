@@ -127,6 +127,7 @@ XOptions::GROUPID XOptions::getGroupID(ID id)
             result=GROUPID_DISASM;
             break;
         case ID_HEX_FONT:
+        case ID_HEX_ADDRESSCOLON:
             result=GROUPID_HEX;
             break;
         case ID_STACK_FONT:
@@ -509,6 +510,7 @@ QString XOptions::idToString(ID id)
         case ID_DISASM_COLOR_ARM_PUSH:                      sResult=QString("Disasm/Color/arm/push");                   break;
         case ID_DISASM_COLOR_ARM_POP:                       sResult=QString("Disasm/Color/arm/pop");                    break;
         case ID_HEX_FONT:                                   sResult=QString("Hex/Font");                                break;
+        case ID_HEX_ADDRESSCOLON:                           sResult=QString("Hex/AddressColon");                        break;
         case ID_STACK_FONT:                                 sResult=QString("Stack/Font");                              break;
         case ID_REGISTERS_FONT:                             sResult=QString("Registers/Font");                          break;
         case ID_DEBUGGER_BREAKPOINT_SYSTEM:                 sResult=QString("Debugger/Breakpoint/System");              break;
@@ -762,13 +764,13 @@ void XOptions::getCheckBox(QCheckBox *pCheckBox,XOptions::ID id)
 }
 #endif
 #ifdef QT_GUI_LIB
-void XOptions::setCheckBox(QGroupBox *pGroupBox, ID id)
+void XOptions::setCheckBox(QGroupBox *pGroupBox,ID id)
 {
     pGroupBox->setChecked(getValue(id).toBool());
 }
 #endif
 #ifdef QT_GUI_LIB
-void XOptions::getCheckBox(QGroupBox *pGroupBox, ID id)
+void XOptions::getCheckBox(QGroupBox *pGroupBox,ID id)
 {
     setValue(id,pGroupBox->isChecked());
 }
