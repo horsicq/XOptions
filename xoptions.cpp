@@ -131,6 +131,7 @@ XOptions::GROUPID XOptions::getGroupID(ID id)
             result=GROUPID_HEX;
             break;
         case ID_STACK_FONT:
+        case ID_STACK_ADDRESSCOLON:
             result=GROUPID_STACK;
             break;
         case ID_REGISTERS_FONT:
@@ -512,6 +513,7 @@ QString XOptions::idToString(ID id)
         case ID_HEX_FONT:                                   sResult=QString("Hex/Font");                                break;
         case ID_HEX_ADDRESSCOLON:                           sResult=QString("Hex/AddressColon");                        break;
         case ID_STACK_FONT:                                 sResult=QString("Stack/Font");                              break;
+        case ID_STACK_ADDRESSCOLON:                         sResult=QString("Stack/AddressColon");                      break;
         case ID_REGISTERS_FONT:                             sResult=QString("Registers/Font");                          break;
         case ID_DEBUGGER_BREAKPOINT_SYSTEM:                 sResult=QString("Debugger/Breakpoint/System");              break;
         case ID_DEBUGGER_BREAKPOINT_ENTRYPOINT:             sResult=QString("Debugger/Breakpoint/EntryPoint");          break;
