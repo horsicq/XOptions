@@ -235,7 +235,7 @@ void XOptions::load()
 #ifdef QT_DEBUG
     if(pSettings)
     {
-        qDebug("XOptions load file %s",pSettings->fileName().toLatin1().data());
+        qDebug("XOptions load file %s",pSettings->fileName().toUtf8().data());
     }
 #endif
 
@@ -392,7 +392,7 @@ void XOptions::save()
 #ifdef QT_DEBUG
     if(pSettings)
     {
-        qDebug("XOptions save file %s",pSettings->fileName().toLatin1().data());
+        qDebug("XOptions save file %s",pSettings->fileName().toUtf8().data());
     }
 #endif
 
@@ -1177,7 +1177,7 @@ bool XOptions::saveTextEdit(QTextEdit *pTextEdit,QString sFileName)
         QString sResult=pTextEdit->toPlainText();
 
         file.resize(0);
-        file.write(sResult.toLatin1().data());
+        file.write(sResult.toUtf8().data());
 
         file.close();
 
@@ -1200,7 +1200,7 @@ bool XOptions::savePlainTextEdit(QPlainTextEdit *pPlainTextEdit,QString sFileNam
         QString sResult=pPlainTextEdit->toPlainText();
 
         file.resize(0);
-        file.write(sResult.toLatin1().data());
+        file.write(sResult.toUtf8().data());
 
         file.close();
 
@@ -1259,7 +1259,7 @@ bool XOptions::saveTextBrowser(QTextBrowser *pTextBrowser,QString sFileName)
         QString sResult=pTextBrowser->toPlainText();
 
         file.resize(0);
-        file.write(sResult.toLatin1().data());
+        file.write(sResult.toUtf8().data());
 
         file.close();
 
@@ -1282,7 +1282,7 @@ bool XOptions::saveTextBrowserHtml(QTextBrowser *pTextBrowser,QString sFileName)
         QString sResult=pTextBrowser->toHtml();
 
         file.resize(0);
-        file.write(sResult.toLatin1().data());
+        file.write(sResult.toUtf8().data());
 
         file.close();
 
