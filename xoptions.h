@@ -70,26 +70,15 @@ public:
         GROUPID_DISASM,
         GROUPID_IODRIVER,
         GROUPID_STRUCTS
+        // TODO GitHub
     };
 
     enum ID
     {
-        ID_STAYONTOP=0,         // TODO remove !!!
-        ID_SAVELASTDIRECTORY,
-        ID_SAVEBACKUP,
-        ID_STYLE,
-        ID_QSS,                 // TODO remove !!!
-        ID_LANG,                // TODO remove !!!
-        ID_SHOWLOGO,
-        ID_SCANAFTEROPEN,
-        ID_RECURSIVESCAN,
-        ID_DEEPSCAN,
-        ID_HEURISTICSCAN,
-        ID_ALLTYPESSCAN,
+        ID_UNKNOWN=0,
         ID_ROOTPATH,
         ID_DATAPATH,            // TODO Create group
         ID_JSON,                // TODO Create group
-        ID_SEARCHSIGNATURESPATH,
         ID_STRUCTSPATH,
         ID_AUTHUSER,
         ID_AUTHTOKEN,

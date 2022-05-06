@@ -253,11 +253,6 @@ void XOptions::load()
             bSaveLastDirectory=true;
         }
 
-        if(g_listValueIDs.at(i)==ID_SAVELASTDIRECTORY)
-        {
-            bSaveLastDirectory=true;
-        }
-
         if(g_listValueIDs.at(i)==ID_NU_LASTDIRECTORY)
         {
             bLastDirectory=true;
@@ -302,30 +297,13 @@ void XOptions::load()
             // TODO remove,use addID
             switch(id)
             {
-                case ID_STAYONTOP:                              varDefault=false;                   break;
-                case ID_SCANAFTEROPEN:                          varDefault=true;                    break;
-                case ID_RECURSIVESCAN:                          varDefault=true;                    break;
-                case ID_DEEPSCAN:                               varDefault=true;                    break;
-                case ID_HEURISTICSCAN:                          varDefault=true;                    break;
-                case ID_ALLTYPESSCAN:                           varDefault=false;                   break;
-                case ID_SAVELASTDIRECTORY:                      varDefault=true;                    break;
-                case ID_SAVEBACKUP:                             varDefault=true;                    break;
-                case ID_STYLE:                                  varDefault="Fusion";                break; // TODO Check styles in OSX and Linux
-                case ID_LANG:                                   varDefault="System";                break;
-                case ID_QSS:                                    varDefault="";                      break;
                 case ID_ROOTPATH:                               varDefault="";                      break;
                 case ID_DATAPATH:                               varDefault="$data/data";            break;
                 case ID_JSON:                                   varDefault="";                      break;
-                case ID_SEARCHSIGNATURESPATH:                   varDefault="$data/signatures";      break;
                 case ID_STRUCTSPATH:                            varDefault="$data/structs";         break;
                 case ID_STRUCTS_PATH:                           varDefault="$data/structs";         break;
                 case ID_AUTHUSER:                               varDefault="";                      break;
                 case ID_AUTHTOKEN:                              varDefault="";                      break;
-                case ID_SHOWLOGO:                               varDefault=true;                    break;
-                case ID_DISASM_SYNTAX:                          varDefault="";                      break;
-                case ID_DEBUGGER_BREAKPOINT_ENTRYPOINT:         varDefault=true;                    break;
-                case ID_DEBUGGER_BREAKPOINT_DLLMAIN:            varDefault=true;                    break;
-                case ID_DEBUGGER_BREAKPOINT_TLSFUNCTIONS:       varDefault=true;                    break;
                 case ID_NU_RECENTFILES:                         varDefault=QList<QVariant>();       break;
                 case ID_NU_LASTDIRECTORY:                       varDefault="";                      break;
                 default:                                        varDefault="";
@@ -455,25 +433,12 @@ QString XOptions::idToString(ID id)
     switch(id)
     {
         // TODO remove
-        case ID_STAYONTOP:                                  sResult=QString("StayOnTop");                               break;
-        case ID_SCANAFTEROPEN:                              sResult=QString("ScanAfterOpen");                           break;
-        case ID_RECURSIVESCAN:                              sResult=QString("RecursiveScan");                           break;
-        case ID_DEEPSCAN:                                   sResult=QString("DeepScan");                                break;
-        case ID_HEURISTICSCAN:                              sResult=QString("HeuristicScan");                           break;
-        case ID_ALLTYPESSCAN:                               sResult=QString("AllTypesScan");                            break;
-        case ID_SAVELASTDIRECTORY:                          sResult=QString("SaveLastDirectory");                       break;
-        case ID_SAVEBACKUP:                                 sResult=QString("SaveBackup");                              break;
-        case ID_STYLE:                                      sResult=QString("Style");                                   break;
-        case ID_LANG:                                       sResult=QString("Lang");                                    break;
-        case ID_QSS:                                        sResult=QString("Qss");                                     break;
         case ID_ROOTPATH:                                   sResult=QString("RootPath");                                break;
         case ID_DATAPATH:                                   sResult=QString("DataPath");                                break;
         case ID_JSON:                                       sResult=QString("Json");                                    break;
-        case ID_SEARCHSIGNATURESPATH:                       sResult=QString("SearchSignaturesPath");                    break;
         case ID_STRUCTSPATH:                                sResult=QString("StructsPath");                             break;
         case ID_AUTHUSER:                                   sResult=QString("AuthUser");                                break;
         case ID_AUTHTOKEN:                                  sResult=QString("AuthToken");                               break;
-        case ID_SHOWLOGO:                                   sResult=QString("ShowLogo");                                break;
         // new
         case ID_VIEW_STAYONTOP:                             sResult=QString("View/StayOnTop");                          break;
         case ID_VIEW_STYLE:                                 sResult=QString("View/Style");                              break;
@@ -533,7 +498,7 @@ QString XOptions::getLastDirectory()
 {
     QString sResult;
 
-    bool bSaveLastDirectory=getValue(ID_FILE_SAVELASTDIRECTORY).toBool()||getValue(ID_SAVELASTDIRECTORY).toBool();
+    bool bSaveLastDirectory=getValue(ID_FILE_SAVELASTDIRECTORY).toBool();
     QString sLastDirectory=getValue(ID_NU_LASTDIRECTORY).toString();
 
     if(bSaveLastDirectory&&(sLastDirectory!="")&&QDir().exists(sLastDirectory))
@@ -557,7 +522,7 @@ void XOptions::setLastDirectory(QString sPathName)
         sPathName=fi.absoluteFilePath();
     }
 
-    if(getValue(ID_FILE_SAVELASTDIRECTORY).toBool()||getValue(ID_SAVELASTDIRECTORY).toBool())
+    if(getValue(ID_FILE_SAVELASTDIRECTORY).toBool())
     {
         setValue(ID_NU_LASTDIRECTORY,sPathName);
     }
@@ -574,7 +539,7 @@ void XOptions::setLastFileName(QString sFileName)
         sDirectory=fi.absolutePath();
     }
 
-    if(getValue(ID_FILE_SAVELASTDIRECTORY).toBool()||getValue(ID_SAVELASTDIRECTORY).toBool())
+    if(getValue(ID_FILE_SAVELASTDIRECTORY).toBool())
     {
         setValue(ID_NU_LASTDIRECTORY,sDirectory);
     }
@@ -1471,18 +1436,7 @@ XOptions::ID XOptions::_fixID(ID id)
 {
     ID result=id;
 
-    if      ((result==ID_VIEW_STAYONTOP)&&(g_mapValues.contains(ID_STAYONTOP)))                     result=ID_STAYONTOP;
-    else if ((result==ID_VIEW_STYLE)&&(g_mapValues.contains(ID_STYLE)))                             result=ID_STYLE;
-    else if ((result==ID_VIEW_QSS)&&(g_mapValues.contains(ID_QSS)))                                 result=ID_QSS;
-    else if ((result==ID_VIEW_LANG)&&(g_mapValues.contains(ID_LANG)))                               result=ID_LANG;
-    else if ((result==ID_VIEW_SHOWLOGO)&&(g_mapValues.contains(ID_SHOWLOGO)))                       result=ID_SHOWLOGO;
-    else if ((result==ID_FILE_SAVELASTDIRECTORY)&&(g_mapValues.contains(ID_SAVELASTDIRECTORY)))     result=ID_SAVELASTDIRECTORY;
-    else if ((result==ID_FILE_SAVEBACKUP)&&(g_mapValues.contains(ID_SAVEBACKUP)))                   result=ID_SAVEBACKUP;
-    else if ((result==ID_SCAN_SCANAFTEROPEN)&&(g_mapValues.contains(ID_SCANAFTEROPEN)))             result=ID_SCANAFTEROPEN;
-    else if ((result==ID_SCAN_RECURSIVE)&&(g_mapValues.contains(ID_RECURSIVESCAN)))                 result=ID_RECURSIVESCAN;
-    else if ((result==ID_SCAN_DEEP)&&(g_mapValues.contains(ID_DEEPSCAN)))                           result=ID_DEEPSCAN;
-    else if ((result==ID_SCAN_HEURISTIC)&&(g_mapValues.contains(ID_HEURISTICSCAN)))                 result=ID_HEURISTICSCAN;
-    else if ((result==ID_SCAN_ALLTYPES)&&(g_mapValues.contains(ID_ALLTYPESSCAN)))                   result=ID_ALLTYPESSCAN;
+    // TODO
 
     return result;
 }
