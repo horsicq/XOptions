@@ -704,7 +704,7 @@ void XOptions::setMonoFont(QWidget *pWidget,qint32 nSize)
     font.setFamily("Courier");
 #endif
 #ifdef Q_OS_LINUX
-    font.setFamily("Monospace");    // TODO Check
+    font.setFamily("DejaVu Sans Mono");
 #endif
 #ifdef Q_OS_OSX
     font.setFamily("Menlo");        // TODO Check
