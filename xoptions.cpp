@@ -1283,6 +1283,15 @@ qint32 XOptions::getCharHeight(QWidget *pWidget)
     return fm.height();
 }
 #endif
+#ifdef QT_GUI_LIB
+void XOptions::showInFolder(QString sFileName)
+{
+    // TODO https://stackoverflow.com/questions/3490336/how-to-reveal-in-finder-or-show-in-explorer-with-qt
+    QString sDirectory=QFileInfo(sFileName).absolutePath();
+
+    QDesktopServices::openUrl(QUrl::fromLocalFile(sDirectory));
+}
+#endif
 QString XOptions::getApplicationLangPath()
 {
     QString sResult;

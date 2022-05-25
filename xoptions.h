@@ -46,6 +46,7 @@
 #include <QTreeView>
 #include <QTreeWidget>
 #include <QWidget>
+#include <QDesktopServices>
 #else
 #include <QCoreApplication>
 #endif
@@ -127,8 +128,6 @@ public:
         ID_DEBUGGER_BREAKPOINT_ENTRYPOINT,
         ID_DEBUGGER_BREAKPOINT_DLLMAIN,
         ID_DEBUGGER_BREAKPOINT_TLSFUNCTIONS,
-        // TODO Breakpoints on system breakpoints
-        // TODO colors for DISASM
         // TODO more
         ID_IODRIVER_FILENAME,
         ID_IODRIVER_SERVICENAME,
@@ -221,6 +220,7 @@ public:
     QMenu *createRecentFilesMenu(QWidget *pParent);
     static qint32 getCharWidth(QWidget *pWidget);
     static qint32 getCharHeight(QWidget *pWidget);
+    static void showInFolder(QString sFileName);
 #endif
 #ifdef Q_OS_WIN
     bool registerContext(QString sApplicationName,QString sType,QString sApplicationFilePath);
