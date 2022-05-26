@@ -7,3 +7,4 @@ Options for projects:
 * XMACHOViewer: https://github.com/horsicq/XMACHOViewer
 * PDBRipper: https://github.com/horsicq/PDBRipper
 * XNTSV: https://github.com/horsicq/xntsv
+* XDepends: https://github.com/horsicq/XDepends
