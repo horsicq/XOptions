@@ -1286,10 +1286,36 @@ qint32 XOptions::getCharHeight(QWidget *pWidget)
 #ifdef QT_GUI_LIB
 void XOptions::showInFolder(QString sFileName)
 {
-    // TODO https://stackoverflow.com/questions/3490336/how-to-reveal-in-finder-or-show-in-explorer-with-qt
-    QString sDirectory=QFileInfo(sFileName).absolutePath();
+    QFileInfo fi=QFileInfo(sFileName);
+
+#if defined(Q_OS_WIN)
+    QStringList slParams;
+    if(!fi.isDir())
+    {
+        slParams+=QLatin1String("/select,");
+    }
+
+    slParams+=QDir::toNativeSeparators(fi.canonicalFilePath());
+
+    QProcess::startDetached("explorer.exe",slParams);
+#elif defined(Q_OS_MAC)
+    QStringList slParams;
+    slParams << "-e";
+    slParams << "tell application \"Finder\"";
+    slParams << "-e";
+    slParams << "activate";
+    slParams << "-e";
+    slParams << "select POSIX file \""+fi.path()+"\"";
+    slParams << "-e";
+    slParams << "end tell";
+    slParams << "-e";
+    slParams << "return";
+    QProcess::execute("/usr/bin/osascript",slParams);
+#else
+    QString sDirectory=fi.absolutePath();
 
     QDesktopServices::openUrl(QUrl::fromLocalFile(sDirectory));
+#endif
 }
 #endif
 QString XOptions::getApplicationLangPath()

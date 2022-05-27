@@ -47,6 +47,7 @@
 #include <QTreeWidget>
 #include <QWidget>
 #include <QDesktopServices>
+#include <QProcess>
 #else
 #include <QCoreApplication>
 #endif
