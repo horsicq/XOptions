@@ -29,6 +29,7 @@ XOptionsWidget::XOptionsWidget(QWidget *pParent) :
 
     g_pParent=pParent;
     g_pOptions=nullptr;
+    g_sApplicationDisplayName="";
 
     connect(this,SIGNAL(saveSignal()),this,SLOT(save()),Qt::DirectConnection);
     connect(this,SIGNAL(reloadSignal()),this,SLOT(reload()),Qt::DirectConnection);
