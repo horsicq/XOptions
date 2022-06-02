@@ -29,15 +29,17 @@
 #ifdef QT_GUI_LIB
 #include <QApplication>
 #include <QCheckBox>
-#include <QGroupBox>
 #include <QComboBox>
+#include <QDesktopServices>
 #include <QFileDialog>
+#include <QGroupBox>
 #include <QLineEdit>
 #include <QListView>
 #include <QListWidget>
 #include <QMenu>
 #include <QMessageBox>
 #include <QPlainTextEdit>
+#include <QProcess>
 #include <QStyleFactory>
 #include <QTableView>
 #include <QTableWidget>
@@ -46,8 +48,6 @@
 #include <QTreeView>
 #include <QTreeWidget>
 #include <QWidget>
-#include <QDesktopServices>
-#include <QProcess>
 #else
 #include <QCoreApplication>
 #endif
