@@ -397,15 +397,11 @@ void XOptions::save()
 
 QVariant XOptions::getValue(XOptions::ID id)
 {
-    id=_fixID(id);
-
     return g_mapValues.value(id);
 }
 
 void XOptions::setValue(XOptions::ID id,QVariant vValue)
 {
-    id=_fixID(id);
-
     if( (id==ID_VIEW_STYLE)||
         (id==ID_VIEW_LANG)||
         (id==ID_VIEW_QSS))
@@ -1465,15 +1461,6 @@ void XOptions::setMaxRecentFilesCount(qint32 nValue)
 qint32 XOptions::getMaxRecentFilesCount()
 {
     return g_nMaxRecentFilesCount;
-}
-
-XOptions::ID XOptions::_fixID(ID id)
-{
-    ID result=id;
-
-    // TODO
-
-    return result;
 }
 #ifdef QT_GUI_LIB
 void XOptions::_updateRecentFilesMenu()

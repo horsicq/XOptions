@@ -239,7 +239,6 @@ private slots:
     void openRecentFile();
 
 private:
-    ID _fixID(ID id); // TODO remove !!!
     void _updateRecentFilesMenu();
 
 signals:
