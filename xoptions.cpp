@@ -26,7 +26,7 @@ XOptions::XOptions(QObject *pParent) : QObject(pParent)
     g_pRecentFilesMenu=nullptr;
 #endif
     g_bIsNeedRestart=false;
-    g_nMaxRecentFilesCount=N_MAX_RECENT_FILES_COUNT; // TODO const static !!!
+    g_nMaxRecentFilesCount=N_MAX_RECENT_FILES_COUNT;
     g_bIsNative=checkNative();
 
     g_sName=QString("%1.ini").arg(qApp->applicationName()); // default name
