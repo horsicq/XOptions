@@ -117,6 +117,7 @@ public:
         ID_DISASM_COLOR_X86_POP,
         ID_DISASM_COLOR_X86_NOP,
         ID_DISASM_COLOR_X86_JMP,
+        ID_DISASM_COLOR_X86_INT3,
         ID_DISASM_COLOR_ARM_BL,
         ID_DISASM_COLOR_ARM_RET,
         ID_DISASM_COLOR_ARM_PUSH,
@@ -229,7 +230,6 @@ public:
     bool clearContext(QString sApplicationName,QString sType);
     bool checkContext(QString sApplicationName,QString sType);
 #endif
-
     void setMaxRecentFilesCount(qint32 nValue);
     qint32 getMaxRecentFilesCount();
 

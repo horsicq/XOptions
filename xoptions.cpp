@@ -120,6 +120,7 @@ XOptions::GROUPID XOptions::getGroupID(ID id)
         case ID_DISASM_COLOR_X86_POP:
         case ID_DISASM_COLOR_X86_NOP:
         case ID_DISASM_COLOR_X86_JMP:
+        case ID_DISASM_COLOR_X86_INT3:
         case ID_DISASM_COLOR_ARM_BL:
         case ID_DISASM_COLOR_ARM_RET:
         case ID_DISASM_COLOR_ARM_PUSH:
@@ -467,6 +468,7 @@ QString XOptions::idToString(ID id)
         case ID_DISASM_COLOR_X86_POP:                       sResult=QString("Disasm/Color/x86/pop");                    break;
         case ID_DISASM_COLOR_X86_NOP:                       sResult=QString("Disasm/Color/x86/nop");                    break;
         case ID_DISASM_COLOR_X86_JMP:                       sResult=QString("Disasm/Color/x86/jmp");                    break;
+        case ID_DISASM_COLOR_X86_INT3:                      sResult=QString("Disasm/Color/x86/int3");                   break;
         case ID_DISASM_COLOR_ARM_BL:                        sResult=QString("Disasm/Color/arm/bl");                     break;
         case ID_DISASM_COLOR_ARM_RET:                       sResult=QString("Disasm/Color/arm/ret");                    break;
         case ID_DISASM_COLOR_ARM_PUSH:                      sResult=QString("Disasm/Color/arm/push");                   break;
