@@ -108,6 +108,7 @@ public:
         ID_DISASM_FONT,
         ID_DISASM_SYNTAX,
         ID_DISASM_ADDRESSCOLON,
+        ID_DISASM_UPPERCASE,
         ID_DISASM_HIGHLIGHT,
         // TODO more
         ID_DISASM_COLOR_X86_CALL,

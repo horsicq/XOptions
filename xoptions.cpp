@@ -112,6 +112,7 @@ XOptions::GROUPID XOptions::getGroupID(ID id)
         case ID_DISASM_FONT:
         case ID_DISASM_SYNTAX:
         case ID_DISASM_ADDRESSCOLON:
+        case ID_DISASM_UPPERCASE:
         case ID_DISASM_HIGHLIGHT:
         case ID_DISASM_COLOR_X86_CALL:
         case ID_DISASM_COLOR_X86_RET:
@@ -459,6 +460,7 @@ QString XOptions::idToString(ID id)
         case ID_SIGNATURES_PATH:                            sResult=QString("Signatures/Path");                         break;
         case ID_DISASM_FONT:                                sResult=QString("Disasm/Font");                             break;
         case ID_DISASM_ADDRESSCOLON:                        sResult=QString("Disasm/AddressColon");                     break;
+        case ID_DISASM_UPPERCASE:                           sResult=QString("Disasm/Uppercase");                        break;
         case ID_DISASM_HIGHLIGHT:                           sResult=QString("Disasm/Highlight");                        break;
         case ID_DISASM_SYNTAX:                              sResult=QString("Disasm/Syntax");                           break;
         case ID_DISASM_COLOR_X86_CALL:                      sResult=QString("Disasm/Color/x86/call");                   break;
