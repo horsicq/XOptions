@@ -48,11 +48,13 @@ void XOptionsWidget::setOptions(XOptions *pOptions,QString sApplicationDisplayNa
     if(g_pOptions->isGroupIDPresent(XOptions::GROUPID_VIEW))
     {
         addListRecord(tr("Appearance"),0);
+        ui->pageView->setProperty("GROUPID",XOptions::GROUPID_VIEW);
     }
 
     if(g_pOptions->isGroupIDPresent(XOptions::GROUPID_FILE))
     {
         addListRecord(tr("File"),1);
+        ui->pageFile->setProperty("GROUPID",XOptions::GROUPID_FILE);
     }
 
     reload();
@@ -83,6 +85,35 @@ void XOptionsWidget::setCurrentPage(qint32 nPage)
     if(nPage<ui->listWidgetOptions->count())
     {
         ui->listWidgetOptions->setCurrentRow(nPage);
+    }
+}
+
+void XOptionsWidget::setCurrentPage(XOptions::GROUPID groupId)
+{
+    if(groupId!=XOptions::GROUPID_UNKNOWN)
+    {
+        qint32 nNumberOfPages=ui->stackedWidgetOptions->count();
+        qint32 nNumberOfLists=ui->listWidgetOptions->count();
+
+        for(qint32 i=0;i<nNumberOfPages;i++)
+        {
+            if(ui->stackedWidgetOptions->widget(i)->property("GROUPID").toUInt()==groupId)
+            {
+                for(qint32 j=0;j<nNumberOfLists;j++)
+                {
+                    qint32 nIndex=ui->listWidgetOptions->item(j)->data(Qt::UserRole).toInt();
+
+                    if(nIndex==i)
+                    {
+                        ui->listWidgetOptions->setCurrentRow(j);
+
+                        break;
+                    }
+                }
+
+                break;
+            }
+        }
     }
 }
 

@@ -40,7 +40,8 @@ public:
     void setOptions(XOptions *pOptions,QString sApplicationDisplayName);
     void addListRecord(QString sTitle,qint32 nIndex);
     void addPage(QWidget *pWidget,QString sTitle);
-    void setCurrentPage(qint32 nPage);
+    void setCurrentPage(qint32 nPage); // TODO remove
+    void setCurrentPage(XOptions::GROUPID groupId);
 
 public slots:
     void save();
