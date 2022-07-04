@@ -175,6 +175,7 @@ public:
     QString getJson();
     QString getAuthUser();
     QString getAuthToken();
+    QString getVirusTotalApiKey();
     bool isSaveBackup();
     bool isSaveLastDirectory();
     bool isSaveRecentFiles();

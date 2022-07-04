@@ -652,6 +652,11 @@ QString XOptions::getAuthToken()
     return getValue(ID_AUTHTOKEN).toString();
 }
 
+QString XOptions::getVirusTotalApiKey()
+{
+    return getValue(ID_ONLINETOOLS_VIRUSTOTAL_APIKEY).toString();
+}
+
 #ifdef QT_GUI_LIB
 void XOptions::adjustStayOnTop(QWidget *pWidget)
 {
