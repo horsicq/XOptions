@@ -100,6 +100,7 @@ XOptions::GROUPID XOptions::getGroupID(ID id)
         case ID_SCAN_RECURSIVE:
         case ID_SCAN_DEEP:
         case ID_SCAN_HEURISTIC:
+        case ID_SCAN_VERBOSE:
         case ID_SCAN_ALLTYPES:
         case ID_SCAN_ENGINE:
         case ID_SCAN_DATABASEPATH:
@@ -453,6 +454,7 @@ QString XOptions::idToString(ID id)
         case ID_SCAN_RECURSIVE:                             sResult=QString("Scan/Recursive");                          break;
         case ID_SCAN_DEEP:                                  sResult=QString("Scan/Deep");                               break;
         case ID_SCAN_HEURISTIC:                             sResult=QString("Scan/Heuristic");                          break;
+        case ID_SCAN_VERBOSE:                               sResult=QString("Scan/Verbose");                            break;
         case ID_SCAN_ALLTYPES:                              sResult=QString("Scan/AllTypes");                           break;
         case ID_SCAN_ENGINE:                                sResult=QString("Scan/Engine");                             break;
         case ID_SCAN_DATABASEPATH:                          sResult=QString("Scan/DatabasePath");                       break;
@@ -914,6 +916,11 @@ bool XOptions::isDeepScan()
 bool XOptions::isHeuristicScan()
 {
     return getValue(XOptions::ID_SCAN_HEURISTIC).toBool();
+}
+
+bool XOptions::isVerbose()
+{
+    return getValue(XOptions::ID_SCAN_VERBOSE).toBool();
 }
 
 bool XOptions::isAllTypesScan()

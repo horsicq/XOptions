@@ -101,6 +101,7 @@ public:
         ID_SCAN_RECURSIVE,
         ID_SCAN_DEEP,
         ID_SCAN_HEURISTIC,
+        ID_SCAN_VERBOSE,
         ID_SCAN_ALLTYPES,
         ID_SCAN_ENGINE,
         ID_SCAN_DATABASEPATH,
@@ -185,6 +186,7 @@ public:
     bool isRecursiveScan();
     bool isDeepScan();
     bool isHeuristicScan();
+    bool isVerbose();
     bool isAllTypesScan();
     bool isSingleApplication();
     bool isShowLogo();
