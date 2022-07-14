@@ -799,6 +799,13 @@ void XOptions::setComboBox(QComboBox *pComboBox,XOptions::ID id)
                 sLocale+=QString("(%1)").arg(locale.nativeCountryName());
             }
 
+            if(sLocale!="")
+            {
+                sLocale.replace(0,1,sLocale[0].toUpper());
+            }
+
+            sLocale+=QString("[%1]").arg(locale.languageToString(locale.language()));
+
             pComboBox->addItem(sLocale,sRecord);
         }
     }
