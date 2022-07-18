@@ -351,3 +351,4 @@ void XOptionsWidget::on_pushButtonCancel_clicked()
 {
     g_pParent->close();
 }
+

@@ -1065,60 +1065,63 @@ QString XOptions::getModelText(QAbstractItemModel *pModel)
 {
     QString sResult;
 
-    qint32 nNumberOfRows=pModel->rowCount();
-    qint32 nNumberOfColumns=pModel->columnCount();
-
-    QList<QString> listHeaders;
-    QList<QList<QString>> listListStrings;
-
-    for(qint32 i=0;i<nNumberOfColumns;i++)
+    if(pModel)
     {
-        QString sHeader=pModel->headerData(i,Qt::Horizontal,Qt::DisplayRole).toString();
+        qint32 nNumberOfRows=pModel->rowCount();
+        qint32 nNumberOfColumns=pModel->columnCount();
 
-        listHeaders.append(sHeader);
-    }
+        QList<QString> listHeaders;
+        QList<QList<QString>> listListStrings;
 
-    for(qint32 i=0;i<nNumberOfRows;i++)
-    {
-        QList<QString> listStrings;
-
-        for(qint32 j=0;j<nNumberOfColumns;j++)
+        for(qint32 i=0;i<nNumberOfColumns;i++)
         {
-            QString sString=pModel->data(pModel->index(i,j)).toString();
+            QString sHeader=pModel->headerData(i,Qt::Horizontal,Qt::DisplayRole).toString();
 
-            listStrings.append(sString);
+            listHeaders.append(sHeader);
         }
 
-        listListStrings.append(listStrings);
-    }
-
-    for(qint32 i=0;i<nNumberOfColumns;i++)
-    {
-        if(i!=(nNumberOfColumns-1))
+        for(qint32 i=0;i<nNumberOfRows;i++)
         {
-            sResult+=QString("%1\t").arg(listHeaders.at(i));
-        }
-        else
-        {
-            sResult+=QString("%1\r\n").arg(listHeaders.at(i));
-        }
-    }
+            QList<QString> listStrings;
 
-    // mb TODO csv,tsv,json,xml,json
-
-    for(qint32 i=0;i<nNumberOfRows;i++)
-    {
-        for(qint32 j=0;j<nNumberOfColumns;j++)
-        {
-            QString sString=listListStrings.at(i).at(j);
-
-            if(j!=(nNumberOfColumns-1))
+            for(qint32 j=0;j<nNumberOfColumns;j++)
             {
-                sResult+=QString("%1\t").arg(sString);
+                QString sString=pModel->data(pModel->index(i,j)).toString();
+
+                listStrings.append(sString);
+            }
+
+            listListStrings.append(listStrings);
+        }
+
+        for(qint32 i=0;i<nNumberOfColumns;i++)
+        {
+            if(i!=(nNumberOfColumns-1))
+            {
+                sResult+=QString("%1\t").arg(listHeaders.at(i));
             }
             else
             {
-                sResult+=QString("%1\r\n").arg(sString);
+                sResult+=QString("%1\r\n").arg(listHeaders.at(i));
+            }
+        }
+
+        // mb TODO csv,tsv,json,xml,json
+
+        for(qint32 i=0;i<nNumberOfRows;i++)
+        {
+            for(qint32 j=0;j<nNumberOfColumns;j++)
+            {
+                QString sString=listListStrings.at(i).at(j);
+
+                if(j!=(nNumberOfColumns-1))
+                {
+                    sResult+=QString("%1\t").arg(sString);
+                }
+                else
+                {
+                    sResult+=QString("%1\r\n").arg(sString);
+                }
             }
         }
     }
