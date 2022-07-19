@@ -559,7 +559,7 @@ void XOptions::setLastFileName(QString sFileName)
 
         if(listFiles.count()>g_nMaxRecentFilesCount)
         {
-            listFiles.removeLast();
+            listFiles.removeFirst();
         }
 
         g_mapValues.insert(ID_NU_RECENTFILES,listFiles);
