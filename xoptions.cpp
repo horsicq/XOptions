@@ -209,14 +209,17 @@ bool XOptions::isAppImage()
 void XOptions::setName(QString sValue)
 {
 #ifdef QT_DEBUG
-#ifdef Q_OS_WIN
-    sValue+="win.debug.ini";
+#ifdef Q_OS_WIN32
+    sValue+="win32.debug.ini";
+#endif
+#ifdef Q_OS_WIN64
+    sValue+="win64.debug.ini";
 #endif
 #ifdef Q_OS_LINUX
     sValue+="linux.debug.ini";
 #endif
-#ifdef Q_OS_OSX
-    sValue+="osx.debug.ini";
+#ifdef Q_OS_MACOS
+    sValue+="macos.debug.ini";
 #endif
 #endif
     g_sName=sValue;
@@ -714,7 +717,7 @@ void XOptions::setMonoFont(QWidget *pWidget,qint32 nSize)
 #ifdef Q_OS_LINUX
     font.setFamily("DejaVu Sans Mono");
 #endif
-#ifdef Q_OS_OSX
+#ifdef Q_OS_MACOS
     font.setFamily("Menlo");        // TODO Check
 #endif
 

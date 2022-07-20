@@ -254,7 +254,7 @@ signals:
     void openFile(QString sFileName);
 
 private:
-    static const int N_MAX_RECENT_FILES_COUNT=10;
+    static const int N_MAX_RECENT_FILES_COUNT=20;
     QString g_sName;
     bool g_bIsNative;
     QList<ID> g_listValueIDs;
