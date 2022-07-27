@@ -554,22 +554,25 @@ void XOptions::setLastFileName(QString sFileName)
     {
         QString _sFileName=fi.absoluteFilePath();
 
-        QList<QVariant> listFiles=getValue(ID_NU_RECENTFILES).toList();
-
-        listFiles.removeAll(_sFileName);
-
-        listFiles.append(QVariant(_sFileName));
-
-        if(listFiles.count()>g_nMaxRecentFilesCount)
+        if(_sFileName!="")
         {
-            listFiles.removeFirst();
+            QList<QVariant> listFiles=getValue(ID_NU_RECENTFILES).toList();
+
+            listFiles.removeAll(_sFileName);
+
+            listFiles.append(QVariant(_sFileName));
+
+            if(listFiles.count()>g_nMaxRecentFilesCount)
+            {
+                listFiles.removeFirst();
+            }
+
+            g_mapValues.insert(ID_NU_RECENTFILES,listFiles);
+
+        #ifdef QT_GUI_LIB
+            _updateRecentFilesMenu();
+        #endif
         }
-
-        g_mapValues.insert(ID_NU_RECENTFILES,listFiles);
-
-    #ifdef QT_GUI_LIB
-        _updateRecentFilesMenu();
-    #endif
     }
 }
 
@@ -1450,7 +1453,28 @@ QString XOptions::getTitle(QString sName,QString sVersion)
 
     return sResult;
 }
+#if (QT_VERSION_MAJOR<6)||defined(QT_CORE5COMPAT_LIB)
+QList<XOptions::CODEPAGE> XOptions::getCodePages()
+{
+    QList<XOptions::CODEPAGE> listResult;
 
+    QList<int> list=QTextCodec::availableMibs();
+
+    qint32 nNumberOfRecords=list.count();
+
+    for(qint32 i=0;i<nNumberOfRecords;i++)
+    {
+        CODEPAGE record={};
+
+        record.nCode=list.at(i);
+        record.sName=QTextCodec::codecForMib(list.at(i))->name();
+
+        listResult.append(listResult);
+    }
+
+    return listResult;
+}
+#endif
 #ifdef Q_OS_WIN
 bool XOptions::registerContext(QString sApplicationName,QString sType,QString sApplicationFilePath)
 {

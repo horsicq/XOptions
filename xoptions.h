@@ -51,6 +51,9 @@
 #else
 #include <QCoreApplication>
 #endif
+#if (QT_VERSION_MAJOR<6)||defined(QT_CORE5COMPAT_LIB)
+#include <QTextCodec>
+#endif
 
 class XOptions : public QObject
 {
@@ -230,6 +233,15 @@ public:
     static qint32 getCharWidth(QWidget *pWidget);
     static qint32 getCharHeight(QWidget *pWidget);
     static void showInFolder(QString sFileName);
+#endif
+#if (QT_VERSION_MAJOR<6)||defined(QT_CORE5COMPAT_LIB)
+    struct CODEPAGE
+    {
+        QString sName;
+        qint32 nCode;
+    };
+
+    static QList<CODEPAGE> getCodePages();
 #endif
 #ifdef Q_OS_WIN
     bool registerContext(QString sApplicationName,QString sType,QString sApplicationFilePath);
