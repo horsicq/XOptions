@@ -1454,22 +1454,42 @@ QString XOptions::getTitle(QString sName,QString sVersion)
     return sResult;
 }
 #if (QT_VERSION_MAJOR<6)||defined(QT_CORE5COMPAT_LIB)
-QList<XOptions::CODEPAGE> XOptions::getCodePages()
-{
-    QList<XOptions::CODEPAGE> listResult;
 
-    QList<int> list=QTextCodec::availableMibs();
+bool sort_code_page(const qint32 &nValue1,const qint32 &nValue2)
+{
+    return (qAbs(nValue1)<qAbs(nValue2));
+}
+
+QList<QString> XOptions::getCodePages(bool bAll)
+{
+    QList<QString> listResult;
+
+    QList<qint32> list=QTextCodec::availableMibs();
+
+    std::sort(list.begin(),list.end(),sort_code_page);
 
     qint32 nNumberOfRecords=list.count();
 
     for(qint32 i=0;i<nNumberOfRecords;i++)
     {
-        CODEPAGE record={};
+        qint32 nMIB=list.at(i);
 
-        record.nCode=list.at(i);
-        record.sName=QTextCodec::codecForMib(list.at(i))->name();
+//        qDebug("%s",QTextCodec::codecForMib(nMIB)->name().data());
 
-        listResult.append(listResult);
+        bool bAdd=true;
+
+        if(!bAll)
+        {
+            if      (nMIB==106)                     bAdd=false; // UTF8
+            else if ((nMIB>=1013)&&(nMIB<=1019))    bAdd=false; // Unicode
+        }
+
+        if(bAdd)
+        {
+            QString sName=QTextCodec::codecForMib(nMIB)->name();
+
+            listResult.append(sName);
+        }
     }
 
     return listResult;

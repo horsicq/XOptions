@@ -235,13 +235,7 @@ public:
     static void showInFolder(QString sFileName);
 #endif
 #if (QT_VERSION_MAJOR<6)||defined(QT_CORE5COMPAT_LIB)
-    struct CODEPAGE
-    {
-        QString sName;
-        qint32 nCode;
-    };
-
-    static QList<CODEPAGE> getCodePages();
+    static QList<QString> getCodePages(bool bAll);
 #endif
 #ifdef Q_OS_WIN
     bool registerContext(QString sApplicationName,QString sType,QString sApplicationFilePath);
