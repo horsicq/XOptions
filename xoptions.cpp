@@ -24,6 +24,7 @@ XOptions::XOptions(QObject *pParent) : QObject(pParent)
 {
 #ifdef QT_GUI_LIB
     g_pRecentFilesMenu=nullptr;
+    g_pCodePagesMenu=nullptr;
 #endif
     g_bIsNeedRestart=false;
     g_nMaxRecentFilesCount=N_MAX_RECENT_FILES_COUNT;
@@ -595,6 +596,20 @@ void XOptions::openRecentFile()
         QString sFileName=pAction->data().toString();
 
         emit openFile(sFileName);
+    }
+#endif
+}
+
+void XOptions::setCodePageSlot()
+{
+#ifdef QT_GUI_LIB
+    QAction *pAction=qobject_cast<QAction *>(sender());
+
+    if(pAction)
+    {
+        QString sCodePage=pAction->data().toString();
+
+        emit setCodePage(sCodePage);
     }
 #endif
 }
@@ -1494,6 +1509,35 @@ QList<QString> XOptions::getCodePages(bool bAll)
 
     return listResult;
 }
+#endif
+#if (QT_VERSION_MAJOR<6)||defined(QT_CORE5COMPAT_LIB)
+#ifdef QT_GUI_LIB
+QMenu *XOptions::createCodePagesMenu(QWidget *pParent, bool bAll)
+{
+    g_pCodePagesMenu=new QMenu(tr("Code pages"),pParent);
+
+    if(g_pCodePagesMenu)
+    {
+        g_pCodePagesMenu->clear();
+
+        QList<QString> listCodePages=getCodePages(bAll);
+
+        qint32 nNumberOfRecords=listCodePages.count();
+
+        for(qint32 i=0;i<nNumberOfRecords;i++)
+        {
+            QAction *pAction=new QAction(listCodePages.at(i),g_pCodePagesMenu);
+            pAction->setData(listCodePages.at(i));
+
+            connect(pAction,SIGNAL(triggered()),this,SLOT(setCodePageSlot()));
+
+            g_pCodePagesMenu->addAction(pAction);
+        }
+    }
+
+    return g_pCodePagesMenu;
+}
+#endif
 #endif
 #ifdef Q_OS_WIN
 bool XOptions::registerContext(QString sApplicationName,QString sType,QString sApplicationFilePath)

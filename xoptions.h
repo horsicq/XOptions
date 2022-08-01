@@ -236,6 +236,9 @@ public:
 #endif
 #if (QT_VERSION_MAJOR<6)||defined(QT_CORE5COMPAT_LIB)
     static QList<QString> getCodePages(bool bAll);
+#ifdef QT_GUI_LIB
+    QMenu *createCodePagesMenu(QWidget *pParent,bool bAll);
+#endif
 #endif
 #ifdef Q_OS_WIN
     bool registerContext(QString sApplicationName,QString sType,QString sApplicationFilePath);
@@ -250,6 +253,7 @@ public slots:
 
 private slots:
     void openRecentFile();
+    void setCodePageSlot();
 
 private:
     void _updateRecentFilesMenu();
@@ -258,6 +262,7 @@ signals:
     void errorMessage(QString sText);
     void infoMessage(QString sText);
     void openFile(QString sFileName);
+    void setCodePage(QString sCodePage);
 
 private:
     static const int N_MAX_RECENT_FILES_COUNT=20;
@@ -270,6 +275,7 @@ private:
     qint32 g_nMaxRecentFilesCount;
 #ifdef QT_GUI_LIB
     QMenu *g_pRecentFilesMenu;
+    QMenu *g_pCodePagesMenu;
 #endif
 };
 
