@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>417</width>
-    <height>385</height>
+    <width>359</width>
+    <height>358</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -32,10 +32,10 @@
       <enum>Qt::Horizontal</enum>
      </property>
      <widget class="QListWidget" name="listWidgetOptions">
-      <property name="maximumSize">
+      <property name="baseSize">
        <size>
         <width>150</width>
-        <height>16777215</height>
+        <height>0</height>
        </size>
       </property>
      </widget>
@@ -73,8 +73,8 @@
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>262</width>
-             <height>353</height>
+             <width>138</width>
+             <height>326</height>
             </rect>
            </property>
            <layout class="QVBoxLayout" name="verticalLayout_8">

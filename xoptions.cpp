@@ -1512,7 +1512,7 @@ QList<QString> XOptions::getCodePages(bool bAll)
 #endif
 #if (QT_VERSION_MAJOR<6)||defined(QT_CORE5COMPAT_LIB)
 #ifdef QT_GUI_LIB
-QMenu *XOptions::createCodePagesMenu(QWidget *pParent, bool bAll)
+QMenu *XOptions::createCodePagesMenu(QWidget *pParent,bool bAll)
 {
     g_pCodePagesMenu=new QMenu(tr("Code pages"),pParent);
 
