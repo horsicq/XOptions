@@ -1128,7 +1128,6 @@ QString XOptions::getModelText(QAbstractItemModel *pModel)
         }
 
         // mb TODO csv,tsv,json,xml,json
-
         for(qint32 i=0;i<nNumberOfRows;i++)
         {
             for(qint32 j=0;j<nNumberOfColumns;j++)
@@ -1479,6 +1478,8 @@ QList<QString> XOptions::getCodePages(bool bAll)
 {
     QList<QString> listResult;
 
+    listResult.append(""); // Empty
+
     QList<qint32> list=QTextCodec::availableMibs();
 
     std::sort(list.begin(),list.end(),sort_code_page);
@@ -1611,8 +1612,6 @@ void XOptions::_updateRecentFilesMenu()
 
             g_pRecentFilesMenu->addAction(pAction);
         }
-
-        // TODO openFile signal
 
         g_pRecentFilesMenu->setEnabled(nNumberOfRecentFiles);
     }
