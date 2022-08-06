@@ -21,8 +21,8 @@
 #ifndef XOPTIONSWIDGET_H
 #define XOPTIONSWIDGET_H
 
-#include <QWidget>
 #include <QFontDialog>
+#include <QWidget>
 #include "xoptions.h"
 
 namespace Ui {
