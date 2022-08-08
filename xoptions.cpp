@@ -210,11 +210,12 @@ bool XOptions::isAppImage()
 void XOptions::setName(QString sValue)
 {
 #ifdef QT_DEBUG
-#ifdef Q_OS_WIN32
+#ifdef Q_OS_WIN
+#ifndef Q_OS_WIN64
     sValue+="win32.debug.ini";
-#endif
-#ifdef Q_OS_WIN64
+#else
     sValue+="win64.debug.ini";
+#endif
 #endif
 #ifdef Q_OS_LINUX
     sValue+="linux.debug.ini";
