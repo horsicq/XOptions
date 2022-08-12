@@ -106,6 +106,7 @@ XOptions::GROUPID XOptions::getGroupID(ID id)
         case ID_SCAN_ENGINE:
         case ID_SCAN_DATABASEPATH:
         case ID_SCAN_INFOPATH:
+        case ID_SCAN_EDITORFONT:
             result=GROUPID_SCAN;
             break;
         case ID_SIGNATURES_PATH:
@@ -464,6 +465,7 @@ QString XOptions::idToString(ID id)
         case ID_SCAN_ENGINE:                                sResult=QString("Scan/Engine");                             break;
         case ID_SCAN_DATABASEPATH:                          sResult=QString("Scan/DatabasePath");                       break;
         case ID_SCAN_INFOPATH:                              sResult=QString("Scan/InfoPath");                           break;
+        case ID_SCAN_EDITORFONT:                            sResult=QString("Scan/EditorFont");                         break;
         case ID_SIGNATURES_PATH:                            sResult=QString("Signatures/Path");                         break;
         case ID_ONLINETOOLS_VIRUSTOTAL_APIKEY:              sResult=QString("OnlineTools/VirusTotalApi");               break;
         case ID_DISASM_FONT:                                sResult=QString("Disasm/Font");                             break;
