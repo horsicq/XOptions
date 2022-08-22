@@ -132,6 +132,7 @@ public:
         ID_DISASM_COLOR_ARM_POP,
         ID_HEX_FONT,
         ID_HEX_ADDRESSCOLON,
+        ID_HEX_BLINKINGCURSOR,
         ID_STACK_FONT,
         ID_STACK_ADDRESSCOLON,
         ID_REGISTERS_FONT,
@@ -201,7 +202,7 @@ public:
     static QList<QString> getAllFilesFromDirectory(QString sDirectory,QString sExtension);
     static bool checkNative();
     QString getApplicationDataPath();
-    static QString getTitle(QString sName,QString sVersion);
+    static QString getTitle(QString sName,QString sVersion,bool bShowOS=true);
 #ifdef QT_GUI_LIB
     void setCheckBox(QCheckBox *pCheckBox,ID id);
     void getCheckBox(QCheckBox *pCheckBox,ID id);

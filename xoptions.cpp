@@ -133,6 +133,7 @@ XOptions::GROUPID XOptions::getGroupID(ID id)
             break;
         case ID_HEX_FONT:
         case ID_HEX_ADDRESSCOLON:
+        case ID_HEX_BLINKINGCURSOR:
             result=GROUPID_HEX;
             break;
         case ID_STACK_FONT:
@@ -487,6 +488,7 @@ QString XOptions::idToString(ID id)
         case ID_DISASM_COLOR_ARM_POP:                       sResult=QString("Disasm/Color/arm/pop");                    break;
         case ID_HEX_FONT:                                   sResult=QString("Hex/Font");                                break;
         case ID_HEX_ADDRESSCOLON:                           sResult=QString("Hex/AddressColon");                        break;
+        case ID_HEX_BLINKINGCURSOR:                         sResult=QString("Hex/BlinkingCursor");                      break;
         case ID_STACK_FONT:                                 sResult=QString("Stack/Font");                              break;
         case ID_STACK_ADDRESSCOLON:                         sResult=QString("Stack/AddressColon");                      break;
         case ID_REGISTERS_FONT:                             sResult=QString("Registers/Font");                          break;
@@ -1459,14 +1461,18 @@ QString XOptions::getApplicationDataPath()
     return sResult;
 }
 
-QString XOptions::getTitle(QString sName,QString sVersion)
+QString XOptions::getTitle(QString sName, QString sVersion, bool bShowOS)
 {
-    QString sResult;
-#if QT_VERSION >= QT_VERSION_CHECK(5,4,0)
-    sResult=QString("%1 v%2 [%3](%4)").arg(sName,sVersion,QSysInfo::prettyProductName(),QSysInfo::buildCpuArchitecture());
-#else
-    sResult=QString("%1 v%2").arg(sName,sVersion); // TODO OS Name // For Windows Arch GetVersionExA
-#endif
+    QString sResult=QString("%1 v%2").arg(sName,sVersion);
+
+    if(bShowOS)
+    {
+    #if QT_VERSION >= QT_VERSION_CHECK(5,4,0)
+        sResult+=QString(" [%3](%4)").arg(QSysInfo::prettyProductName(),QSysInfo::buildCpuArchitecture());
+    #else
+        // TODO OS Name // For Windows Arch GetVersionExA
+    #endif
+    }
 
     return sResult;
 }
