@@ -114,7 +114,7 @@ public:
         ID_ONLINETOOLS_VIRUSTOTAL_APIKEY,
         ID_DISASM_FONT,
         ID_DISASM_SYNTAX,
-        ID_DISASM_ADDRESSCOLON, // TODO Change to Show colons in addresses
+        ID_DISASM_ADDRESSCOLON,
         ID_DISASM_UPPERCASE,
         ID_DISASM_HIGHLIGHT,
         // TODO more
