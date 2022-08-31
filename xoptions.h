@@ -60,6 +60,13 @@ class XOptions : public QObject
     Q_OBJECT
 
 public:
+    enum CR
+    {
+        CR_SUCCESS          =0,
+        CR_CANNOTFINDFILE   =1,
+        CR_CANNOTOPENFILE   =2
+    };
+
     enum GROUPID
     {
         GROUPID_UNKNOWN=0,
