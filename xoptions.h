@@ -275,7 +275,7 @@ signals:
     void setCodePage(QString sCodePage);
 
 private:
-    static const int N_MAX_RECENT_FILES_COUNT=20;
+    static const int N_MAX_RECENT_FILES_COUNT=20; // TODO Set get
     QString g_sName;
     bool g_bIsNative;
     QList<ID> g_listValueIDs;
