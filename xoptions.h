@@ -65,6 +65,7 @@ public:
         CR_SUCCESS          =0,
         CR_CANNOTFINDFILE   =1,
         CR_CANNOTOPENFILE   =2
+        // TODO more
     };
 
     enum GROUPID
