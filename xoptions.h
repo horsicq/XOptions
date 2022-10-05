@@ -60,6 +60,23 @@ class XOptions : public QObject
     Q_OBJECT
 
 public:
+    // TODO Check if update available
+    // TODO Show in dialog all available updates
+    enum BUNDLE
+    {
+        BUNDLE_UNKNOWN=0,
+        BUNDLE_ARCHLINUX,
+        BUNDLE_WINXP,
+        BUNDLE_WIN32,
+        BUNDLE_WIN64,
+        BUNDLE_WIN64_QT6,
+        BUNDLE_LINUX_APPIMAGE,
+        BUNDLE_DEBIAN,
+        BUNDLE_UBUNTU,
+        BUNDLE_MACOS,
+        BUNDLE_MACOS_QT6_M1
+    };
+
     enum CR
     {
         CR_SUCCESS          =0,
