@@ -1,14 +1,14 @@
 INCLUDEPATH += $$PWD
 DEPENDPATH += $$PWD
 
-FORMS += \
-    $$PWD/xoptionswidget.ui
-
 HEADERS += \
     $$PWD/xoptionswidget.h
 
 SOURCES += \
     $$PWD/xoptionswidget.cpp
+
+FORMS += \
+    $$PWD/xoptionswidget.ui
 
 !contains(XCONFIG, xoptions) {
     XCONFIG += xoptions
