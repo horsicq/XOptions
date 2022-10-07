@@ -1645,5 +1645,13 @@ XOptions::BUNDLE XOptions::getBundle()
 #endif
 #endif
 
+#ifdef Q_OS_LINUX
+    // TODO
+#endif
+
+#ifdef Q_OS_MACOS
+    // TODO
+#endif
+
     return result;
 }
