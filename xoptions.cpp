@@ -1590,6 +1590,7 @@ qint32 XOptions::getMaxRecentFilesCount()
 {
     return g_nMaxRecentFilesCount;
 }
+
 #ifdef QT_GUI_LIB
 void XOptions::_updateRecentFilesMenu()
 {
@@ -1626,3 +1627,23 @@ void XOptions::_updateRecentFilesMenu()
     }
 }
 #endif
+XOptions::BUNDLE XOptions::getBundle()
+{
+    BUNDLE result=BUNDLE_UNKNOWN;
+
+#ifdef Q_OS_WIN
+#if QT_VERSION<=QT_VERSION_CHECK(5,6,3)
+    result=BUNDLE_WINXP;
+#elif (QT_VERSION_MAJOR>=6)
+    result=BUNDLE_WIN64_QT6;
+#else
+#ifndef Q_OS_WIN64
+    result=BUNDLE_WIN32;
+#else
+    result=BUNDLE_WIN64;
+#endif
+#endif
+#endif
+
+    return result;
+}

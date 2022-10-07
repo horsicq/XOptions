@@ -276,6 +276,8 @@ public:
     void setMaxRecentFilesCount(qint32 nValue);
     qint32 getMaxRecentFilesCount();
 
+    static BUNDLE getBundle();
+
 public slots:
     void clearRecentFiles();
 
