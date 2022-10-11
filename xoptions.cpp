@@ -1647,10 +1647,14 @@ XOptions::BUNDLE XOptions::getBundle()
 
 #ifdef Q_OS_LINUX
     // TODO
+    // ARCH
+    // UBUNTU
+    // APPIMAGE
 #endif
 
 #ifdef Q_OS_MACOS
     // TODO
+    // M1
 #endif
 
     return result;
