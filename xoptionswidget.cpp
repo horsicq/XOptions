@@ -316,16 +316,7 @@ void XOptionsWidget::on_checkBoxFileContext_toggled(bool bChecked)
 
 void XOptionsWidget::on_toolButtonViewFont_clicked()
 {
-    QFont _font;
-    _font.fromString(ui->lineEditViewFont->text());
-
-    bool bOK=false;
-    _font=QFontDialog::getFont(&bOK,_font,this);
-
-    if(bOK)
-    {
-        ui->lineEditViewFont->setText(_font.toString());
-    }
+    XOptions::handleFontButton(this,ui->lineEditViewFont);
 }
 
 void XOptionsWidget::on_pushButtonDefault_clicked()

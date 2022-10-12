@@ -1366,6 +1366,21 @@ void XOptions::showInFolder(QString sFileName)
 #endif
 }
 #endif
+#ifdef QT_GUI_LIB
+void XOptions::handleFontButton(QWidget *pParent,QLineEdit *pLineEdit)
+{
+    QFont _font;
+    _font.fromString(pLineEdit->text());
+
+    bool bOK=false;
+    _font=QFontDialog::getFont(&bOK,_font,pParent);
+
+    if(bOK)
+    {
+        pLineEdit->setText(_font.toString());
+    }
+}
+#endif
 QString XOptions::getApplicationLangPath()
 {
     QString sResult;
@@ -1476,6 +1491,7 @@ QString XOptions::getTitle(QString sName,QString sVersion,bool bShowOS)
 
     return sResult;
 }
+
 #if (QT_VERSION_MAJOR<6)||defined(QT_CORE5COMPAT_LIB)
 
 bool sort_code_page(const qint32 &nValue1,const qint32 &nValue2)
@@ -1654,7 +1670,7 @@ XOptions::BUNDLE XOptions::getBundle()
 
 #ifdef Q_OS_MACOS
     // TODO
-    // M1
+    // M
 #endif
 
     return result;

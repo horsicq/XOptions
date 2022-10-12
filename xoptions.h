@@ -48,6 +48,7 @@
 #include <QTreeView>
 #include <QTreeWidget>
 #include <QWidget>
+#include <QFontDialog>
 #else
 #include <QCoreApplication>
 #endif
@@ -74,7 +75,7 @@ public:
         BUNDLE_DEBIAN,
         BUNDLE_UBUNTU,
         BUNDLE_MACOS,
-        BUNDLE_MACOS_QT6_M1
+        BUNDLE_MACOS_QT6_M
     };
 
     enum CR
@@ -261,6 +262,7 @@ public:
     static qint32 getCharWidth(QWidget *pWidget);
     static qint32 getCharHeight(QWidget *pWidget);
     static void showInFolder(QString sFileName);
+    static void handleFontButton(QWidget *pParent,QLineEdit *pLineEdit);
 #endif
 #if (QT_VERSION_MAJOR<6)||defined(QT_CORE5COMPAT_LIB)
     static QList<QString> getCodePages(bool bAll);
