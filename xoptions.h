@@ -74,8 +74,10 @@ public:
         BUNDLE_LINUX_APPIMAGE,
         BUNDLE_DEBIAN,
         BUNDLE_UBUNTU,
+        BUNDLE_PARROTOS,
         BUNDLE_MACOS,
         BUNDLE_MACOS_QT6_M
+        // TODO more
     };
 
     enum CR
