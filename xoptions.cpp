@@ -1656,10 +1656,24 @@ XOptions::BUNDLE XOptions::getBundle()
 #endif
 
 #ifdef Q_OS_LINUX
+#if QT_VERSION==QT_VERSION_CHECK(5,2,1)
+    resul
+#elif QT_VERSION >= QT_VERSION_CHECK(5,4,0)
+    QString sTest=QSysInfo::buildCpuArchitecture();
+    sTest=QSysInfo::currentCpuArchitecture();
+    sTest=QSysInfo::buildAbi();
+
+    sTest=QSysInfo::kernelType();
+    sTest=QSysInfo::kernelVersion();
+    sTest=QSysInfo::productType();
+    sTest=QSysInfo::productVersion();
+    sTest=QSysInfo::prettyProductName();
+
+    sTest="";
+#endif
     // TODO
     // ARCH
     // UBUNTU
-    // APPIMAGE
 #endif
 
 #ifdef Q_OS_MACOS
