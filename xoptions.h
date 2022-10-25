@@ -72,10 +72,10 @@ public:
         BUNDLE_WIN64,
         BUNDLE_WIN64_QT6,
         BUNDLE_LINUX_APPIMAGE,
-        BUNDLE_DEBIAN,
-        BUNDLE_UBUNTU,
-        BUNDLE_PARROTOS,
-        BUNDLE_MACOS,
+        BUNDLE_DEBIAN_X64,
+        BUNDLE_UBUNTU_X64,
+        BUNDLE_PARROTOS_X64,
+        BUNDLE_MACOS_X64,
         BUNDLE_MACOS_QT6_M
         // TODO WIN ARM
         // TODO more

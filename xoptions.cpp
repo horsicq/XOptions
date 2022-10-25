@@ -1655,31 +1655,26 @@ XOptions::BUNDLE XOptions::getBundle()
 #endif
 #endif
 
+#ifdef Q_PROCESSOR_X86_64
 #ifdef Q_OS_LINUX
 #if QT_VERSION==QT_VERSION_CHECK(5,2,1)
-    resul
+    result=BUNDLE_LINUX_APPIMAGE;
 #elif QT_VERSION >= QT_VERSION_CHECK(5,4,0)
-    QString sTest=QSysInfo::buildCpuArchitecture();
-    sTest=QSysInfo::currentCpuArchitecture();
-    sTest=QSysInfo::buildAbi();
+    QString sProductType=QSysInfo::productType();
 
-    sTest=QSysInfo::kernelType();
-    sTest=QSysInfo::kernelVersion();
-    sTest=QSysInfo::productType();
-    sTest=QSysInfo::productVersion();
-    sTest=QSysInfo::prettyProductName();
-
-    sTest="";
-#endif
+    if(sProductType=="ubuntu")
+    {
+        result=BUNDLE_UBUNTU_X64;
+    }
     // TODO
     // ARCH
-    // UBUNTU
-#endif
 
+#endif
+#endif
 #ifdef Q_OS_MACOS
     // TODO
     // M
 #endif
-
+#endif
     return result;
 }
