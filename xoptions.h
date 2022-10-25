@@ -77,6 +77,7 @@ public:
         BUNDLE_PARROTOS,
         BUNDLE_MACOS,
         BUNDLE_MACOS_QT6_M
+        // TODO WIN ARM
         // TODO more
     };
 
