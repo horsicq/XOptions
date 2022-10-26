@@ -63,6 +63,7 @@ class XOptions : public QObject
 public:
     // TODO Check if update available
     // TODO Show in dialog all available updates
+    // Ubuntu -> Ubuntu+Debian+appImage
     enum BUNDLE
     {
         BUNDLE_UNKNOWN=0,
