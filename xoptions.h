@@ -79,6 +79,7 @@ public:
         BUNDLE_MACOS_X64,
         BUNDLE_MACOS_QT6_M
         // TODO WIN ARM
+        // TODO FREEBSD
         // TODO more
     };
 
