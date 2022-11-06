@@ -64,6 +64,7 @@ public:
     // TODO Check if update available
     // TODO Show in dialog all available updates
     // Ubuntu -> Ubuntu+Debian+appImage
+    // Windows 64 -> Windows 32 +Windows 64 +Windows XP
     enum BUNDLE
     {
         BUNDLE_UNKNOWN=0,
