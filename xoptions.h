@@ -66,6 +66,7 @@ public:
     // Ubuntu -> Ubuntu+Debian+appImage
     // Windows 64 -> Windows 32 + Windows 64 + Windows XP
     // Windows 32 -> Windows 32 + Windows XP
+    // Windows XP -> Windows XP
     enum BUNDLE
     {
         BUNDLE_UNKNOWN=0,
