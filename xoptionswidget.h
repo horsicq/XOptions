@@ -7,8 +7,8 @@
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
  *
- * The above copyright notice and this permission notice shall be included in all
- * copies or substantial portions of the Software.
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
  *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
@@ -23,31 +23,31 @@
 
 #include <QFontDialog>
 #include <QWidget>
+
 #include "xoptions.h"
 
 namespace Ui {
 class XOptionsWidget;
 }
 
-class XOptionsWidget : public QWidget
-{
+class XOptionsWidget : public QWidget {
     Q_OBJECT
 
-public:
-    explicit XOptionsWidget(QWidget *pParent=nullptr);
+   public:
+    explicit XOptionsWidget(QWidget *pParent = nullptr);
     ~XOptionsWidget();
 
-    void setOptions(XOptions *pOptions,QString sApplicationDisplayName);
-    void addListRecord(QString sTitle,qint32 nIndex);
-    void addPage(QWidget *pWidget,QString sTitle);
-    void setCurrentPage(qint32 nPage); // TODO Check -> remove
+    void setOptions(XOptions *pOptions, QString sApplicationDisplayName);
+    void addListRecord(QString sTitle, qint32 nIndex);
+    void addPage(QWidget *pWidget, QString sTitle);
+    void setCurrentPage(qint32 nPage);  // TODO Check -> remove
     void setCurrentPage(XOptions::GROUPID groupId);
 
-public slots:
+   public slots:
     void save();
     void reload();
 
-private slots:
+   private slots:
     void on_listWidgetOptions_currentRowChanged(int nCurrentRow);
     void on_checkBoxFileContext_toggled(bool bChecked);
     void on_toolButtonViewFont_clicked();
@@ -55,15 +55,15 @@ private slots:
     void on_pushButtonOK_clicked();
     void on_pushButtonCancel_clicked();
 
-signals:
+   signals:
     void saveSignal();
     void reloadSignal();
 
-private:
+   private:
     Ui::XOptionsWidget *ui;
     QWidget *g_pParent;
     XOptions *g_pOptions;
     QString g_sApplicationDisplayName;
 };
 
-#endif // XOPTIONSWIDGET_H
+#endif  // XOPTIONSWIDGET_H

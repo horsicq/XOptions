@@ -7,8 +7,8 @@
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
  *
- * The above copyright notice and this permission notice shall be included in all
- * copies or substantial portions of the Software.
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
  *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
@@ -32,6 +32,7 @@
 #include <QComboBox>
 #include <QDesktopServices>
 #include <QFileDialog>
+#include <QFontDialog>
 #include <QGroupBox>
 #include <QLineEdit>
 #include <QListView>
@@ -48,19 +49,17 @@
 #include <QTreeView>
 #include <QTreeWidget>
 #include <QWidget>
-#include <QFontDialog>
 #else
 #include <QCoreApplication>
 #endif
-#if (QT_VERSION_MAJOR<6)||defined(QT_CORE5COMPAT_LIB)
+#if (QT_VERSION_MAJOR < 6) || defined(QT_CORE5COMPAT_LIB)
 #include <QTextCodec>
 #endif
 
-class XOptions : public QObject
-{
+class XOptions : public QObject {
     Q_OBJECT
 
-public:
+   public:
     // TODO Check if update available
     // TODO Show in dialog all available updates
     // Ubuntu -> Ubuntu+Debian+appImage
@@ -68,9 +67,8 @@ public:
     // Windows 64 -> Windows 32 + Windows 64 + Windows XP
     // Windows 32 -> Windows 32 + Windows XP
     // Windows XP -> Windows XP
-    enum BUNDLE
-    {
-        BUNDLE_UNKNOWN=0,
+    enum BUNDLE {
+        BUNDLE_UNKNOWN = 0,
         BUNDLE_ARCHLINUX,
         BUNDLE_WINXP,
         BUNDLE_WIN32,
@@ -88,17 +86,15 @@ public:
         // TODO more
     };
 
-    enum CR
-    {
-        CR_SUCCESS          =0,
-        CR_CANNOTFINDFILE   =1,
-        CR_CANNOTOPENFILE   =2
+    enum CR {
+        CR_SUCCESS = 0,
+        CR_CANNOTFINDFILE = 1,
+        CR_CANNOTOPENFILE = 2
         // TODO more
     };
 
-    enum GROUPID
-    {
-        GROUPID_UNKNOWN=0,
+    enum GROUPID {
+        GROUPID_UNKNOWN = 0,
         GROUPID_VIEW,
         GROUPID_EDIT,
         GROUPID_FILE,
@@ -115,12 +111,11 @@ public:
         // TODO GitHub
     };
 
-    enum ID
-    {
-        ID_UNKNOWN=0,
+    enum ID {
+        ID_UNKNOWN = 0,
         ID_ROOTPATH,
-        ID_DATAPATH,            // TODO Create group
-        ID_JSON,                // TODO Create group
+        ID_DATAPATH,  // TODO Create group
+        ID_JSON,      // TODO Create group
         ID_STRUCTSPATH,
         ID_AUTHUSER,
         ID_AUTHTOKEN,
@@ -145,7 +140,7 @@ public:
         ID_SCAN_ENGINE,
         ID_SCAN_DATABASEPATH,
         ID_SCAN_INFOPATH,
-        ID_SCAN_EDITORFONT, // TODO more
+        ID_SCAN_EDITORFONT,  // TODO more
         ID_SIGNATURES_PATH,
         ID_ONLINETOOLS_VIRUSTOTAL_APIKEY,
         ID_DISASM_FONT,
@@ -182,16 +177,16 @@ public:
         ID_IODRIVER_SERVICENAME,
         ID_STRUCTS_PATH,
         // for internal use.
-        ID_NU_LASTDIRECTORY,    // Using if ID_SAVELASTDIRECTORY
-        ID_NU_RECENTFILES       // Using if ID_SAVERECENTFILES
+        ID_NU_LASTDIRECTORY,  // Using if ID_SAVELASTDIRECTORY
+        ID_NU_RECENTFILES     // Using if ID_SAVERECENTFILES
     };
 
-    explicit XOptions(QObject *pParent=nullptr);
+    explicit XOptions(QObject *pParent = nullptr);
 
     void resetToDefault();
     void setValueIDs(QList<ID> listValueIDs);
-    void setDefaultValues(QMap<ID,QVariant> mapDefaultValues);
-    void addID(ID id,QVariant varDefaultValue=QVariant());
+    void setDefaultValues(QMap<ID, QVariant> mapDefaultValues);
+    void addID(ID id, QVariant varDefaultValue = QVariant());
     GROUPID getGroupID(ID id);
     bool isIDPresent(ID id);
     bool isGroupIDPresent(GROUPID groupID);
@@ -202,7 +197,7 @@ public:
     void load();
     void save();
     QVariant getValue(ID id);
-    void setValue(ID id,QVariant vValue);
+    void setValue(ID id, QVariant vValue);
     void clearValue(ID id);
     static QString idToString(ID id);
     QString getLastDirectory();
@@ -236,82 +231,89 @@ public:
     QString getStructsPath();
     QString getApplicationLangPath();
     QString getApplicationQssPath();
-    static QList<QString> getAllFilesFromDirectory(QString sDirectory,QString sExtension);
+    static QList<QString> getAllFilesFromDirectory(QString sDirectory,
+                                                   QString sExtension);
     static bool checkNative();
     QString getApplicationDataPath();
-    static QString getTitle(QString sName,QString sVersion,bool bShowOS=true);
+    static QString getTitle(QString sName, QString sVersion,
+                            bool bShowOS = true);
 #ifdef QT_GUI_LIB
-    void setCheckBox(QCheckBox *pCheckBox,ID id);
-    void getCheckBox(QCheckBox *pCheckBox,ID id);
-    void setCheckBox(QGroupBox *pGroupBox,ID id);
-    void getCheckBox(QGroupBox *pGroupBox,ID id);
-    void setComboBox(QComboBox *pComboBox,ID id);
-    void getComboBox(QComboBox *pComboBox,ID id);
-    void setLineEdit(QLineEdit *pLineEdit,ID id);
-    void getLineEdit(QLineEdit *pLineEdit,ID id);
+    void setCheckBox(QCheckBox *pCheckBox, ID id);
+    void getCheckBox(QCheckBox *pCheckBox, ID id);
+    void setCheckBox(QGroupBox *pGroupBox, ID id);
+    void getCheckBox(QGroupBox *pGroupBox, ID id);
+    void setComboBox(QComboBox *pComboBox, ID id);
+    void getComboBox(QComboBox *pComboBox, ID id);
+    void setLineEdit(QLineEdit *pLineEdit, ID id);
+    void getLineEdit(QLineEdit *pLineEdit, ID id);
     void adjustStayOnTop(QWidget *pWidget);
     void adjustFont(QWidget *pWidget);
     void adjustWindow(QWidget *pWidget);
-    void static setMonoFont(QWidget *pWidget,qint32 nSize=-1);
-    static void adjustApplicationView(QString sTranslationName,XOptions *pOptions);
-//    static void adjustApplicationView(QString sApplicationFileName,QString sTranslationName);
+    void static setMonoFont(QWidget *pWidget, qint32 nSize = -1);
+    static void adjustApplicationView(QString sTranslationName,
+                                      XOptions *pOptions);
+    //    static void adjustApplicationView(QString sApplicationFileName,QString
+    //    sTranslationName);
     static QWidget *getMainWidget(QWidget *pWidget);
     static QString getModelText(QAbstractItemModel *pModel);
-    static bool saveModel(QAbstractItemModel *pModel,QString sFileName);
-    static bool saveTextEdit(QTextEdit *pTextEdit,QString sFileName);
-    static bool savePlainTextEdit(QPlainTextEdit *pPlainTextEdit,QString sFileName);
-    static bool saveTableView(QTableView *pTableView,QString sFileName);
-    static bool saveTableWidget(QTableWidget *pTableWidget,QString sFileName);
-    static bool saveListView(QListView *pListView,QString sFileName);
-    static bool saveListWidget(QListWidget *pListWidget,QString sFileName);
-    static bool saveTreeView(QTreeView *pTreeView,QString sFileName);
-    static bool saveTreeWidget(QTreeWidget *pTreeWidget,QString sFileName);
-    static bool saveTextBrowser(QTextBrowser *pTextBrowser,QString sFileName);
-    static bool saveTextBrowserHtml(QTextBrowser *pTextBrowser,QString sFileName);
+    static bool saveModel(QAbstractItemModel *pModel, QString sFileName);
+    static bool saveTextEdit(QTextEdit *pTextEdit, QString sFileName);
+    static bool savePlainTextEdit(QPlainTextEdit *pPlainTextEdit,
+                                  QString sFileName);
+    static bool saveTableView(QTableView *pTableView, QString sFileName);
+    static bool saveTableWidget(QTableWidget *pTableWidget, QString sFileName);
+    static bool saveListView(QListView *pListView, QString sFileName);
+    static bool saveListWidget(QListWidget *pListWidget, QString sFileName);
+    static bool saveTreeView(QTreeView *pTreeView, QString sFileName);
+    static bool saveTreeWidget(QTreeWidget *pTreeWidget, QString sFileName);
+    static bool saveTextBrowser(QTextBrowser *pTextBrowser, QString sFileName);
+    static bool saveTextBrowserHtml(QTextBrowser *pTextBrowser,
+                                    QString sFileName);
     QMenu *createRecentFilesMenu(QWidget *pParent);
     static qint32 getCharWidth(QWidget *pWidget);
     static qint32 getCharHeight(QWidget *pWidget);
     static void showInFolder(QString sFileName);
-    static void handleFontButton(QWidget *pParent,QLineEdit *pLineEdit);
+    static void handleFontButton(QWidget *pParent, QLineEdit *pLineEdit);
 #endif
-#if (QT_VERSION_MAJOR<6)||defined(QT_CORE5COMPAT_LIB)
+#if (QT_VERSION_MAJOR < 6) || defined(QT_CORE5COMPAT_LIB)
     static QList<QString> getCodePages(bool bAll);
 #ifdef QT_GUI_LIB
-    QMenu *createCodePagesMenu(QWidget *pParent,bool bAll);
+    QMenu *createCodePagesMenu(QWidget *pParent, bool bAll);
 #endif
 #endif
 #ifdef Q_OS_WIN
-    bool registerContext(QString sApplicationName,QString sType,QString sApplicationFilePath);
-    bool clearContext(QString sApplicationName,QString sType);
-    bool checkContext(QString sApplicationName,QString sType);
+    bool registerContext(QString sApplicationName, QString sType,
+                         QString sApplicationFilePath);
+    bool clearContext(QString sApplicationName, QString sType);
+    bool checkContext(QString sApplicationName, QString sType);
 #endif
     void setMaxRecentFilesCount(qint32 nValue);
     qint32 getMaxRecentFilesCount();
     static BUNDLE getBundle();
 
-public slots:
+   public slots:
     void clearRecentFiles();
 
-private slots:
+   private slots:
     void openRecentFile();
     void setCodePageSlot();
 
-private:
+   private:
     void _updateRecentFilesMenu();
 
-signals:
+   signals:
     void errorMessage(QString sText);
     void infoMessage(QString sText);
     void openFile(QString sFileName);
     void setCodePage(QString sCodePage);
 
-private:
-    static const int N_MAX_RECENT_FILES_COUNT=20; // TODO Set get
+   private:
+    static const int N_MAX_RECENT_FILES_COUNT = 20;  // TODO Set get
     QString g_sName;
     bool g_bIsNative;
     QList<ID> g_listValueIDs;
-    QMap<ID,QVariant> g_mapValues;
-    QMap<ID,QVariant> g_mapDefaultValues;
+    QMap<ID, QVariant> g_mapValues;
+    QMap<ID, QVariant> g_mapDefaultValues;
     bool g_bIsNeedRestart;
     qint32 g_nMaxRecentFilesCount;
 #ifdef QT_GUI_LIB
@@ -320,4 +322,4 @@ private:
 #endif
 };
 
-#endif // XOPTIONS_H
+#endif  // XOPTIONS_H
