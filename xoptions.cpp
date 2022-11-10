@@ -170,17 +170,20 @@ bool XOptions::isGroupIDPresent(GROUPID groupID) {
     return bResult;
 }
 
-void XOptions::setNative(bool bValue) { g_bIsNative = bValue; }
+void XOptions::setNative(bool bValue) {
+    g_bIsNative = bValue;
+}
 
-bool XOptions::isNative() { return g_bIsNative; }
+bool XOptions::isNative() {
+    return g_bIsNative;
+}
 
 bool XOptions::isAppImage() {
     bool bResult = false;
 
     QString sApplicationDirPath = qApp->applicationDirPath();
 
-    bResult =
-        (sApplicationDirPath.contains("/tmp/.mount_"));  // TODO more check
+    bResult = (sApplicationDirPath.contains("/tmp/.mount_"));  // TODO more check
 
     return bResult;
 }
@@ -210,9 +213,7 @@ void XOptions::load() {
     if (g_bIsNative) {
         pSettings = new QSettings;
     } else {
-        pSettings = new QSettings(getApplicationDataPath() + QDir::separator() +
-                                      QString("%1").arg(g_sName),
-                                  QSettings::IniFormat);
+        pSettings = new QSettings(getApplicationDataPath() + QDir::separator() + QString("%1").arg(g_sName), QSettings::IniFormat);
     }
 
 #ifdef QT_DEBUG
@@ -302,9 +303,8 @@ void XOptions::load() {
         QVariant variant = pSettings->value(sName, varDefault);
 
         if (!variant.toString().contains("$data")) {
-            if ((id == ID_SCAN_DATABASEPATH) || (id == ID_SCAN_INFOPATH) ||
-                (id == ID_DATAPATH) || (id == ID_SIGNATURES_PATH) ||
-                (id == ID_STRUCTS_PATH) || (id == ID_STRUCTSPATH)) {
+            if ((id == ID_SCAN_DATABASEPATH) || (id == ID_SCAN_INFOPATH) || (id == ID_DATAPATH) || (id == ID_SIGNATURES_PATH) || (id == ID_STRUCTS_PATH) ||
+                (id == ID_STRUCTSPATH)) {
                 if (!QDir(variant.toString()).exists()) {
                     variant = varDefault;
                 }
@@ -339,9 +339,7 @@ void XOptions::save() {
     if (g_bIsNative) {
         pSettings = new QSettings;
     } else {
-        pSettings = new QSettings(getApplicationDataPath() + QDir::separator() +
-                                      QString("%1").arg(g_sName),
-                                  QSettings::IniFormat);
+        pSettings = new QSettings(getApplicationDataPath() + QDir::separator() + QString("%1").arg(g_sName), QSettings::IniFormat);
     }
 
 #ifdef QT_DEBUG
@@ -357,11 +355,9 @@ void XOptions::save() {
         QString sName = idToString(id);
         pSettings->setValue(sName, g_mapValues.value(id));
 
-        if ((id == ID_FILE_SAVELASTDIRECTORY) &&
-            (g_mapValues.value(id).toBool() == false)) {
+        if ((id == ID_FILE_SAVELASTDIRECTORY) && (g_mapValues.value(id).toBool() == false)) {
             pSettings->setValue(idToString(ID_NU_LASTDIRECTORY), "");
-        } else if ((id == ID_FILE_SAVERECENTFILES) &&
-                   (g_mapValues.value(id).toBool() == false)) {
+        } else if ((id == ID_FILE_SAVERECENTFILES) && (g_mapValues.value(id).toBool() == false)) {
             clearRecentFiles();
         }
     }
@@ -369,7 +365,9 @@ void XOptions::save() {
     delete pSettings;
 }
 
-QVariant XOptions::getValue(XOptions::ID id) { return g_mapValues.value(id); }
+QVariant XOptions::getValue(XOptions::ID id) {
+    return g_mapValues.value(id);
+}
 
 void XOptions::setValue(XOptions::ID id, QVariant vValue) {
     if ((id == ID_VIEW_STYLE) || (id == ID_VIEW_LANG) || (id == ID_VIEW_QSS)) {
@@ -383,7 +381,9 @@ void XOptions::setValue(XOptions::ID id, QVariant vValue) {
     g_mapValues.insert(id, vValue);
 }
 
-void XOptions::clearValue(XOptions::ID id) { g_mapValues.insert(id, ""); }
+void XOptions::clearValue(XOptions::ID id) {
+    g_mapValues.insert(id, "");
+}
 
 QString XOptions::idToString(ID id) {
     QString sResult = QString("Unknown");
@@ -585,8 +585,7 @@ QString XOptions::getLastDirectory() {
     bool bSaveLastDirectory = getValue(ID_FILE_SAVELASTDIRECTORY).toBool();
     QString sLastDirectory = getValue(ID_NU_LASTDIRECTORY).toString();
 
-    if (bSaveLastDirectory && (sLastDirectory != "") &&
-        QDir().exists(sLastDirectory)) {
+    if (bSaveLastDirectory && (sLastDirectory != "") && QDir().exists(sLastDirectory)) {
         sResult = sLastDirectory;
     }
 
@@ -705,15 +704,25 @@ QString XOptions::getDisasmSyntax() {
     return getValue(ID_DISASM_SYNTAX).toString();
 }
 
-QString XOptions::getRootPath() { return getValue(ID_ROOTPATH).toString(); }
+QString XOptions::getRootPath() {
+    return getValue(ID_ROOTPATH).toString();
+}
 
-QString XOptions::getDataPath() { return getValue(ID_DATAPATH).toString(); }
+QString XOptions::getDataPath() {
+    return getValue(ID_DATAPATH).toString();
+}
 
-QString XOptions::getJson() { return getValue(ID_JSON).toString(); }
+QString XOptions::getJson() {
+    return getValue(ID_JSON).toString();
+}
 
-QString XOptions::getAuthUser() { return getValue(ID_AUTHUSER).toString(); }
+QString XOptions::getAuthUser() {
+    return getValue(ID_AUTHUSER).toString();
+}
 
-QString XOptions::getAuthToken() { return getValue(ID_AUTHTOKEN).toString(); }
+QString XOptions::getAuthToken() {
+    return getValue(ID_AUTHTOKEN).toString();
+}
 
 QString XOptions::getVirusTotalApiKey() {
     return getValue(ID_ONLINETOOLS_VIRUSTOTAL_APIKEY).toString();
@@ -817,8 +826,7 @@ void XOptions::setComboBox(QComboBox *pComboBox, XOptions::ID id) {
         pComboBox->addItem("English", "");
         pComboBox->addItem("System", "System");
 
-        QList<QString> listFileNames =
-            getAllFilesFromDirectory(getApplicationLangPath(), "*.qm");
+        QList<QString> listFileNames = getAllFilesFromDirectory(getApplicationLangPath(), "*.qm");
 
         qint32 nNumberOfRecords = listFileNames.count();
 
@@ -838,16 +846,14 @@ void XOptions::setComboBox(QComboBox *pComboBox, XOptions::ID id) {
                 sLocale.replace(0, 1, sLocale[0].toUpper());
             }
 
-            sLocale +=
-                QString("[%1]").arg(locale.languageToString(locale.language()));
+            sLocale += QString("[%1]").arg(locale.languageToString(locale.language()));
 
             pComboBox->addItem(sLocale, sRecord);
         }
     } else if (id == ID_VIEW_QSS) {
         pComboBox->addItem("Default", "");
 
-        QList<QString> listFileNames =
-            getAllFilesFromDirectory(getApplicationQssPath(), "*.qss");
+        QList<QString> listFileNames = getAllFilesFromDirectory(getApplicationQssPath(), "*.qss");
 
         qint32 nNumberOfRecords = listFileNames.count();
 
@@ -913,7 +919,9 @@ bool XOptions::isSaveRecentFiles() {
     return getValue(XOptions::ID_FILE_SAVERECENTFILES).toBool();
 }
 
-bool XOptions::isRestartNeeded() { return g_bIsNeedRestart; }
+bool XOptions::isRestartNeeded() {
+    return g_bIsNeedRestart;
+}
 
 bool XOptions::isStayOnTop() {
     return getValue(XOptions::ID_VIEW_STAYONTOP).toBool();
@@ -959,8 +967,7 @@ QString XOptions::getStructsPath() {
     return getValue(XOptions::ID_STRUCTS_PATH).toString();
 }
 #ifdef QT_GUI_LIB
-void XOptions::adjustApplicationView(QString sTranslationName,
-                                     XOptions *pOptions) {
+void XOptions::adjustApplicationView(QString sTranslationName, XOptions *pOptions) {
     if (pOptions->isIDPresent(XOptions::ID_VIEW_STYLE)) {
         QString sStyle = pOptions->getValue(XOptions::ID_VIEW_STYLE).toString();
 
@@ -979,8 +986,7 @@ void XOptions::adjustApplicationView(QString sTranslationName,
         if (sLang == "System") {
             QLocale locale = QLocale::system();
             if (locale != QLocale::English) {
-                bLoad = pTranslator->load(locale, sTranslationName, "_",
-                                          sLangsPath, ".qm");
+                bLoad = pTranslator->load(locale, sTranslationName, "_", sLangsPath, ".qm");
             }
         } else if (sLang != "") {
             bLoad = pTranslator->load(sLang, sLangsPath);
@@ -995,9 +1001,7 @@ void XOptions::adjustApplicationView(QString sTranslationName,
         QString sQss = pOptions->getValue(XOptions::ID_VIEW_QSS).toString();
 
         if (sQss != "") {
-            QString sQssFileName = pOptions->getApplicationQssPath() +
-                                   QDir::separator() +
-                                   QString("%1.qss").arg(sQss);
+            QString sQssFileName = pOptions->getApplicationQssPath() + QDir::separator() + QString("%1.qss").arg(sQss);
 
             if (QFile::exists(sQssFileName)) {
                 QFile file;
@@ -1064,9 +1068,7 @@ QString XOptions::getModelText(QAbstractItemModel *pModel) {
         QList<QList<QString>> listListStrings;
 
         for (qint32 i = 0; i < nNumberOfColumns; i++) {
-            QString sHeader =
-                pModel->headerData(i, Qt::Horizontal, Qt::DisplayRole)
-                    .toString();
+            QString sHeader = pModel->headerData(i, Qt::Horizontal, Qt::DisplayRole).toString();
 
             listHeaders.append(sHeader);
         }
@@ -1151,8 +1153,7 @@ bool XOptions::saveTextEdit(QTextEdit *pTextEdit, QString sFileName) {
 }
 #endif
 #ifdef QT_GUI_LIB
-bool XOptions::savePlainTextEdit(QPlainTextEdit *pPlainTextEdit,
-                                 QString sFileName) {
+bool XOptions::savePlainTextEdit(QPlainTextEdit *pPlainTextEdit, QString sFileName) {
     bool bResult = false;
 
     QFile file;
@@ -1224,8 +1225,7 @@ bool XOptions::saveTextBrowser(QTextBrowser *pTextBrowser, QString sFileName) {
 }
 #endif
 #ifdef QT_GUI_LIB
-bool XOptions::saveTextBrowserHtml(QTextBrowser *pTextBrowser,
-                                   QString sFileName) {
+bool XOptions::saveTextBrowserHtml(QTextBrowser *pTextBrowser, QString sFileName) {
     bool bResult = false;
 
     QFile file;
@@ -1330,8 +1330,7 @@ QString XOptions::getApplicationQssPath() {
     return sResult;
 }
 
-QList<QString> XOptions::getAllFilesFromDirectory(QString sDirectory,
-                                                  QString sExtension) {
+QList<QString> XOptions::getAllFilesFromDirectory(QString sDirectory, QString sExtension) {
     QDir directory(sDirectory);
 
     return directory.entryList(QStringList() << sExtension, QDir::Files);
@@ -1344,11 +1343,8 @@ bool XOptions::checkNative() {
 #elif defined(Q_OS_LINUX)
     QString sApplicationDirPath = qApp->applicationDirPath();
 
-    if ((sApplicationDirPath == "/bin") ||
-        (sApplicationDirPath == "/usr/bin") ||
-        (sApplicationDirPath == "/usr/local/bin") ||
-        (sApplicationDirPath.contains(QRegExp("/usr/local/bin$"))) ||
-        isAppImage()) {
+    if ((sApplicationDirPath == "/bin") || (sApplicationDirPath == "/usr/bin") || (sApplicationDirPath == "/usr/local/bin") ||
+        (sApplicationDirPath.contains(QRegExp("/usr/local/bin$"))) || isAppImage()) {
         bResult = true;
     } else {
         bResult = false;
@@ -1356,8 +1352,7 @@ bool XOptions::checkNative() {
 #elif defined(Q_OS_WIN)
     QString sApplicationDirPath = qApp->applicationDirPath();
 
-    if (sApplicationDirPath.contains("C:\\Program Files\\") ||
-        sApplicationDirPath.contains("C:\\Program Files (x86)\\")) {
+    if (sApplicationDirPath.contains("C:\\Program Files\\") || sApplicationDirPath.contains("C:\\Program Files (x86)\\")) {
         bResult = true;
     }
 #endif
@@ -1375,12 +1370,9 @@ QString XOptions::getApplicationDataPath() {
 #elif defined(Q_OS_LINUX)
     if (g_bIsNative) {
         if (sApplicationDirPath.contains(QRegExp("/usr/local/bin$"))) {
-            QString sPrefix =
-                sApplicationDirPath.section("/usr/local/bin", 0, 0);
+            QString sPrefix = sApplicationDirPath.section("/usr/local/bin", 0, 0);
 
-            sResult +=
-                sPrefix +
-                QString("/usr/local/lib/%1").arg(qApp->applicationName());
+            sResult += sPrefix + QString("/usr/local/lib/%1").arg(qApp->applicationName());
         } else {
             if (sApplicationDirPath.contains("/tmp/.mount_"))  // AppImage
             {
@@ -1404,9 +1396,7 @@ QString XOptions::getTitle(QString sName, QString sVersion, bool bShowOS) {
 
     if (bShowOS) {
 #if QT_VERSION >= QT_VERSION_CHECK(5, 4, 0)
-        sResult += QString(" [%3](%4)")
-                       .arg(QSysInfo::prettyProductName(),
-                            QSysInfo::buildCpuArchitecture());
+        sResult += QString(" [%3](%4)").arg(QSysInfo::prettyProductName(), QSysInfo::buildCpuArchitecture());
 #else
         // TODO OS Name // For Windows Arch GetVersionExA
 #endif
@@ -1469,12 +1459,10 @@ QMenu *XOptions::createCodePagesMenu(QWidget *pParent, bool bAll) {
         qint32 nNumberOfRecords = listCodePages.count();
 
         for (qint32 i = 0; i < nNumberOfRecords; i++) {
-            QAction *pAction =
-                new QAction(listCodePages.at(i), g_pCodePagesMenu);
+            QAction *pAction = new QAction(listCodePages.at(i), g_pCodePagesMenu);
             pAction->setData(listCodePages.at(i));
 
-            connect(pAction, SIGNAL(triggered()), this,
-                    SLOT(setCodePageSlot()));
+            connect(pAction, SIGNAL(triggered()), this, SLOT(setCodePageSlot()));
 
             g_pCodePagesMenu->addAction(pAction);
         }
@@ -1485,19 +1473,12 @@ QMenu *XOptions::createCodePagesMenu(QWidget *pParent, bool bAll) {
 #endif
 #endif
 #ifdef Q_OS_WIN
-bool XOptions::registerContext(QString sApplicationName, QString sType,
-                               QString sApplicationFilePath) {
-    QSettings settings(QString("HKEY_CLASSES_ROOT\\%1\\shell\\%2\\command")
-                           .arg(sType, sApplicationName),
-                       QSettings::NativeFormat);
-    settings.setValue(
-        ".", "\"" + sApplicationFilePath.replace("/", "\\") + "\" \"%1\"");
+bool XOptions::registerContext(QString sApplicationName, QString sType, QString sApplicationFilePath) {
+    QSettings settings(QString("HKEY_CLASSES_ROOT\\%1\\shell\\%2\\command").arg(sType, sApplicationName), QSettings::NativeFormat);
+    settings.setValue(".", "\"" + sApplicationFilePath.replace("/", "\\") + "\" \"%1\"");
 
-    QSettings settingsIcon(QString("HKEY_CLASSES_ROOT\\%1\\shell\\%2")
-                               .arg(sType, sApplicationName),
-                           QSettings::NativeFormat);
-    settingsIcon.setValue(
-        "Icon", "\"" + sApplicationFilePath.replace("/", "\\") + "\"");
+    QSettings settingsIcon(QString("HKEY_CLASSES_ROOT\\%1\\shell\\%2").arg(sType, sApplicationName), QSettings::NativeFormat);
+    settingsIcon.setValue("Icon", "\"" + sApplicationFilePath.replace("/", "\\") + "\"");
 
     // TODO Check if not send message
     return checkContext(sApplicationName, sType);
@@ -1505,9 +1486,7 @@ bool XOptions::registerContext(QString sApplicationName, QString sType,
 #endif
 #ifdef Q_OS_WIN
 bool XOptions::clearContext(QString sApplicationName, QString sType) {
-    QSettings settings(QString("HKEY_CLASSES_ROOT\\%1\\shell\\%2")
-                           .arg(sType, sApplicationName),
-                       QSettings::NativeFormat);
+    QSettings settings(QString("HKEY_CLASSES_ROOT\\%1\\shell\\%2").arg(sType, sApplicationName), QSettings::NativeFormat);
     settings.clear();
 
     // TODO Check if not send message
@@ -1516,11 +1495,9 @@ bool XOptions::clearContext(QString sApplicationName, QString sType) {
 #endif
 #ifdef Q_OS_WIN
 bool XOptions::checkContext(QString sApplicationName, QString sType) {
-    QSettings settings(QString("HKEY_CLASSES_ROOT\\%1\\shell").arg(sType),
-                       QSettings::NativeFormat);
+    QSettings settings(QString("HKEY_CLASSES_ROOT\\%1\\shell").arg(sType), QSettings::NativeFormat);
 
-    return (settings.value(QString("%1/command/Default").arg(sApplicationName))
-                .toString() != "");
+    return (settings.value(QString("%1/command/Default").arg(sApplicationName)).toString() != "");
 }
 #endif
 
@@ -1528,7 +1505,9 @@ void XOptions::setMaxRecentFilesCount(qint32 nValue) {
     g_nMaxRecentFilesCount = nValue;
 }
 
-qint32 XOptions::getMaxRecentFilesCount() { return g_nMaxRecentFilesCount; }
+qint32 XOptions::getMaxRecentFilesCount() {
+    return g_nMaxRecentFilesCount;
+}
 
 #ifdef QT_GUI_LIB
 void XOptions::_updateRecentFilesMenu() {
@@ -1540,8 +1519,7 @@ void XOptions::_updateRecentFilesMenu() {
         qint32 nNumberOfRecentFiles = listRecentFiles.count();
 
         for (qint32 i = nNumberOfRecentFiles - 1; i >= 0; i--) {
-            QAction *pAction =
-                new QAction(listRecentFiles.at(i), g_pRecentFilesMenu);
+            QAction *pAction = new QAction(listRecentFiles.at(i), g_pRecentFilesMenu);
             pAction->setData(listRecentFiles.at(i));
 
             connect(pAction, SIGNAL(triggered()), this, SLOT(openRecentFile()));
@@ -1554,8 +1532,7 @@ void XOptions::_updateRecentFilesMenu() {
 
             QAction *pAction = new QAction(tr("Clear"), g_pRecentFilesMenu);
 
-            connect(pAction, SIGNAL(triggered()), this,
-                    SLOT(clearRecentFiles()));
+            connect(pAction, SIGNAL(triggered()), this, SLOT(clearRecentFiles()));
 
             g_pRecentFilesMenu->addAction(pAction);
         }

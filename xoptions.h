@@ -59,7 +59,7 @@
 class XOptions : public QObject {
     Q_OBJECT
 
-   public:
+public:
     // TODO Check if update available
     // TODO Show in dialog all available updates
     // Ubuntu -> Ubuntu+Debian+appImage
@@ -231,12 +231,10 @@ class XOptions : public QObject {
     QString getStructsPath();
     QString getApplicationLangPath();
     QString getApplicationQssPath();
-    static QList<QString> getAllFilesFromDirectory(QString sDirectory,
-                                                   QString sExtension);
+    static QList<QString> getAllFilesFromDirectory(QString sDirectory, QString sExtension);
     static bool checkNative();
     QString getApplicationDataPath();
-    static QString getTitle(QString sName, QString sVersion,
-                            bool bShowOS = true);
+    static QString getTitle(QString sName, QString sVersion, bool bShowOS = true);
 #ifdef QT_GUI_LIB
     void setCheckBox(QCheckBox *pCheckBox, ID id);
     void getCheckBox(QCheckBox *pCheckBox, ID id);
@@ -250,16 +248,14 @@ class XOptions : public QObject {
     void adjustFont(QWidget *pWidget);
     void adjustWindow(QWidget *pWidget);
     void static setMonoFont(QWidget *pWidget, qint32 nSize = -1);
-    static void adjustApplicationView(QString sTranslationName,
-                                      XOptions *pOptions);
+    static void adjustApplicationView(QString sTranslationName, XOptions *pOptions);
     //    static void adjustApplicationView(QString sApplicationFileName,QString
     //    sTranslationName);
     static QWidget *getMainWidget(QWidget *pWidget);
     static QString getModelText(QAbstractItemModel *pModel);
     static bool saveModel(QAbstractItemModel *pModel, QString sFileName);
     static bool saveTextEdit(QTextEdit *pTextEdit, QString sFileName);
-    static bool savePlainTextEdit(QPlainTextEdit *pPlainTextEdit,
-                                  QString sFileName);
+    static bool savePlainTextEdit(QPlainTextEdit *pPlainTextEdit, QString sFileName);
     static bool saveTableView(QTableView *pTableView, QString sFileName);
     static bool saveTableWidget(QTableWidget *pTableWidget, QString sFileName);
     static bool saveListView(QListView *pListView, QString sFileName);
@@ -267,8 +263,7 @@ class XOptions : public QObject {
     static bool saveTreeView(QTreeView *pTreeView, QString sFileName);
     static bool saveTreeWidget(QTreeWidget *pTreeWidget, QString sFileName);
     static bool saveTextBrowser(QTextBrowser *pTextBrowser, QString sFileName);
-    static bool saveTextBrowserHtml(QTextBrowser *pTextBrowser,
-                                    QString sFileName);
+    static bool saveTextBrowserHtml(QTextBrowser *pTextBrowser, QString sFileName);
     QMenu *createRecentFilesMenu(QWidget *pParent);
     static qint32 getCharWidth(QWidget *pWidget);
     static qint32 getCharHeight(QWidget *pWidget);
@@ -282,8 +277,7 @@ class XOptions : public QObject {
 #endif
 #endif
 #ifdef Q_OS_WIN
-    bool registerContext(QString sApplicationName, QString sType,
-                         QString sApplicationFilePath);
+    bool registerContext(QString sApplicationName, QString sType, QString sApplicationFilePath);
     bool clearContext(QString sApplicationName, QString sType);
     bool checkContext(QString sApplicationName, QString sType);
 #endif
@@ -291,23 +285,23 @@ class XOptions : public QObject {
     qint32 getMaxRecentFilesCount();
     static BUNDLE getBundle();
 
-   public slots:
+public slots:
     void clearRecentFiles();
 
-   private slots:
+private slots:
     void openRecentFile();
     void setCodePageSlot();
 
-   private:
+private:
     void _updateRecentFilesMenu();
 
-   signals:
+signals:
     void errorMessage(QString sText);
     void infoMessage(QString sText);
     void openFile(QString sFileName);
     void setCodePage(QString sCodePage);
 
-   private:
+private:
     static const int N_MAX_RECENT_FILES_COUNT = 20;  // TODO Set get
     QString g_sName;
     bool g_bIsNative;
