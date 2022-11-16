@@ -20,7 +20,8 @@
  */
 #include "xoptions.h"
 
-XOptions::XOptions(QObject *pParent) : QObject(pParent) {
+XOptions::XOptions(QObject *pParent) : QObject(pParent)
+{
 #ifdef QT_GUI_LIB
     g_pRecentFilesMenu = nullptr;
     g_pCodePagesMenu = nullptr;
@@ -32,7 +33,8 @@ XOptions::XOptions(QObject *pParent) : QObject(pParent) {
     g_sName = QString("%1.ini").arg(qApp->applicationName());  // default name
 }
 
-void XOptions::resetToDefault() {
+void XOptions::resetToDefault()
+{
     qint32 nNumberOfRecords = g_listValueIDs.count();
 
     for (qint32 i = 0; i < nNumberOfRecords; i++) {
@@ -50,15 +52,18 @@ void XOptions::resetToDefault() {
     }
 }
 
-void XOptions::setValueIDs(QList<ID> listVariantIDs) {
+void XOptions::setValueIDs(QList<ID> listVariantIDs)
+{
     g_listValueIDs = listVariantIDs;
 }
 
-void XOptions::setDefaultValues(QMap<XOptions::ID, QVariant> mapDefaultValues) {
+void XOptions::setDefaultValues(QMap<XOptions::ID, QVariant> mapDefaultValues)
+{
     g_mapDefaultValues = mapDefaultValues;
 }
 
-void XOptions::addID(ID id, QVariant varDefaultValue) {
+void XOptions::addID(ID id, QVariant varDefaultValue)
+{
     g_listValueIDs.append(id);
 
     if (varDefaultValue.isValid()) {
@@ -66,7 +71,8 @@ void XOptions::addID(ID id, QVariant varDefaultValue) {
     }
 }
 
-XOptions::GROUPID XOptions::getGroupID(ID id) {
+XOptions::GROUPID XOptions::getGroupID(ID id)
+{
     GROUPID result = GROUPID_UNKNOWN;
 
     switch (id) {
@@ -140,7 +146,8 @@ XOptions::GROUPID XOptions::getGroupID(ID id) {
     return result;
 }
 
-bool XOptions::isIDPresent(ID id) {
+bool XOptions::isIDPresent(ID id)
+{
     bool bResult = false;
 
     qint32 nNumberOfRecords = g_listValueIDs.count();
@@ -155,7 +162,8 @@ bool XOptions::isIDPresent(ID id) {
     return bResult;
 }
 
-bool XOptions::isGroupIDPresent(GROUPID groupID) {
+bool XOptions::isGroupIDPresent(GROUPID groupID)
+{
     bool bResult = false;
 
     qint32 nNumberOfRecords = g_listValueIDs.count();
@@ -170,15 +178,18 @@ bool XOptions::isGroupIDPresent(GROUPID groupID) {
     return bResult;
 }
 
-void XOptions::setNative(bool bValue) {
+void XOptions::setNative(bool bValue)
+{
     g_bIsNative = bValue;
 }
 
-bool XOptions::isNative() {
+bool XOptions::isNative()
+{
     return g_bIsNative;
 }
 
-bool XOptions::isAppImage() {
+bool XOptions::isAppImage()
+{
     bool bResult = false;
 
     QString sApplicationDirPath = qApp->applicationDirPath();
@@ -188,7 +199,8 @@ bool XOptions::isAppImage() {
     return bResult;
 }
 
-void XOptions::setName(QString sValue) {
+void XOptions::setName(QString sValue)
+{
 #ifdef QT_DEBUG
 #ifdef Q_OS_WIN
 #ifndef Q_OS_WIN64
@@ -207,7 +219,8 @@ void XOptions::setName(QString sValue) {
     g_sName = sValue;
 }
 
-void XOptions::load() {
+void XOptions::load()
+{
     QSettings *pSettings = nullptr;
 
     if (g_bIsNative) {
@@ -333,7 +346,8 @@ void XOptions::load() {
     delete pSettings;
 }
 
-void XOptions::save() {
+void XOptions::save()
+{
     QSettings *pSettings = nullptr;
 
     if (g_bIsNative) {
@@ -365,11 +379,13 @@ void XOptions::save() {
     delete pSettings;
 }
 
-QVariant XOptions::getValue(XOptions::ID id) {
+QVariant XOptions::getValue(XOptions::ID id)
+{
     return g_mapValues.value(id);
 }
 
-void XOptions::setValue(XOptions::ID id, QVariant vValue) {
+void XOptions::setValue(XOptions::ID id, QVariant vValue)
+{
     if ((id == ID_VIEW_STYLE) || (id == ID_VIEW_LANG) || (id == ID_VIEW_QSS)) {
         QVariant vOld = g_mapValues.value(id);
 
@@ -381,11 +397,13 @@ void XOptions::setValue(XOptions::ID id, QVariant vValue) {
     g_mapValues.insert(id, vValue);
 }
 
-void XOptions::clearValue(XOptions::ID id) {
+void XOptions::clearValue(XOptions::ID id)
+{
     g_mapValues.insert(id, "");
 }
 
-QString XOptions::idToString(ID id) {
+QString XOptions::idToString(ID id)
+{
     QString sResult = QString("Unknown");
 
     switch (id) {
@@ -579,7 +597,8 @@ QString XOptions::idToString(ID id) {
     return sResult;
 }
 
-QString XOptions::getLastDirectory() {
+QString XOptions::getLastDirectory()
+{
     QString sResult;
 
     bool bSaveLastDirectory = getValue(ID_FILE_SAVELASTDIRECTORY).toBool();
@@ -592,7 +611,8 @@ QString XOptions::getLastDirectory() {
     return sResult;
 }
 
-void XOptions::setLastDirectory(QString sPathName) {
+void XOptions::setLastDirectory(QString sPathName)
+{
     if (getValue(ID_FILE_SAVELASTDIRECTORY).toBool()) {
         QFileInfo fi(sPathName);
 
@@ -606,7 +626,8 @@ void XOptions::setLastDirectory(QString sPathName) {
     }
 }
 
-void XOptions::setLastFileName(QString sFileName) {
+void XOptions::setLastFileName(QString sFileName)
+{
     QFileInfo fi(sFileName);
 
     QString sDirectory;
@@ -642,7 +663,8 @@ void XOptions::setLastFileName(QString sFileName) {
     }
 }
 
-void XOptions::clearRecentFiles() {
+void XOptions::clearRecentFiles()
+{
     g_mapValues.insert(ID_NU_RECENTFILES, QList<QVariant>());
 
 #ifdef QT_GUI_LIB
@@ -650,7 +672,8 @@ void XOptions::clearRecentFiles() {
 #endif
 }
 
-void XOptions::openRecentFile() {
+void XOptions::openRecentFile()
+{
 #ifdef QT_GUI_LIB
     QAction *pAction = qobject_cast<QAction *>(sender());
 
@@ -662,7 +685,8 @@ void XOptions::openRecentFile() {
 #endif
 }
 
-void XOptions::setCodePageSlot() {
+void XOptions::setCodePageSlot()
+{
 #ifdef QT_GUI_LIB
     QAction *pAction = qobject_cast<QAction *>(sender());
 
@@ -674,7 +698,8 @@ void XOptions::setCodePageSlot() {
 #endif
 }
 
-QList<QString> XOptions::getRecentFiles() {
+QList<QString> XOptions::getRecentFiles()
+{
     QList<QString> listResult;
 
     QList<QVariant> listFiles = getValue(ID_NU_RECENTFILES).toList();
@@ -688,48 +713,59 @@ QList<QString> XOptions::getRecentFiles() {
     return listResult;
 }
 
-QString XOptions::getDatabasePath() {
+QString XOptions::getDatabasePath()
+{
     return getValue(ID_SCAN_DATABASEPATH).toString();
 }
 
-QString XOptions::getInfoPath() {
+QString XOptions::getInfoPath()
+{
     return getValue(ID_SCAN_INFOPATH).toString();
 }
 
-QString XOptions::getScanEngine() {
+QString XOptions::getScanEngine()
+{
     return getValue(ID_SCAN_ENGINE).toString();
 }
 
-QString XOptions::getDisasmSyntax() {
+QString XOptions::getDisasmSyntax()
+{
     return getValue(ID_DISASM_SYNTAX).toString();
 }
 
-QString XOptions::getRootPath() {
+QString XOptions::getRootPath()
+{
     return getValue(ID_ROOTPATH).toString();
 }
 
-QString XOptions::getDataPath() {
+QString XOptions::getDataPath()
+{
     return getValue(ID_DATAPATH).toString();
 }
 
-QString XOptions::getJson() {
+QString XOptions::getJson()
+{
     return getValue(ID_JSON).toString();
 }
 
-QString XOptions::getAuthUser() {
+QString XOptions::getAuthUser()
+{
     return getValue(ID_AUTHUSER).toString();
 }
 
-QString XOptions::getAuthToken() {
+QString XOptions::getAuthToken()
+{
     return getValue(ID_AUTHTOKEN).toString();
 }
 
-QString XOptions::getVirusTotalApiKey() {
+QString XOptions::getVirusTotalApiKey()
+{
     return getValue(ID_ONLINETOOLS_VIRUSTOTAL_APIKEY).toString();
 }
 
 #ifdef QT_GUI_LIB
-void XOptions::adjustStayOnTop(QWidget *pWidget) {
+void XOptions::adjustStayOnTop(QWidget *pWidget)
+{
     Qt::WindowFlags wf = pWidget->windowFlags();
 
     if (isStayOnTop()) {
@@ -743,7 +779,8 @@ void XOptions::adjustStayOnTop(QWidget *pWidget) {
 }
 #endif
 #ifdef QT_GUI_LIB
-void XOptions::adjustFont(QWidget *pWidget) {
+void XOptions::adjustFont(QWidget *pWidget)
+{
     QFont _font;
     QString sFont = getValue(XOptions::ID_VIEW_FONT).toString();
 
@@ -753,7 +790,8 @@ void XOptions::adjustFont(QWidget *pWidget) {
 }
 #endif
 #ifdef QT_GUI_LIB
-void XOptions::adjustWindow(QWidget *pWidget) {
+void XOptions::adjustWindow(QWidget *pWidget)
+{
     if (isIDPresent(XOptions::ID_VIEW_STAYONTOP)) {
         adjustStayOnTop(pWidget);
     }
@@ -764,7 +802,8 @@ void XOptions::adjustWindow(QWidget *pWidget) {
 }
 #endif
 #ifdef QT_GUI_LIB
-void XOptions::setMonoFont(QWidget *pWidget, qint32 nSize) {
+void XOptions::setMonoFont(QWidget *pWidget, qint32 nSize)
+{
     QFont font = pWidget->font();
 
 #ifdef Q_OS_WIN
@@ -785,27 +824,32 @@ void XOptions::setMonoFont(QWidget *pWidget, qint32 nSize) {
 }
 #endif
 #ifdef QT_GUI_LIB
-void XOptions::setCheckBox(QCheckBox *pCheckBox, XOptions::ID id) {
+void XOptions::setCheckBox(QCheckBox *pCheckBox, XOptions::ID id)
+{
     pCheckBox->setChecked(getValue(id).toBool());
 }
 #endif
 #ifdef QT_GUI_LIB
-void XOptions::getCheckBox(QCheckBox *pCheckBox, XOptions::ID id) {
+void XOptions::getCheckBox(QCheckBox *pCheckBox, XOptions::ID id)
+{
     setValue(id, pCheckBox->isChecked());
 }
 #endif
 #ifdef QT_GUI_LIB
-void XOptions::setCheckBox(QGroupBox *pGroupBox, ID id) {
+void XOptions::setCheckBox(QGroupBox *pGroupBox, ID id)
+{
     pGroupBox->setChecked(getValue(id).toBool());
 }
 #endif
 #ifdef QT_GUI_LIB
-void XOptions::getCheckBox(QGroupBox *pGroupBox, ID id) {
+void XOptions::getCheckBox(QGroupBox *pGroupBox, ID id)
+{
     setValue(id, pGroupBox->isChecked());
 }
 #endif
 #ifdef QT_GUI_LIB
-void XOptions::setComboBox(QComboBox *pComboBox, XOptions::ID id) {
+void XOptions::setComboBox(QComboBox *pComboBox, XOptions::ID id)
+{
     const bool bBlocked1 = pComboBox->blockSignals(true);
 
     pComboBox->clear();
@@ -893,81 +937,100 @@ void XOptions::setComboBox(QComboBox *pComboBox, XOptions::ID id) {
 }
 #endif
 #ifdef QT_GUI_LIB
-void XOptions::getComboBox(QComboBox *pComboBox, XOptions::ID id) {
+void XOptions::getComboBox(QComboBox *pComboBox, XOptions::ID id)
+{
     setValue(id, pComboBox->currentData());
 }
 #endif
 #ifdef QT_GUI_LIB
-void XOptions::setLineEdit(QLineEdit *pLineEdit, XOptions::ID id) {
+void XOptions::setLineEdit(QLineEdit *pLineEdit, XOptions::ID id)
+{
     pLineEdit->setText(getValue(id).toString());
 }
 #endif
 #ifdef QT_GUI_LIB
-void XOptions::getLineEdit(QLineEdit *pLineEdit, XOptions::ID id) {
+void XOptions::getLineEdit(QLineEdit *pLineEdit, XOptions::ID id)
+{
     setValue(id, pLineEdit->text());
 }
 #endif
-bool XOptions::isSaveBackup() {
+bool XOptions::isSaveBackup()
+{
     return getValue(XOptions::ID_FILE_SAVEBACKUP).toBool();
 }
 
-bool XOptions::isSaveLastDirectory() {
+bool XOptions::isSaveLastDirectory()
+{
     return getValue(XOptions::ID_FILE_SAVELASTDIRECTORY).toBool();
 }
 
-bool XOptions::isSaveRecentFiles() {
+bool XOptions::isSaveRecentFiles()
+{
     return getValue(XOptions::ID_FILE_SAVERECENTFILES).toBool();
 }
 
-bool XOptions::isRestartNeeded() {
+bool XOptions::isRestartNeeded()
+{
     return g_bIsNeedRestart;
 }
 
-bool XOptions::isStayOnTop() {
+bool XOptions::isStayOnTop()
+{
     return getValue(XOptions::ID_VIEW_STAYONTOP).toBool();
 }
 
-bool XOptions::isScanAfterOpen() {
+bool XOptions::isScanAfterOpen()
+{
     return getValue(XOptions::ID_SCAN_SCANAFTEROPEN).toBool();
 }
 
-bool XOptions::isRecursiveScan() {
+bool XOptions::isRecursiveScan()
+{
     return getValue(XOptions::ID_SCAN_RECURSIVE).toBool();
 }
 
-bool XOptions::isDeepScan() {
+bool XOptions::isDeepScan()
+{
     return getValue(XOptions::ID_SCAN_DEEP).toBool();
 }
 
-bool XOptions::isHeuristicScan() {
+bool XOptions::isHeuristicScan()
+{
     return getValue(XOptions::ID_SCAN_HEURISTIC).toBool();
 }
 
-bool XOptions::isVerbose() {
+bool XOptions::isVerbose()
+{
     return getValue(XOptions::ID_SCAN_VERBOSE).toBool();
 }
 
-bool XOptions::isAllTypesScan() {
+bool XOptions::isAllTypesScan()
+{
     return getValue(XOptions::ID_SCAN_ALLTYPES).toBool();
 }
 
-bool XOptions::isSingleApplication() {
+bool XOptions::isSingleApplication()
+{
     return getValue(XOptions::ID_VIEW_SINGLEAPPLICATION).toBool();
 }
 
-bool XOptions::isShowLogo() {
+bool XOptions::isShowLogo()
+{
     return getValue(XOptions::ID_VIEW_SHOWLOGO).toBool();
 }
 
-QString XOptions::getSearchSignaturesPath() {
+QString XOptions::getSearchSignaturesPath()
+{
     return getValue(XOptions::ID_SIGNATURES_PATH).toString();
 }
 
-QString XOptions::getStructsPath() {
+QString XOptions::getStructsPath()
+{
     return getValue(XOptions::ID_STRUCTS_PATH).toString();
 }
 #ifdef QT_GUI_LIB
-void XOptions::adjustApplicationView(QString sTranslationName, XOptions *pOptions) {
+void XOptions::adjustApplicationView(QString sTranslationName, XOptions *pOptions)
+{
     if (pOptions->isIDPresent(XOptions::ID_VIEW_STYLE)) {
         QString sStyle = pOptions->getValue(XOptions::ID_VIEW_STYLE).toString();
 
@@ -1046,7 +1109,8 @@ void XOptions::adjustApplicationView(QString sTranslationName, XOptions *pOption
 //}
 //#endif
 #ifdef QT_GUI_LIB
-QWidget *XOptions::getMainWidget(QWidget *pWidget) {
+QWidget *XOptions::getMainWidget(QWidget *pWidget)
+{
     QWidget *pResult = pWidget;
 
     while (pResult->parent()) {
@@ -1057,7 +1121,8 @@ QWidget *XOptions::getMainWidget(QWidget *pWidget) {
 }
 #endif
 #ifdef QT_GUI_LIB
-QString XOptions::getModelText(QAbstractItemModel *pModel) {
+QString XOptions::getModelText(QAbstractItemModel *pModel)
+{
     QString sResult;
 
     if (pModel) {
@@ -1111,7 +1176,8 @@ QString XOptions::getModelText(QAbstractItemModel *pModel) {
 }
 #endif
 #ifdef QT_GUI_LIB
-bool XOptions::saveModel(QAbstractItemModel *pModel, QString sFileName) {
+bool XOptions::saveModel(QAbstractItemModel *pModel, QString sFileName)
+{
     bool bResult = false;
 
     QFile file;
@@ -1132,7 +1198,8 @@ bool XOptions::saveModel(QAbstractItemModel *pModel, QString sFileName) {
 }
 #endif
 #ifdef QT_GUI_LIB
-bool XOptions::saveTextEdit(QTextEdit *pTextEdit, QString sFileName) {
+bool XOptions::saveTextEdit(QTextEdit *pTextEdit, QString sFileName)
+{
     bool bResult = false;
 
     QFile file;
@@ -1153,7 +1220,8 @@ bool XOptions::saveTextEdit(QTextEdit *pTextEdit, QString sFileName) {
 }
 #endif
 #ifdef QT_GUI_LIB
-bool XOptions::savePlainTextEdit(QPlainTextEdit *pPlainTextEdit, QString sFileName) {
+bool XOptions::savePlainTextEdit(QPlainTextEdit *pPlainTextEdit, QString sFileName)
+{
     bool bResult = false;
 
     QFile file;
@@ -1174,37 +1242,44 @@ bool XOptions::savePlainTextEdit(QPlainTextEdit *pPlainTextEdit, QString sFileNa
 }
 #endif
 #ifdef QT_GUI_LIB
-bool XOptions::saveTableView(QTableView *pTableView, QString sFileName) {
+bool XOptions::saveTableView(QTableView *pTableView, QString sFileName)
+{
     return saveModel(pTableView->model(), sFileName);
 }
 #endif
 #ifdef QT_GUI_LIB
-bool XOptions::saveTableWidget(QTableWidget *pTableWidget, QString sFileName) {
+bool XOptions::saveTableWidget(QTableWidget *pTableWidget, QString sFileName)
+{
     return saveModel(pTableWidget->model(), sFileName);
 }
 #endif
 #ifdef QT_GUI_LIB
-bool XOptions::saveListView(QListView *pListView, QString sFileName) {
+bool XOptions::saveListView(QListView *pListView, QString sFileName)
+{
     return saveModel(pListView->model(), sFileName);
 }
 #endif
 #ifdef QT_GUI_LIB
-bool XOptions::saveListWidget(QListWidget *pListWidget, QString sFileName) {
+bool XOptions::saveListWidget(QListWidget *pListWidget, QString sFileName)
+{
     return saveModel(pListWidget->model(), sFileName);
 }
 #endif
 #ifdef QT_GUI_LIB
-bool XOptions::saveTreeView(QTreeView *pTreeView, QString sFileName) {
+bool XOptions::saveTreeView(QTreeView *pTreeView, QString sFileName)
+{
     return saveModel(pTreeView->model(), sFileName);
 }
 #endif
 #ifdef QT_GUI_LIB
-bool XOptions::saveTreeWidget(QTreeWidget *pTreeWidget, QString sFileName) {
+bool XOptions::saveTreeWidget(QTreeWidget *pTreeWidget, QString sFileName)
+{
     return saveModel(pTreeWidget->model(), sFileName);
 }
 #endif
 #ifdef QT_GUI_LIB
-bool XOptions::saveTextBrowser(QTextBrowser *pTextBrowser, QString sFileName) {
+bool XOptions::saveTextBrowser(QTextBrowser *pTextBrowser, QString sFileName)
+{
     bool bResult = false;
 
     QFile file;
@@ -1225,7 +1300,8 @@ bool XOptions::saveTextBrowser(QTextBrowser *pTextBrowser, QString sFileName) {
 }
 #endif
 #ifdef QT_GUI_LIB
-bool XOptions::saveTextBrowserHtml(QTextBrowser *pTextBrowser, QString sFileName) {
+bool XOptions::saveTextBrowserHtml(QTextBrowser *pTextBrowser, QString sFileName)
+{
     bool bResult = false;
 
     QFile file;
@@ -1246,7 +1322,8 @@ bool XOptions::saveTextBrowserHtml(QTextBrowser *pTextBrowser, QString sFileName
 }
 #endif
 #ifdef QT_GUI_LIB
-QMenu *XOptions::createRecentFilesMenu(QWidget *pParent) {
+QMenu *XOptions::createRecentFilesMenu(QWidget *pParent)
+{
     g_pRecentFilesMenu = new QMenu(tr("Recent files"), pParent);
 
     _updateRecentFilesMenu();
@@ -1255,21 +1332,24 @@ QMenu *XOptions::createRecentFilesMenu(QWidget *pParent) {
 }
 #endif
 #ifdef QT_GUI_LIB
-qint32 XOptions::getCharWidth(QWidget *pWidget) {
+qint32 XOptions::getCharWidth(QWidget *pWidget)
+{
     const QFontMetricsF fm(pWidget->font());
 
     return fm.maxWidth();
 }
 #endif
 #ifdef QT_GUI_LIB
-qint32 XOptions::getCharHeight(QWidget *pWidget) {
+qint32 XOptions::getCharHeight(QWidget *pWidget)
+{
     const QFontMetricsF fm(pWidget->font());
 
     return fm.height();
 }
 #endif
 #ifdef QT_GUI_LIB
-void XOptions::showInFolder(QString sFileName) {
+void XOptions::showInFolder(QString sFileName)
+{
     QFileInfo fi = QFileInfo(sFileName);
 
 #if defined(Q_OS_WIN)
@@ -1302,7 +1382,8 @@ void XOptions::showInFolder(QString sFileName) {
 }
 #endif
 #ifdef QT_GUI_LIB
-void XOptions::handleFontButton(QWidget *pParent, QLineEdit *pLineEdit) {
+void XOptions::handleFontButton(QWidget *pParent, QLineEdit *pLineEdit)
+{
     QFont _font;
     _font.fromString(pLineEdit->text());
 
@@ -1314,7 +1395,8 @@ void XOptions::handleFontButton(QWidget *pParent, QLineEdit *pLineEdit) {
     }
 }
 #endif
-QString XOptions::getApplicationLangPath() {
+QString XOptions::getApplicationLangPath()
+{
     QString sResult;
 
     sResult = getApplicationDataPath() + QDir::separator() + "lang";
@@ -1322,7 +1404,8 @@ QString XOptions::getApplicationLangPath() {
     return sResult;
 }
 
-QString XOptions::getApplicationQssPath() {
+QString XOptions::getApplicationQssPath()
+{
     QString sResult;
 
     sResult = getApplicationDataPath() + QDir::separator() + "qss";
@@ -1330,13 +1413,15 @@ QString XOptions::getApplicationQssPath() {
     return sResult;
 }
 
-QList<QString> XOptions::getAllFilesFromDirectory(QString sDirectory, QString sExtension) {
+QList<QString> XOptions::getAllFilesFromDirectory(QString sDirectory, QString sExtension)
+{
     QDir directory(sDirectory);
 
     return directory.entryList(QStringList() << sExtension, QDir::Files);
 }
 
-bool XOptions::checkNative() {
+bool XOptions::checkNative()
+{
     bool bResult = false;
 #ifdef Q_OS_MAC
     bResult = true;
@@ -1360,7 +1445,8 @@ bool XOptions::checkNative() {
     return bResult;
 }
 
-QString XOptions::getApplicationDataPath() {
+QString XOptions::getApplicationDataPath()
+{
     QString sResult;
 
     QString sApplicationDirPath = qApp->applicationDirPath();
@@ -1391,7 +1477,8 @@ QString XOptions::getApplicationDataPath() {
     return sResult;
 }
 
-QString XOptions::getTitle(QString sName, QString sVersion, bool bShowOS) {
+QString XOptions::getTitle(QString sName, QString sVersion, bool bShowOS)
+{
     QString sResult = QString("%1 v%2").arg(sName, sVersion);
 
     if (bShowOS) {
@@ -1407,11 +1494,13 @@ QString XOptions::getTitle(QString sName, QString sVersion, bool bShowOS) {
 
 #if (QT_VERSION_MAJOR < 6) || defined(QT_CORE5COMPAT_LIB)
 
-bool sort_code_page(const qint32 &nValue1, const qint32 &nValue2) {
+bool sort_code_page(const qint32 &nValue1, const qint32 &nValue2)
+{
     return (qAbs(nValue1) < qAbs(nValue2));
 }
 
-QList<QString> XOptions::getCodePages(bool bAll) {
+QList<QString> XOptions::getCodePages(bool bAll)
+{
     QList<QString> listResult;
 
     listResult.append("");  // Empty
@@ -1448,7 +1537,8 @@ QList<QString> XOptions::getCodePages(bool bAll) {
 #endif
 #if (QT_VERSION_MAJOR < 6) || defined(QT_CORE5COMPAT_LIB)
 #ifdef QT_GUI_LIB
-QMenu *XOptions::createCodePagesMenu(QWidget *pParent, bool bAll) {
+QMenu *XOptions::createCodePagesMenu(QWidget *pParent, bool bAll)
+{
     g_pCodePagesMenu = new QMenu(tr("Code pages"), pParent);
 
     if (g_pCodePagesMenu) {
@@ -1473,7 +1563,8 @@ QMenu *XOptions::createCodePagesMenu(QWidget *pParent, bool bAll) {
 #endif
 #endif
 #ifdef Q_OS_WIN
-bool XOptions::registerContext(QString sApplicationName, QString sType, QString sApplicationFilePath) {
+bool XOptions::registerContext(QString sApplicationName, QString sType, QString sApplicationFilePath)
+{
     QSettings settings(QString("HKEY_CLASSES_ROOT\\%1\\shell\\%2\\command").arg(sType, sApplicationName), QSettings::NativeFormat);
     settings.setValue(".", "\"" + sApplicationFilePath.replace("/", "\\") + "\" \"%1\"");
 
@@ -1485,7 +1576,8 @@ bool XOptions::registerContext(QString sApplicationName, QString sType, QString 
 }
 #endif
 #ifdef Q_OS_WIN
-bool XOptions::clearContext(QString sApplicationName, QString sType) {
+bool XOptions::clearContext(QString sApplicationName, QString sType)
+{
     QSettings settings(QString("HKEY_CLASSES_ROOT\\%1\\shell\\%2").arg(sType, sApplicationName), QSettings::NativeFormat);
     settings.clear();
 
@@ -1494,23 +1586,27 @@ bool XOptions::clearContext(QString sApplicationName, QString sType) {
 }
 #endif
 #ifdef Q_OS_WIN
-bool XOptions::checkContext(QString sApplicationName, QString sType) {
+bool XOptions::checkContext(QString sApplicationName, QString sType)
+{
     QSettings settings(QString("HKEY_CLASSES_ROOT\\%1\\shell").arg(sType), QSettings::NativeFormat);
 
     return (settings.value(QString("%1/command/Default").arg(sApplicationName)).toString() != "");
 }
 #endif
 
-void XOptions::setMaxRecentFilesCount(qint32 nValue) {
+void XOptions::setMaxRecentFilesCount(qint32 nValue)
+{
     g_nMaxRecentFilesCount = nValue;
 }
 
-qint32 XOptions::getMaxRecentFilesCount() {
+qint32 XOptions::getMaxRecentFilesCount()
+{
     return g_nMaxRecentFilesCount;
 }
 
 #ifdef QT_GUI_LIB
-void XOptions::_updateRecentFilesMenu() {
+void XOptions::_updateRecentFilesMenu()
+{
     if (g_pRecentFilesMenu) {
         g_pRecentFilesMenu->clear();
 
@@ -1541,7 +1637,8 @@ void XOptions::_updateRecentFilesMenu() {
     }
 }
 #endif
-XOptions::BUNDLE XOptions::getBundle() {
+XOptions::BUNDLE XOptions::getBundle()
+{
     BUNDLE result = BUNDLE_UNKNOWN;
 
 #ifdef Q_OS_WIN

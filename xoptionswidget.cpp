@@ -22,7 +22,8 @@
 
 #include "ui_xoptionswidget.h"
 
-XOptionsWidget::XOptionsWidget(QWidget *pParent) : QWidget(pParent), ui(new Ui::XOptionsWidget) {
+XOptionsWidget::XOptionsWidget(QWidget *pParent) : QWidget(pParent), ui(new Ui::XOptionsWidget)
+{
     ui->setupUi(this);
 
     g_pParent = pParent;
@@ -33,11 +34,13 @@ XOptionsWidget::XOptionsWidget(QWidget *pParent) : QWidget(pParent), ui(new Ui::
     connect(this, SIGNAL(reloadSignal()), this, SLOT(reload()), Qt::DirectConnection);
 }
 
-XOptionsWidget::~XOptionsWidget() {
+XOptionsWidget::~XOptionsWidget()
+{
     delete ui;
 }
 
-void XOptionsWidget::setOptions(XOptions *pOptions, QString sApplicationDisplayName) {
+void XOptionsWidget::setOptions(XOptions *pOptions, QString sApplicationDisplayName)
+{
     g_pOptions = pOptions;
     g_sApplicationDisplayName = sApplicationDisplayName;
 
@@ -54,7 +57,8 @@ void XOptionsWidget::setOptions(XOptions *pOptions, QString sApplicationDisplayN
     reload();
 }
 
-void XOptionsWidget::addListRecord(QString sTitle, qint32 nIndex) {
+void XOptionsWidget::addListRecord(QString sTitle, qint32 nIndex)
+{
     QListWidgetItem *pItem = new QListWidgetItem;
 
     pItem->setText(sTitle);
@@ -63,7 +67,8 @@ void XOptionsWidget::addListRecord(QString sTitle, qint32 nIndex) {
     ui->listWidgetOptions->addItem(pItem);
 }
 
-void XOptionsWidget::addPage(QWidget *pWidget, QString sTitle) {
+void XOptionsWidget::addPage(QWidget *pWidget, QString sTitle)
+{
     qint32 nIndex = ui->stackedWidgetOptions->addWidget(pWidget);
 
     addListRecord(sTitle, nIndex);
@@ -72,13 +77,15 @@ void XOptionsWidget::addPage(QWidget *pWidget, QString sTitle) {
     connect(this, SIGNAL(reloadSignal()), pWidget, SLOT(reload()), Qt::DirectConnection);
 }
 
-void XOptionsWidget::setCurrentPage(qint32 nPage) {
+void XOptionsWidget::setCurrentPage(qint32 nPage)
+{
     if (nPage < ui->listWidgetOptions->count()) {
         ui->listWidgetOptions->setCurrentRow(nPage);
     }
 }
 
-void XOptionsWidget::setCurrentPage(XOptions::GROUPID groupId) {
+void XOptionsWidget::setCurrentPage(XOptions::GROUPID groupId)
+{
     if (groupId != XOptions::GROUPID_UNKNOWN) {
         qint32 nNumberOfPages = ui->stackedWidgetOptions->count();
         qint32 nNumberOfLists = ui->listWidgetOptions->count();
@@ -101,7 +108,8 @@ void XOptionsWidget::setCurrentPage(XOptions::GROUPID groupId) {
     }
 }
 
-void XOptionsWidget::save() {
+void XOptionsWidget::save()
+{
     if (g_pOptions->isIDPresent(XOptions::ID_VIEW_STAYONTOP)) {
         g_pOptions->getCheckBox(ui->checkBoxViewStayOnTop, XOptions::ID_VIEW_STAYONTOP);
     }
@@ -145,7 +153,8 @@ void XOptionsWidget::save() {
     g_pOptions->save();
 }
 
-void XOptionsWidget::reload() {
+void XOptionsWidget::reload()
+{
     if (g_pOptions->isIDPresent(XOptions::ID_VIEW_STAYONTOP)) {
         g_pOptions->setCheckBox(ui->checkBoxViewStayOnTop, XOptions::ID_VIEW_STAYONTOP);
     } else {
@@ -215,14 +224,16 @@ void XOptionsWidget::reload() {
     }
 }
 
-void XOptionsWidget::on_listWidgetOptions_currentRowChanged(int nCurrentRow) {
+void XOptionsWidget::on_listWidgetOptions_currentRowChanged(int nCurrentRow)
+{
     if (nCurrentRow < ui->stackedWidgetOptions->count()) {
         qint32 nIndex = ui->listWidgetOptions->item(nCurrentRow)->data(Qt::UserRole).toInt();
         ui->stackedWidgetOptions->setCurrentIndex(nIndex);
     }
 }
 
-void XOptionsWidget::on_checkBoxFileContext_toggled(bool bChecked) {
+void XOptionsWidget::on_checkBoxFileContext_toggled(bool bChecked)
+{
     if (g_pOptions->isIDPresent(XOptions::ID_FILE_CONTEXT)) {
 #ifdef Q_OS_WIN
         if (g_pOptions->checkContext(g_sApplicationDisplayName, g_pOptions->getValue(XOptions::ID_FILE_CONTEXT).toString()) != bChecked) {
@@ -244,17 +255,20 @@ void XOptionsWidget::on_checkBoxFileContext_toggled(bool bChecked) {
     }
 }
 
-void XOptionsWidget::on_toolButtonViewFont_clicked() {
+void XOptionsWidget::on_toolButtonViewFont_clicked()
+{
     XOptions::handleFontButton(this, ui->lineEditViewFont);
 }
 
-void XOptionsWidget::on_pushButtonDefault_clicked() {
+void XOptionsWidget::on_pushButtonDefault_clicked()
+{
     g_pOptions->resetToDefault();
 
     emit reloadSignal();
 }
 
-void XOptionsWidget::on_pushButtonOK_clicked() {
+void XOptionsWidget::on_pushButtonOK_clicked()
+{
     emit saveSignal();
 
     if (g_pOptions->isRestartNeeded()) {
@@ -264,6 +278,7 @@ void XOptionsWidget::on_pushButtonOK_clicked() {
     g_pParent->close();
 }
 
-void XOptionsWidget::on_pushButtonCancel_clicked() {
+void XOptionsWidget::on_pushButtonCancel_clicked()
+{
     g_pParent->close();
 }
