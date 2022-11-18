@@ -20,7 +20,8 @@
  */
 #include "xoptions.h"
 
-XOptions::XOptions(QObject *pParent) : QObject(pParent)
+XOptions::XOptions(QObject *pParent)
+    : QObject(pParent)
 {
 #ifdef QT_GUI_LIB
     g_pRecentFilesMenu = nullptr;
