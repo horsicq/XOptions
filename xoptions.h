@@ -62,8 +62,9 @@ class XOptions : public QObject {
 public:
     // TODO Check if update available
     // TODO Show in dialog all available updates
-    // Ubuntu -> Ubuntu+Debian+appImage
-    // Debian -> Debian+appImage
+    // Ubuntu -> Ubuntu + Debian + appImage
+    // Debian -> Debian + appImage
+    // Parrot -> Parrot + Debian + appImage
     // Windows 64 -> Windows 32 + Windows 64 + Windows XP
     // Windows 32 -> Windows 32 + Windows XP
     // Windows XP -> Windows XP
