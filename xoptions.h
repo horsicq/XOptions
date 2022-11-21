@@ -81,7 +81,7 @@ public:
         BUNDLE_PARROTOS_X64,
         BUNDLE_MACOS_X64,
         BUNDLE_MACOS_QT6_M
-        // TODO WIN ARM
+        // TODO WIN ARM64
         // TODO FREEBSD
         // TODO KALI
         // TODO more
