@@ -20,8 +20,7 @@
  */
 #include "xoptions.h"
 
-XOptions::XOptions(QObject *pParent)
-    : QObject(pParent)
+XOptions::XOptions(QObject *pParent) : QObject(pParent)
 {
 #ifdef QT_GUI_LIB
     g_pRecentFilesMenu = nullptr;
@@ -317,8 +316,7 @@ void XOptions::load()
         QVariant variant = pSettings->value(sName, varDefault);
 
         if (!variant.toString().contains("$data")) {
-            if ((id == ID_SCAN_DATABASEPATH) || (id == ID_SCAN_INFOPATH) || (id == ID_DATAPATH) || (id == ID_SIGNATURES_PATH) || (id == ID_STRUCTS_PATH) ||
-                (id == ID_STRUCTSPATH)) {
+            if ((id == ID_SCAN_DATABASEPATH) || (id == ID_SCAN_INFOPATH) || (id == ID_DATAPATH) || (id == ID_SIGNATURES_PATH) || (id == ID_STRUCTS_PATH) || (id == ID_STRUCTSPATH)) {
                 if (!QDir(variant.toString()).exists()) {
                     variant = varDefault;
                 }
@@ -1429,8 +1427,8 @@ bool XOptions::checkNative()
 #elif defined(Q_OS_LINUX)
     QString sApplicationDirPath = qApp->applicationDirPath();
 
-    if ((sApplicationDirPath == "/bin") || (sApplicationDirPath == "/usr/bin") || (sApplicationDirPath == "/usr/local/bin") ||
-        (sApplicationDirPath.contains(QRegExp("/usr/local/bin$"))) || isAppImage()) {
+    if ((sApplicationDirPath == "/bin") || (sApplicationDirPath == "/usr/bin") || (sApplicationDirPath == "/usr/local/bin") || (sApplicationDirPath.contains(QRegExp("/usr/local/bin$"))) ||
+        isAppImage()) {
         bResult = true;
     } else {
         bResult = false;

@@ -22,8 +22,7 @@
 
 #include "ui_xoptionswidget.h"
 
-XOptionsWidget::XOptionsWidget(QWidget *pParent)
-    : QWidget(pParent), ui(new Ui::XOptionsWidget)
+XOptionsWidget::XOptionsWidget(QWidget *pParent) : QWidget(pParent), ui(new Ui::XOptionsWidget)
 {
     ui->setupUi(this);
 
