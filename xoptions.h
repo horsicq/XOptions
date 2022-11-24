@@ -108,7 +108,8 @@ public:
         GROUPID_DISASM,
         GROUPID_IODRIVER,
         GROUPID_STRUCTS,
-        GROUPID_ONLINETOOLS
+        GROUPID_ONLINETOOLS,
+        GROUPID_INFO
         // TODO GitHub
     };
 
@@ -140,9 +141,9 @@ public:
         ID_SCAN_ALLTYPES,
         ID_SCAN_ENGINE,
         ID_SCAN_DATABASEPATH,
-        ID_SCAN_INFOPATH,
         ID_SCAN_EDITORFONT,  // TODO more
         ID_SIGNATURES_PATH,
+        ID_INFO_PATH,
         ID_ONLINETOOLS_VIRUSTOTAL_APIKEY,
         ID_DISASM_FONT,
         ID_DISASM_SYNTAX,

@@ -99,12 +99,14 @@ XOptions::GROUPID XOptions::getGroupID(ID id)
         case ID_SCAN_ALLTYPES:
         case ID_SCAN_ENGINE:
         case ID_SCAN_DATABASEPATH:
-        case ID_SCAN_INFOPATH:
         case ID_SCAN_EDITORFONT:
             result = GROUPID_SCAN;
             break;
         case ID_SIGNATURES_PATH:
             result = GROUPID_SIGNATURES;
+            break;
+        case ID_INFO_PATH:
+            result = GROUPID_INFO;
             break;
         case ID_DISASM_FONT:
         case ID_DISASM_SYNTAX:
@@ -316,7 +318,7 @@ void XOptions::load()
         QVariant variant = pSettings->value(sName, varDefault);
 
         if (!variant.toString().contains("$data")) {
-            if ((id == ID_SCAN_DATABASEPATH) || (id == ID_SCAN_INFOPATH) || (id == ID_DATAPATH) || (id == ID_SIGNATURES_PATH) || (id == ID_STRUCTS_PATH) || (id == ID_STRUCTSPATH)) {
+            if ((id == ID_SCAN_DATABASEPATH) || (id == ID_DATAPATH) || (id == ID_SIGNATURES_PATH) || (id == ID_STRUCTS_PATH) || (id == ID_STRUCTSPATH) || (id == ID_INFO_PATH)) {
                 if (!QDir(variant.toString()).exists()) {
                     variant = varDefault;
                 }
@@ -483,14 +485,14 @@ QString XOptions::idToString(ID id)
         case ID_SCAN_DATABASEPATH:
             sResult = QString("Scan/DatabasePath");
             break;
-        case ID_SCAN_INFOPATH:
-            sResult = QString("Scan/InfoPath");
-            break;
         case ID_SCAN_EDITORFONT:
             sResult = QString("Scan/EditorFont");
             break;
         case ID_SIGNATURES_PATH:
             sResult = QString("Signatures/Path");
+            break;
+        case ID_INFO_PATH:
+            sResult = QString("Info/Path");
             break;
         case ID_ONLINETOOLS_VIRUSTOTAL_APIKEY:
             sResult = QString("OnlineTools/VirusTotalApi");
@@ -719,7 +721,7 @@ QString XOptions::getDatabasePath()
 
 QString XOptions::getInfoPath()
 {
-    return getValue(ID_SCAN_INFOPATH).toString();
+    return getValue(ID_INFO_PATH).toString();
 }
 
 QString XOptions::getScanEngine()
@@ -1427,8 +1429,8 @@ bool XOptions::checkNative()
 #elif defined(Q_OS_LINUX)
     QString sApplicationDirPath = qApp->applicationDirPath();
 
-    if ((sApplicationDirPath == "/bin") || (sApplicationDirPath == "/usr/bin") || (sApplicationDirPath == "/usr/local/bin") || (sApplicationDirPath.contains(QRegExp("/usr/local/bin$"))) ||
-        isAppImage()) {
+    if ((sApplicationDirPath == "/bin") || (sApplicationDirPath == "/usr/bin") || (sApplicationDirPath == "/usr/local/bin") ||
+        (sApplicationDirPath.contains(QRegExp("/usr/local/bin$"))) || isAppImage()) {
         bResult = true;
     } else {
         bResult = false;
