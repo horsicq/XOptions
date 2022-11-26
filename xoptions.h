@@ -68,7 +68,8 @@ public:
     // Windows 64 -> Windows 32 + Windows 64 + Windows XP
     // Windows 32 -> Windows 32 + Windows XP
     // Windows XP -> Windows XP
-    // MacOS
+    // MacOS M1 -> MacOS M1 + MacOS X64
+    // MacOS X64 -> MacOS X64
     enum BUNDLE {
         BUNDLE_UNKNOWN = 0,
         BUNDLE_ARCHLINUX,
