@@ -143,6 +143,11 @@ XOptions::GROUPID XOptions::getGroupID(ID id)
         case ID_IODRIVER_SERVICENAME:
             result = GROUPID_IODRIVER;
             break;
+        default:
+#ifdef QT_DEBUG
+        qDebug("Unknown GroupID");
+#endif
+            result = GROUPID_UNKNOWN;
     }
 
     return result;
