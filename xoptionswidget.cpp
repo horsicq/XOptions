@@ -240,7 +240,8 @@ void XOptionsWidget::on_checkBoxFileContext_toggled(bool bChecked)
             bool bSuccess = false;
 
             if (bChecked) {
-                bSuccess = g_pOptions->registerContext(g_sApplicationDisplayName, g_pOptions->getValue(XOptions::ID_FILE_CONTEXT).toString(), qApp->applicationFilePath());
+                bSuccess =
+                    g_pOptions->registerContext(g_sApplicationDisplayName, g_pOptions->getValue(XOptions::ID_FILE_CONTEXT).toString(), qApp->applicationFilePath());
             } else {
                 bSuccess = g_pOptions->clearContext(g_sApplicationDisplayName, g_pOptions->getValue(XOptions::ID_FILE_CONTEXT).toString());
             }
