@@ -65,6 +65,7 @@ public:
     // Ubuntu -> Ubuntu + Debian + appImage
     // Debian -> Debian + appImage
     // Parrot -> Parrot + Debian + appImage
+    // Linux X64 -> appImage
     // Windows 64 -> Windows 32 + Windows 64 + Windows XP
     // Windows 32 -> Windows 32 + Windows XP
     // Windows XP -> Windows XP
