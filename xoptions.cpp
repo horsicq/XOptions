@@ -28,7 +28,6 @@ XOptions::XOptions(QObject *pParent) : QObject(pParent)
 #endif
     g_bIsNeedRestart = false;
     g_nMaxRecentFilesCount = N_MAX_RECENT_FILES_COUNT;
-    g_bIsNative = checkNative();
 
     g_sName = QString("%1.ini").arg(qApp->applicationName());  // default name
 }
@@ -83,6 +82,7 @@ XOptions::GROUPID XOptions::getGroupID(ID id)
         case ID_VIEW_SINGLEAPPLICATION:
         case ID_VIEW_SHOWLOGO:
         case ID_VIEW_FONT:
+        case ID_VIEW_ADVANCED:
             result = GROUPID_VIEW;
             break;
         case ID_FILE_SAVELASTDIRECTORY:
@@ -185,14 +185,9 @@ bool XOptions::isGroupIDPresent(GROUPID groupID)
     return bResult;
 }
 
-void XOptions::setNative(bool bValue)
-{
-    g_bIsNative = bValue;
-}
-
 bool XOptions::isNative()
 {
-    return g_bIsNative;
+    return checkNative(g_sName);
 }
 
 bool XOptions::isAppImage()
@@ -230,7 +225,9 @@ void XOptions::load()
 {
     QSettings *pSettings = nullptr;
 
-    if (g_bIsNative) {
+    bool bIsNative = isNative();
+
+    if (bIsNative) {
         pSettings = new QSettings;
     } else {
         pSettings = new QSettings(getApplicationDataPath() + QDir::separator() + QString("%1").arg(g_sName), QSettings::IniFormat);
@@ -331,7 +328,7 @@ void XOptions::load()
             }
         }
 
-        if (g_bIsNative) {
+        if (bIsNative) {
             if (variant.toString().contains("$data")) {
                 QString sValue = variant.toString();
                 sValue = sValue.replace("$data", getApplicationDataPath());
@@ -357,7 +354,9 @@ void XOptions::save()
 {
     QSettings *pSettings = nullptr;
 
-    if (g_bIsNative) {
+    bool bIsNative = isNative();
+
+    if (bIsNative) {
         pSettings = new QSettings;
     } else {
         pSettings = new QSettings(getApplicationDataPath() + QDir::separator() + QString("%1").arg(g_sName), QSettings::IniFormat);
@@ -454,6 +453,9 @@ QString XOptions::idToString(ID id)
             break;
         case ID_VIEW_FONT:
             sResult = QString("View/Font");
+            break;
+        case ID_VIEW_ADVANCED:
+            sResult = QString("View/Advanced");
             break;
         case ID_FILE_SAVELASTDIRECTORY:
             sResult = QString("File/SaveLastDirectory");
@@ -1427,7 +1429,7 @@ QList<QString> XOptions::getAllFilesFromDirectory(QString sDirectory, QString sE
     return directory.entryList(QStringList() << sExtension, QDir::Files);
 }
 
-bool XOptions::checkNative()
+bool XOptions::checkNative(QString sIniFileName)
 {
     bool bResult = false;
 #ifdef Q_OS_MAC
@@ -1449,6 +1451,12 @@ bool XOptions::checkNative()
     }
 #endif
 
+    if (!bResult) {
+        QSettings settings(qApp->applicationDirPath() + QDir::separator() + QString("%1").arg(sIniFileName), QSettings::IniFormat);
+
+        bResult = !(settings.isWritable());
+    }
+
     return bResult;
 }
 
@@ -1461,7 +1469,7 @@ QString XOptions::getApplicationDataPath()
 #ifdef Q_OS_MAC
     sResult = sApplicationDirPath + "/../Resources";
 #elif defined(Q_OS_LINUX)
-    if (g_bIsNative) {
+    if (isNative()) {
         if (sApplicationDirPath.contains(QRegExp("/usr/local/bin$"))) {
             QString sPrefix = sApplicationDirPath.section("/usr/local/bin", 0, 0);
 

@@ -132,6 +132,7 @@ public:
         ID_VIEW_SINGLEAPPLICATION,
         ID_VIEW_SHOWLOGO,
         ID_VIEW_FONT,
+        ID_VIEW_ADVANCED,
         ID_FILE_SAVELASTDIRECTORY,
         ID_FILE_SAVERECENTFILES,
         ID_FILE_SAVEBACKUP,
@@ -195,7 +196,6 @@ public:
     GROUPID getGroupID(ID id);
     bool isIDPresent(ID id);
     bool isGroupIDPresent(GROUPID groupID);
-    void setNative(bool bValue);
     bool isNative();
     static bool isAppImage();
     void setName(QString sValue);
@@ -237,7 +237,7 @@ public:
     QString getApplicationLangPath();
     QString getApplicationQssPath();
     static QList<QString> getAllFilesFromDirectory(QString sDirectory, QString sExtension);
-    static bool checkNative();
+    static bool checkNative(QString sIniFileName);
     QString getApplicationDataPath();
     static QString getTitle(QString sName, QString sVersion, bool bShowOS = true);
 #ifdef QT_GUI_LIB
@@ -309,7 +309,6 @@ signals:
 private:
     static const int N_MAX_RECENT_FILES_COUNT = 20;  // TODO Set get
     QString g_sName;
-    bool g_bIsNative;
     QList<ID> g_listValueIDs;
     QMap<ID, QVariant> g_mapValues;
     QMap<ID, QVariant> g_mapDefaultValues;
