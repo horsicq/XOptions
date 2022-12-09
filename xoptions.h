@@ -49,6 +49,7 @@
 #include <QTreeView>
 #include <QTreeWidget>
 #include <QWidget>
+#include <QStandardItemModel>
 #else
 #include <QCoreApplication>
 #endif
@@ -257,8 +258,11 @@ public:
     //    static void adjustApplicationView(QString sApplicationFileName,QString
     //    sTranslationName);
     static QWidget *getMainWidget(QWidget *pWidget);
-    static QString getModelText(QAbstractItemModel *pModel);
-    static bool saveModel(QAbstractItemModel *pModel, QString sFileName);
+    static QString getTableModelText(QAbstractItemModel *pModel);
+    static void _getTreeModelText(QString *psString, QAbstractItemModel *pModel, QModelIndex index, qint32 nLevel);
+    static QString getTreeModelText(QAbstractItemModel *pModel);
+    static bool saveTableModel(QAbstractItemModel *pModel, QString sFileName);
+    static bool saveTreeModel(QAbstractItemModel *pModel, QString sFileName);
     static bool saveTextEdit(QTextEdit *pTextEdit, QString sFileName);
     static bool savePlainTextEdit(QPlainTextEdit *pPlainTextEdit, QString sFileName);
     static bool saveTableView(QTableView *pTableView, QString sFileName);

@@ -1130,7 +1130,7 @@ QWidget *XOptions::getMainWidget(QWidget *pWidget)
 }
 #endif
 #ifdef QT_GUI_LIB
-QString XOptions::getModelText(QAbstractItemModel *pModel)
+QString XOptions::getTableModelText(QAbstractItemModel *pModel)
 {
     QString sResult;
 
@@ -1168,11 +1168,16 @@ QString XOptions::getModelText(QAbstractItemModel *pModel)
         }
 
         // mb TODO csv,tsv,json,xml,json
-        for (qint32 i = 0; i < nNumberOfRows; i++) {
-            for (qint32 j = 0; j < nNumberOfColumns; j++) {
+        qint32 _nNumberOfLines = listListStrings.count();
+
+        for (qint32 i = 0; i < _nNumberOfLines; i++) {
+
+            qint32 _nNumberOfColumns = listListStrings.at(i).count();
+
+            for (qint32 j = 0; j < _nNumberOfColumns; j++) {
                 QString sString = listListStrings.at(i).at(j);
 
-                if (j != (nNumberOfColumns - 1)) {
+                if (j != (_nNumberOfColumns - 1)) {
                     sResult += QString("%1\t").arg(sString);
                 } else {
                     sResult += QString("%1\r\n").arg(sString);
@@ -1185,7 +1190,48 @@ QString XOptions::getModelText(QAbstractItemModel *pModel)
 }
 #endif
 #ifdef QT_GUI_LIB
-bool XOptions::saveModel(QAbstractItemModel *pModel, QString sFileName)
+void XOptions::_getTreeModelText(QString *psString, QAbstractItemModel *pModel, QModelIndex index, qint32 nLevel)
+{
+    qint32 nNumberOfRows = pModel->rowCount(index);
+    qint32 nNumberOfColumns = pModel->columnCount(index);
+
+    for (qint32 i = 0; i < nNumberOfRows; i++) {
+        QString sPrefix;
+        sPrefix = sPrefix.leftJustified(4 * nLevel, ' ');
+
+        *psString += sPrefix;
+
+        for (qint32 j = 0; j < nNumberOfColumns; j++) {
+            QString sString = pModel->data(pModel->index(i, j, index)).toString();
+
+            if (j != (nNumberOfColumns - 1)) {
+                *psString += QString("%1\t").arg(sString);
+            } else {
+                *psString += QString("%1\r\n").arg(sString);
+            }
+        }
+
+        if (nNumberOfColumns) {
+            _getTreeModelText(psString, pModel, pModel->index(i, 0, index), nLevel + 1);
+        }
+    }
+}
+#endif
+#ifdef QT_GUI_LIB
+QString XOptions::getTreeModelText(QAbstractItemModel *pModel)
+{
+    QString sResult;
+
+    if (pModel) {
+        _getTreeModelText(&sResult, pModel, QModelIndex(), 0);
+    }
+
+
+    return sResult;
+}
+#endif
+#ifdef QT_GUI_LIB
+bool XOptions::saveTableModel(QAbstractItemModel *pModel, QString sFileName)
 {
     bool bResult = false;
 
@@ -1193,7 +1239,29 @@ bool XOptions::saveModel(QAbstractItemModel *pModel, QString sFileName)
     file.setFileName(sFileName);
 
     if (file.open(QIODevice::ReadWrite)) {
-        QString sText = getModelText(pModel);
+        QString sText = getTableModelText(pModel);
+
+        file.resize(0);
+        file.write(sText.toUtf8().data());
+
+        file.close();
+
+        bResult = true;
+    }
+
+    return bResult;
+}
+#endif
+#ifdef QT_GUI_LIB
+bool XOptions::saveTreeModel(QAbstractItemModel *pModel, QString sFileName)
+{
+    bool bResult = false;
+
+    QFile file;
+    file.setFileName(sFileName);
+
+    if (file.open(QIODevice::ReadWrite)) {
+        QString sText = getTreeModelText(pModel);
 
         file.resize(0);
         file.write(sText.toUtf8().data());
@@ -1253,37 +1321,37 @@ bool XOptions::savePlainTextEdit(QPlainTextEdit *pPlainTextEdit, QString sFileNa
 #ifdef QT_GUI_LIB
 bool XOptions::saveTableView(QTableView *pTableView, QString sFileName)
 {
-    return saveModel(pTableView->model(), sFileName);
+    return saveTableModel(pTableView->model(), sFileName);
 }
 #endif
 #ifdef QT_GUI_LIB
 bool XOptions::saveTableWidget(QTableWidget *pTableWidget, QString sFileName)
 {
-    return saveModel(pTableWidget->model(), sFileName);
+    return saveTableModel(pTableWidget->model(), sFileName);
 }
 #endif
 #ifdef QT_GUI_LIB
 bool XOptions::saveListView(QListView *pListView, QString sFileName)
 {
-    return saveModel(pListView->model(), sFileName);
+    return saveTableModel(pListView->model(), sFileName);
 }
 #endif
 #ifdef QT_GUI_LIB
 bool XOptions::saveListWidget(QListWidget *pListWidget, QString sFileName)
 {
-    return saveModel(pListWidget->model(), sFileName);
+    return saveTableModel(pListWidget->model(), sFileName);
 }
 #endif
 #ifdef QT_GUI_LIB
 bool XOptions::saveTreeView(QTreeView *pTreeView, QString sFileName)
 {
-    return saveModel(pTreeView->model(), sFileName);
+    return saveTreeModel(pTreeView->model(), sFileName);
 }
 #endif
 #ifdef QT_GUI_LIB
 bool XOptions::saveTreeWidget(QTreeWidget *pTreeWidget, QString sFileName)
 {
-    return saveModel(pTreeWidget->model(), sFileName);
+    return saveTreeModel(pTreeWidget->model(), sFileName);
 }
 #endif
 #ifdef QT_GUI_LIB
