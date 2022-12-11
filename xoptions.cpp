@@ -145,7 +145,7 @@ XOptions::GROUPID XOptions::getGroupID(ID id)
             break;
         default:
 #ifdef QT_DEBUG
-        qDebug("Unknown GroupID");
+            qDebug("Unknown GroupID");
 #endif
             result = GROUPID_UNKNOWN;
     }
@@ -1171,7 +1171,6 @@ QString XOptions::getTableModelText(QAbstractItemModel *pModel)
         qint32 _nNumberOfLines = listListStrings.count();
 
         for (qint32 i = 0; i < _nNumberOfLines; i++) {
-
             qint32 _nNumberOfColumns = listListStrings.at(i).count();
 
             for (qint32 j = 0; j < _nNumberOfColumns; j++) {
@@ -1225,7 +1224,6 @@ QString XOptions::getTreeModelText(QAbstractItemModel *pModel)
     if (pModel) {
         _getTreeModelText(&sResult, pModel, QModelIndex(), 0);
     }
-
 
     return sResult;
 }
