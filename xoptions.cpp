@@ -1739,7 +1739,7 @@ XOptions::BUNDLE XOptions::getBundle()
 #ifdef Q_PROCESSOR_X86_64
 #ifdef Q_OS_LINUX
 #if QT_VERSION == QT_VERSION_CHECK(5, 2, 1)
-    result = BUNDLE_LINUX_APPIMAGE;
+    result = BUNDLE_LINUX_APPIMAGE_X64;
 #elif QT_VERSION >= QT_VERSION_CHECK(5, 4, 0)
     QString sProductType = QSysInfo::productType();
 
