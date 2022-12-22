@@ -279,6 +279,7 @@ public:
     static qint32 getCharHeight(QWidget *pWidget);
     static void showInFolder(QString sFileName);
     static void handleFontButton(QWidget *pParent, QLineEdit *pLineEdit);
+    static void setModelTextAlignment(QAbstractItemModel *pModel, qint32 nColumn, Qt::Alignment flag);
 #endif
 #if (QT_VERSION_MAJOR < 6) || defined(QT_CORE5COMPAT_LIB)
     static QList<QString> getCodePages(bool bAll);

@@ -1470,6 +1470,34 @@ void XOptions::handleFontButton(QWidget *pParent, QLineEdit *pLineEdit)
     }
 }
 #endif
+#ifdef QT_GUI_LIB
+void XOptions::setModelTextAlignment(QAbstractItemModel *pModel, qint32 nColumn, Qt::Alignment flag)
+{
+    QStandardItemModel *_pModel = dynamic_cast<QStandardItemModel *>(pModel);
+
+    if (_pModel) {
+        qint32 nNumberOfRows = _pModel->rowCount();
+
+        _pModel->setHeaderData(nColumn, Qt::Horizontal, (qint32)flag, Qt::TextAlignmentRole);
+
+        for (qint32 i = 0; i < nNumberOfRows; i++) {
+            QStandardItem *pItem = _pModel->item(i, nColumn);
+
+            if (pItem) {
+                pItem->setTextAlignment(flag);
+                //pModel->setData(pModel->index(i, nColumn), (qint32)flag, Qt::TextAlignmentRole);
+
+                QModelIndex index = _pModel->index(i, 0);
+                qint32 _nNumberOfRows = _pModel->rowCount(index);
+
+                for (qint32 j = 0; j < _nNumberOfRows; j++) {
+                    _pModel->setData(_pModel->index(j, nColumn, index), (qint32)flag, Qt::TextAlignmentRole);
+                }
+            }
+        }
+    }
+}
+#endif
 QString XOptions::getApplicationLangPath()
 {
     QString sResult;
