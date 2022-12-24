@@ -72,7 +72,7 @@ public:
     // Windows XP -> Windows XP
     // MacOS M1 -> MacOS M1 + MacOS X64
     // MacOS X64 -> MacOS X64
-    // TODO Linux ARM types
+    // TODO Linux ARM types 32/64
     enum BUNDLE {
         BUNDLE_UNKNOWN = 0,
         BUNDLE_ARCHLINUX,
