@@ -26,6 +26,7 @@
 #include <QSettings>
 #include <QSysInfo>
 #include <QTranslator>
+#include <QVector>
 #ifdef QT_GUI_LIB
 #include <QApplication>
 #include <QCheckBox>
