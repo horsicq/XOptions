@@ -31,7 +31,7 @@ XOptions::XOptions(QObject *pParent) : QObject(pParent)
 
     g_sName = QString("%1.ini").arg(qApp->applicationName());  // default name
 
-    qRegisterMetaType<QVector<int>>("QVector<int>"); // Windows debug messages
+//    qRegisterMetaType<QVector<int>>("QVector<int>"); // Windows debug messages
 }
 
 void XOptions::resetToDefault()
