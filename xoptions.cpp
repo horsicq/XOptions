@@ -1473,31 +1473,67 @@ void XOptions::handleFontButton(QWidget *pParent, QLineEdit *pLineEdit)
 }
 #endif
 #ifdef QT_GUI_LIB
-void XOptions::setModelTextAlignment(QAbstractItemModel *pModel, qint32 nColumn, Qt::Alignment flag)
+void XOptions::setModelTextAlignment(QStandardItemModel *pModel, qint32 nColumn, Qt::Alignment flag)
 {
-    QStandardItemModel *_pModel = dynamic_cast<QStandardItemModel *>(pModel);
+    qint32 nNumberOfRows = pModel->rowCount();
 
-    if (_pModel) {
-        qint32 nNumberOfRows = _pModel->rowCount();
+    pModel->setHeaderData(nColumn, Qt::Horizontal, (qint32)flag, Qt::TextAlignmentRole);
 
-        _pModel->setHeaderData(nColumn, Qt::Horizontal, (qint32)flag, Qt::TextAlignmentRole);
+    for (qint32 i = 0; i < nNumberOfRows; i++) {
+        QStandardItem *pItem = pModel->item(i, nColumn);
 
-        for (qint32 i = 0; i < nNumberOfRows; i++) {
-            QStandardItem *pItem = _pModel->item(i, nColumn);
+        if (pItem) {
+            pItem->setTextAlignment(flag);
+            //pModel->setData(pModel->index(i, nColumn), (qint32)flag, Qt::TextAlignmentRole);
 
-            if (pItem) {
-                pItem->setTextAlignment(flag);
-                //pModel->setData(pModel->index(i, nColumn), (qint32)flag, Qt::TextAlignmentRole);
+            QModelIndex index = pModel->index(i, 0);
+            qint32 _nNumberOfRows = pModel->rowCount(index);
 
-                QModelIndex index = _pModel->index(i, 0);
-                qint32 _nNumberOfRows = _pModel->rowCount(index);
-
-                for (qint32 j = 0; j < _nNumberOfRows; j++) {
-                    _pModel->setData(_pModel->index(j, nColumn, index), (qint32)flag, Qt::TextAlignmentRole);
-                }
+            for (qint32 j = 0; j < _nNumberOfRows; j++) {
+                pModel->setData(pModel->index(j, nColumn, index), (qint32)flag, Qt::TextAlignmentRole);
             }
         }
     }
+}
+#endif
+#ifdef QT_GUI_LIB
+void XOptions::setTableViewHeaderWidth(QTableView *pTableView, qint32 nColumn, qint32 nContentWidth)
+{
+    QFont font = pTableView->font();
+    font.setBold(true);
+
+    const QFontMetricsF fm(font);
+
+    QString sTitle = pTableView->model()->headerData(nColumn, Qt::Horizontal, Qt::DisplayRole).toString();
+
+    qreal rWidth = fm.boundingRect(sTitle + "  ").width();
+
+    nContentWidth = qMax(nContentWidth, (qint32)(rWidth));
+
+    pTableView->setColumnWidth(nColumn, nContentWidth);
+}
+#endif
+#ifdef QT_GUI_LIB
+void XOptions::setTreeViewHeaderWidth(QTreeView *pTreeView, qint32 nColumn, qint32 nContentWidth)
+{
+    QFont font = pTreeView->font();
+    font.setBold(true);
+
+    const QFontMetricsF fm(font);
+
+    QString sTitle = pTreeView->model()->headerData(nColumn, Qt::Horizontal, Qt::DisplayRole).toString();
+
+    qreal rWidth = fm.boundingRect(sTitle + "  ").width();
+
+    nContentWidth = qMax(nContentWidth, (qint32)(rWidth));
+
+    pTreeView->setColumnWidth(nColumn, nContentWidth);
+}
+#endif
+#ifdef QT_GUI_LIB
+void XOptions::setTableWidgetHeaderAlignment(QTableWidget *pTableWidget, qint32 nColumn, Qt::Alignment flag)
+{
+    pTableWidget->model()->setHeaderData(nColumn, Qt::Horizontal, (qint32)flag, Qt::TextAlignmentRole);
 }
 #endif
 QString XOptions::getApplicationLangPath()
