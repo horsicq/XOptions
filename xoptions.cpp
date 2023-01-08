@@ -31,7 +31,7 @@ XOptions::XOptions(QObject *pParent) : QObject(pParent)
 
     g_sName = QString("%1.ini").arg(qApp->applicationName());  // default name
 
-//    qRegisterMetaType<QVector<int>>("QVector<int>"); // Windows debug messages
+    //    qRegisterMetaType<QVector<int>>("QVector<int>"); // Windows debug messages
 }
 
 void XOptions::resetToDefault()
@@ -1484,7 +1484,7 @@ void XOptions::setModelTextAlignment(QStandardItemModel *pModel, qint32 nColumn,
 
         if (pItem) {
             pItem->setTextAlignment(flag);
-            //pModel->setData(pModel->index(i, nColumn), (qint32)flag, Qt::TextAlignmentRole);
+            // pModel->setData(pModel->index(i, nColumn), (qint32)flag, Qt::TextAlignmentRole);
 
             QModelIndex index = pModel->index(i, 0);
             qint32 _nNumberOfRows = pModel->rowCount(index);
