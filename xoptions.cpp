@@ -1124,8 +1124,10 @@ QWidget *XOptions::getMainWidget(QWidget *pWidget)
 {
     QWidget *pResult = pWidget;
 
-    while (pResult->parent()) {
-        pResult = qobject_cast<QWidget *>(pResult->parent());
+    if (pResult) {
+        while (pResult->parent()) {
+            pResult = qobject_cast<QWidget *>(pResult->parent());
+        }
     }
 
     return pResult;
