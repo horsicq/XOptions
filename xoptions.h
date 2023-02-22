@@ -76,17 +76,17 @@ public:
     // TODO Linux ARM types 32/64, old ARM?
     enum BUNDLE {
         BUNDLE_UNKNOWN = 0,
-        BUNDLE_ARCHLINUX,
-        BUNDLE_WINXP,
-        BUNDLE_WIN32,
-        BUNDLE_WIN64,
-        BUNDLE_WIN64_QT6,
+        BUNDLE_ARCHLINUX_X64,
+        BUNDLE_WINDOWSXP_X86,
+        BUNDLE_WINDOWS_X86,
+        BUNDLE_WINDOWS_X64,
+        BUNDLE_WINDOWS_QT6_X64,
         BUNDLE_LINUX_APPIMAGE_X64,
         BUNDLE_DEBIAN_X64,
         BUNDLE_UBUNTU_X64,
         BUNDLE_PARROTOS_X64,
         BUNDLE_MACOS_X64,
-        BUNDLE_MACOS_QT6_M
+        BUNDLE_MACOS_QT6_ARM64
         // TODO WIN ARM64
         // TODO FREEBSD
         // TODO KALI
