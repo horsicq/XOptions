@@ -131,7 +131,7 @@ XOptions::GROUPID XOptions::getGroupID(ID id)
             break;
         case ID_HEX_FONT:
         case ID_HEX_ADDRESSCOLON:
-//        case ID_HEX_BLINKINGCURSOR:
+            //        case ID_HEX_BLINKINGCURSOR:
             result = GROUPID_HEX;
             break;
         case ID_STACK_FONT:
@@ -564,9 +564,9 @@ QString XOptions::idToString(ID id)
         case ID_HEX_ADDRESSCOLON:
             sResult = QString("Hex/AddressColon");
             break;
-//        case ID_HEX_BLINKINGCURSOR:
-//            sResult = QString("Hex/BlinkingCursor");
-//            break;
+            //        case ID_HEX_BLINKINGCURSOR:
+            //            sResult = QString("Hex/BlinkingCursor");
+            //            break;
         case ID_STACK_FONT:
             sResult = QString("Stack/Font");
             break;
@@ -1099,11 +1099,11 @@ void XOptions::adjustApplicationView(QString sTranslationName, XOptions *pOption
     }
 }
 #endif
-//#ifdef QT_GUI_LIB
-// void XOptions::adjustApplicationView(QString sApplicationFileName,QString
-// sTranslationName)
+// #ifdef QT_GUI_LIB
+//  void XOptions::adjustApplicationView(QString sApplicationFileName,QString
+//  sTranslationName)
 //{
-//    XOptions xOptions;
+//     XOptions xOptions;
 
 //    xOptions.setName(sApplicationFileName);
 
@@ -1118,7 +1118,7 @@ void XOptions::adjustApplicationView(QString sTranslationName, XOptions *pOption
 
 //    xOptions.adjustApplicationView(sTranslationName,&xOptions);
 //}
-//#endif
+// #endif
 #ifdef QT_GUI_LIB
 QWidget *XOptions::getMainWidget(QWidget *pWidget)
 {
