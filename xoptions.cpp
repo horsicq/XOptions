@@ -777,9 +777,15 @@ QString XOptions::getVirusTotalApiKey()
 #ifdef QT_GUI_LIB
 void XOptions::adjustStayOnTop(QWidget *pWidget)
 {
+    _adjustStayOnTop(pWidget, isStayOnTop());
+}
+#endif
+#ifdef QT_GUI_LIB
+void XOptions::_adjustStayOnTop(QWidget *pWidget, bool bState)
+{
     Qt::WindowFlags wf = pWidget->windowFlags();
 
-    if (isStayOnTop()) {
+    if (bState) {
         wf |= Qt::WindowStaysOnTopHint;
     } else {
         wf &= ~(Qt::WindowStaysOnTopHint);

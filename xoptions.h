@@ -67,6 +67,7 @@ public:
     // Ubuntu -> Ubuntu + Debian + appImage
     // Debian -> Debian + appImage
     // Parrot -> Parrot + Debian + appImage
+    // MX Linux -> MX Linux + Debian + appImage
     // Linux X64 -> appImage
     // Windows 64 -> Windows 32 + Windows 64 + Windows XP
     // Windows 32 -> Windows 32 + Windows XP
@@ -254,9 +255,10 @@ public:
     void setLineEdit(QLineEdit *pLineEdit, ID id);
     void getLineEdit(QLineEdit *pLineEdit, ID id);
     void adjustStayOnTop(QWidget *pWidget);
+    static void _adjustStayOnTop(QWidget *pWidget, bool bState);
     void adjustFont(QWidget *pWidget);
     void adjustWindow(QWidget *pWidget);
-    void static setMonoFont(QWidget *pWidget, qint32 nSize = -1);
+    static void  setMonoFont(QWidget *pWidget, qint32 nSize = -1);
     static void adjustApplicationView(QString sTranslationName, XOptions *pOptions);
     //    static void adjustApplicationView(QString sApplicationFileName,QString
     //    sTranslationName);
