@@ -75,6 +75,7 @@ public:
     // MacOS M1 -> MacOS M1 + MacOS X64
     // MacOS X64 -> MacOS X64
     // TODO Linux ARM types 32/64, old ARM?
+    // TODO Check freebsd
     enum BUNDLE {
         BUNDLE_UNKNOWN = 0,
         BUNDLE_ARCHLINUX_X64,
