@@ -257,6 +257,7 @@ public:
     void getLineEdit(QLineEdit *pLineEdit, ID id);
     void adjustStayOnTop(QWidget *pWidget);
     static void _adjustStayOnTop(QWidget *pWidget, bool bState);
+    static void _adjustApplicationModal(QWidget *pWidget, bool bState);
     void adjustFont(QWidget *pWidget);
     void adjustWindow(QWidget *pWidget);
     static void  setMonoFont(QWidget *pWidget, qint32 nSize = -1);

@@ -796,6 +796,18 @@ void XOptions::_adjustStayOnTop(QWidget *pWidget, bool bState)
 }
 #endif
 #ifdef QT_GUI_LIB
+void XOptions::_adjustApplicationModal(QWidget *pWidget, bool bState)
+{
+    if (bState) {
+        pWidget->setWindowModality(Qt::ApplicationModal);
+    } else {
+        pWidget->setWindowModality(Qt::NonModal);
+    }
+
+    pWidget->show();
+}
+#endif
+#ifdef QT_GUI_LIB
 void XOptions::adjustFont(QWidget *pWidget)
 {
     QFont _font;
