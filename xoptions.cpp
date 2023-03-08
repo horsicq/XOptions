@@ -808,6 +808,16 @@ void XOptions::_adjustApplicationModal(QWidget *pWidget, bool bState)
 }
 #endif
 #ifdef QT_GUI_LIB
+void XOptions::_adjustFullScreen(QWidget *pWidget, bool bState)
+{
+    if (bState) {
+        pWidget->showFullScreen();
+    } else {
+        pWidget->showNormal();
+    }
+}
+#endif
+#ifdef QT_GUI_LIB
 void XOptions::adjustFont(QWidget *pWidget)
 {
     QFont _font;
