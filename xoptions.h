@@ -76,7 +76,7 @@ public:
     // MacOS X64 -> MacOS X64
     // TODO Linux ARM types 32/64, old ARM?
     // TODO Check freebsd
-    // TODO Check Wiondows ARM
+    // TODO Check Windows ARM
     enum BUNDLE {
         BUNDLE_UNKNOWN = 0,
         BUNDLE_ARCHLINUX_X64,
