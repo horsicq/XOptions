@@ -260,6 +260,7 @@ public:
     static void _adjustStayOnTop(QWidget *pWidget, bool bState);
     static void _adjustApplicationModal(QWidget *pWidget, bool bState);
     static void _adjustFullScreen(QWidget *pWidget, bool bState);
+    // mb TODO Mac/min
     void adjustFont(QWidget *pWidget);
     void adjustWindow(QWidget *pWidget);
     static void setMonoFont(QWidget *pWidget, qint32 nSize = -1);
