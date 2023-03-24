@@ -78,6 +78,7 @@ public:
     // TODO Check freebsd
     // TODO Check Raspberry PI
     // TODO Check Windows ARM
+    // TODO Linux FEDORA
     enum BUNDLE {
         BUNDLE_UNKNOWN = 0,
         BUNDLE_ARCHLINUX_X64,
