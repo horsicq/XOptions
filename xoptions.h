@@ -202,6 +202,7 @@ public:
     void setValueIDs(QList<ID> listValueIDs);
     void setDefaultValues(QMap<ID, QVariant> mapDefaultValues);
     void addID(ID id, QVariant varDefaultValue = QVariant());
+    void removeID(ID id);
     GROUPID getGroupID(ID id);
     bool isIDPresent(ID id);
     bool isGroupIDPresent(GROUPID groupID);
@@ -213,6 +214,7 @@ public:
     QVariant getValue(ID id);
     void setValue(ID id, QVariant vValue);
     void clearValue(ID id);
+    QVariant getDefaultValue(ID id);
     static QString idToString(ID id);
     QString getLastDirectory();
     void setLastDirectory(QString sPathName);

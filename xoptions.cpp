@@ -72,6 +72,13 @@ void XOptions::addID(ID id, QVariant varDefaultValue)
     }
 }
 
+void XOptions::removeID(ID id)
+{
+    g_listValueIDs.removeOne(id);
+    g_mapDefaultValues.remove(id);
+    g_mapValues.remove(id);
+}
+
 XOptions::GROUPID XOptions::getGroupID(ID id)
 {
     GROUPID result = GROUPID_UNKNOWN;
@@ -408,6 +415,11 @@ void XOptions::setValue(XOptions::ID id, QVariant vValue)
 void XOptions::clearValue(XOptions::ID id)
 {
     g_mapValues.insert(id, "");
+}
+
+QVariant XOptions::getDefaultValue(ID id)
+{
+    return g_mapDefaultValues.value(id);
 }
 
 QString XOptions::idToString(ID id)
