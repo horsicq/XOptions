@@ -1826,6 +1826,38 @@ void XOptions::_updateRecentFilesMenu()
     }
 }
 #endif
+#ifdef QT_GUI_LIB
+QString XOptions::getImageFilter()
+{
+    const QList<QByteArray> listImageFormats = QImageWriter::supportedImageFormats();
+
+    QStringList listFilter;
+
+    qint32 nNumberOfImageFormats = listImageFormats.count();
+
+    if (nNumberOfImageFormats) {
+        QString sImageFilter = tr("Images") + " (";
+
+        for (qint32 i = 0; i < nNumberOfImageFormats; i++) {
+            if (i > 0) {
+                sImageFilter += " ";
+            }
+
+            sImageFilter += "*.";
+            sImageFilter += listImageFormats.at(i);
+        }
+
+        sImageFilter += ")";
+
+        listFilter.append(sImageFilter);
+    }
+
+    listFilter.append(QString("PDF %1 (*.pdf)").arg(tr("Documents")));
+    //    listFilter.append(QString("Postscript %1 (*.ps)").arg(tr("Documents")));
+
+    return listFilter.join(";;");
+}
+#endif
 XOptions::BUNDLE XOptions::getBundle()
 {
     BUNDLE result = BUNDLE_UNKNOWN;

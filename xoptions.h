@@ -51,6 +51,7 @@
 #include <QTreeWidget>
 #include <QWidget>
 #include <QStandardItemModel>
+#include <QImageWriter>
 #else
 #include <QCoreApplication>
 #endif
@@ -296,6 +297,7 @@ public:
     static void setTableViewHeaderWidth(QTableView *pTableView, qint32 nColumn, qint32 nContentWidth);
     static void setTreeViewHeaderWidth(QTreeView *pTreeView, qint32 nColumn, qint32 nContentWidth);
     static void setTableWidgetHeaderAlignment(QTableWidget *pTableWidget, qint32 nColumn, Qt::Alignment flag);
+    static QString getImageFilter();
 #endif
 #if (QT_VERSION_MAJOR < 6) || defined(QT_CORE5COMPAT_LIB)
     static QList<QString> getCodePages(bool bAll);
