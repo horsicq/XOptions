@@ -615,6 +615,8 @@ QString XOptions::idToString(ID id)
         case ID_NU_LASTDIRECTORY:
             sResult = QString("LastDirectory");
             break;
+        default:
+            sResult = QString("Unknown");
     }
 
     return sResult;
