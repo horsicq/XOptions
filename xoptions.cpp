@@ -1733,7 +1733,7 @@ QMenu *XOptions::createCodePagesMenu(QWidget *pParent, bool bAll)
     g_pCodePagesMenu = new QMenu(tr("Code pages"), pParent);
 
     if (g_pCodePagesMenu) {
-        g_pCodePagesMenu->clear(); // TODO Check
+        g_pCodePagesMenu->clear();  // TODO Check
 
         QList<QString> listCodePages = getCodePages(bAll);
 
