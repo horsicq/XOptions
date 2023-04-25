@@ -1866,7 +1866,7 @@ XOptions::BUNDLE XOptions::getBundle()
 
 #ifdef Q_OS_WIN
 #if QT_VERSION <= QT_VERSION_CHECK(5, 6, 3)
-    result = BUNDLE_WINDOWSXP_X86;
+    result = BUNDLE_WINDOWS_XP_X86;
 #elif (QT_VERSION_MAJOR >= 6)
     // TODO ARM
     result = BUNDLE_WINDOWS_QT6_X64;
@@ -1887,7 +1887,7 @@ XOptions::BUNDLE XOptions::getBundle()
     QString sProductType = QSysInfo::productType();
 
     if (sProductType == "ubuntu") {
-        result = BUNDLE_UBUNTU_X64;
+        result = BUNDLE_LINUX_UBUNTU_X64;
     }
     // TODO
     // ARCH
