@@ -209,7 +209,7 @@ public:
     bool isGroupIDPresent(GROUPID groupID);
     bool isNative();
     static bool isAppImage();
-    void setName(QString sValue);
+    void setName(const QString &sValue);
     void load();
     void save();
     QVariant getValue(ID id);

@@ -210,24 +210,24 @@ bool XOptions::isAppImage()
     return bResult;
 }
 
-void XOptions::setName(QString sValue)
+void XOptions::setName(const QString &sValue)
 {
+    g_sName = sValue;
 #ifdef QT_DEBUG
 #ifdef Q_OS_WIN
 #ifndef Q_OS_WIN64
-    sValue += "win32.debug.ini";
+    g_sName += "win32.debug.ini";
 #else
-    sValue += "win64.debug.ini";
+    g_sName += "win64.debug.ini";
 #endif
 #endif
 #ifdef Q_OS_LINUX
-    sValue += "linux.debug.ini";
+    g_sName += "linux.debug.ini";
 #endif
 #ifdef Q_OS_MACOS
-    sValue += "macos.debug.ini";
+    g_sName += "macos.debug.ini";
 #endif
-#endif
-    g_sName = sValue;
+#endif  
 }
 
 void XOptions::load()
