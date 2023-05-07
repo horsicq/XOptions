@@ -218,7 +218,7 @@ public:
     QVariant getDefaultValue(ID id);
     static QString idToString(ID id);
     QString getLastDirectory();
-    void setLastDirectory(QString sPathName);
+    void setLastDirectory(const QString &sPathName);
     void setLastFileName(QString sFileName);
     QList<QString> getRecentFiles();
     QString getDatabasePath();

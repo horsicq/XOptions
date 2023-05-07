@@ -227,7 +227,7 @@ void XOptions::setName(const QString &sValue)
 #ifdef Q_OS_MACOS
     g_sName += "macos.debug.ini";
 #endif
-#endif  
+#endif
 }
 
 void XOptions::load()
@@ -636,18 +636,20 @@ QString XOptions::getLastDirectory()
     return sResult;
 }
 
-void XOptions::setLastDirectory(QString sPathName)
+void XOptions::setLastDirectory(const QString &sPathName)
 {
+    QString _sPathName = sPathName;
+
     if (getValue(ID_FILE_SAVELASTDIRECTORY).toBool()) {
-        QFileInfo fi(sPathName);
+        QFileInfo fi(_sPathName);
 
         if (fi.isFile()) {
-            sPathName = fi.absolutePath();
+            _sPathName = fi.absolutePath();
         } else if (fi.isDir()) {
-            sPathName = fi.absoluteFilePath();
+            _sPathName = fi.absoluteFilePath();
         }
 
-        setValue(ID_NU_LASTDIRECTORY, sPathName);
+        setValue(ID_NU_LASTDIRECTORY, _sPathName);
     }
 }
 
