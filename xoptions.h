@@ -219,7 +219,7 @@ public:
     static QString idToString(ID id);
     QString getLastDirectory();
     void setLastDirectory(const QString &sPathName);
-    void setLastFileName(QString sFileName);
+    void setLastFileName(const QString &sFileName);
     QList<QString> getRecentFiles();
     QString getDatabasePath();
     QString getInfoPath();

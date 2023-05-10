@@ -653,7 +653,7 @@ void XOptions::setLastDirectory(const QString &sPathName)
     }
 }
 
-void XOptions::setLastFileName(QString sFileName)
+void XOptions::setLastFileName(const QString &sFileName)
 {
     QFileInfo fi(sFileName);
 
