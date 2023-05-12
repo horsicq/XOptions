@@ -1756,12 +1756,26 @@ QMenu *XOptions::createCodePagesMenu(QWidget *pParent, bool bAll)
 #endif
 #endif
 #ifdef Q_OS_WIN
-bool XOptions::registerContext(QString sApplicationName, QString sType, QString sApplicationFilePath)
+QString XOptions::getClassesPrefix(USERROLE userRole)
 {
-    QSettings settings(QString("HKEY_CLASSES_ROOT\\%1\\shell\\%2\\command").arg(sType, sApplicationName), QSettings::NativeFormat);
+    QString sResult;
+
+    if (userRole == USERROLE_ADMIN) {
+        sResult = "HKEY_CLASSES_ROOT";
+    } else if (userRole == USERROLE_NORMAL) {
+        sResult = "HKEY_CURRENT_USER\\Software\\Classes";
+    }
+
+    return sResult;
+}
+#endif
+#ifdef Q_OS_WIN
+bool XOptions::registerContext(QString sApplicationName, QString sType, QString sApplicationFilePath, USERROLE userRole)
+{
+    QSettings settings(getClassesPrefix(userRole) + QString("\\%1\\shell\\%2\\command").arg(sType, sApplicationName), QSettings::NativeFormat);
     settings.setValue(".", "\"" + sApplicationFilePath.replace("/", "\\") + "\" \"%1\"");
 
-    QSettings settingsIcon(QString("HKEY_CLASSES_ROOT\\%1\\shell\\%2").arg(sType, sApplicationName), QSettings::NativeFormat);
+    QSettings settingsIcon(getClassesPrefix(userRole) + QString("\\%1\\shell\\%2").arg(sType, sApplicationName), QSettings::NativeFormat);
     settingsIcon.setValue("Icon", "\"" + sApplicationFilePath.replace("/", "\\") + "\"");
 
     // TODO Check if not send message
@@ -1769,9 +1783,9 @@ bool XOptions::registerContext(QString sApplicationName, QString sType, QString 
 }
 #endif
 #ifdef Q_OS_WIN
-bool XOptions::clearContext(QString sApplicationName, QString sType)
+bool XOptions::clearContext(QString sApplicationName, QString sType, USERROLE userRole)
 {
-    QSettings settings(QString("HKEY_CLASSES_ROOT\\%1\\shell\\%2").arg(sType, sApplicationName), QSettings::NativeFormat);
+    QSettings settings(getClassesPrefix(userRole) + QString("\\%1\\shell\\%2").arg(sType, sApplicationName), QSettings::NativeFormat);
     settings.clear();
 
     // TODO Check if not send message
@@ -1779,9 +1793,9 @@ bool XOptions::clearContext(QString sApplicationName, QString sType)
 }
 #endif
 #ifdef Q_OS_WIN
-bool XOptions::checkContext(QString sApplicationName, QString sType)
+bool XOptions::checkContext(QString sApplicationName, QString sType, USERROLE userRole)
 {
-    QSettings settings(QString("HKEY_CLASSES_ROOT\\%1\\shell").arg(sType), QSettings::NativeFormat);
+    QSettings settings(getClassesPrefix(userRole) + QString("\\%1\\shell").arg(sType), QSettings::NativeFormat);
 
     return (settings.value(QString("%1/command/Default").arg(sApplicationName)).toString() != "");
 }

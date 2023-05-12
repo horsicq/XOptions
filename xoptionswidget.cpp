@@ -32,6 +32,10 @@ XOptionsWidget::XOptionsWidget(QWidget *pParent) : QWidget(pParent), ui(new Ui::
 
     connect(this, SIGNAL(saveSignal()), this, SLOT(save()), Qt::DirectConnection);
     connect(this, SIGNAL(reloadSignal()), this, SLOT(reload()), Qt::DirectConnection);
+
+#ifdef Q_OS_WIN
+    g_userRole = XOptions::USERROLE_NORMAL;
+#endif
 }
 
 XOptionsWidget::~XOptionsWidget()
@@ -217,7 +221,11 @@ void XOptionsWidget::reload()
 
     if (g_pOptions->isIDPresent(XOptions::ID_FILE_CONTEXT)) {
 #ifdef Q_OS_WIN
-        ui->checkBoxFileContext->setChecked(g_pOptions->checkContext(g_sApplicationDisplayName, g_pOptions->getValue(XOptions::ID_FILE_CONTEXT).toString()));
+        if (g_pOptions->checkContext(g_sApplicationDisplayName, g_pOptions->getValue(XOptions::ID_FILE_CONTEXT).toString(), XOptions::USERROLE_ADMIN)) {
+            g_userRole = XOptions::USERROLE_ADMIN;
+        }
+
+        ui->checkBoxFileContext->setChecked(g_pOptions->checkContext(g_sApplicationDisplayName, g_pOptions->getValue(XOptions::ID_FILE_CONTEXT).toString(), g_userRole));
 #endif
     } else {
         ui->checkBoxFileContext->hide();
@@ -236,14 +244,14 @@ void XOptionsWidget::on_checkBoxFileContext_toggled(bool bChecked)
 {
     if (g_pOptions->isIDPresent(XOptions::ID_FILE_CONTEXT)) {
 #ifdef Q_OS_WIN
-        if (g_pOptions->checkContext(g_sApplicationDisplayName, g_pOptions->getValue(XOptions::ID_FILE_CONTEXT).toString()) != bChecked) {
+        if (g_pOptions->checkContext(g_sApplicationDisplayName, g_pOptions->getValue(XOptions::ID_FILE_CONTEXT).toString(), g_userRole) != bChecked) {
             bool bSuccess = false;
 
             if (bChecked) {
                 bSuccess =
-                    g_pOptions->registerContext(g_sApplicationDisplayName, g_pOptions->getValue(XOptions::ID_FILE_CONTEXT).toString(), qApp->applicationFilePath());
+                    g_pOptions->registerContext(g_sApplicationDisplayName, g_pOptions->getValue(XOptions::ID_FILE_CONTEXT).toString(), qApp->applicationFilePath(), g_userRole);
             } else {
-                bSuccess = g_pOptions->clearContext(g_sApplicationDisplayName, g_pOptions->getValue(XOptions::ID_FILE_CONTEXT).toString());
+                bSuccess = g_pOptions->clearContext(g_sApplicationDisplayName, g_pOptions->getValue(XOptions::ID_FILE_CONTEXT).toString(), g_userRole);
             }
 
             if (!bSuccess) {

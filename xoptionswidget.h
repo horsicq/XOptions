@@ -64,6 +64,9 @@ private:
     QWidget *g_pParent;
     XOptions *g_pOptions;
     QString g_sApplicationDisplayName;
+#ifdef Q_OS_WIN
+    XOptions::USERROLE g_userRole;
+#endif
 };
 
 #endif  // XOPTIONSWIDGET_H

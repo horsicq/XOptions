@@ -306,9 +306,14 @@ public:
 #endif
 #endif
 #ifdef Q_OS_WIN
-    bool registerContext(QString sApplicationName, QString sType, QString sApplicationFilePath);
-    bool clearContext(QString sApplicationName, QString sType);
-    bool checkContext(QString sApplicationName, QString sType);
+    enum USERROLE {
+        USERROLE_NORMAL = 0,
+        USERROLE_ADMIN
+    };
+    QString getClassesPrefix(USERROLE userRole);
+    bool registerContext(QString sApplicationName, QString sType, QString sApplicationFilePath, USERROLE userRole = USERROLE_ADMIN);
+    bool clearContext(QString sApplicationName, QString sType, USERROLE userRole = USERROLE_ADMIN);
+    bool checkContext(QString sApplicationName, QString sType, USERROLE userRole = USERROLE_ADMIN);
 #endif
     void setMaxRecentFilesCount(qint32 nValue);
     qint32 getMaxRecentFilesCount();
