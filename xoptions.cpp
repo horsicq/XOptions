@@ -1600,7 +1600,7 @@ QString XOptions::getApplicationQssPath()
     return sResult;
 }
 
-QList<QString> XOptions::getAllFilesFromDirectory(const QString &sDirectory, QString sExtension)
+QList<QString> XOptions::getAllFilesFromDirectory(const QString &sDirectory, const QString &sExtension)
 {
     QDir directory(sDirectory);
 

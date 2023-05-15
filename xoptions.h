@@ -248,7 +248,7 @@ public:
     QString getStructsPath();
     QString getApplicationLangPath();
     QString getApplicationQssPath();
-    static QList<QString> getAllFilesFromDirectory(const QString &sDirectory, QString sExtension);
+    static QList<QString> getAllFilesFromDirectory(const QString &sDirectory, const QString &sExtension);
     static bool checkNative(QString sIniFileName);
     QString getApplicationDataPath();
     static QString getTitle(QString sName, QString sVersion, bool bShowOS = true);
