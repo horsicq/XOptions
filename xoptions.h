@@ -249,7 +249,7 @@ public:
     QString getApplicationLangPath();
     QString getApplicationQssPath();
     static QList<QString> getAllFilesFromDirectory(const QString &sDirectory, const QString &sExtension);
-    static bool checkNative(QString sIniFileName);
+    static bool checkNative(const QString &sIniFileName);
     QString getApplicationDataPath();
     static QString getTitle(QString sName, QString sVersion, bool bShowOS = true);
 #ifdef QT_GUI_LIB

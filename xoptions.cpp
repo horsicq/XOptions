@@ -1607,7 +1607,7 @@ QList<QString> XOptions::getAllFilesFromDirectory(const QString &sDirectory, con
     return directory.entryList(QStringList() << sExtension, QDir::Files);
 }
 
-bool XOptions::checkNative(QString sIniFileName)
+bool XOptions::checkNative(const QString &sIniFileName)
 {
     bool bResult = false;
 #ifdef Q_OS_MAC
