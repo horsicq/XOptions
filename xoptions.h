@@ -143,6 +143,7 @@ public:
         ID_VIEW_SHOWLOGO,
         ID_VIEW_FONT,
         ID_VIEW_ADVANCED,
+        ID_VIEW_SELECTSTYLE,
         ID_FILE_SAVELASTDIRECTORY,
         ID_FILE_SAVERECENTFILES,
         ID_FILE_SAVEBACKUP,
@@ -155,6 +156,7 @@ public:
         ID_SCAN_ALLTYPES,
         ID_SCAN_ENGINE,
         ID_SCAN_DATABASEPATH,
+        ID_SCAN_YARADATABASEPATH,
         ID_SCAN_EDITORFONT,  // TODO more
         ID_SIGNATURES_PATH,
         ID_INFO_PATH,
@@ -251,7 +253,8 @@ public:
     static QList<QString> getAllFilesFromDirectory(const QString &sDirectory, const QString &sExtension);
     static bool checkNative(const QString &sIniFileName);
     QString getApplicationDataPath();
-    static QString getTitle(QString sName, QString sVersion, bool bShowOS = true);
+    static QString getTitle(const QString sName, QString sVersion, bool bShowOS = true);
+    bool isWritable();
 #ifdef QT_GUI_LIB
     void setCheckBox(QCheckBox *pCheckBox, ID id);
     void getCheckBox(QCheckBox *pCheckBox, ID id);

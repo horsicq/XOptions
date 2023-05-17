@@ -92,6 +92,7 @@ XOptions::GROUPID XOptions::getGroupID(ID id)
         case ID_VIEW_SHOWLOGO:
         case ID_VIEW_FONT:
         case ID_VIEW_ADVANCED:
+        case ID_VIEW_SELECTSTYLE:
             result = GROUPID_VIEW;
             break;
         case ID_FILE_SAVELASTDIRECTORY:
@@ -108,6 +109,7 @@ XOptions::GROUPID XOptions::getGroupID(ID id)
         case ID_SCAN_ALLTYPES:
         case ID_SCAN_ENGINE:
         case ID_SCAN_DATABASEPATH:
+        case ID_SCAN_YARADATABASEPATH:
         case ID_SCAN_EDITORFONT:
             result = GROUPID_SCAN;
             break;
@@ -330,7 +332,7 @@ void XOptions::load()
 
         if (!variant.toString().contains("$data")) {
             if ((id == ID_SCAN_DATABASEPATH) || (id == ID_DATAPATH) || (id == ID_SIGNATURES_PATH) || (id == ID_STRUCTS_PATH) || (id == ID_STRUCTSPATH) ||
-                (id == ID_INFO_PATH)) {
+                (id == ID_INFO_PATH) || (id == ID_SCAN_YARADATABASEPATH)) {
                 if (!QDir(variant.toString()).exists()) {
                     variant = varDefault;
                 }
@@ -471,6 +473,9 @@ QString XOptions::idToString(ID id)
         case ID_VIEW_ADVANCED:
             sResult = QString("View/Advanced");
             break;
+        case ID_VIEW_SELECTSTYLE:
+            sResult = QString("View/SelectStyle");
+            break;
         case ID_FILE_SAVELASTDIRECTORY:
             sResult = QString("File/SaveLastDirectory");
             break;
@@ -506,6 +511,9 @@ QString XOptions::idToString(ID id)
             break;
         case ID_SCAN_DATABASEPATH:
             sResult = QString("Scan/DatabasePath");
+            break;
+        case ID_SCAN_YARADATABASEPATH:
+            sResult = QString("Scan/YaraDatabasePath");
             break;
         case ID_SCAN_EDITORFONT:
             sResult = QString("Scan/EditorFont");
@@ -1670,7 +1678,7 @@ QString XOptions::getApplicationDataPath()
     return sResult;
 }
 
-QString XOptions::getTitle(QString sName, QString sVersion, bool bShowOS)
+QString XOptions::getTitle(const QString sName, QString sVersion, bool bShowOS)
 {
     QString sResult = QString("%1 v%2").arg(sName, sVersion);
 
@@ -1683,6 +1691,26 @@ QString XOptions::getTitle(QString sName, QString sVersion, bool bShowOS)
     }
 
     return sResult;
+}
+
+bool XOptions::isWritable()
+{
+    bool bResult = false;
+    QSettings *pSettings = nullptr;
+
+    bool bIsNative = isNative();
+
+    if (bIsNative) {
+        pSettings = new QSettings;
+    } else {
+        pSettings = new QSettings(getApplicationDataPath() + QDir::separator() + QString("%1").arg(g_sName), QSettings::IniFormat);
+    }
+
+    bResult = pSettings->isWritable();
+
+    delete pSettings;
+
+    return bResult;
 }
 
 #if (QT_VERSION_MAJOR < 6) || defined(QT_CORE5COMPAT_LIB)
