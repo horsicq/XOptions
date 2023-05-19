@@ -109,7 +109,7 @@ XOptions::GROUPID XOptions::getGroupID(ID id)
         case ID_SCAN_ALLTYPES:
         case ID_SCAN_ENGINE:
         case ID_SCAN_DATABASEPATH:
-        case ID_SCAN_YARADATABASEPATH:
+        case ID_SCAN_YARARULESPATH:
         case ID_SCAN_EDITORFONT:
             result = GROUPID_SCAN;
             break;
@@ -332,7 +332,7 @@ void XOptions::load()
 
         if (!variant.toString().contains("$data")) {
             if ((id == ID_SCAN_DATABASEPATH) || (id == ID_DATAPATH) || (id == ID_SIGNATURES_PATH) || (id == ID_STRUCTS_PATH) || (id == ID_STRUCTSPATH) ||
-                (id == ID_INFO_PATH) || (id == ID_SCAN_YARADATABASEPATH)) {
+                (id == ID_INFO_PATH) || (id == ID_SCAN_YARARULESPATH)) {
                 if (!QDir(variant.toString()).exists()) {
                     variant = varDefault;
                 }
@@ -512,8 +512,8 @@ QString XOptions::idToString(ID id)
         case ID_SCAN_DATABASEPATH:
             sResult = QString("Scan/DatabasePath");
             break;
-        case ID_SCAN_YARADATABASEPATH:
-            sResult = QString("Scan/YaraDatabasePath");
+        case ID_SCAN_YARARULESPATH:
+            sResult = QString("Scan/YaraRulesPath");
             break;
         case ID_SCAN_EDITORFONT:
             sResult = QString("Scan/EditorFont");
@@ -975,6 +975,7 @@ void XOptions::setComboBox(QComboBox *pComboBox, XOptions::ID id)
         pComboBox->addItem(tr("Automatic"), "auto");
         pComboBox->addItem(QString("Detect It Easy(DiE)"), "die");
         pComboBox->addItem(QString("Nauz File Detector(NFD)"), "nfd");
+        pComboBox->addItem(QString("YARA"), "yara");
     } else if (id == ID_DISASM_SYNTAX) {
         pComboBox->addItem("Default", "");
         pComboBox->addItem(QString("ATT"), "ATT");
@@ -1678,7 +1679,7 @@ QString XOptions::getApplicationDataPath()
     return sResult;
 }
 
-QString XOptions::getTitle(const QString sName, QString sVersion, bool bShowOS)
+QString XOptions::getTitle(const QString &sName, QString sVersion, bool bShowOS)
 {
     QString sResult = QString("%1 v%2").arg(sName, sVersion);
 
