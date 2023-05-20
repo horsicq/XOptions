@@ -1679,7 +1679,7 @@ QString XOptions::getApplicationDataPath()
     return sResult;
 }
 
-QString XOptions::getTitle(const QString &sName, QString sVersion, bool bShowOS)
+QString XOptions::getTitle(const QString &sName, const QString &sVersion, bool bShowOS)
 {
     QString sResult = QString("%1 v%2").arg(sName, sVersion);
 
