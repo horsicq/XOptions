@@ -272,7 +272,7 @@ public:
     void adjustFont(QWidget *pWidget);
     void adjustWindow(QWidget *pWidget);
     static void setMonoFont(QWidget *pWidget, qint32 nSize = -1);
-    static void adjustApplicationView(QString sTranslationName, XOptions *pOptions);
+    static void adjustApplicationView(const QString &sTranslationName, XOptions *pOptions);
     //    static void adjustApplicationView(QString sApplicationFileName,QString
     //    sTranslationName);
     static QWidget *getMainWidget(QWidget *pWidget);

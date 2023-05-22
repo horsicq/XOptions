@@ -1093,7 +1093,7 @@ QString XOptions::getStructsPath()
     return getValue(XOptions::ID_STRUCTS_PATH).toString();
 }
 #ifdef QT_GUI_LIB
-void XOptions::adjustApplicationView(QString sTranslationName, XOptions *pOptions)
+void XOptions::adjustApplicationView(const QString &sTranslationName, XOptions *pOptions)
 {
     if (pOptions->isIDPresent(XOptions::ID_VIEW_STYLE)) {
         QString sStyle = pOptions->getValue(XOptions::ID_VIEW_STYLE).toString();
