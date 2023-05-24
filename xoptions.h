@@ -279,10 +279,10 @@ public:
     static QString getTableModelText(QAbstractItemModel *pModel);
     static void _getTreeModelText(QString *psString, QAbstractItemModel *pModel, QModelIndex index, qint32 nLevel);
     static QString getTreeModelText(QAbstractItemModel *pModel);
-    static bool saveTableModel(QAbstractItemModel *pModel, QString sFileName);
+    static bool saveTableModel(QAbstractItemModel *pModel, const QString &sFileName);
     static bool saveTreeModel(QAbstractItemModel *pModel, QString sFileName);
     static bool saveTextEdit(QTextEdit *pTextEdit, QString sFileName);
-    static bool savePlainTextEdit(QPlainTextEdit *pPlainTextEdit, QString sFileName);
+    static bool savePlainTextEdit(QPlainTextEdit *pPlainTextEdit, const QString &sFileName);
     static bool saveTableView(QTableView *pTableView, QString sFileName);
     static bool saveTableWidget(QTableWidget *pTableWidget, QString sFileName);
     static bool saveListView(QListView *pListView, QString sFileName);

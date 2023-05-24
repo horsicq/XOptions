@@ -1286,7 +1286,7 @@ QString XOptions::getTreeModelText(QAbstractItemModel *pModel)
 }
 #endif
 #ifdef QT_GUI_LIB
-bool XOptions::saveTableModel(QAbstractItemModel *pModel, QString sFileName)
+bool XOptions::saveTableModel(QAbstractItemModel *pModel, const QString &sFileName)
 {
     bool bResult = false;
 
@@ -1352,7 +1352,7 @@ bool XOptions::saveTextEdit(QTextEdit *pTextEdit, QString sFileName)
 }
 #endif
 #ifdef QT_GUI_LIB
-bool XOptions::savePlainTextEdit(QPlainTextEdit *pPlainTextEdit, QString sFileName)
+bool XOptions::savePlainTextEdit(QPlainTextEdit *pPlainTextEdit, const QString &sFileName)
 {
     bool bResult = false;
 
