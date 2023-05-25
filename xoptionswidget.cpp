@@ -61,7 +61,7 @@ void XOptionsWidget::setOptions(XOptions *pOptions, const QString &sApplicationD
     reload();
 }
 
-void XOptionsWidget::addListRecord(QString sTitle, qint32 nIndex)
+void XOptionsWidget::addListRecord(const QString &sTitle, qint32 nIndex)
 {
     QListWidgetItem *pItem = new QListWidgetItem;
 
