@@ -1308,7 +1308,7 @@ bool XOptions::saveTableModel(QAbstractItemModel *pModel, const QString &sFileNa
 }
 #endif
 #ifdef QT_GUI_LIB
-bool XOptions::saveTreeModel(QAbstractItemModel *pModel, QString sFileName)
+bool XOptions::saveTreeModel(QAbstractItemModel *pModel, const QString &sFileName)
 {
     bool bResult = false;
 
