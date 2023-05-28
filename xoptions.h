@@ -315,7 +315,7 @@ public:
     };
     QString getClassesPrefix(USERROLE userRole);
     bool registerContext(const QString &sApplicationName, const QString &sType, QString sApplicationFilePath, USERROLE userRole = USERROLE_ADMIN);
-    bool clearContext(QString sApplicationName, QString sType, USERROLE userRole = USERROLE_ADMIN);
+    bool clearContext(const QString &sApplicationName, QString sType, USERROLE userRole = USERROLE_ADMIN);
     bool checkContext(QString sApplicationName, QString sType, USERROLE userRole = USERROLE_ADMIN);
 #endif
     void setMaxRecentFilesCount(qint32 nValue);
