@@ -1330,7 +1330,7 @@ bool XOptions::saveTreeModel(QAbstractItemModel *pModel, const QString &sFileNam
 }
 #endif
 #ifdef QT_GUI_LIB
-bool XOptions::saveTextEdit(QTextEdit *pTextEdit, QString sFileName)
+bool XOptions::saveTextEdit(QTextEdit *pTextEdit, const QString &sFileName)
 {
     bool bResult = false;
 

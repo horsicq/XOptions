@@ -281,7 +281,7 @@ public:
     static QString getTreeModelText(QAbstractItemModel *pModel);
     static bool saveTableModel(QAbstractItemModel *pModel, const QString &sFileName);
     static bool saveTreeModel(QAbstractItemModel *pModel, const QString &sFileName);
-    static bool saveTextEdit(QTextEdit *pTextEdit, QString sFileName);
+    static bool saveTextEdit(QTextEdit *pTextEdit, const QString &sFileName);
     static bool savePlainTextEdit(QPlainTextEdit *pPlainTextEdit, const QString &sFileName);
     static bool saveTableView(QTableView *pTableView, QString sFileName);
     static bool saveTableWidget(QTableWidget *pTableWidget, QString sFileName);
