@@ -1374,7 +1374,7 @@ bool XOptions::savePlainTextEdit(QPlainTextEdit *pPlainTextEdit, const QString &
 }
 #endif
 #ifdef QT_GUI_LIB
-bool XOptions::saveTableView(QTableView *pTableView, QString sFileName)
+bool XOptions::saveTableView(QTableView *pTableView, const QString &sFileName)
 {
     return saveTableModel(pTableView->model(), sFileName);
 }
