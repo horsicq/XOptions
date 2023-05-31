@@ -179,6 +179,7 @@ public:
         ID_DISASM_COLOR_ARM_RET,
         ID_DISASM_COLOR_ARM_PUSH,
         ID_DISASM_COLOR_ARM_POP,
+        ID_DISASM_COLOR_ARM_NOP,
         ID_HEX_FONT,
         ID_HEX_ADDRESSCOLON,
         //        ID_HEX_BLINKINGCURSOR,
@@ -316,7 +317,7 @@ public:
     QString getClassesPrefix(USERROLE userRole);
     bool registerContext(const QString &sApplicationName, const QString &sType, QString sApplicationFilePath, USERROLE userRole = USERROLE_ADMIN);
     bool clearContext(const QString &sApplicationName, QString sType, USERROLE userRole = USERROLE_ADMIN);
-    bool checkContext(QString sApplicationName, QString sType, USERROLE userRole = USERROLE_ADMIN);
+    bool checkContext(const QString &sApplicationName, QString sType, USERROLE userRole = USERROLE_ADMIN);
 #endif
     void setMaxRecentFilesCount(qint32 nValue);
     qint32 getMaxRecentFilesCount();

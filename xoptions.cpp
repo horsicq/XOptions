@@ -136,6 +136,7 @@ XOptions::GROUPID XOptions::getGroupID(ID id)
         case ID_DISASM_COLOR_ARM_RET:
         case ID_DISASM_COLOR_ARM_PUSH:
         case ID_DISASM_COLOR_ARM_POP:
+        case ID_DISASM_COLOR_ARM_NOP:
             result = GROUPID_DISASM;
             break;
         case ID_HEX_FONT:
@@ -1822,7 +1823,7 @@ bool XOptions::clearContext(const QString &sApplicationName, QString sType, USER
 }
 #endif
 #ifdef Q_OS_WIN
-bool XOptions::checkContext(QString sApplicationName, QString sType, USERROLE userRole)
+bool XOptions::checkContext(const QString &sApplicationName, QString sType, USERROLE userRole)
 {
     QSettings settings(getClassesPrefix(userRole) + QString("\\%1\\shell").arg(sType), QSettings::NativeFormat);
 
