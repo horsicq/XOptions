@@ -1823,7 +1823,7 @@ bool XOptions::clearContext(const QString &sApplicationName, const QString &sTyp
 }
 #endif
 #ifdef Q_OS_WIN
-bool XOptions::checkContext(const QString &sApplicationName, QString sType, USERROLE userRole)
+bool XOptions::checkContext(const QString &sApplicationName, const QString &sType, USERROLE userRole)
 {
     QSettings settings(getClassesPrefix(userRole) + QString("\\%1\\shell").arg(sType), QSettings::NativeFormat);
 
