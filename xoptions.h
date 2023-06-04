@@ -315,7 +315,7 @@ public:
         USERROLE_ADMIN
     };
     QString getClassesPrefix(USERROLE userRole);
-    bool registerContext(const QString &sApplicationName, const QString &sType, QString sApplicationFilePath, USERROLE userRole = USERROLE_ADMIN);
+    bool registerContext(const QString &sApplicationName, const QString &sType, const QString &sApplicationFilePath, USERROLE userRole = USERROLE_ADMIN);
     bool clearContext(const QString &sApplicationName, const QString &sType, USERROLE userRole = USERROLE_ADMIN);
     bool checkContext(const QString &sApplicationName, const QString &sType, USERROLE userRole = USERROLE_ADMIN);
 #endif

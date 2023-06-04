@@ -1800,7 +1800,7 @@ QString XOptions::getClassesPrefix(USERROLE userRole)
 }
 #endif
 #ifdef Q_OS_WIN
-bool XOptions::registerContext(const QString &sApplicationName, const QString &sType, QString sApplicationFilePath, USERROLE userRole)
+bool XOptions::registerContext(const QString &sApplicationName, const QString &sType, const QString &sApplicationFilePath, USERROLE userRole)
 {
     QSettings settings(getClassesPrefix(userRole) + QString("\\%1\\shell\\%2\\command").arg(sType, sApplicationName), QSettings::NativeFormat);
     settings.setValue(".", "\"" + sApplicationFilePath.replace("/", "\\") + "\" \"%1\"");
