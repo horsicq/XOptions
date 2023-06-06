@@ -1481,7 +1481,7 @@ qint32 XOptions::getCharHeight(QWidget *pWidget)
 }
 #endif
 #ifdef QT_GUI_LIB
-void XOptions::showInFolder(QString sFileName)
+void XOptions::showInFolder(const QString &sFileName)
 {
     QFileInfo fi = QFileInfo(sFileName);
 
@@ -1802,11 +1802,13 @@ QString XOptions::getClassesPrefix(USERROLE userRole)
 #ifdef Q_OS_WIN
 bool XOptions::registerContext(const QString &sApplicationName, const QString &sType, const QString &sApplicationFilePath, USERROLE userRole)
 {
+    QString _sApplicationFilePath = sApplicationFilePath;
+
     QSettings settings(getClassesPrefix(userRole) + QString("\\%1\\shell\\%2\\command").arg(sType, sApplicationName), QSettings::NativeFormat);
-    settings.setValue(".", "\"" + sApplicationFilePath.replace("/", "\\") + "\" \"%1\"");
+    settings.setValue(".", "\"" + _sApplicationFilePath.replace("/", "\\") + "\" \"%1\"");
 
     QSettings settingsIcon(getClassesPrefix(userRole) + QString("\\%1\\shell\\%2").arg(sType, sApplicationName), QSettings::NativeFormat);
-    settingsIcon.setValue("Icon", "\"" + sApplicationFilePath.replace("/", "\\") + "\"");
+    settingsIcon.setValue("Icon", "\"" + _sApplicationFilePath.replace("/", "\\") + "\"");
 
     // TODO Check if not send message
     return checkContext(sApplicationName, sType);
