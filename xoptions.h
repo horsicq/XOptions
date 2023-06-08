@@ -285,7 +285,7 @@ public:
     static bool saveTextEdit(QTextEdit *pTextEdit, const QString &sFileName);
     static bool savePlainTextEdit(QPlainTextEdit *pPlainTextEdit, const QString &sFileName);
     static bool saveTableView(QTableView *pTableView, const QString &sFileName);
-    static bool saveTableWidget(QTableWidget *pTableWidget, QString sFileName);
+    static bool saveTableWidget(QTableWidget *pTableWidget, const QString &sFileName);
     static bool saveListView(QListView *pListView, QString sFileName);
     static bool saveListWidget(QListWidget *pListWidget, QString sFileName);
     static bool saveTreeView(QTreeView *pTreeView, QString sFileName);
