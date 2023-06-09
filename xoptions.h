@@ -290,7 +290,7 @@ public:
     static bool saveListWidget(QListWidget *pListWidget, QString sFileName);
     static bool saveTreeView(QTreeView *pTreeView, QString sFileName);
     static bool saveTreeWidget(QTreeWidget *pTreeWidget, QString sFileName);
-    static bool saveTextBrowser(QTextBrowser *pTextBrowser, QString sFileName);
+    static bool saveTextBrowser(QTextBrowser *pTextBrowser, const QString &sFileName);
     static bool saveTextBrowserHtml(QTextBrowser *pTextBrowser, const QString &sFileName);
     QMenu *createRecentFilesMenu(QWidget *pParent);
     static qint32 getCharWidth(QWidget *pWidget);

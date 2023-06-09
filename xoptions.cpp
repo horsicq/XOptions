@@ -1411,7 +1411,7 @@ bool XOptions::saveTreeWidget(QTreeWidget *pTreeWidget, QString sFileName)
 }
 #endif
 #ifdef QT_GUI_LIB
-bool XOptions::saveTextBrowser(QTextBrowser *pTextBrowser, QString sFileName)
+bool XOptions::saveTextBrowser(QTextBrowser *pTextBrowser, const QString &sFileName)
 {
     bool bResult = false;
 
