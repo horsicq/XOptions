@@ -1405,7 +1405,7 @@ bool XOptions::saveTreeView(QTreeView *pTreeView, QString sFileName)
 }
 #endif
 #ifdef QT_GUI_LIB
-bool XOptions::saveTreeWidget(QTreeWidget *pTreeWidget, QString sFileName)
+bool XOptions::saveTreeWidget(QTreeWidget *pTreeWidget, const QString &sFileName)
 {
     return saveTreeModel(pTreeWidget->model(), sFileName);
 }
