@@ -1393,7 +1393,7 @@ bool XOptions::saveListView(QListView *pListView, const QString &sFileName)
 }
 #endif
 #ifdef QT_GUI_LIB
-bool XOptions::saveListWidget(QListWidget *pListWidget, QString sFileName)
+bool XOptions::saveListWidget(QListWidget *pListWidget, const QString &sFileName)
 {
     return saveTableModel(pListWidget->model(), sFileName);
 }
