@@ -1399,7 +1399,7 @@ bool XOptions::saveListWidget(QListWidget *pListWidget, const QString &sFileName
 }
 #endif
 #ifdef QT_GUI_LIB
-bool XOptions::saveTreeView(QTreeView *pTreeView, QString sFileName)
+bool XOptions::saveTreeView(QTreeView *pTreeView, const QString &sFileName)
 {
     return saveTreeModel(pTreeView->model(), sFileName);
 }

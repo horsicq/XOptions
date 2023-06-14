@@ -288,7 +288,7 @@ public:
     static bool saveTableWidget(QTableWidget *pTableWidget, const QString &sFileName);
     static bool saveListView(QListView *pListView, const QString &sFileName);
     static bool saveListWidget(QListWidget *pListWidget, const QString &sFileName);
-    static bool saveTreeView(QTreeView *pTreeView, QString sFileName);
+    static bool saveTreeView(QTreeView *pTreeView, const QString &sFileName);
     static bool saveTreeWidget(QTreeWidget *pTreeWidget, const QString &sFileName);
     static bool saveTextBrowser(QTextBrowser *pTextBrowser, const QString &sFileName);
     static bool saveTextBrowserHtml(QTextBrowser *pTextBrowser, const QString &sFileName);
