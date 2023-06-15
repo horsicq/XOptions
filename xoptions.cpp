@@ -1064,7 +1064,7 @@ bool XOptions::isHeuristicScan()
     return getValue(XOptions::ID_SCAN_HEURISTIC).toBool();
 }
 
-bool XOptions::isVerbose()
+bool XOptions::isVerboseScan()
 {
     return getValue(XOptions::ID_SCAN_VERBOSE).toBool();
 }

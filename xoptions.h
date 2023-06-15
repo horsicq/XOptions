@@ -243,7 +243,7 @@ public:
     bool isRecursiveScan();
     bool isDeepScan();
     bool isHeuristicScan();
-    bool isVerbose();
+    bool isVerboseScan();
     bool isAllTypesScan();
     bool isSingleApplication();
     bool isShowLogo();
