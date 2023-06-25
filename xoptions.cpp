@@ -92,15 +92,11 @@ XOptions::GROUPID XOptions::getGroupID(ID id)
         case ID_VIEW_SHOWLOGO:
         case ID_VIEW_FONT:
         case ID_VIEW_ADVANCED:
-        case ID_VIEW_SELECTSTYLE:
-            result = GROUPID_VIEW;
-            break;
+        case ID_VIEW_SELECTSTYLE: result = GROUPID_VIEW; break;
         case ID_FILE_SAVELASTDIRECTORY:
         case ID_FILE_SAVERECENTFILES:
         case ID_FILE_SAVEBACKUP:
-        case ID_FILE_CONTEXT:
-            result = GROUPID_FILE;
-            break;
+        case ID_FILE_CONTEXT: result = GROUPID_FILE; break;
         case ID_SCAN_SCANAFTEROPEN:
         case ID_SCAN_RECURSIVE:
         case ID_SCAN_DEEP:
@@ -110,15 +106,9 @@ XOptions::GROUPID XOptions::getGroupID(ID id)
         case ID_SCAN_ENGINE:
         case ID_SCAN_DATABASEPATH:
         case ID_SCAN_YARARULESPATH:
-        case ID_SCAN_EDITORFONT:
-            result = GROUPID_SCAN;
-            break;
-        case ID_SIGNATURES_PATH:
-            result = GROUPID_SIGNATURES;
-            break;
-        case ID_INFO_PATH:
-            result = GROUPID_INFO;
-            break;
+        case ID_SCAN_EDITORFONT: result = GROUPID_SCAN; break;
+        case ID_SIGNATURES_PATH: result = GROUPID_SIGNATURES; break;
+        case ID_INFO_PATH: result = GROUPID_INFO; break;
         case ID_DISASM_FONT:
         case ID_DISASM_SYNTAX:
         case ID_DISASM_ADDRESSCOLON:
@@ -136,25 +126,17 @@ XOptions::GROUPID XOptions::getGroupID(ID id)
         case ID_DISASM_COLOR_ARM_RET:
         case ID_DISASM_COLOR_ARM_PUSH:
         case ID_DISASM_COLOR_ARM_POP:
-        case ID_DISASM_COLOR_ARM_NOP:
-            result = GROUPID_DISASM;
-            break;
+        case ID_DISASM_COLOR_ARM_NOP: result = GROUPID_DISASM; break;
         case ID_HEX_FONT:
         case ID_HEX_ADDRESSCOLON:
             //        case ID_HEX_BLINKINGCURSOR:
             result = GROUPID_HEX;
             break;
         case ID_STACK_FONT:
-        case ID_STACK_ADDRESSCOLON:
-            result = GROUPID_STACK;
-            break;
-        case ID_REGISTERS_FONT:
-            result = GROUPID_REGISTERS;
-            break;
+        case ID_STACK_ADDRESSCOLON: result = GROUPID_STACK; break;
+        case ID_REGISTERS_FONT: result = GROUPID_REGISTERS; break;
         case ID_IODRIVER_FILENAME:
-        case ID_IODRIVER_SERVICENAME:
-            result = GROUPID_IODRIVER;
-            break;
+        case ID_IODRIVER_SERVICENAME: result = GROUPID_IODRIVER; break;
         default:
 #ifdef QT_DEBUG
             qDebug("Unknown GroupID");
@@ -297,35 +279,16 @@ void XOptions::load()
         } else {
             // TODO remove,use addID
             switch (id) {
-                case ID_ROOTPATH:
-                    varDefault = "";
-                    break;
-                case ID_DATAPATH:
-                    varDefault = "$data/data";
-                    break;
-                case ID_JSON:
-                    varDefault = "";
-                    break;
-                case ID_STRUCTSPATH:
-                    varDefault = "$data/structs";
-                    break;
-                case ID_STRUCTS_PATH:
-                    varDefault = "$data/structs";
-                    break;
-                case ID_AUTHUSER:
-                    varDefault = "";
-                    break;
-                case ID_AUTHTOKEN:
-                    varDefault = "";
-                    break;
-                case ID_NU_RECENTFILES:
-                    varDefault = QList<QVariant>();
-                    break;
-                case ID_NU_LASTDIRECTORY:
-                    varDefault = "";
-                    break;
-                default:
-                    varDefault = "";
+                case ID_ROOTPATH: varDefault = ""; break;
+                case ID_DATAPATH: varDefault = "$data/data"; break;
+                case ID_JSON: varDefault = ""; break;
+                case ID_STRUCTSPATH: varDefault = "$data/structs"; break;
+                case ID_STRUCTS_PATH: varDefault = "$data/structs"; break;
+                case ID_AUTHUSER: varDefault = ""; break;
+                case ID_AUTHTOKEN: varDefault = ""; break;
+                case ID_NU_RECENTFILES: varDefault = QList<QVariant>(); break;
+                case ID_NU_LASTDIRECTORY: varDefault = ""; break;
+                default: varDefault = "";
             }
         }
 
@@ -431,201 +394,76 @@ QString XOptions::idToString(ID id)
 
     switch (id) {
         // TODO remove
-        case ID_ROOTPATH:
-            sResult = QString("RootPath");
-            break;
-        case ID_DATAPATH:
-            sResult = QString("DataPath");
-            break;
-        case ID_JSON:
-            sResult = QString("Json");
-            break;
-        case ID_STRUCTSPATH:
-            sResult = QString("StructsPath");
-            break;
-        case ID_AUTHUSER:
-            sResult = QString("AuthUser");
-            break;
-        case ID_AUTHTOKEN:
-            sResult = QString("AuthToken");
-            break;
+        case ID_ROOTPATH: sResult = QString("RootPath"); break;
+        case ID_DATAPATH: sResult = QString("DataPath"); break;
+        case ID_JSON: sResult = QString("Json"); break;
+        case ID_STRUCTSPATH: sResult = QString("StructsPath"); break;
+        case ID_AUTHUSER: sResult = QString("AuthUser"); break;
+        case ID_AUTHTOKEN: sResult = QString("AuthToken"); break;
         // new
-        case ID_VIEW_STAYONTOP:
-            sResult = QString("View/StayOnTop");
-            break;
-        case ID_VIEW_STYLE:
-            sResult = QString("View/Style");
-            break;
-        case ID_VIEW_QSS:
-            sResult = QString("View/Qss");
-            break;
-        case ID_VIEW_LANG:
-            sResult = QString("View/Lang");
-            break;
-        case ID_VIEW_SINGLEAPPLICATION:
-            sResult = QString("View/SingleApplication");
-            break;
-        case ID_VIEW_SHOWLOGO:
-            sResult = QString("View/ShowLogo");
-            break;
-        case ID_VIEW_FONT:
-            sResult = QString("View/Font");
-            break;
-        case ID_VIEW_ADVANCED:
-            sResult = QString("View/Advanced");
-            break;
-        case ID_VIEW_SELECTSTYLE:
-            sResult = QString("View/SelectStyle");
-            break;
-        case ID_FILE_SAVELASTDIRECTORY:
-            sResult = QString("File/SaveLastDirectory");
-            break;
-        case ID_FILE_SAVERECENTFILES:
-            sResult = QString("File/SaveRecentFiles");
-            break;
-        case ID_FILE_SAVEBACKUP:
-            sResult = QString("File/SaveBackup");
-            break;
-        case ID_FILE_CONTEXT:
-            sResult = QString("File/Context");
-            break;
-        case ID_SCAN_SCANAFTEROPEN:
-            sResult = QString("Scan/ScanAfterOpen");
-            break;
-        case ID_SCAN_RECURSIVE:
-            sResult = QString("Scan/Recursive");
-            break;
-        case ID_SCAN_DEEP:
-            sResult = QString("Scan/Deep");
-            break;
-        case ID_SCAN_HEURISTIC:
-            sResult = QString("Scan/Heuristic");
-            break;
-        case ID_SCAN_VERBOSE:
-            sResult = QString("Scan/Verbose");
-            break;
-        case ID_SCAN_ALLTYPES:
-            sResult = QString("Scan/AllTypes");
-            break;
-        case ID_SCAN_ENGINE:
-            sResult = QString("Scan/Engine");
-            break;
-        case ID_SCAN_DATABASEPATH:
-            sResult = QString("Scan/DatabasePath");
-            break;
-        case ID_SCAN_YARARULESPATH:
-            sResult = QString("Scan/YaraRulesPath");
-            break;
-        case ID_SCAN_EDITORFONT:
-            sResult = QString("Scan/EditorFont");
-            break;
-        case ID_SIGNATURES_PATH:
-            sResult = QString("Signatures/Path");
-            break;
-        case ID_INFO_PATH:
-            sResult = QString("Info/Path");
-            break;
-        case ID_ONLINETOOLS_VIRUSTOTAL_APIKEY:
-            sResult = QString("OnlineTools/VirusTotalApi");
-            break;
-        case ID_DISASM_FONT:
-            sResult = QString("Disasm/Font");
-            break;
-        case ID_DISASM_ADDRESSCOLON:
-            sResult = QString("Disasm/AddressColon");
-            break;
-        case ID_DISASM_UPPERCASE:
-            sResult = QString("Disasm/Uppercase");
-            break;
-        case ID_DISASM_HIGHLIGHT:
-            sResult = QString("Disasm/Highlight");
-            break;
-        case ID_DISASM_SYNTAX:
-            sResult = QString("Disasm/Syntax");
-            break;
-        case ID_DISASM_COLOR_X86_CALL:
-            sResult = QString("Disasm/Color/x86/call");
-            break;
-        case ID_DISASM_COLOR_X86_RET:
-            sResult = QString("Disasm/Color/x86/ret");
-            break;
-        case ID_DISASM_COLOR_X86_JCC:
-            sResult = QString("Disasm/Color/x86/jcc");
-            break;
-        case ID_DISASM_COLOR_X86_PUSH:
-            sResult = QString("Disasm/Color/x86/push");
-            break;
-        case ID_DISASM_COLOR_X86_POP:
-            sResult = QString("Disasm/Color/x86/pop");
-            break;
-        case ID_DISASM_COLOR_X86_NOP:
-            sResult = QString("Disasm/Color/x86/nop");
-            break;
-        case ID_DISASM_COLOR_X86_JMP:
-            sResult = QString("Disasm/Color/x86/jmp");
-            break;
-        case ID_DISASM_COLOR_X86_INT3:
-            sResult = QString("Disasm/Color/x86/int3");
-            break;
-        case ID_DISASM_COLOR_ARM_BL:
-            sResult = QString("Disasm/Color/arm/bl");
-            break;
-        case ID_DISASM_COLOR_ARM_RET:
-            sResult = QString("Disasm/Color/arm/ret");
-            break;
-        case ID_DISASM_COLOR_ARM_PUSH:
-            sResult = QString("Disasm/Color/arm/push");
-            break;
-        case ID_DISASM_COLOR_ARM_POP:
-            sResult = QString("Disasm/Color/arm/pop");
-            break;
-        case ID_HEX_FONT:
-            sResult = QString("Hex/Font");
-            break;
+        case ID_VIEW_STAYONTOP: sResult = QString("View/StayOnTop"); break;
+        case ID_VIEW_STYLE: sResult = QString("View/Style"); break;
+        case ID_VIEW_QSS: sResult = QString("View/Qss"); break;
+        case ID_VIEW_LANG: sResult = QString("View/Lang"); break;
+        case ID_VIEW_SINGLEAPPLICATION: sResult = QString("View/SingleApplication"); break;
+        case ID_VIEW_SHOWLOGO: sResult = QString("View/ShowLogo"); break;
+        case ID_VIEW_FONT: sResult = QString("View/Font"); break;
+        case ID_VIEW_ADVANCED: sResult = QString("View/Advanced"); break;
+        case ID_VIEW_SELECTSTYLE: sResult = QString("View/SelectStyle"); break;
+        case ID_FILE_SAVELASTDIRECTORY: sResult = QString("File/SaveLastDirectory"); break;
+        case ID_FILE_SAVERECENTFILES: sResult = QString("File/SaveRecentFiles"); break;
+        case ID_FILE_SAVEBACKUP: sResult = QString("File/SaveBackup"); break;
+        case ID_FILE_CONTEXT: sResult = QString("File/Context"); break;
+        case ID_SCAN_SCANAFTEROPEN: sResult = QString("Scan/ScanAfterOpen"); break;
+        case ID_SCAN_RECURSIVE: sResult = QString("Scan/Recursive"); break;
+        case ID_SCAN_DEEP: sResult = QString("Scan/Deep"); break;
+        case ID_SCAN_HEURISTIC: sResult = QString("Scan/Heuristic"); break;
+        case ID_SCAN_VERBOSE: sResult = QString("Scan/Verbose"); break;
+        case ID_SCAN_ALLTYPES: sResult = QString("Scan/AllTypes"); break;
+        case ID_SCAN_ENGINE: sResult = QString("Scan/Engine"); break;
+        case ID_SCAN_DATABASEPATH: sResult = QString("Scan/DatabasePath"); break;
+        case ID_SCAN_YARARULESPATH: sResult = QString("Scan/YaraRulesPath"); break;
+        case ID_SCAN_EDITORFONT: sResult = QString("Scan/EditorFont"); break;
+        case ID_SIGNATURES_PATH: sResult = QString("Signatures/Path"); break;
+        case ID_INFO_PATH: sResult = QString("Info/Path"); break;
+        case ID_ONLINETOOLS_VIRUSTOTAL_APIKEY: sResult = QString("OnlineTools/VirusTotalApi"); break;
+        case ID_DISASM_FONT: sResult = QString("Disasm/Font"); break;
+        case ID_DISASM_ADDRESSCOLON: sResult = QString("Disasm/AddressColon"); break;
+        case ID_DISASM_UPPERCASE: sResult = QString("Disasm/Uppercase"); break;
+        case ID_DISASM_HIGHLIGHT: sResult = QString("Disasm/Highlight"); break;
+        case ID_DISASM_SYNTAX: sResult = QString("Disasm/Syntax"); break;
+        case ID_DISASM_COLOR_X86_CALL: sResult = QString("Disasm/Color/x86/call"); break;
+        case ID_DISASM_COLOR_X86_RET: sResult = QString("Disasm/Color/x86/ret"); break;
+        case ID_DISASM_COLOR_X86_JCC: sResult = QString("Disasm/Color/x86/jcc"); break;
+        case ID_DISASM_COLOR_X86_PUSH: sResult = QString("Disasm/Color/x86/push"); break;
+        case ID_DISASM_COLOR_X86_POP: sResult = QString("Disasm/Color/x86/pop"); break;
+        case ID_DISASM_COLOR_X86_NOP: sResult = QString("Disasm/Color/x86/nop"); break;
+        case ID_DISASM_COLOR_X86_JMP: sResult = QString("Disasm/Color/x86/jmp"); break;
+        case ID_DISASM_COLOR_X86_INT3: sResult = QString("Disasm/Color/x86/int3"); break;
+        case ID_DISASM_COLOR_ARM_BL: sResult = QString("Disasm/Color/arm/bl"); break;
+        case ID_DISASM_COLOR_ARM_RET: sResult = QString("Disasm/Color/arm/ret"); break;
+        case ID_DISASM_COLOR_ARM_PUSH: sResult = QString("Disasm/Color/arm/push"); break;
+        case ID_DISASM_COLOR_ARM_POP: sResult = QString("Disasm/Color/arm/pop"); break;
+        case ID_HEX_FONT: sResult = QString("Hex/Font"); break;
         case ID_HEX_ADDRESSCOLON:
             sResult = QString("Hex/AddressColon");
             break;
             //        case ID_HEX_BLINKINGCURSOR:
             //            sResult = QString("Hex/BlinkingCursor");
             //            break;
-        case ID_STACK_FONT:
-            sResult = QString("Stack/Font");
-            break;
-        case ID_STACK_ADDRESSCOLON:
-            sResult = QString("Stack/AddressColon");
-            break;
-        case ID_REGISTERS_FONT:
-            sResult = QString("Registers/Font");
-            break;
-        case ID_DEBUGGER_BREAKPOINT_SYSTEM:
-            sResult = QString("Debugger/Breakpoint/System");
-            break;
-        case ID_DEBUGGER_BREAKPOINT_ENTRYPOINT:
-            sResult = QString("Debugger/Breakpoint/EntryPoint");
-            break;
-        case ID_DEBUGGER_BREAKPOINT_DLLMAIN:
-            sResult = QString("Debugger/Breakpoint/DLLMain");
-            break;
-        case ID_DEBUGGER_BREAKPOINT_TLSFUNCTIONS:
-            sResult = QString("Debugger/Breakpoint/TLSFunctions");
-            break;
-        case ID_IODRIVER_FILENAME:
-            sResult = QString("IODriver/FileName");
-            break;
-        case ID_IODRIVER_SERVICENAME:
-            sResult = QString("IODriver/ServiceName");
-            break;
-        case ID_STRUCTS_PATH:
-            sResult = QString("Structs/Path");
-            break;
-        case ID_NU_RECENTFILES:
-            sResult = QString("RecentFiles");
-            break;
-        case ID_NU_LASTDIRECTORY:
-            sResult = QString("LastDirectory");
-            break;
-        default:
-            sResult = QString("Unknown");
+        case ID_STACK_FONT: sResult = QString("Stack/Font"); break;
+        case ID_STACK_ADDRESSCOLON: sResult = QString("Stack/AddressColon"); break;
+        case ID_REGISTERS_FONT: sResult = QString("Registers/Font"); break;
+        case ID_DEBUGGER_BREAKPOINT_SYSTEM: sResult = QString("Debugger/Breakpoint/System"); break;
+        case ID_DEBUGGER_BREAKPOINT_ENTRYPOINT: sResult = QString("Debugger/Breakpoint/EntryPoint"); break;
+        case ID_DEBUGGER_BREAKPOINT_DLLMAIN: sResult = QString("Debugger/Breakpoint/DLLMain"); break;
+        case ID_DEBUGGER_BREAKPOINT_TLSFUNCTIONS: sResult = QString("Debugger/Breakpoint/TLSFunctions"); break;
+        case ID_IODRIVER_FILENAME: sResult = QString("IODriver/FileName"); break;
+        case ID_IODRIVER_SERVICENAME: sResult = QString("IODriver/ServiceName"); break;
+        case ID_STRUCTS_PATH: sResult = QString("Structs/Path"); break;
+        case ID_NU_RECENTFILES: sResult = QString("RecentFiles"); break;
+        case ID_NU_LASTDIRECTORY: sResult = QString("LastDirectory"); break;
+        default: sResult = QString("Unknown");
     }
 
     return sResult;
