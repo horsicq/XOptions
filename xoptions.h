@@ -58,6 +58,9 @@
 #if (QT_VERSION_MAJOR < 6) || defined(QT_CORE5COMPAT_LIB)
 #include <QTextCodec>
 #endif
+#if defined(Q_OS_FREEBSD)
+// TODO
+#endif
 
 class XOptions : public QObject {
     Q_OBJECT
