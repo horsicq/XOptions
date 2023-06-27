@@ -1580,10 +1580,8 @@ QList<QString> XOptions::getCodePages(bool bAll)
         bool bAdd = true;
 
         if (!bAll) {
-            if (nMIB == 106)
-                bAdd = false;  // UTF8
-            else if ((nMIB >= 1013) && (nMIB <= 1019))
-                bAdd = false;  // Unicode
+            if (nMIB == 106) bAdd = false;                            // UTF8
+            else if ((nMIB >= 1013) && (nMIB <= 1019)) bAdd = false;  // Unicode
         }
 
         if (bAdd) {
