@@ -59,7 +59,7 @@
 #include <QTextCodec>
 #endif
 #if defined(Q_OS_FREEBSD)
-// TODO
+#include <QStandardPaths>
 #endif
 
 class XOptions : public QObject {

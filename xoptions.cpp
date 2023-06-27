@@ -1458,7 +1458,7 @@ QList<QString> XOptions::getAllFilesFromDirectory(const QString &sDirectory, con
 bool XOptions::checkNative(const QString &sIniFileName)
 {
     bool bResult = false;
-#ifdef Q_OS_MAC
+#ifdef defined(Q_OS_MAC) || defined(Q_OS_FREEBSD)
     bResult = true;
 #elif defined(Q_OS_LINUX)
     QString sApplicationDirPath = qApp->applicationDirPath();
@@ -1511,6 +1511,8 @@ QString XOptions::getApplicationDataPath()
     } else {
         sResult = sApplicationDirPath;
     }
+#elif defined(Q_OS_FREEBSD)
+    sResult = QStandardPaths::standardLocations(QStandardPaths::GenericDataLocation).at(1) + QDir::separator() + qApp->applicationName();
 #else
     sResult = sApplicationDirPath;
 #endif
