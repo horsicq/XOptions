@@ -1458,9 +1458,9 @@ QList<QString> XOptions::getAllFilesFromDirectory(const QString &sDirectory, con
 bool XOptions::checkNative(const QString &sIniFileName)
 {
     bool bResult = false;
-#ifdef defined(Q_OS_MAC) || defined(Q_OS_FREEBSD)
+#ifdef defined(Q_OS_MAC)
     bResult = true;
-#elif defined(Q_OS_LINUX)
+#elif defined(Q_OS_LINUX) || defined(Q_OS_FREEBSD)
     QString sApplicationDirPath = qApp->applicationDirPath();
 
     if ((sApplicationDirPath == "/bin") || (sApplicationDirPath == "/usr/bin") || (sApplicationDirPath == "/usr/local/bin") ||
@@ -1477,11 +1477,11 @@ bool XOptions::checkNative(const QString &sIniFileName)
     }
 #endif
 
-    if (!bResult) {
-        QSettings settings(qApp->applicationDirPath() + QDir::separator() + QString("%1").arg(sIniFileName), QSettings::IniFormat);
+//    if (!bResult) {
+//        QSettings settings(qApp->applicationDirPath() + QDir::separator() + QString("%1").arg(sIniFileName), QSettings::IniFormat);
 
-        bResult = !(settings.isWritable());
-    }
+//        bResult = !(settings.isWritable());
+//    }
 
     return bResult;
 }
