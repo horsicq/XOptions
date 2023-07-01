@@ -1479,11 +1479,11 @@ bool XOptions::checkNative(const QString &sIniFileName)
     }
 #endif
 
-//    if (!bResult) {
-//        QSettings settings(qApp->applicationDirPath() + QDir::separator() + QString("%1").arg(sIniFileName), QSettings::IniFormat);
+    //    if (!bResult) {
+    //        QSettings settings(qApp->applicationDirPath() + QDir::separator() + QString("%1").arg(sIniFileName), QSettings::IniFormat);
 
-//        bResult = !(settings.isWritable());
-//    }
+    //        bResult = !(settings.isWritable());
+    //    }
 
     return bResult;
 }
