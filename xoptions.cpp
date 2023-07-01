@@ -1457,8 +1457,10 @@ QList<QString> XOptions::getAllFilesFromDirectory(const QString &sDirectory, con
 
 bool XOptions::checkNative(const QString &sIniFileName)
 {
+    Q_UNUSED(sIniFileName)
+
     bool bResult = false;
-#ifdef defined(Q_OS_MAC)
+#if defined(Q_OS_MAC)
     bResult = true;
 #elif defined(Q_OS_LINUX) || defined(Q_OS_FREEBSD)
     QString sApplicationDirPath = qApp->applicationDirPath();

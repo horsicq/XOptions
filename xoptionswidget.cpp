@@ -260,6 +260,8 @@ void XOptionsWidget::on_checkBoxFileContext_toggled(bool bChecked)
                 ui->checkBoxFileContext->setChecked(!bChecked);
             }
         }
+#else
+        Q_UNUSED(bChecked)
 #endif
     }
 }
