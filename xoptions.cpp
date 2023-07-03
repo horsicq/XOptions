@@ -1353,6 +1353,41 @@ void XOptions::showInFolder(const QString &sFileName)
 }
 #endif
 #ifdef QT_GUI_LIB
+void XOptions::showFolder(const QString &sFileName)
+{
+    // TODO
+    QFileInfo fi = QFileInfo(sFileName);
+
+#if defined(Q_OS_WIN)
+    QStringList slParams;
+    if (!fi.isDir()) {
+        slParams += QLatin1String("/select,");
+    }
+
+    slParams += QDir::toNativeSeparators(fi.canonicalFilePath());
+
+    QProcess::startDetached("explorer.exe", slParams);
+#elif defined(Q_OS_MAC)
+    QStringList slParams;
+    slParams << "-e";
+    slParams << "tell application \"Finder\"";
+    slParams << "-e";
+    slParams << "activate";
+    slParams << "-e";
+    slParams << "select POSIX file \"" + fi.path() + "\"";
+    slParams << "-e";
+    slParams << "end tell";
+    slParams << "-e";
+    slParams << "return";
+    QProcess::execute("/usr/bin/osascript", slParams);
+#else
+    QString sDirectory = fi.absolutePath();
+
+    QDesktopServices::openUrl(QUrl::fromLocalFile(sDirectory));
+#endif
+}
+#endif
+#ifdef QT_GUI_LIB
 void XOptions::handleFontButton(QWidget *pParent, QLineEdit *pLineEdit)
 {
     QFont _font;
