@@ -299,7 +299,7 @@ public:
     static qint32 getCharWidth(QWidget *pWidget);
     static qint32 getCharHeight(QWidget *pWidget);
     static void showInFolder(const QString &sFileName);
-    static void showFolder(const QString &sFileName);
+    static void showFolder(const QString &sDirectory);
     static void handleFontButton(QWidget *pParent, QLineEdit *pLineEdit);
     static void setModelTextAlignment(QStandardItemModel *pModel, qint32 nColumn, Qt::Alignment flag);
     static void setTableViewHeaderWidth(QTableView *pTableView, qint32 nColumn, qint32 nContentWidth);

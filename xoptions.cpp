@@ -1321,6 +1321,7 @@ qint32 XOptions::getCharHeight(QWidget *pWidget)
 #ifdef QT_GUI_LIB
 void XOptions::showInFolder(const QString &sFileName)
 {
+    // TODO https://github.com/qt-creator/qt-creator/blob/master/src/plugins/coreplugin/fileutils.cpp#L67
     QFileInfo fi = QFileInfo(sFileName);
 
 #if defined(Q_OS_WIN)
@@ -1346,25 +1347,17 @@ void XOptions::showInFolder(const QString &sFileName)
     slParams << "return";
     QProcess::execute("/usr/bin/osascript", slParams);
 #else
-    QString sDirectory = fi.absolutePath();
-
-    QDesktopServices::openUrl(QUrl::fromLocalFile(sDirectory));
+    QDesktopServices::openUrl(QUrl::fromLocalFile(fi.path()));
 #endif
 }
 #endif
 #ifdef QT_GUI_LIB
-void XOptions::showFolder(const QString &sFileName)
+void XOptions::showFolder(const QString &sDirectory)
 {
-    // TODO
-    QFileInfo fi = QFileInfo(sFileName);
-
 #if defined(Q_OS_WIN)
     QStringList slParams;
-    if (!fi.isDir()) {
-        slParams += QLatin1String("/select,");
-    }
 
-    slParams += QDir::toNativeSeparators(fi.canonicalFilePath());
+    slParams += QDir::toNativeSeparators(sDirectory);
 
     QProcess::startDetached("explorer.exe", slParams);
 #elif defined(Q_OS_MAC)
@@ -1374,15 +1367,13 @@ void XOptions::showFolder(const QString &sFileName)
     slParams << "-e";
     slParams << "activate";
     slParams << "-e";
-    slParams << "select POSIX file \"" + fi.path() + "\"";
+    slParams << "select POSIX file \"" + sDirectory + "\"";
     slParams << "-e";
     slParams << "end tell";
     slParams << "-e";
     slParams << "return";
     QProcess::execute("/usr/bin/osascript", slParams);
 #else
-    QString sDirectory = fi.absolutePath();
-
     QDesktopServices::openUrl(QUrl::fromLocalFile(sDirectory));
 #endif
 }
