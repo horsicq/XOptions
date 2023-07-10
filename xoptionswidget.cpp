@@ -221,7 +221,8 @@ void XOptionsWidget::reload()
 
     if (g_pOptions->isIDPresent(XOptions::ID_FILE_CONTEXT)) {
 #ifdef Q_OS_WIN
-        if (g_pOptions->checkContext(g_sApplicationDisplayName, g_pOptions->getValue(XOptions::ID_FILE_CONTEXT).toString(), XOptions::USERROLE_ADMIN)) {
+        if (g_pOptions->checkContext(g_sApplicationDisplayName, g_pOptions->getValue(XOptions::ID_FILE_CONTEXT).toString(), XOptions::USERROLE_ADMIN) &&
+            (!g_pOptions->checkContext(g_sApplicationDisplayName, g_pOptions->getValue(XOptions::ID_FILE_CONTEXT).toString(), XOptions::USERROLE_NORMAL))) {
             g_userRole = XOptions::USERROLE_ADMIN;
         }
 
