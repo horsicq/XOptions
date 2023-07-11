@@ -1813,6 +1813,9 @@ XOptions::BUNDLE XOptions::getBundle()
     // TODO QSysInfo::currentCpyArchitecture();
     // M
 #endif
+#ifdef Q_OS_FRREBSD
+    result = BUNDLE_FREEBSD_X64;
+#endif
 #endif
     return result;
 }
