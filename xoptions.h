@@ -79,7 +79,7 @@ public:
     // MacOS M1 -> MacOS M1 + MacOS X64
     // MacOS X64 -> MacOS X64
     // TODO Linux ARM types 32/64, old ARM? Check
-    // TODO Check freebsd, other BSD
+    // TODO Check other BSD
     // TODO Check Raspberry PI
     // TODO Check Windows ARM
     // TODO Linux FEDORA
