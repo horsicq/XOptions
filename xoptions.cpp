@@ -243,17 +243,11 @@ void XOptions::load()
     for (qint32 i = 0; i < nNumberOfIDs; i++) {
         if (g_listValueIDs.at(i) == ID_FILE_SAVELASTDIRECTORY) {
             bSaveLastDirectory = true;
-        }
-
-        if (g_listValueIDs.at(i) == ID_NU_LASTDIRECTORY) {
+        } else if (g_listValueIDs.at(i) == ID_NU_LASTDIRECTORY) {
             bLastDirectory = true;
-        }
-
-        if (g_listValueIDs.at(i) == ID_FILE_SAVERECENTFILES) {
+        } else if (g_listValueIDs.at(i) == ID_FILE_SAVERECENTFILES) {
             bSaveRecentFiles = true;
-        }
-
-        if (g_listValueIDs.at(i) == ID_NU_RECENTFILES) {
+        } else if (g_listValueIDs.at(i) == ID_NU_RECENTFILES) {
             bRecentFiles = true;
         }
     }
