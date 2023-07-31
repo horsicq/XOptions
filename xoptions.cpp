@@ -1137,7 +1137,6 @@ bool XOptions::saveTableModel(QAbstractItemModel *pModel, const QString &sFileNa
 
         file.resize(0);
         file.write(sText.toUtf8().data());
-
         file.close();
 
         bResult = true;
@@ -1159,7 +1158,6 @@ bool XOptions::saveTreeModel(QAbstractItemModel *pModel, const QString &sFileNam
 
         file.resize(0);
         file.write(sText.toUtf8().data());
-
         file.close();
 
         bResult = true;
@@ -1181,7 +1179,6 @@ bool XOptions::saveTextEdit(QTextEdit *pTextEdit, const QString &sFileName)
 
         file.resize(0);
         file.write(sResult.toUtf8().data());
-
         file.close();
 
         bResult = true;
@@ -1203,7 +1200,6 @@ bool XOptions::savePlainTextEdit(QPlainTextEdit *pPlainTextEdit, const QString &
 
         file.resize(0);
         file.write(sResult.toUtf8().data());
-
         file.close();
 
         bResult = true;
@@ -1261,7 +1257,6 @@ bool XOptions::saveTextBrowser(QTextBrowser *pTextBrowser, const QString &sFileN
 
         file.resize(0);
         file.write(sResult.toUtf8().data());
-
         file.close();
 
         bResult = true;
@@ -1283,7 +1278,6 @@ bool XOptions::saveTextBrowserHtml(QTextBrowser *pTextBrowser, const QString &sF
 
         file.resize(0);
         file.write(sResult.toUtf8().data());
-
         file.close();
 
         bResult = true;
