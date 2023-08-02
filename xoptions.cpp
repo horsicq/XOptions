@@ -548,7 +548,11 @@ void XOptions::openRecentFile()
     if (pAction) {
         QString sFileName = pAction->data().toString();
 
-        emit openFile(sFileName);
+        if (QFile::exists(sFileName)) {
+            emit openFile(sFileName);
+        } else {
+            emit errorMessage(QString("%1: %2").arg(tr("Cannot find file"), sFileName));
+        }
     }
 #endif
 }

@@ -338,7 +338,7 @@ private:
     void _updateRecentFilesMenu();
 
 signals:
-    void errorMessage(QString sText);
+    void errorMessage(const QString &sText);
     void infoMessage(QString sText);
     void openFile(QString sFileName);
     void setCodePage(QString sCodePage);
