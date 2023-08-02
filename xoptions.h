@@ -95,7 +95,7 @@ public:
         BUNDLE_WINDOWS_X86,
         BUNDLE_WINDOWS_X64,
         BUNDLE_MACOS_X64,
-        BUNDLE_MACOS_QT6_ARM64,
+        BUNDLE_MACOS_QT6_ARM64, // TODO Check
         BUNDLE_FREEBSD_X64
         // TODO WIN ARM64
         // TODO KALI
@@ -272,7 +272,7 @@ public:
     static void _adjustStayOnTop(QWidget *pWidget, bool bState);
     static void _adjustApplicationModal(QWidget *pWidget, bool bState);
     static void _adjustFullScreen(QWidget *pWidget, bool bState);
-    // mb TODO Mac/min
+    // mb TODO max/min
     void adjustFont(QWidget *pWidget);
     void adjustWindow(QWidget *pWidget);
     static void setMonoFont(QWidget *pWidget, qint32 nSize = -1);
