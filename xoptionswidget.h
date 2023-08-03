@@ -39,7 +39,7 @@ public:
 
     void setOptions(XOptions *pOptions, const QString &sApplicationDisplayName);
     void addListRecord(const QString &sTitle, qint32 nIndex);
-    void addPage(QWidget *pWidget, QString sTitle);
+    void addPage(QWidget *pWidget, const QString &sTitle);
     void setCurrentPage(qint32 nPage);  // TODO Check -> remove
     void setCurrentPage(XOptions::GROUPID groupId);
 

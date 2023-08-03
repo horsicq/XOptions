@@ -339,9 +339,9 @@ private:
 
 signals:
     void errorMessage(const QString &sText);
-    void infoMessage(QString sText);
-    void openFile(QString sFileName);
-    void setCodePage(QString sCodePage);
+    void infoMessage(const QString &sText);
+    void openFile(const QString &sFileName);
+    void setCodePage(const QString &sCodePage);
 
 private:
     static const int N_MAX_RECENT_FILES_COUNT = 20;  // TODO Set get

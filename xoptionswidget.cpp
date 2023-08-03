@@ -71,7 +71,7 @@ void XOptionsWidget::addListRecord(const QString &sTitle, qint32 nIndex)
     ui->listWidgetOptions->addItem(pItem);
 }
 
-void XOptionsWidget::addPage(QWidget *pWidget, QString sTitle)
+void XOptionsWidget::addPage(QWidget *pWidget, const QString &sTitle)
 {
     qint32 nIndex = ui->stackedWidgetOptions->addWidget(pWidget);
 
