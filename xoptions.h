@@ -95,7 +95,7 @@ public:
         BUNDLE_WINDOWS_X86,
         BUNDLE_WINDOWS_X64,
         BUNDLE_MACOS_X64,
-        BUNDLE_MACOS_QT6_ARM64, // TODO Check
+        BUNDLE_MACOS_QT6_ARM64,  // TODO Check
         BUNDLE_FREEBSD_X64
         // TODO WIN ARM64
         // TODO KALI
