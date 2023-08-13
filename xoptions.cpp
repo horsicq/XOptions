@@ -1359,7 +1359,7 @@ void XOptions::showFolder(const QString &sDirectory)
     slParams << "-e";
     slParams << "activate";
     slParams << "-e";
-    slParams << "select POSIX file \"" + sDirectory + "\""; // TODO Check
+    slParams << "select POSIX file \"" + sDirectory + "\"";  // TODO Check
     slParams << "-e";
     slParams << "end tell";
     slParams << "-e";
