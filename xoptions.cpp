@@ -1546,6 +1546,7 @@ QString XOptions::getTitle(const QString &sName, const QString &sVersion, bool b
 
     if (bShowOS) {
 #if QT_VERSION >= QT_VERSION_CHECK(5, 4, 0)
+        // TODO Check Windows 11
         sResult += QString(" [%3] (%4)").arg(QSysInfo::prettyProductName(), QSysInfo::buildCpuArchitecture());
 #else
         // TODO OS Name // For Windows Arch GetVersionExA
@@ -1805,7 +1806,9 @@ XOptions::BUNDLE XOptions::getBundle()
     // TODO QSysInfo::currentCpyArchitecture();
     // M
 #endif
+#endif
 #ifdef Q_OS_FRREBSD
+#ifdef Q_PROCESSOR_X86_64
     result = BUNDLE_FREEBSD_X64;
 #endif
 #endif
