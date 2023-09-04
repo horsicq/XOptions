@@ -53,7 +53,7 @@ void XOptions::resetToDefault()
     }
 }
 
-void XOptions::setValueIDs(QList<ID> listVariantIDs)
+void XOptions::setValueIDs(const QList<ID> &listVariantIDs)
 {
     g_listValueIDs = listVariantIDs;
 }

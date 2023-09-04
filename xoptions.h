@@ -206,7 +206,7 @@ public:
     explicit XOptions(QObject *pParent = nullptr);
 
     void resetToDefault();
-    void setValueIDs(QList<ID> listValueIDs);
+    void setValueIDs(const QList<ID> &listValueIDs);
     void setDefaultValues(QMap<ID, QVariant> mapDefaultValues);
     void addID(ID id, QVariant varDefaultValue = QVariant());
     void removeID(ID id);
