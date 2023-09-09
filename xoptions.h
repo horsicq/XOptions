@@ -189,10 +189,10 @@ public:
         ID_STACK_FONT,
         ID_STACK_ADDRESSCOLON,
         ID_REGISTERS_FONT,
-        ID_DEBUGGER_BREAKPOINT_SYSTEM, // TODO remove
-        ID_DEBUGGER_BREAKPOINT_ENTRYPOINT, // TODO remove
-        ID_DEBUGGER_BREAKPOINT_DLLMAIN, // TODO remove
-        ID_DEBUGGER_BREAKPOINT_TLSFUNCTIONS, // TODO remove
+        ID_DEBUGGER_BREAKPOINT_SYSTEM,        // TODO remove
+        ID_DEBUGGER_BREAKPOINT_ENTRYPOINT,    // TODO remove
+        ID_DEBUGGER_BREAKPOINT_DLLMAIN,       // TODO remove
+        ID_DEBUGGER_BREAKPOINT_TLSFUNCTIONS,  // TODO remove
         // TODO debugger animate timeout
         // TODO more
         ID_IODRIVER_FILENAME,
