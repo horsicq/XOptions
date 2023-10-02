@@ -83,6 +83,7 @@ public:
     // TODO Check Raspberry PI
     // TODO Check Windows ARM
     // TODO Linux FEDORA
+    // TODO Linux Mint
     enum BUNDLE {
         BUNDLE_UNKNOWN = 0,
         BUNDLE_LINUX_ARCH_X64,
