@@ -1769,6 +1769,13 @@ XOptions::BUNDLE XOptions::getBundle()
 {
     BUNDLE result = BUNDLE_UNKNOWN;
 
+#ifdef QT_DEBUG
+#if QT_VERSION >= QT_VERSION_CHECK(5, 4, 0)
+    QString _sProductType = QSysInfo::productType();
+    qDebug("OS: %s", _sProductType.toUtf8().data());
+#endif
+#endif
+
 #ifdef Q_OS_WIN
 #if QT_VERSION <= QT_VERSION_CHECK(5, 6, 3)
     result = BUNDLE_WINDOWS_XP_X86;
