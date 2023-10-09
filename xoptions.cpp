@@ -103,6 +103,7 @@ XOptions::GROUPID XOptions::getGroupID(ID id)
         case ID_SCAN_ALLTYPES:
         case ID_SCAN_ENGINE:
         case ID_SCAN_DATABASEPATH:
+        case ID_SCAN_CUSTOMDATABASEPATH:
         case ID_SCAN_YARARULESPATH:
         case ID_SCAN_EDITORFONT: result = GROUPID_SCAN; break;
         case ID_SIGNATURES_PATH: result = GROUPID_SIGNATURES; break;
@@ -287,7 +288,7 @@ void XOptions::load()
         QVariant variant = pSettings->value(sName, varDefault);
 
         if (!variant.toString().contains("$data")) {
-            if ((id == ID_SCAN_DATABASEPATH) || (id == ID_DATAPATH) || (id == ID_SIGNATURES_PATH) || (id == ID_STRUCTS_PATH) || (id == ID_STRUCTSPATH) ||
+            if ((id == ID_SCAN_DATABASEPATH) || (id == ID_SCAN_CUSTOMDATABASEPATH) || (id == ID_DATAPATH) || (id == ID_SIGNATURES_PATH) || (id == ID_STRUCTS_PATH) || (id == ID_STRUCTSPATH) ||
                 (id == ID_INFO_PATH) || (id == ID_SCAN_YARARULESPATH)) {
                 if (!QDir(variant.toString()).exists()) {
                     variant = varDefault;
@@ -414,6 +415,7 @@ QString XOptions::idToString(ID id)
         case ID_SCAN_ALLTYPES: sResult = QString("Scan/AllTypes"); break;
         case ID_SCAN_ENGINE: sResult = QString("Scan/Engine"); break;
         case ID_SCAN_DATABASEPATH: sResult = QString("Scan/DatabasePath"); break;
+        case ID_SCAN_CUSTOMDATABASEPATH: sResult = QString("Scan/UserDatabasePath"); break;
         case ID_SCAN_YARARULESPATH: sResult = QString("Scan/YaraRulesPath"); break;
         case ID_SCAN_EDITORFONT: sResult = QString("Scan/EditorFont"); break;
         case ID_SIGNATURES_PATH: sResult = QString("Signatures/Path"); break;
@@ -586,6 +588,11 @@ QList<QString> XOptions::getRecentFiles()
 QString XOptions::getDatabasePath()
 {
     return getValue(ID_SCAN_DATABASEPATH).toString();
+}
+
+QString XOptions::getCustomDatabasePath()
+{
+    return getValue(ID_SCAN_CUSTOMDATABASEPATH).toString();
 }
 
 QString XOptions::getInfoPath()
