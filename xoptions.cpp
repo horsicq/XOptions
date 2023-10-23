@@ -444,9 +444,7 @@ QString XOptions::idToString(ID id)
         case ID_DISASM_COLOR_ARM_PUSH: sResult = QString("Disasm/Color/arm/push"); break;
         case ID_DISASM_COLOR_ARM_POP: sResult = QString("Disasm/Color/arm/pop"); break;
         case ID_HEX_FONT: sResult = QString("Hex/Font"); break;
-        case ID_HEX_ADDRESSCOLON:
-            sResult = QString("Hex/AddressColon");
-            break;
+        case ID_HEX_ADDRESSCOLON: sResult = QString("Hex/AddressColon"); break;
             //        case ID_HEX_BLINKINGCURSOR:
             //            sResult = QString("Hex/BlinkingCursor");
             //            break;
