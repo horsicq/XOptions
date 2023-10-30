@@ -113,8 +113,10 @@ XOptions::GROUPID XOptions::getGroupID(ID id)
         case ID_DISASM_ADDRESSCOLON:
         case ID_DISASM_UPPERCASE:
         case ID_DISASM_HIGHLIGHT:
+        case ID_DISASM_COLOR_X86_REGS:
         case ID_DISASM_COLOR_X86_REGS_GENERAL:
         case ID_DISASM_COLOR_X86_REGS_SEGMENT:
+        case ID_DISASM_COLOR_X86_REGS_DEBUG:
         case ID_DISASM_COLOR_X86_OPCODE:
         case ID_DISASM_COLOR_X86_OPCODE_CALL:
         case ID_DISASM_COLOR_X86_OPCODE_RET:
@@ -125,6 +127,7 @@ XOptions::GROUPID XOptions::getGroupID(ID id)
         case ID_DISASM_COLOR_X86_OPCODE_JMP:
         case ID_DISASM_COLOR_X86_OPCODE_INT3:
         case ID_DISASM_COLOR_X86_OPCODE_SYSCALL:
+        case ID_DISASM_COLOR_ARM_OPCODE:
         case ID_DISASM_COLOR_ARM_OPCODE_BL:
         case ID_DISASM_COLOR_ARM_OPCODE_RET:
         case ID_DISASM_COLOR_ARM_OPCODE_PUSH:
@@ -430,8 +433,10 @@ QString XOptions::idToString(ID id)
         case ID_DISASM_UPPERCASE: sResult = QString("Disasm/Uppercase"); break;
         case ID_DISASM_HIGHLIGHT: sResult = QString("Disasm/Highlight"); break;
         case ID_DISASM_SYNTAX: sResult = QString("Disasm/Syntax"); break;
+        case ID_DISASM_COLOR_X86_REGS: sResult = QString("Disasm/Color/x86/Regs"); break;
         case ID_DISASM_COLOR_X86_REGS_GENERAL: sResult = QString("Disasm/Color/x86/Regs/General"); break;
         case ID_DISASM_COLOR_X86_REGS_SEGMENT: sResult = QString("Disasm/Color/x86/Regs/Segment"); break;
+        case ID_DISASM_COLOR_X86_REGS_DEBUG: sResult = QString("Disasm/Color/x86/Regs/Debug"); break;
         case ID_DISASM_COLOR_X86_OPCODE: sResult = QString("Disasm/Color/x86/Opcode"); break;
         case ID_DISASM_COLOR_X86_OPCODE_CALL: sResult = QString("Disasm/Color/x86/Opcode/call"); break;
         case ID_DISASM_COLOR_X86_OPCODE_RET: sResult = QString("Disasm/Color/x86/Opcode/ret"); break;
@@ -442,6 +447,7 @@ QString XOptions::idToString(ID id)
         case ID_DISASM_COLOR_X86_OPCODE_JMP: sResult = QString("Disasm/Color/x86/Opcode/jmp"); break;
         case ID_DISASM_COLOR_X86_OPCODE_INT3: sResult = QString("Disasm/Color/x86/Opcode/int3"); break;
         case ID_DISASM_COLOR_X86_OPCODE_SYSCALL: sResult = QString("Disasm/Color/x86/Opcode/syscall"); break;
+        case ID_DISASM_COLOR_ARM_OPCODE: sResult = QString("Disasm/Color/arm/Opcode"); break;
         case ID_DISASM_COLOR_ARM_OPCODE_BL: sResult = QString("Disasm/Color/arm/Opcode/bl"); break;
         case ID_DISASM_COLOR_ARM_OPCODE_RET: sResult = QString("Disasm/Color/arm/Opcode/ret"); break;
         case ID_DISASM_COLOR_ARM_OPCODE_PUSH: sResult = QString("Disasm/Color/arm/Opcode/push"); break;
