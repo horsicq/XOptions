@@ -26,6 +26,12 @@
 #include <QSettings>
 #include <QSysInfo>
 #include <QTranslator>
+#if (QT_VERSION_MAJOR < 5)  // TODO Check
+#include <QRegExp>
+#else
+#include <QRegularExpression>
+#include <QRegularExpressionMatch>
+#endif
 // #include <QVector>
 #ifdef QT_GUI_LIB
 #include <QApplication>
