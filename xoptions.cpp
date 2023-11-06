@@ -1513,7 +1513,7 @@ bool XOptions::checkNative(const QString &sIniFileName)
     QString sApplicationDirPath = qApp->applicationDirPath();
 
     if ((sApplicationDirPath == "/bin") || (sApplicationDirPath == "/usr/bin") || (sApplicationDirPath == "/usr/local/bin") ||
-        (sApplicationDirPath.contains(QRegExp("/usr/local/bin$"))) || isAppImage()) {
+        (sApplicationDirPath.contains("/usr/local/bin$")) || isAppImage()) {
         bResult = true;
     } else {
         bResult = false;
@@ -1545,7 +1545,7 @@ QString XOptions::getApplicationDataPath()
     sResult = sApplicationDirPath + "/../Resources";
 #elif defined(Q_OS_LINUX)
     if (isNative()) {
-        if (sApplicationDirPath.contains(QRegExp("/usr/local/bin$"))) {
+        if (sApplicationDirPath.contains("/usr/local/bin$")) {
             QString sPrefix = sApplicationDirPath.section("/usr/local/bin", 0, 0);
 
             sResult += sPrefix + QString("/usr/local/lib/%1").arg(qApp->applicationName());
