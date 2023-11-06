@@ -67,37 +67,6 @@ void DialogViewColors::save()
     }
 }
 
-void DialogViewColors::setDefaultColorValues(XOptions *pOptions)
-{
-    // Colors
-    // X86
-    pOptions->addID(XOptions::ID_DISASM_COLOR_X86_REGS, QString("%1|%2").arg(QColor(Qt::red).name(), ""));           // TODO color
-    pOptions->addID(XOptions::ID_DISASM_COLOR_X86_REGS_GENERAL, QString("%1|%2").arg(QColor(Qt::red).name(), ""));   // TODO color
-    pOptions->addID(XOptions::ID_DISASM_COLOR_X86_REGS_SEGMENT, QString("%1|%2").arg(QColor(Qt::blue).name(), ""));  // TODO color
-    pOptions->addID(XOptions::ID_DISASM_COLOR_X86_REGS_DEBUG, QString("%1|%2").arg(QColor(Qt::blue).name(), ""));    // TODO color
-    pOptions->addID(XOptions::ID_DISASM_COLOR_X86_OPCODE, QString("%1|%2").arg(QColor(Qt::blue).name(), ""));
-    pOptions->addID(XOptions::ID_DISASM_COLOR_X86_OPCODE_CALL, QString("%1|%2").arg(QColor(Qt::red).name(), ""));
-    pOptions->addID(XOptions::ID_DISASM_COLOR_X86_OPCODE_RET, QString("%1|%2").arg(QColor(Qt::red).name(), ""));
-    pOptions->addID(XOptions::ID_DISASM_COLOR_X86_OPCODE_NOP, QString("%1|%2").arg(QColor(Qt::gray).name(), ""));
-    pOptions->addID(XOptions::ID_DISASM_COLOR_X86_OPCODE_PUSH, QString("%1|%2").arg(QColor(Qt::blue).name(), ""));
-    pOptions->addID(XOptions::ID_DISASM_COLOR_X86_OPCODE_POP, QString("%1|%2").arg(QColor(Qt::blue).name(), ""));
-    pOptions->addID(XOptions::ID_DISASM_COLOR_X86_OPCODE_JCC, QString("%1|%2").arg(QColor(Qt::green).name(), ""));
-    pOptions->addID(XOptions::ID_DISASM_COLOR_X86_OPCODE_JMP, QString("%1|%2").arg(QColor(Qt::darkBlue).name(), ""));
-    pOptions->addID(XOptions::ID_DISASM_COLOR_X86_OPCODE_INT3, QString("%1|%2").arg(QColor(Qt::darkGray).name(), ""));
-    pOptions->addID(XOptions::ID_DISASM_COLOR_X86_OPCODE_SYSCALL, QString("%1|%2").arg(QColor(Qt::red).name(), ""));
-    // ARM
-    pOptions->addID(XOptions::ID_DISASM_COLOR_ARM_REGS, QString("%1|%2").arg(QColor(Qt::red).name(), ""));
-    pOptions->addID(XOptions::ID_DISASM_COLOR_ARM_REGS_GENERAL, QString("%1|%2").arg(QColor(Qt::red).name(), ""));
-    pOptions->addID(XOptions::ID_DISASM_COLOR_ARM_OPCODE, QString("%1|%2").arg(QColor(Qt::blue).name(), ""));
-    pOptions->addID(XOptions::ID_DISASM_COLOR_ARM_OPCODE_B, QString("%1|%2").arg(QColor(Qt::red).name(), ""));
-    pOptions->addID(XOptions::ID_DISASM_COLOR_ARM_OPCODE_BL, QString("%1|%2").arg(QColor(Qt::red).name(), ""));
-    pOptions->addID(XOptions::ID_DISASM_COLOR_ARM_OPCODE_RET, QString("%1|%2").arg(QColor(Qt::red).name(), ""));
-    pOptions->addID(XOptions::ID_DISASM_COLOR_ARM_OPCODE_PUSH, QString("%1|%2").arg(QColor(Qt::blue).name(), ""));
-    pOptions->addID(XOptions::ID_DISASM_COLOR_ARM_OPCODE_POP, QString("%1|%2").arg(QColor(Qt::blue).name(), ""));
-    pOptions->addID(XOptions::ID_DISASM_COLOR_ARM_OPCODE_NOP, QString("%1|%2").arg(QColor(Qt::gray).name(), ""));
-    // TODO more
-}
-
 void DialogViewColors::on_pushButtonCancel_clicked()
 {
     this->close();
