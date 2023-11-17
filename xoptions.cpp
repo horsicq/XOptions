@@ -1834,9 +1834,6 @@ XOptions::BUNDLE XOptions::getBundle()
     if (sProductType == "ubuntu") {
         result = BUNDLE_LINUX_UBUNTU_X64;
     }
-    // TODO
-    // ARCH
-
 #endif
 #endif
 #ifdef Q_OS_MACOS
