@@ -44,7 +44,7 @@ void DialogViewColors::setOptions(XOptions *pOptions, const QList<RECORD> &listR
     ui->tableWidgetColors->setRowCount(nNumberOfRecords);
 
     for (qint32 i = 0; i < nNumberOfRecords; i++) {
-        addRecord(listRecords.at(i));
+        addRecord(i, listRecords.at(i));
     }
 
     //    ui->tableWidgetColors->setColumnWidth(COLUMN_TEXT_COLOR,80);
@@ -130,9 +130,9 @@ void DialogViewColors::addRecord(qint32 nRow, const QString &sGroup, const QStri
     updateRow(nRow);
 }
 
-void DialogViewColors::addRecord(const RECORD &record)
+void DialogViewColors::addRecord(qint32 nRow, const RECORD &record)
 {
-    addRecord(record.nRow, record.sGroup, record.sText, record.id);
+    addRecord(nRow, record.sGroup, record.sText, record.id);
 }
 
 void DialogViewColors::updateRow(qint32 nRow)
