@@ -120,6 +120,7 @@ XOptions::GROUPID XOptions::getGroupID(ID id)
         case ID_DISASM_COLOR_X86_REGS_IP:
         case ID_DISASM_COLOR_X86_REGS_FLAGS:
         case ID_DISASM_COLOR_X86_REGS_FPU:
+        case ID_DISASM_COLOR_X86_NUMBERS:
         case ID_DISASM_COLOR_X86_OPCODE:
         case ID_DISASM_COLOR_X86_OPCODE_CALL:
         case ID_DISASM_COLOR_X86_OPCODE_RET:
@@ -132,6 +133,7 @@ XOptions::GROUPID XOptions::getGroupID(ID id)
         case ID_DISASM_COLOR_X86_OPCODE_SYSCALL:
         case ID_DISASM_COLOR_ARM_REGS:
         case ID_DISASM_COLOR_ARM_REGS_GENERAL:
+        case ID_DISASM_COLOR_ARM_NUMBERS:
         case ID_DISASM_COLOR_ARM_OPCODE:
         case ID_DISASM_COLOR_ARM_OPCODE_B:
         case ID_DISASM_COLOR_ARM_OPCODE_BL:
@@ -396,7 +398,7 @@ QVariant XOptions::getDefaultValue(ID id)
 
 QString XOptions::idToString(ID id)
 {
-    QString sResult = QString("Unknown");
+    QString sResult;
 
     switch (id) {
         // TODO remove
@@ -446,6 +448,7 @@ QString XOptions::idToString(ID id)
         case ID_DISASM_COLOR_X86_REGS_IP: sResult = QString("Disasm/Color/x86/Regs/IP"); break;
         case ID_DISASM_COLOR_X86_REGS_FLAGS: sResult = QString("Disasm/Color/x86/Regs/Flags"); break;
         case ID_DISASM_COLOR_X86_REGS_FPU: sResult = QString("Disasm/Color/x86/Regs/Float"); break;
+        case ID_DISASM_COLOR_X86_NUMBERS: sResult = QString("Disasm/Color/x86/Numbers"); break;
         case ID_DISASM_COLOR_X86_OPCODE: sResult = QString("Disasm/Color/x86/Opcode"); break;
         case ID_DISASM_COLOR_X86_OPCODE_CALL: sResult = QString("Disasm/Color/x86/Opcode/call"); break;
         case ID_DISASM_COLOR_X86_OPCODE_RET: sResult = QString("Disasm/Color/x86/Opcode/ret"); break;
@@ -458,12 +461,14 @@ QString XOptions::idToString(ID id)
         case ID_DISASM_COLOR_X86_OPCODE_SYSCALL: sResult = QString("Disasm/Color/x86/Opcode/syscall"); break;
         case ID_DISASM_COLOR_ARM_REGS: sResult = QString("Disasm/Color/arm/Regs"); break;
         case ID_DISASM_COLOR_ARM_REGS_GENERAL: sResult = QString("Disasm/Color/arm/Regs/General"); break;
+        case ID_DISASM_COLOR_ARM_NUMBERS: sResult = QString("Disasm/Color/arm/Numbers"); break;
         case ID_DISASM_COLOR_ARM_OPCODE: sResult = QString("Disasm/Color/arm/Opcode"); break;
         case ID_DISASM_COLOR_ARM_OPCODE_B: sResult = QString("Disasm/Color/arm/Opcode/b"); break;
         case ID_DISASM_COLOR_ARM_OPCODE_BL: sResult = QString("Disasm/Color/arm/Opcode/bl"); break;
         case ID_DISASM_COLOR_ARM_OPCODE_RET: sResult = QString("Disasm/Color/arm/Opcode/ret"); break;
         case ID_DISASM_COLOR_ARM_OPCODE_PUSH: sResult = QString("Disasm/Color/arm/Opcode/push"); break;
         case ID_DISASM_COLOR_ARM_OPCODE_POP: sResult = QString("Disasm/Color/arm/Opcode/pop"); break;
+        case ID_DISASM_COLOR_ARM_OPCODE_NOP: sResult = QString("Disasm/Color/arm/Opcode/nop"); break;
         case ID_HEX_FONT: sResult = QString("Hex/Font"); break;
         case ID_HEX_ADDRESSCOLON:
             sResult = QString("Hex/AddressColon");
