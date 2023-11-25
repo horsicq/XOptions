@@ -32,7 +32,7 @@ DialogViewColors::~DialogViewColors()
     delete ui;
 }
 
-void DialogViewColors::setOptions(XOptions *pOptions, const QList<RECORD> &listRecords)
+void DialogViewColors::setOptions(XOptions *pOptions, const QList<RECORD> &listRecords, const QString &sTitle)
 {
     g_pOptions = pOptions;
 
@@ -51,6 +51,8 @@ void DialogViewColors::setOptions(XOptions *pOptions, const QList<RECORD> &listR
     ui->tableWidgetColors->setColumnWidth(COLUMN_TEXT_COLOR_REMOVE, 20);
     //    ui->tableWidgetColors->setColumnWidth(COLUMN_BACKGROUND_COLOR,80);
     ui->tableWidgetColors->setColumnWidth(COLUMN_BACKGROUND_COLOR_REMOVE, 20);
+
+    setWindowTitle(sTitle);
 }
 
 void DialogViewColors::save()

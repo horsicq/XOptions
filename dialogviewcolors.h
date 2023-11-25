@@ -53,7 +53,7 @@ public:
     explicit DialogViewColors(QWidget *pParent = nullptr);
     ~DialogViewColors();
 
-    void setOptions(XOptions *pOptions, const QList<RECORD> &listRecords);
+    void setOptions(XOptions *pOptions, const QList<RECORD> &listRecords, const QString &sTitle);
     void save();
 
 private slots:

@@ -479,10 +479,7 @@ QString XOptions::idToString(ID id)
         case ID_STACK_FONT: sResult = QString("Stack/Font"); break;
         case ID_STACK_ADDRESSCOLON: sResult = QString("Stack/AddressColon"); break;
         case ID_REGISTERS_FONT: sResult = QString("Registers/Font"); break;
-        case ID_DEBUGGER_BREAKPOINT_SYSTEM: sResult = QString("Debugger/Breakpoint/System"); break;
-        case ID_DEBUGGER_BREAKPOINT_ENTRYPOINT: sResult = QString("Debugger/Breakpoint/EntryPoint"); break;
-        case ID_DEBUGGER_BREAKPOINT_DLLMAIN: sResult = QString("Debugger/Breakpoint/DLLMain"); break;
-        case ID_DEBUGGER_BREAKPOINT_TLSFUNCTIONS: sResult = QString("Debugger/Breakpoint/TLSFunctions"); break;
+        case ID_DEBUGGERT_DISASM_COLOR_X86_BREAKPOINTS: sResult = QString("Debugger/Disasm/Color/x86/Breakpoints"); break;
         case ID_IODRIVER_FILENAME: sResult = QString("IODriver/FileName"); break;
         case ID_IODRIVER_SERVICENAME: sResult = QString("IODriver/ServiceName"); break;
         case ID_STRUCTS_PATH: sResult = QString("Structs/Path"); break;
