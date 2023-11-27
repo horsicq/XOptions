@@ -69,6 +69,8 @@ void XOptionsWidget::addListRecord(const QString &sTitle, qint32 nIndex)
     pItem->setData(Qt::UserRole, nIndex);
 
     ui->listWidgetOptions->addItem(pItem);
+
+    XOptions::adjustListWidget(ui->listWidgetOptions);
 }
 
 void XOptionsWidget::addPage(QWidget *pWidget, const QString &sTitle)

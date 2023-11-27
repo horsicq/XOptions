@@ -186,6 +186,7 @@ public:
         ID_DISASM_COLOR_X86_REGS_IP,
         ID_DISASM_COLOR_X86_REGS_FLAGS,
         ID_DISASM_COLOR_X86_REGS_FPU,
+        ID_DISASM_COLOR_X86_REGS_XMM,
         ID_DISASM_COLOR_X86_NUMBERS,
         ID_DISASM_COLOR_X86_OPCODE,
         ID_DISASM_COLOR_X86_OPCODE_CALL,
@@ -299,6 +300,7 @@ public:
     void adjustWindow(QWidget *pWidget);
     static void setMonoFont(QWidget *pWidget, qint32 nSize = -1);
     static void adjustApplicationView(const QString &sTranslationName, XOptions *pOptions);
+    static void adjustListWidget(QListWidget *pListWidget, qint32 nMinimumWidth = 100);
     //    static void adjustApplicationView(QString sApplicationFileName,QString
     //    sTranslationName);
     static QWidget *getMainWidget(QWidget *pWidget);
