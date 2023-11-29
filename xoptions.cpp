@@ -142,9 +142,11 @@ XOptions::GROUPID XOptions::getGroupID(ID id)
         case ID_DISASM_COLOR_ARM_OPCODE_PUSH:
         case ID_DISASM_COLOR_ARM_OPCODE_POP:
         case ID_DISASM_COLOR_ARM_OPCODE_NOP: result = GROUPID_DISASM; break;
+        case ID_DEBUGGER_DISASM_COLOR_X86_BREAKPOINTS:
+            result = GROUPID_DEBUGGER;
+            break;
         case ID_HEX_FONT:
         case ID_HEX_ADDRESSCOLON:
-            //        case ID_HEX_BLINKINGCURSOR:
             result = GROUPID_HEX;
             break;
         case ID_STACK_FONT:
@@ -481,7 +483,7 @@ QString XOptions::idToString(ID id)
         case ID_STACK_FONT: sResult = QString("Stack/Font"); break;
         case ID_STACK_ADDRESSCOLON: sResult = QString("Stack/AddressColon"); break;
         case ID_REGISTERS_FONT: sResult = QString("Registers/Font"); break;
-        case ID_DEBUGGERT_DISASM_COLOR_X86_BREAKPOINTS: sResult = QString("Debugger/Disasm/Color/x86/Breakpoints"); break;
+        case ID_DEBUGGER_DISASM_COLOR_X86_BREAKPOINTS: sResult = QString("Debugger/Disasm/Color/x86/Breakpoints"); break;
         case ID_IODRIVER_FILENAME: sResult = QString("IODriver/FileName"); break;
         case ID_IODRIVER_SERVICENAME: sResult = QString("IODriver/ServiceName"); break;
         case ID_STRUCTS_PATH: sResult = QString("Structs/Path"); break;

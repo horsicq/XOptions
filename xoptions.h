@@ -214,7 +214,7 @@ public:
         ID_STACK_FONT,
         ID_STACK_ADDRESSCOLON,
         ID_REGISTERS_FONT,
-        ID_DEBUGGERT_DISASM_COLOR_X86_BREAKPOINTS,
+        ID_DEBUGGER_DISASM_COLOR_X86_BREAKPOINTS,
         // TODO debugger animate timeout
         // TODO more
         ID_IODRIVER_FILENAME,
