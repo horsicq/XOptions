@@ -32,6 +32,7 @@ namespace Ui {
 class DialogViewColors;
 }
 
+// mb TODO TreeView
 class DialogViewColors : public QDialog {
     Q_OBJECT
 

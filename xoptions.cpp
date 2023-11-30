@@ -113,6 +113,8 @@ XOptions::GROUPID XOptions::getGroupID(ID id)
         case ID_DISASM_ADDRESSCOLON:
         case ID_DISASM_UPPERCASE:
         case ID_DISASM_HIGHLIGHT:
+        case ID_DISASM_COLOR_ARROWS:
+        case ID_DISASM_COLOR_ARROWS_SELECTED:
         case ID_DISASM_COLOR_X86_REGS:
         case ID_DISASM_COLOR_X86_REGS_GENERAL:
         case ID_DISASM_COLOR_X86_REGS_SEGMENT:
@@ -142,7 +144,7 @@ XOptions::GROUPID XOptions::getGroupID(ID id)
         case ID_DISASM_COLOR_ARM_OPCODE_PUSH:
         case ID_DISASM_COLOR_ARM_OPCODE_POP:
         case ID_DISASM_COLOR_ARM_OPCODE_NOP: result = GROUPID_DISASM; break;
-        case ID_DEBUGGER_DISASM_COLOR_X86_BREAKPOINTS:
+        case ID_DEBUGGER_COLOR_X86_BREAKPOINTS:
             result = GROUPID_DEBUGGER;
             break;
         case ID_HEX_FONT:
@@ -444,6 +446,8 @@ QString XOptions::idToString(ID id)
         case ID_DISASM_UPPERCASE: sResult = QString("Disasm/Uppercase"); break;
         case ID_DISASM_HIGHLIGHT: sResult = QString("Disasm/Highlight"); break;
         case ID_DISASM_SYNTAX: sResult = QString("Disasm/Syntax"); break;
+        case ID_DISASM_COLOR_ARROWS: sResult = QString("Disasm/Color/Arrows"); break;
+        case ID_DISASM_COLOR_ARROWS_SELECTED: sResult = QString("Disasm/Color/Arrows/Selected"); break;
         case ID_DISASM_COLOR_X86_REGS: sResult = QString("Disasm/Color/x86/Regs"); break;
         case ID_DISASM_COLOR_X86_REGS_GENERAL: sResult = QString("Disasm/Color/x86/Regs/General"); break;
         case ID_DISASM_COLOR_X86_REGS_SEGMENT: sResult = QString("Disasm/Color/x86/Regs/Segment"); break;
@@ -477,13 +481,10 @@ QString XOptions::idToString(ID id)
         case ID_HEX_ADDRESSCOLON:
             sResult = QString("Hex/AddressColon");
             break;
-            //        case ID_HEX_BLINKINGCURSOR:
-            //            sResult = QString("Hex/BlinkingCursor");
-            //            break;
         case ID_STACK_FONT: sResult = QString("Stack/Font"); break;
         case ID_STACK_ADDRESSCOLON: sResult = QString("Stack/AddressColon"); break;
         case ID_REGISTERS_FONT: sResult = QString("Registers/Font"); break;
-        case ID_DEBUGGER_DISASM_COLOR_X86_BREAKPOINTS: sResult = QString("Debugger/Disasm/Color/x86/Breakpoints"); break;
+        case ID_DEBUGGER_COLOR_X86_BREAKPOINTS: sResult = QString("Debugger/Color/x86/Breakpoints"); break;
         case ID_IODRIVER_FILENAME: sResult = QString("IODriver/FileName"); break;
         case ID_IODRIVER_SERVICENAME: sResult = QString("IODriver/ServiceName"); break;
         case ID_STRUCTS_PATH: sResult = QString("Structs/Path"); break;
