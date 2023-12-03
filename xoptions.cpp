@@ -144,13 +144,9 @@ XOptions::GROUPID XOptions::getGroupID(ID id)
         case ID_DISASM_COLOR_ARM_OPCODE_PUSH:
         case ID_DISASM_COLOR_ARM_OPCODE_POP:
         case ID_DISASM_COLOR_ARM_OPCODE_NOP: result = GROUPID_DISASM; break;
-        case ID_DEBUGGER_COLOR_X86_BREAKPOINTS:
-            result = GROUPID_DEBUGGER;
-            break;
+        case ID_DEBUGGER_COLOR_X86_BREAKPOINTS: result = GROUPID_DEBUGGER; break;
         case ID_HEX_FONT:
-        case ID_HEX_ADDRESSCOLON:
-            result = GROUPID_HEX;
-            break;
+        case ID_HEX_ADDRESSCOLON: result = GROUPID_HEX; break;
         case ID_STACK_FONT:
         case ID_STACK_ADDRESSCOLON: result = GROUPID_STACK; break;
         case ID_REGISTERS_FONT: result = GROUPID_REGISTERS; break;
@@ -478,9 +474,7 @@ QString XOptions::idToString(ID id)
         case ID_DISASM_COLOR_ARM_OPCODE_POP: sResult = QString("Disasm/Color/arm/Opcode/pop"); break;
         case ID_DISASM_COLOR_ARM_OPCODE_NOP: sResult = QString("Disasm/Color/arm/Opcode/nop"); break;
         case ID_HEX_FONT: sResult = QString("Hex/Font"); break;
-        case ID_HEX_ADDRESSCOLON:
-            sResult = QString("Hex/AddressColon");
-            break;
+        case ID_HEX_ADDRESSCOLON: sResult = QString("Hex/AddressColon"); break;
         case ID_STACK_FONT: sResult = QString("Stack/Font"); break;
         case ID_STACK_ADDRESSCOLON: sResult = QString("Stack/AddressColon"); break;
         case ID_REGISTERS_FONT: sResult = QString("Registers/Font"); break;
