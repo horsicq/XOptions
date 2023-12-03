@@ -212,7 +212,6 @@ public:
         ID_DISASM_COLOR_ARM_OPCODE_NOP,
         ID_HEX_FONT,
         ID_HEX_ADDRESSCOLON,
-        //        ID_HEX_BLINKINGCURSOR, // TODO Check
         ID_STACK_FONT,
         ID_STACK_ADDRESSCOLON,
         ID_REGISTERS_FONT,
