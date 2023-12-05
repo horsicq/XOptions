@@ -117,6 +117,7 @@ XOptions::GROUPID XOptions::getGroupID(ID id)
         case ID_DISASM_COLOR_ARROWS_SELECTED:
         case ID_DISASM_COLOR_X86_REGS:
         case ID_DISASM_COLOR_X86_REGS_GENERAL:
+        case ID_DISASM_COLOR_X86_REGS_STACK:
         case ID_DISASM_COLOR_X86_REGS_SEGMENT:
         case ID_DISASM_COLOR_X86_REGS_DEBUG:
         case ID_DISASM_COLOR_X86_REGS_IP:
@@ -446,6 +447,7 @@ QString XOptions::idToString(ID id)
         case ID_DISASM_COLOR_ARROWS_SELECTED: sResult = QString("Disasm/Color/Arrows/Selected"); break;
         case ID_DISASM_COLOR_X86_REGS: sResult = QString("Disasm/Color/x86/Regs"); break;
         case ID_DISASM_COLOR_X86_REGS_GENERAL: sResult = QString("Disasm/Color/x86/Regs/General"); break;
+        case ID_DISASM_COLOR_X86_REGS_STACK: sResult = QString("Disasm/Color/x86/Regs/Stack"); break;
         case ID_DISASM_COLOR_X86_REGS_SEGMENT: sResult = QString("Disasm/Color/x86/Regs/Segment"); break;
         case ID_DISASM_COLOR_X86_REGS_DEBUG: sResult = QString("Disasm/Color/x86/Regs/Debug"); break;
         case ID_DISASM_COLOR_X86_REGS_IP: sResult = QString("Disasm/Color/x86/Regs/IP"); break;
