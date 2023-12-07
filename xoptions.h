@@ -58,6 +58,7 @@
 #include <QWidget>
 #include <QStandardItemModel>
 #include <QImageWriter>
+#include <QColorDialog>
 #else
 #include <QCoreApplication>
 #endif
@@ -181,7 +182,9 @@ public:
         // TODO more
         ID_DISASM_COLOR_ARROWS,
         ID_DISASM_COLOR_ARROWS_SELECTED,
-        ID_DISASM_COLOR_X86_REGS,
+        ID_DISASM_COLOR_REGS,
+        ID_DISASM_COLOR_NUMBERS,
+        ID_DISASM_COLOR_OPCODE,
         ID_DISASM_COLOR_X86_REGS_GENERAL,
         ID_DISASM_COLOR_X86_REGS_STACK,
         ID_DISASM_COLOR_X86_REGS_SEGMENT,
@@ -190,8 +193,6 @@ public:
         ID_DISASM_COLOR_X86_REGS_FLAGS,
         ID_DISASM_COLOR_X86_REGS_FPU,
         ID_DISASM_COLOR_X86_REGS_XMM,
-        ID_DISASM_COLOR_X86_NUMBERS,
-        ID_DISASM_COLOR_X86_OPCODE,
         ID_DISASM_COLOR_X86_OPCODE_CALL,
         ID_DISASM_COLOR_X86_OPCODE_RET,
         ID_DISASM_COLOR_X86_OPCODE_JCC,
@@ -201,10 +202,7 @@ public:
         ID_DISASM_COLOR_X86_OPCODE_JMP,
         ID_DISASM_COLOR_X86_OPCODE_INT3,
         ID_DISASM_COLOR_X86_OPCODE_SYSCALL,
-        ID_DISASM_COLOR_ARM_REGS,
         ID_DISASM_COLOR_ARM_REGS_GENERAL,
-        ID_DISASM_COLOR_ARM_NUMBERS,
-        ID_DISASM_COLOR_ARM_OPCODE,
         ID_DISASM_COLOR_ARM_OPCODE_B,
         ID_DISASM_COLOR_ARM_OPCODE_BL,
         ID_DISASM_COLOR_ARM_OPCODE_RET,
@@ -216,7 +214,7 @@ public:
         ID_STACK_FONT,
         ID_STACK_ADDRESSCOLON,
         ID_REGISTERS_FONT,
-        ID_DEBUGGER_COLOR_X86_BREAKPOINTS,
+        ID_DEBUGGER_COLOR_BREAKPOINT,
         // TODO debugger animate timeout
         // TODO more
         ID_IODRIVER_FILENAME,
@@ -332,6 +330,7 @@ public:
     static void setTreeViewHeaderWidth(QTreeView *pTreeView, qint32 nColumn, qint32 nContentWidth);
     static void setTableWidgetHeaderAlignment(QTableWidget *pTableWidget, qint32 nColumn, Qt::Alignment flag);
     static QString getImageFilter();
+    static QColor getColorDialog(QWidget *pParent, QString sTitle, QColor &color);
 #endif
 #if (QT_VERSION_MAJOR < 6) || defined(QT_CORE5COMPAT_LIB)
     static QList<QString> getCodePages(bool bAll);

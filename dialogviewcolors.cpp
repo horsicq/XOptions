@@ -177,14 +177,14 @@ void DialogViewColors::pushButtonSlot()
             QColor color;
             color.setNamedColor(sTextColor);
 
-            color = QColorDialog::getColor(color, this, tr("Color"));
+            color = XOptions::getColorDialog(this, tr("Color"), color);
 
             sTextColor = color.name();
         } else if (nColumn == COLUMN_BACKGROUND_COLOR) {
             QColor color;
             color.setNamedColor(sBackgroundColor);
 
-            color = QColorDialog::getColor(color, this, tr("Background"));
+            color = XOptions::getColorDialog(this, tr("Background"), color);
 
             sBackgroundColor = color.name();
         } else if (nColumn == COLUMN_TEXT_COLOR_REMOVE) {

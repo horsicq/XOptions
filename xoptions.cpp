@@ -115,7 +115,9 @@ XOptions::GROUPID XOptions::getGroupID(ID id)
         case ID_DISASM_HIGHLIGHT:
         case ID_DISASM_COLOR_ARROWS:
         case ID_DISASM_COLOR_ARROWS_SELECTED:
-        case ID_DISASM_COLOR_X86_REGS:
+        case ID_DISASM_COLOR_REGS:
+        case ID_DISASM_COLOR_NUMBERS:
+        case ID_DISASM_COLOR_OPCODE:
         case ID_DISASM_COLOR_X86_REGS_GENERAL:
         case ID_DISASM_COLOR_X86_REGS_STACK:
         case ID_DISASM_COLOR_X86_REGS_SEGMENT:
@@ -124,8 +126,6 @@ XOptions::GROUPID XOptions::getGroupID(ID id)
         case ID_DISASM_COLOR_X86_REGS_FLAGS:
         case ID_DISASM_COLOR_X86_REGS_FPU:
         case ID_DISASM_COLOR_X86_REGS_XMM:
-        case ID_DISASM_COLOR_X86_NUMBERS:
-        case ID_DISASM_COLOR_X86_OPCODE:
         case ID_DISASM_COLOR_X86_OPCODE_CALL:
         case ID_DISASM_COLOR_X86_OPCODE_RET:
         case ID_DISASM_COLOR_X86_OPCODE_JCC:
@@ -135,17 +135,14 @@ XOptions::GROUPID XOptions::getGroupID(ID id)
         case ID_DISASM_COLOR_X86_OPCODE_JMP:
         case ID_DISASM_COLOR_X86_OPCODE_INT3:
         case ID_DISASM_COLOR_X86_OPCODE_SYSCALL:
-        case ID_DISASM_COLOR_ARM_REGS:
         case ID_DISASM_COLOR_ARM_REGS_GENERAL:
-        case ID_DISASM_COLOR_ARM_NUMBERS:
-        case ID_DISASM_COLOR_ARM_OPCODE:
         case ID_DISASM_COLOR_ARM_OPCODE_B:
         case ID_DISASM_COLOR_ARM_OPCODE_BL:
         case ID_DISASM_COLOR_ARM_OPCODE_RET:
         case ID_DISASM_COLOR_ARM_OPCODE_PUSH:
         case ID_DISASM_COLOR_ARM_OPCODE_POP:
         case ID_DISASM_COLOR_ARM_OPCODE_NOP: result = GROUPID_DISASM; break;
-        case ID_DEBUGGER_COLOR_X86_BREAKPOINTS: result = GROUPID_DEBUGGER; break;
+        case ID_DEBUGGER_COLOR_BREAKPOINT: result = GROUPID_DEBUGGER; break;
         case ID_HEX_FONT:
         case ID_HEX_ADDRESSCOLON: result = GROUPID_HEX; break;
         case ID_STACK_FONT:
@@ -445,7 +442,9 @@ QString XOptions::idToString(ID id)
         case ID_DISASM_SYNTAX: sResult = QString("Disasm/Syntax"); break;
         case ID_DISASM_COLOR_ARROWS: sResult = QString("Disasm/Color/Arrows"); break;
         case ID_DISASM_COLOR_ARROWS_SELECTED: sResult = QString("Disasm/Color/Arrows/Selected"); break;
-        case ID_DISASM_COLOR_X86_REGS: sResult = QString("Disasm/Color/x86/Regs"); break;
+        case ID_DISASM_COLOR_REGS: sResult = QString("Disasm/Color/Regs"); break;
+        case ID_DISASM_COLOR_NUMBERS: sResult = QString("Disasm/Color/Numbers"); break;
+        case ID_DISASM_COLOR_OPCODE: sResult = QString("Disasm/Color/Opcode"); break;
         case ID_DISASM_COLOR_X86_REGS_GENERAL: sResult = QString("Disasm/Color/x86/Regs/General"); break;
         case ID_DISASM_COLOR_X86_REGS_STACK: sResult = QString("Disasm/Color/x86/Regs/Stack"); break;
         case ID_DISASM_COLOR_X86_REGS_SEGMENT: sResult = QString("Disasm/Color/x86/Regs/Segment"); break;
@@ -453,9 +452,7 @@ QString XOptions::idToString(ID id)
         case ID_DISASM_COLOR_X86_REGS_IP: sResult = QString("Disasm/Color/x86/Regs/IP"); break;
         case ID_DISASM_COLOR_X86_REGS_FLAGS: sResult = QString("Disasm/Color/x86/Regs/Flags"); break;
         case ID_DISASM_COLOR_X86_REGS_FPU: sResult = QString("Disasm/Color/x86/Regs/Float"); break;
-        case ID_DISASM_COLOR_X86_REGS_XMM: sResult = QString("Disasm/Color/x86/Regs/XMM"); break;
-        case ID_DISASM_COLOR_X86_NUMBERS: sResult = QString("Disasm/Color/x86/Numbers"); break;
-        case ID_DISASM_COLOR_X86_OPCODE: sResult = QString("Disasm/Color/x86/Opcode"); break;
+        case ID_DISASM_COLOR_X86_REGS_XMM: sResult = QString("Disasm/Color/x86/Regs/XMM"); break; 
         case ID_DISASM_COLOR_X86_OPCODE_CALL: sResult = QString("Disasm/Color/x86/Opcode/call"); break;
         case ID_DISASM_COLOR_X86_OPCODE_RET: sResult = QString("Disasm/Color/x86/Opcode/ret"); break;
         case ID_DISASM_COLOR_X86_OPCODE_JCC: sResult = QString("Disasm/Color/x86/Opcode/jcc"); break;
@@ -465,10 +462,7 @@ QString XOptions::idToString(ID id)
         case ID_DISASM_COLOR_X86_OPCODE_JMP: sResult = QString("Disasm/Color/x86/Opcode/jmp"); break;
         case ID_DISASM_COLOR_X86_OPCODE_INT3: sResult = QString("Disasm/Color/x86/Opcode/int3"); break;
         case ID_DISASM_COLOR_X86_OPCODE_SYSCALL: sResult = QString("Disasm/Color/x86/Opcode/syscall"); break;
-        case ID_DISASM_COLOR_ARM_REGS: sResult = QString("Disasm/Color/arm/Regs"); break;
         case ID_DISASM_COLOR_ARM_REGS_GENERAL: sResult = QString("Disasm/Color/arm/Regs/General"); break;
-        case ID_DISASM_COLOR_ARM_NUMBERS: sResult = QString("Disasm/Color/arm/Numbers"); break;
-        case ID_DISASM_COLOR_ARM_OPCODE: sResult = QString("Disasm/Color/arm/Opcode"); break;
         case ID_DISASM_COLOR_ARM_OPCODE_B: sResult = QString("Disasm/Color/arm/Opcode/b"); break;
         case ID_DISASM_COLOR_ARM_OPCODE_BL: sResult = QString("Disasm/Color/arm/Opcode/bl"); break;
         case ID_DISASM_COLOR_ARM_OPCODE_RET: sResult = QString("Disasm/Color/arm/Opcode/ret"); break;
@@ -480,7 +474,7 @@ QString XOptions::idToString(ID id)
         case ID_STACK_FONT: sResult = QString("Stack/Font"); break;
         case ID_STACK_ADDRESSCOLON: sResult = QString("Stack/AddressColon"); break;
         case ID_REGISTERS_FONT: sResult = QString("Registers/Font"); break;
-        case ID_DEBUGGER_COLOR_X86_BREAKPOINTS: sResult = QString("Debugger/Color/x86/Breakpoints"); break;
+        case ID_DEBUGGER_COLOR_BREAKPOINT: sResult = QString("Debugger/Color/Breakpoint"); break;
         case ID_IODRIVER_FILENAME: sResult = QString("IODriver/FileName"); break;
         case ID_IODRIVER_SERVICENAME: sResult = QString("IODriver/ServiceName"); break;
         case ID_STRUCTS_PATH: sResult = QString("Structs/Path"); break;
@@ -1814,6 +1808,24 @@ QString XOptions::getImageFilter()
     //    listFilter.append(QString("Postscript %1 (*.ps)").arg(tr("Documents")));
 
     return listFilter.join(";;");
+}
+#endif
+#ifdef QT_GUI_LIB
+QColor XOptions::getColorDialog(QWidget *pParent, QString sTitle, QColor &color)
+{
+    QColor colResult;
+
+    QColorDialog colorDialog(pParent);
+    colorDialog.setCurrentColor(color);
+    colorDialog.setWindowTitle(sTitle);
+
+    _adjustStayOnTop(&colorDialog, true);
+
+    if (colorDialog.exec() == QDialog::Accepted) {
+        colResult = colorDialog.currentColor();
+    }
+
+    return colResult;
 }
 #endif
 XOptions::BUNDLE XOptions::getBundle()
