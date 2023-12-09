@@ -454,7 +454,7 @@ QString XOptions::idToString(ID id)
         case ID_DISASM_COLOR_X86_REGS_IP: sResult = QString("Disasm/Color/x86/Regs/IP"); break;
         case ID_DISASM_COLOR_X86_REGS_FLAGS: sResult = QString("Disasm/Color/x86/Regs/Flags"); break;
         case ID_DISASM_COLOR_X86_REGS_FPU: sResult = QString("Disasm/Color/x86/Regs/Float"); break;
-        case ID_DISASM_COLOR_X86_REGS_XMM: sResult = QString("Disasm/Color/x86/Regs/XMM"); break; 
+        case ID_DISASM_COLOR_X86_REGS_XMM: sResult = QString("Disasm/Color/x86/Regs/XMM"); break;
         case ID_DISASM_COLOR_X86_OPCODE_CALL: sResult = QString("Disasm/Color/x86/Opcode/call"); break;
         case ID_DISASM_COLOR_X86_OPCODE_RET: sResult = QString("Disasm/Color/x86/Opcode/ret"); break;
         case ID_DISASM_COLOR_X86_OPCODE_JCC: sResult = QString("Disasm/Color/x86/Opcode/jcc"); break;
