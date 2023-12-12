@@ -1027,10 +1027,11 @@ void XOptions::adjustListWidget(QListWidget *pListWidget, qint32 nMinimumWidth)
     qint32 nNumberOfRecords = pListWidget->count();
 
     for (qint32 i = 0; i < nNumberOfRecords; i++) {
-        QString sText = pListWidget->item(i)->text() + "WW";
+        QString sText = pListWidget->item(i)->text() + "WWWW";
         nWidth = qMax(QFontMetrics(pListWidget->item(i)->font()).size(Qt::TextSingleLine, sText).width(), nWidth);
     }
 
+    pListWidget->setMinimumWidth(0);
     pListWidget->setMaximumWidth(nWidth);
 }
 #endif
