@@ -844,9 +844,9 @@ void XOptions::setComboBox(QComboBox *pComboBox, XOptions::ID id)
         }
     } else if (id == ID_SCAN_ENGINE) {
         pComboBox->addItem(tr("Automatic"), "auto");
-        pComboBox->addItem(QString("Detect It Easy(DiE)"), "die");
-        pComboBox->addItem(QString("Nauz File Detector(NFD)"), "nfd");
-        pComboBox->addItem(QString("YARA"), "yara");
+        pComboBox->addItem(QString("Detect It Easy (DiE)"), "die");
+        pComboBox->addItem(QString("Nauz File Detector (NFD)"), "nfd");
+        pComboBox->addItem(QString("Yara rules"), "yara");
     } else if (id == ID_DISASM_SYNTAX) {
         pComboBox->addItem("Default", "");
         pComboBox->addItem(QString("ATT"), "ATT");
