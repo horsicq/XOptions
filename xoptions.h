@@ -64,6 +64,7 @@
 #endif
 #if (QT_VERSION_MAJOR < 6) || defined(QT_CORE5COMPAT_LIB)
 #include <QTextCodec>
+#include "codecs/codec_cp437.h"
 #endif
 #if defined(Q_OS_FREEBSD)
 #include <QStandardPaths>
@@ -353,6 +354,7 @@ public:
     void setMaxRecentFilesCount(qint32 nValue);
     qint32 getMaxRecentFilesCount();
     static BUNDLE getBundle();
+    static void registerCodecs();
 
 public slots:
     void clearRecentFiles();

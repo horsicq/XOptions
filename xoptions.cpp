@@ -1667,6 +1667,19 @@ QList<QString> XOptions::getCodePages(bool bAll)
     return listResult;
 }
 #endif
+void XOptions::registerCodecs()
+{
+    #if (QT_VERSION_MAJOR < 6) || defined(QT_CORE5COMPAT_LIB)
+    {
+        codec_cp437 *pCodec = new codec_cp437;
+
+        if (!pCodec) {
+            qFatal("Codec failed");
+        }
+    }
+    #endif
+}
+
 #if (QT_VERSION_MAJOR < 6) || defined(QT_CORE5COMPAT_LIB)
 #ifdef QT_GUI_LIB
 QMenu *XOptions::createCodePagesMenu(QWidget *pParent, bool bAll)

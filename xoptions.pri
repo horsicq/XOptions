@@ -2,10 +2,14 @@ INCLUDEPATH += $$PWD
 DEPENDPATH += $$PWD
 
 HEADERS += \
-    $$PWD/xoptions.h
+    $$PWD/codecs/codec_cp437.h \
+    $$PWD/xoptions.h \
+    $$PWD/codecs/codec_cp437.h
 
 SOURCES += \
-    $$PWD/xoptions.cpp
+    $$PWD/codecs/codec_cp437.cpp \
+    $$PWD/xoptions.cpp \
+    $$PWD/codecs/codec_cp437.cpp
 
 DISTFILES += \
     $$PWD/LICENSE \
