@@ -122,6 +122,8 @@ int codec_cp437::mibEnum() const
 
 QString codec_cp437::convertToUnicode(const char *in, int length, ConverterState *state) const
 {
+    Q_UNUSED(state)
+
     QString str;
     if ( length >= 6 && in[0] == '8' && in[1] == '0' &&
         in[length - 4] == 'F' && in[length - 3] == 'F' &&
