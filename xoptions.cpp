@@ -1669,7 +1669,7 @@ QList<QString> XOptions::getCodePages(bool bAll)
 #endif
 void XOptions::registerCodecs()
 {
-    #if (QT_VERSION_MAJOR < 6) || defined(QT_CORE5COMPAT_LIB)
+#if (QT_VERSION_MAJOR < 6) || defined(QT_CORE5COMPAT_LIB)
     {
         codec_cp437 *pCodec = new codec_cp437;
 
@@ -1677,7 +1677,7 @@ void XOptions::registerCodecs()
             qFatal("Codec failed");
         }
     }
-    #endif
+#endif
 }
 
 #if (QT_VERSION_MAJOR < 6) || defined(QT_CORE5COMPAT_LIB)

@@ -24,8 +24,7 @@
 #include <QTextCodec>
 #include <QObject>
 
-class codec_cp437 : public QTextCodec
-{
+class codec_cp437 : public QTextCodec {
 public:
     codec_cp437();
     ~codec_cp437();
@@ -39,4 +38,4 @@ protected:
     QByteArray convertFromUnicode(const QChar *in, int length, ConverterState *state) const;
 };
 #endif
-#endif // CODEC_CP437_H
+#endif  // CODEC_CP437_H
