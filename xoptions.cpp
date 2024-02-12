@@ -1534,7 +1534,7 @@ bool XOptions::checkNative(const QString &sIniFileName)
     QString sApplicationDirPath = qApp->applicationDirPath();
 
     if ((sApplicationDirPath == "/bin") || (sApplicationDirPath == "/usr/bin") || (sApplicationDirPath == "/usr/local/bin") ||
-        (sApplicationDirPath.contains("/usr/local/bin$")) || isAppImage()) {
+        (sApplicationDirPath == "/app/bin") || (sApplicationDirPath.contains("/usr/local/bin$")) || isAppImage()) {
         bResult = true;
     } else {
         bResult = false;
