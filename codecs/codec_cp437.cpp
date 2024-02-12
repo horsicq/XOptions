@@ -113,6 +113,8 @@ QString codec_cp437::convertToUnicode(const char *in, int length, ConverterState
 
 QByteArray codec_cp437::convertFromUnicode(const QChar *in, int length, ConverterState *state) const
 {
+    Q_UNUSED(state)
+
     QByteArray result;
     unsigned int ch;
     char *out;
