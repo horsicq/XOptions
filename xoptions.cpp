@@ -846,7 +846,9 @@ void XOptions::setComboBox(QComboBox *pComboBox, XOptions::ID id)
         pComboBox->addItem(tr("Automatic"), "auto");
         pComboBox->addItem(QString("Detect It Easy (DiE)"), "die");
         pComboBox->addItem(QString("Nauz File Detector (NFD)"), "nfd");
+#ifdef USE_YARA
         pComboBox->addItem(QString("Yara rules"), "yara");
+#endif
     } else if (id == ID_DISASM_SYNTAX) {
         pComboBox->addItem("Default", "");
         pComboBox->addItem(QString("ATT"), "ATT");
