@@ -106,6 +106,7 @@ XOptions::GROUPID XOptions::getGroupID(ID id)
         case ID_SCAN_VERBOSE:
         case ID_SCAN_ALLTYPES:
         case ID_SCAN_ENGINE:
+        case ID_SCAN_ENGINE_EMPTY:
         case ID_SCAN_DATABASEPATH:
         case ID_SCAN_CUSTOMDATABASEPATH:
         case ID_SCAN_YARARULESPATH:
@@ -395,6 +396,11 @@ void XOptions::clearValue(XOptions::ID id)
     g_mapValues.insert(id, "");
 }
 
+bool XOptions::isValuePresent(ID id)
+{
+    return g_mapValues.contains(id);
+}
+
 QVariant XOptions::getDefaultValue(ID id)
 {
     return g_mapDefaultValues.value(id);
@@ -432,7 +438,9 @@ QString XOptions::idToString(ID id)
         case ID_SCAN_HEURISTIC: sResult = QString("Scan/Heuristic"); break;
         case ID_SCAN_VERBOSE: sResult = QString("Scan/Verbose"); break;
         case ID_SCAN_ALLTYPES: sResult = QString("Scan/AllTypes"); break;
-        case ID_SCAN_ENGINE: sResult = QString("Scan/Engine"); break;
+        case ID_SCAN_ENGINE:
+        case ID_SCAN_ENGINE_EMPTY:
+            sResult = QString("Scan/Engine"); break;
         case ID_SCAN_DATABASEPATH: sResult = QString("Scan/DatabasePath"); break;
         case ID_SCAN_CUSTOMDATABASEPATH: sResult = QString("Scan/UserDatabasePath"); break;
         case ID_SCAN_YARARULESPATH: sResult = QString("Scan/YaraRulesPath"); break;
@@ -624,14 +632,22 @@ QString XOptions::getCustomDatabasePath()
     return getValue(ID_SCAN_CUSTOMDATABASEPATH).toString();
 }
 
+QString XOptions::getScanEngine()
+{
+    QString sResult;
+
+    if (isValuePresent(ID_SCAN_ENGINE)) {
+        sResult = getValue(ID_SCAN_ENGINE).toString();
+    } else if (isValuePresent(ID_SCAN_ENGINE_EMPTY)) {
+        sResult = getValue(ID_SCAN_ENGINE_EMPTY).toString();
+    }
+
+    return sResult;
+}
+
 QString XOptions::getInfoPath()
 {
     return getValue(ID_INFO_PATH).toString();
-}
-
-QString XOptions::getScanEngine()
-{
-    return getValue(ID_SCAN_ENGINE).toString();
 }
 
 QString XOptions::getDisasmSyntax()
@@ -844,6 +860,13 @@ void XOptions::setComboBox(QComboBox *pComboBox, XOptions::ID id)
         }
     } else if (id == ID_SCAN_ENGINE) {
         pComboBox->addItem(tr("Automatic"), "auto");
+        pComboBox->addItem(QString("Detect It Easy (DiE)"), "die");
+        pComboBox->addItem(QString("Nauz File Detector (NFD)"), "nfd");
+#ifdef USE_YARA
+        pComboBox->addItem(QString("Yara rules"), "yara");
+#endif
+    } else if (id == ID_SCAN_ENGINE_EMPTY) {
+        pComboBox->addItem("", "");
         pComboBox->addItem(QString("Detect It Easy (DiE)"), "die");
         pComboBox->addItem(QString("Nauz File Detector (NFD)"), "nfd");
 #ifdef USE_YARA

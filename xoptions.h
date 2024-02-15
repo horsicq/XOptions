@@ -169,6 +169,7 @@ public:
         ID_SCAN_VERBOSE,
         ID_SCAN_ALLTYPES,
         ID_SCAN_ENGINE,
+        ID_SCAN_ENGINE_EMPTY,
         ID_SCAN_DATABASEPATH,
         ID_SCAN_CUSTOMDATABASEPATH,
         ID_SCAN_YARARULESPATH,
@@ -246,6 +247,7 @@ public:
     QVariant getValue(ID id);
     void setValue(ID id, QVariant vValue);
     void clearValue(ID id);
+    bool isValuePresent(ID id);
     QVariant getDefaultValue(ID id);
     static QString idToString(ID id);
     QString getLastDirectory();
@@ -254,8 +256,8 @@ public:
     QList<QString> getRecentFiles();
     QString getDatabasePath();
     QString getCustomDatabasePath();
-    QString getInfoPath();
     QString getScanEngine();
+    QString getInfoPath();
     QString getDisasmSyntax();
     QString getRootPath();
     QString getDataPath();
