@@ -439,8 +439,7 @@ QString XOptions::idToString(ID id)
         case ID_SCAN_VERBOSE: sResult = QString("Scan/Verbose"); break;
         case ID_SCAN_ALLTYPES: sResult = QString("Scan/AllTypes"); break;
         case ID_SCAN_ENGINE:
-        case ID_SCAN_ENGINE_EMPTY:
-            sResult = QString("Scan/Engine"); break;
+        case ID_SCAN_ENGINE_EMPTY: sResult = QString("Scan/Engine"); break;
         case ID_SCAN_DATABASEPATH: sResult = QString("Scan/DatabasePath"); break;
         case ID_SCAN_CUSTOMDATABASEPATH: sResult = QString("Scan/UserDatabasePath"); break;
         case ID_SCAN_YARARULESPATH: sResult = QString("Scan/YaraRulesPath"); break;
@@ -1558,8 +1557,8 @@ bool XOptions::checkNative(const QString &sIniFileName)
 #elif defined(Q_OS_LINUX) || defined(Q_OS_FREEBSD)
     QString sApplicationDirPath = qApp->applicationDirPath();
 
-    if ((sApplicationDirPath == "/bin") || (sApplicationDirPath == "/usr/bin") || (sApplicationDirPath == "/usr/local/bin") ||
-        (sApplicationDirPath == "/app/bin") || (sApplicationDirPath.contains("/usr/local/bin$")) || isAppImage()) {
+    if ((sApplicationDirPath == "/bin") || (sApplicationDirPath == "/usr/bin") || (sApplicationDirPath == "/usr/local/bin") || (sApplicationDirPath == "/app/bin") ||
+        (sApplicationDirPath.contains("/usr/local/bin$")) || isAppImage()) {
         bResult = true;
     } else {
         bResult = false;
