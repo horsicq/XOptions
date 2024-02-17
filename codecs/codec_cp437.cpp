@@ -121,7 +121,7 @@ QByteArray codec_cp437::convertFromUnicode(const QChar *in, int length, Converte
 
     // Determine if the string should be encoded using the UCS-2 hack.
     bool non437 = false;
-    for (int posn = 0; !non437 && posn < length; ++posn) {
+    for (qint32 posn = 0; !non437 && posn < length; ++posn) {
         ch = in[posn].unicode();
         if (ch >= 0x0100) non437 = true;
         else if (cp437FromUnicode[ch] == '?' && ch != '?') non437 = true;
