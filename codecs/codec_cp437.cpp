@@ -19,7 +19,7 @@
  * SOFTWARE.
  */
 #include "codec_cp437.h"
-#if (QT_VERSION_MAJOR == 5) || defined(QT_CORE5COMPAT_LIB)
+#if (QT_VERSION_MAJOR < 6) || defined(QT_CORE5COMPAT_LIB)
 static const char hexchars[] = "0123456789ABCDEF";
 
 // Convert IBM437 character codes 0x00 - 0xFF into Unicode.

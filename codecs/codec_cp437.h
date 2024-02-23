@@ -20,9 +20,9 @@
  */
 #ifndef CODEC_CP437_H
 #define CODEC_CP437_H
-#if (QT_VERSION_MAJOR == 5) || defined(QT_CORE5COMPAT_LIB)
-#include <QTextCodec>
 #include <QObject>
+#if (QT_VERSION_MAJOR < 6) || defined(QT_CORE5COMPAT_LIB)
+#include <QTextCodec>
 
 class codec_cp437 : public QTextCodec {
 public:
