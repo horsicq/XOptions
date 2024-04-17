@@ -989,6 +989,18 @@ QString XOptions::getStructsPath()
 {
     return getValue(XOptions::ID_STRUCTS_PATH).toString();
 }
+
+void XOptions::adjustApplicationInitAttributes()
+{
+#ifdef QT_GUI_LIB
+#if QT_VERSION >= QT_VERSION_CHECK(5, 6, 0)
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
+    QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
+#endif
+#endif
+#endif
+}
+
 #ifdef QT_GUI_LIB
 void XOptions::adjustApplicationView(const QString &sTranslationName, XOptions *pOptions)
 {

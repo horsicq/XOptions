@@ -288,6 +288,7 @@ public:
     QString getApplicationDataPath();
     static QString getTitle(const QString &sName, const QString &sVersion, bool bShowOS = true);
     bool isWritable();
+    static void adjustApplicationInitAttributes();
 #ifdef QT_GUI_LIB
     void setCheckBox(QCheckBox *pCheckBox, ID id);
     void getCheckBox(QCheckBox *pCheckBox, ID id);
