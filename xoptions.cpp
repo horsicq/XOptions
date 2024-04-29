@@ -105,6 +105,7 @@ XOptions::GROUPID XOptions::getGroupID(ID id)
         case ID_SCAN_HEURISTIC:
         case ID_SCAN_VERBOSE:
         case ID_SCAN_ALLTYPES:
+        case ID_SCAN_PROFILING:
         case ID_SCAN_HIGHLIGHT:
         case ID_SCAN_ENGINE:
         case ID_SCAN_ENGINE_EMPTY:
@@ -439,6 +440,7 @@ QString XOptions::idToString(ID id)
         case ID_SCAN_HEURISTIC: sResult = QString("Scan/Heuristic"); break;
         case ID_SCAN_VERBOSE: sResult = QString("Scan/Verbose"); break;
         case ID_SCAN_ALLTYPES: sResult = QString("Scan/AllTypes"); break;
+        case ID_SCAN_PROFILING: sResult = QString("Scan/Profiling"); break;
         case ID_SCAN_HIGHLIGHT: sResult = QString("Scan/Highlight"); break;
         case ID_SCAN_ENGINE:
         case ID_SCAN_ENGINE_EMPTY: sResult = QString("Scan/Engine"); break;
