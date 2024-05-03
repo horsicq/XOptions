@@ -271,7 +271,7 @@ public:
     bool isSaveLastDirectory();
     bool isSaveRecentFiles();
     bool isRestartNeeded();
-    bool isStayOnTop();
+    bool isStayOnTop(); // TODO remove
     bool isScanAfterOpen();
     bool isRecursiveScan();
     bool isDeepScan();
@@ -279,7 +279,7 @@ public:
     bool isVerboseScan();
     bool isAllTypesScan();
     bool isSingleApplication();
-    bool isShowLogo();
+    bool isShowLogo(); // TODO remove
     QString getSearchSignaturesPath();
     QString getStructsPath();
     QString getApplicationLangPath();
