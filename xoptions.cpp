@@ -144,6 +144,7 @@ XOptions::GROUPID XOptions::getGroupID(ID id)
         case ID_DISASM_COLOR_X86_OPCODE_INT3:
         case ID_DISASM_COLOR_X86_OPCODE_SYSCALL:
         case ID_DISASM_COLOR_ARM_REGS_GENERAL:
+        case ID_DISASM_COLOR_ARM_REGS_STACK:
         case ID_DISASM_COLOR_ARM_OPCODE_B:
         case ID_DISASM_COLOR_ARM_OPCODE_BL:
         case ID_DISASM_COLOR_ARM_OPCODE_RET:
@@ -480,6 +481,7 @@ QString XOptions::idToString(ID id)
         case ID_DISASM_COLOR_X86_OPCODE_INT3: sResult = QString("Disasm/Color/x86/Opcode/int3"); break;
         case ID_DISASM_COLOR_X86_OPCODE_SYSCALL: sResult = QString("Disasm/Color/x86/Opcode/syscall"); break;
         case ID_DISASM_COLOR_ARM_REGS_GENERAL: sResult = QString("Disasm/Color/arm/Regs/General"); break;
+        case ID_DISASM_COLOR_ARM_REGS_STACK: sResult = QString("Disasm/Color/arm/Regs/Stack"); break;
         case ID_DISASM_COLOR_ARM_OPCODE_B: sResult = QString("Disasm/Color/arm/Opcode/b"); break;
         case ID_DISASM_COLOR_ARM_OPCODE_BL: sResult = QString("Disasm/Color/arm/Opcode/bl"); break;
         case ID_DISASM_COLOR_ARM_OPCODE_RET: sResult = QString("Disasm/Color/arm/Opcode/ret"); break;
