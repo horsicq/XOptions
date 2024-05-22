@@ -302,6 +302,7 @@ public:
     void getLineEdit(QLineEdit *pLineEdit, ID id);
     void adjustStayOnTop(QWidget *pWidget);
     static void _adjustStayOnTop(QWidget *pWidget, bool bState);
+    static bool _isAjustStayOnTop(QWidget *pWidget);
     static void _adjustApplicationModal(QWidget *pWidget, bool bState);
     static void _adjustFullScreen(QWidget *pWidget, bool bState);
     // mb TODO max/min

@@ -712,6 +712,20 @@ void XOptions::_adjustStayOnTop(QWidget *pWidget, bool bState)
 }
 #endif
 #ifdef QT_GUI_LIB
+bool XOptions::_isAjustStayOnTop(QWidget *pWidget)
+{
+    bool bResult = false;
+
+    Qt::WindowFlags wf = pWidget->windowFlags();
+
+    if (wf & Qt::WindowStaysOnTopHint) {
+        bResult = true;
+    }
+
+    return bResult;
+}
+#endif
+#ifdef QT_GUI_LIB
 void XOptions::_adjustApplicationModal(QWidget *pWidget, bool bState)
 {
     if (bState) {
