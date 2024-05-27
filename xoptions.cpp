@@ -1887,7 +1887,7 @@ QString XOptions::getImageFilter()
 }
 #endif
 #ifdef QT_GUI_LIB
-QColor XOptions::getColorDialog(QWidget *pParent, QString sTitle, QColor &color)
+QColor XOptions::getColorDialog(QWidget *pParent, const QString &sTitle, QColor &color)
 {
     QColor colResult;
 
