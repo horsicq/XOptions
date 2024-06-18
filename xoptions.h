@@ -169,6 +169,7 @@ public:
         ID_SCAN_VERBOSE,
         ID_SCAN_ALLTYPES,
         ID_SCAN_PROFILING,
+        ID_SCAN_BUFFERSIZE,
         ID_SCAN_HIGHLIGHT,
         ID_SCAN_ENGINE,
         ID_SCAN_ENGINE_EMPTY,
