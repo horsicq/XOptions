@@ -156,6 +156,7 @@ public:
         ID_VIEW_SINGLEAPPLICATION,
         ID_VIEW_SHOWLOGO,
         ID_VIEW_FONT,
+        ID_VIEW_FONT_TABLES,
         ID_VIEW_ADVANCED,
         ID_VIEW_SELECTSTYLE,
         ID_FILE_SAVELASTDIRECTORY,
@@ -307,8 +308,9 @@ public:
     static void _adjustApplicationModal(QWidget *pWidget, bool bState);
     static void _adjustFullScreen(QWidget *pWidget, bool bState);
     // mb TODO max/min
-    void adjustFont(QWidget *pWidget);
+    void adjustFont(QWidget *pWidget, ID id = ID_VIEW_FONT);
     void adjustWindow(QWidget *pWidget);
+    void adjustWidget(QWidget *pWidget);
     static void setMonoFont(QWidget *pWidget, qint32 nSize = -1);
     static void adjustApplicationView(const QString &sTranslationName, XOptions *pOptions);
     static void adjustListWidget(QListWidget *pListWidget, qint32 nMinimumWidth = 100);

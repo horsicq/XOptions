@@ -93,6 +93,7 @@ XOptions::GROUPID XOptions::getGroupID(ID id)
         case ID_VIEW_SINGLEAPPLICATION:
         case ID_VIEW_SHOWLOGO:
         case ID_VIEW_FONT:
+        case ID_VIEW_FONT_TABLES:
         case ID_VIEW_ADVANCED:
         case ID_VIEW_SELECTSTYLE: result = GROUPID_VIEW; break;
         case ID_FILE_SAVELASTDIRECTORY:
@@ -430,6 +431,7 @@ QString XOptions::idToString(ID id)
         case ID_VIEW_SINGLEAPPLICATION: sResult = QString("View/SingleApplication"); break;
         case ID_VIEW_SHOWLOGO: sResult = QString("View/ShowLogo"); break;
         case ID_VIEW_FONT: sResult = QString("View/Font"); break;
+        case ID_VIEW_FONT_TABLES: sResult = QString("View/Font/Tables"); break;
         case ID_VIEW_ADVANCED: sResult = QString("View/Advanced"); break;
         case ID_VIEW_SELECTSTYLE: sResult = QString("View/SelectStyle"); break;
         case ID_FILE_SAVELASTDIRECTORY: sResult = QString("File/SaveLastDirectory"); break;
@@ -750,7 +752,7 @@ void XOptions::_adjustFullScreen(QWidget *pWidget, bool bState)
 }
 #endif
 #ifdef QT_GUI_LIB
-void XOptions::adjustFont(QWidget *pWidget)
+void XOptions::adjustFont(QWidget *pWidget, ID id)
 {
     QFont _font;
     QString sFont = getValue(XOptions::ID_VIEW_FONT).toString();
@@ -767,8 +769,14 @@ void XOptions::adjustWindow(QWidget *pWidget)
         adjustStayOnTop(pWidget);
     }
 
+    adjustWidget(pWidget);
+}
+#endif
+#ifdef QT_GUI_LIB
+void XOptions::adjustWidget(QWidget *pWidget)
+{
     if (isIDPresent(XOptions::ID_VIEW_FONT)) {
-        adjustFont(pWidget);
+        adjustFont(pWidget, XOptions::ID_VIEW_FONT);
     }
 }
 #endif
