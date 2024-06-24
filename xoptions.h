@@ -127,6 +127,7 @@ public:
         GROUPID_VIEW,
         GROUPID_EDIT,
         GROUPID_FILE,
+        GROUPID_FONTS,
         GROUPID_SCAN,
         GROUPID_SIGNATURES,
         GROUPID_DEBUGGER,

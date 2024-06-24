@@ -792,8 +792,12 @@ QFont XOptions::getDefaultFont(qint32 nFontSize)
     if (nFontSize == -1) {
 #ifdef Q_OS_MACOS
         nFontSize = 13;
-#else
+#endif
+#ifdef Q_OS_WIN
         nFontSize = 9;
+#endif
+#ifdef Q_OS_LINUX
+        nFontSize = 11;
 #endif
     }
 
@@ -801,7 +805,7 @@ QFont XOptions::getDefaultFont(qint32 nFontSize)
     fontResult = QFont("Segoe UI", nFontSize);
 #endif
 #ifdef Q_OS_LINUX
-    fontResult = QFont("DejaVu Sans Mono", nFontSize);
+    fontResult = QFont("Ubuntu", nFontSize);
 #endif
 #ifdef Q_OS_MACOS
     fontResult = QFont(".AppleSystemUIFont", nFontSize);
@@ -818,7 +822,11 @@ QFont XOptions::getMonoFont(qint32 nFontSize)
     if (nFontSize == -1) {
 #ifdef Q_OS_MACOS
         nFontSize = 12;
-#else
+#endif
+#ifdef Q_OS_WIN
+        nFontSize = 10;
+#endif
+#ifdef Q_OS_LINUX
         nFontSize = 10;
 #endif
     }

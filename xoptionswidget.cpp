@@ -58,6 +58,12 @@ void XOptionsWidget::setOptions(XOptions *pOptions, const QString &sApplicationD
         ui->pageFile->setProperty("GROUPID", XOptions::GROUPID_FILE);
     }
 
+    if (g_pOptions->isIDPresent(XOptions::ID_VIEW_FONT_CONTROLS) ||
+        g_pOptions->isIDPresent(XOptions::ID_VIEW_FONT_TABLES))  {
+        addListRecord(tr("Fonts"), 2);
+        ui->pageFile->setProperty("GROUPID", XOptions::GROUPID_FONTS);
+    }
+
     reload();
 }
 
@@ -148,6 +154,14 @@ void XOptionsWidget::save()
         g_pOptions->getLineEdit(ui->lineEditViewFontTables, XOptions::ID_VIEW_FONT_TABLES);
     }
 
+    if (g_pOptions->isIDPresent(XOptions::ID_HEX_FONT)) {
+        g_pOptions->getLineEdit(ui->lineEditHexFont, XOptions::ID_HEX_FONT);
+    }
+
+    if (g_pOptions->isIDPresent(XOptions::ID_DISASM_FONT)) {
+        g_pOptions->getLineEdit(ui->lineEditDisasmFont, XOptions::ID_DISASM_FONT);
+    }
+
     if (g_pOptions->isIDPresent(XOptions::ID_FILE_SAVELASTDIRECTORY)) {
         g_pOptions->getCheckBox(ui->checkBoxFileSaveLastDirectory, XOptions::ID_FILE_SAVELASTDIRECTORY);
     }
@@ -211,6 +225,18 @@ void XOptionsWidget::reload()
         g_pOptions->setLineEdit(ui->lineEditViewFontTables, XOptions::ID_VIEW_FONT_TABLES);
     } else {
         ui->groupBoxViewFontTables->hide();
+    }
+
+    if (g_pOptions->isIDPresent(XOptions::ID_HEX_FONT)) {
+        g_pOptions->setLineEdit(ui->lineEditHexFont, XOptions::ID_HEX_FONT);
+    } else {
+        ui->groupBoxHexFont->hide();
+    }
+
+    if (g_pOptions->isIDPresent(XOptions::ID_DISASM_FONT)) {
+        g_pOptions->setLineEdit(ui->lineEditDisasmFont, XOptions::ID_DISASM_FONT);
+    } else {
+        ui->groupBoxDisasmFont->hide();
     }
 
     if (g_pOptions->isIDPresent(XOptions::ID_FILE_SAVELASTDIRECTORY)) {
@@ -289,6 +315,16 @@ void XOptionsWidget::on_toolButtonViewFontControls_clicked()
 void XOptionsWidget::on_toolButtonViewFontTables_clicked()
 {
     XOptions::handleFontButton(this, ui->lineEditViewFontTables);
+}
+
+void XOptionsWidget::on_toolButtonHexFont_clicked()
+{
+    XOptions::handleFontButton(this, ui->lineEditHexFont);
+}
+
+void XOptionsWidget::on_toolButtonDisasmFont_clicked()
+{
+    XOptions::handleFontButton(this, ui->lineEditDisasmFont);
 }
 
 void XOptionsWidget::on_pushButtonDefault_clicked()
