@@ -59,6 +59,7 @@
 #include <QStandardItemModel>
 #include <QImageWriter>
 #include <QColorDialog>
+#include <QToolButton>
 #else
 #include <QCoreApplication>
 #endif
@@ -156,6 +157,7 @@ public:
         ID_VIEW_SINGLEAPPLICATION,
         ID_VIEW_SHOWLOGO,
         ID_VIEW_FONT,
+        ID_VIEW_FONT_CONTROLS,
         ID_VIEW_FONT_TABLES,
         ID_VIEW_ADVANCED,
         ID_VIEW_SELECTSTYLE,
@@ -310,7 +312,9 @@ public:
     // mb TODO max/min
     void adjustFont(QWidget *pWidget, ID id = ID_VIEW_FONT);
     void adjustWindow(QWidget *pWidget);
-    void adjustWidget(QWidget *pWidget);
+    void adjustWidget(QWidget *pWidget, ID id = ID_VIEW_FONT);
+    static QFont getDefaultFont(qint32 nFontSize = -1);
+    static QFont getMonoFont(qint32 nFontSize = -1);
     static void setMonoFont(QWidget *pWidget, qint32 nSize = -1);
     static void adjustApplicationView(const QString &sTranslationName, XOptions *pOptions);
     static void adjustListWidget(QListWidget *pListWidget, qint32 nMinimumWidth = 100);
@@ -344,6 +348,7 @@ public:
     static void setTableWidgetHeaderAlignment(QTableWidget *pTableWidget, qint32 nColumn, Qt::Alignment flag);
     static QString getImageFilter();
     static QColor getColorDialog(QWidget *pParent, const QString &sTitle, QColor &color);
+    static void addToolButtonIcon(QToolButton *pToolButton, const QString &sIconName);
 #endif
 #if (QT_VERSION_MAJOR < 6) || defined(QT_CORE5COMPAT_LIB)
     static QList<QString> getCodePages(bool bAll);

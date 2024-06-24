@@ -93,6 +93,7 @@ XOptions::GROUPID XOptions::getGroupID(ID id)
         case ID_VIEW_SINGLEAPPLICATION:
         case ID_VIEW_SHOWLOGO:
         case ID_VIEW_FONT:
+        case ID_VIEW_FONT_CONTROLS:
         case ID_VIEW_FONT_TABLES:
         case ID_VIEW_ADVANCED:
         case ID_VIEW_SELECTSTYLE: result = GROUPID_VIEW; break;
@@ -431,6 +432,7 @@ QString XOptions::idToString(ID id)
         case ID_VIEW_SINGLEAPPLICATION: sResult = QString("View/SingleApplication"); break;
         case ID_VIEW_SHOWLOGO: sResult = QString("View/ShowLogo"); break;
         case ID_VIEW_FONT: sResult = QString("View/Font"); break;
+        case ID_VIEW_FONT_CONTROLS: sResult = QString("View/Font/Controls"); break;
         case ID_VIEW_FONT_TABLES: sResult = QString("View/Font/Tables"); break;
         case ID_VIEW_ADVANCED: sResult = QString("View/Advanced"); break;
         case ID_VIEW_SELECTSTYLE: sResult = QString("View/SelectStyle"); break;
@@ -697,7 +699,9 @@ QString XOptions::getVirusTotalApiKey()
 #ifdef QT_GUI_LIB
 void XOptions::adjustStayOnTop(QWidget *pWidget)
 {
-    _adjustStayOnTop(pWidget, isStayOnTop());
+    if (isIDPresent(XOptions::ID_VIEW_STAYONTOP)) {
+        _adjustStayOnTop(pWidget, isStayOnTop());
+    }
 }
 #endif
 #ifdef QT_GUI_LIB
@@ -755,7 +759,7 @@ void XOptions::_adjustFullScreen(QWidget *pWidget, bool bState)
 void XOptions::adjustFont(QWidget *pWidget, ID id)
 {
     QFont _font;
-    QString sFont = getValue(XOptions::ID_VIEW_FONT).toString();
+    QString sFont = getValue(id).toString();
 
     if ((sFont != "") && _font.fromString(sFont)) {
         pWidget->setFont(_font);
@@ -769,35 +773,77 @@ void XOptions::adjustWindow(QWidget *pWidget)
         adjustStayOnTop(pWidget);
     }
 
-    adjustWidget(pWidget);
+    adjustWidget(pWidget, XOptions::ID_VIEW_FONT);
 }
 #endif
 #ifdef QT_GUI_LIB
-void XOptions::adjustWidget(QWidget *pWidget)
+void XOptions::adjustWidget(QWidget *pWidget, ID id)
 {
-    if (isIDPresent(XOptions::ID_VIEW_FONT)) {
-        adjustFont(pWidget, XOptions::ID_VIEW_FONT);
+    if (isIDPresent(id)) {
+        adjustFont(pWidget, id);
     }
+}
+#endif
+#ifdef QT_GUI_LIB
+QFont XOptions::getDefaultFont(qint32 nFontSize)
+{
+    QFont fontResult;
+
+    if (nFontSize == -1) {
+#ifdef Q_OS_MACOS
+        nFontSize = 13;
+#else
+        nFontSize = 9;
+#endif
+    }
+
+#ifdef Q_OS_WIN
+    fontResult = QFont("Segoe UI", nFontSize);
+#endif
+#ifdef Q_OS_LINUX
+    fontResult = QFont("DejaVu Sans Mono", nFontSize);
+#endif
+#ifdef Q_OS_MACOS
+    fontResult = QFont(".AppleSystemUIFont", nFontSize);
+#endif
+
+    return fontResult;
+}
+#endif
+#ifdef QT_GUI_LIB
+QFont XOptions::getMonoFont(qint32 nFontSize)
+{
+    QFont fontResult;
+
+    if (nFontSize == -1) {
+#ifdef Q_OS_MACOS
+        nFontSize = 12;
+#else
+        nFontSize = 10;
+#endif
+    }
+
+#ifdef Q_OS_WIN
+    fontResult = QFont("Courier", nFontSize);
+#endif
+#ifdef Q_OS_LINUX
+    fontResult = QFont("DejaVu Sans Mono", nFontSize);
+#endif
+#ifdef Q_OS_MACOS
+    fontResult = QFont("Menlo", nFontSize);
+#endif
+
+    return fontResult;
 }
 #endif
 #ifdef QT_GUI_LIB
 void XOptions::setMonoFont(QWidget *pWidget, qint32 nSize)
 {
     QFont font = pWidget->font();
+    QFont fontMono = getMonoFont(nSize);
 
-#ifdef Q_OS_WIN
-    font.setFamily("Courier");
-#endif
-#ifdef Q_OS_LINUX
-    font.setFamily("DejaVu Sans Mono");
-#endif
-#ifdef Q_OS_MACOS
-    font.setFamily("Menlo");  // TODO Check
-#endif
-
-    if (nSize != -1) {
-        font.setPointSize(nSize);
-    }
+    font.setFamily(fontMono.family());
+    font.setPointSize(fontMono.pointSize());
 
     pWidget->setFont(font);
 }
@@ -1923,6 +1969,21 @@ QColor XOptions::getColorDialog(QWidget *pParent, const QString &sTitle, QColor 
     }
 
     return colResult;
+}
+#endif
+#ifdef QT_GUI_LIB
+void XOptions::addToolButtonIcon(QToolButton *pToolButton, const QString &sIconName)
+{
+    if (QFile::exists(sIconName)) {
+        QIcon icon;
+        icon.addFile(sIconName, QSize(), QIcon::Normal, QIcon::Off);
+        pToolButton->setIcon(icon);
+        pToolButton->setIconSize(QSize(16, 16));
+    } else {
+#ifdef QT_DEBUG
+        qDebug("Icon not found: %s", sIconName.toUtf8().data());
+#endif
+    }
 }
 #endif
 XOptions::BUNDLE XOptions::getBundle()

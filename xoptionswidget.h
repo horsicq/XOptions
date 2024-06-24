@@ -50,7 +50,8 @@ public slots:
 private slots:
     void on_listWidgetOptions_currentRowChanged(int nCurrentRow);
     void on_checkBoxFileContext_toggled(bool bChecked);
-    void on_toolButtonViewFont_clicked();
+    void on_toolButtonViewFontControls_clicked();
+    void on_toolButtonViewFontTables_clicked();
     void on_pushButtonDefault_clicked();
     void on_pushButtonOK_clicked();
     void on_pushButtonCancel_clicked();

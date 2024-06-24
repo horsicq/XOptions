@@ -140,8 +140,12 @@ void XOptionsWidget::save()
         g_pOptions->getCheckBox(ui->checkBoxViewShowLogo, XOptions::ID_VIEW_SHOWLOGO);
     }
 
-    if (g_pOptions->isIDPresent(XOptions::ID_VIEW_FONT)) {
-        g_pOptions->getLineEdit(ui->lineEditViewFont, XOptions::ID_VIEW_FONT);
+    if (g_pOptions->isIDPresent(XOptions::ID_VIEW_FONT_CONTROLS)) {
+        g_pOptions->getLineEdit(ui->lineEditViewFontControls, XOptions::ID_VIEW_FONT_CONTROLS);
+    }
+
+    if (g_pOptions->isIDPresent(XOptions::ID_VIEW_FONT_TABLES)) {
+        g_pOptions->getLineEdit(ui->lineEditViewFontTables, XOptions::ID_VIEW_FONT_TABLES);
     }
 
     if (g_pOptions->isIDPresent(XOptions::ID_FILE_SAVELASTDIRECTORY)) {
@@ -197,10 +201,16 @@ void XOptionsWidget::reload()
         ui->checkBoxViewShowLogo->hide();
     }
 
-    if (g_pOptions->isIDPresent(XOptions::ID_VIEW_FONT)) {
-        g_pOptions->setLineEdit(ui->lineEditViewFont, XOptions::ID_VIEW_FONT);
+    if (g_pOptions->isIDPresent(XOptions::ID_VIEW_FONT_CONTROLS)) {
+        g_pOptions->setLineEdit(ui->lineEditViewFontControls, XOptions::ID_VIEW_FONT_CONTROLS);
     } else {
-        ui->groupBoxViewFont->hide();
+        ui->groupBoxViewFontControls->hide();
+    }
+
+    if (g_pOptions->isIDPresent(XOptions::ID_VIEW_FONT_TABLES)) {
+        g_pOptions->setLineEdit(ui->lineEditViewFontTables, XOptions::ID_VIEW_FONT_TABLES);
+    } else {
+        ui->groupBoxViewFontTables->hide();
     }
 
     if (g_pOptions->isIDPresent(XOptions::ID_FILE_SAVELASTDIRECTORY)) {
@@ -271,9 +281,14 @@ void XOptionsWidget::on_checkBoxFileContext_toggled(bool bChecked)
     }
 }
 
-void XOptionsWidget::on_toolButtonViewFont_clicked()
+void XOptionsWidget::on_toolButtonViewFontControls_clicked()
 {
-    XOptions::handleFontButton(this, ui->lineEditViewFont);
+    XOptions::handleFontButton(this, ui->lineEditViewFontControls);
+}
+
+void XOptionsWidget::on_toolButtonViewFontTables_clicked()
+{
+    XOptions::handleFontButton(this, ui->lineEditViewFontTables);
 }
 
 void XOptionsWidget::on_pushButtonDefault_clicked()
