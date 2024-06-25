@@ -21,21 +21,20 @@
 #ifndef XOPTIONSWIDGET_H
 #define XOPTIONSWIDGET_H
 
-#include <QFontDialog>
-#include <QWidget>
-
-#include "xoptions.h"
+#include "xshortcutswidget.h"
 
 namespace Ui {
 class XOptionsWidget;
 }
 
-class XOptionsWidget : public QWidget {
+class XOptionsWidget : public XShortcutsWidget {
     Q_OBJECT
 
 public:
     explicit XOptionsWidget(QWidget *pParent = nullptr);
     ~XOptionsWidget();
+
+    virtual void adjustView();
 
     void setOptions(XOptions *pOptions, const QString &sApplicationDisplayName);
     void addListRecord(const QString &sTitle, qint32 nIndex);
@@ -61,6 +60,9 @@ private slots:
 signals:
     void saveSignal();
     void reloadSignal();
+
+protected:
+    virtual void registerShortcuts(bool bState);
 
 private:
     Ui::XOptionsWidget *ui;

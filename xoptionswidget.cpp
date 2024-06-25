@@ -22,7 +22,7 @@
 
 #include "ui_xoptionswidget.h"
 
-XOptionsWidget::XOptionsWidget(QWidget *pParent) : QWidget(pParent), ui(new Ui::XOptionsWidget)
+XOptionsWidget::XOptionsWidget(QWidget *pParent) : XShortcutsWidget(pParent), ui(new Ui::XOptionsWidget)
 {
     ui->setupUi(this);
 
@@ -41,6 +41,11 @@ XOptionsWidget::XOptionsWidget(QWidget *pParent) : QWidget(pParent), ui(new Ui::
 XOptionsWidget::~XOptionsWidget()
 {
     delete ui;
+}
+
+void XOptionsWidget::adjustView()
+{
+
 }
 
 void XOptionsWidget::setOptions(XOptions *pOptions, const QString &sApplicationDisplayName)
@@ -348,4 +353,9 @@ void XOptionsWidget::on_pushButtonOK_clicked()
 void XOptionsWidget::on_pushButtonCancel_clicked()
 {
     g_pParent->close();
+}
+
+void XOptionsWidget::registerShortcuts(bool bState)
+{
+    Q_UNUSED(bState)
 }
