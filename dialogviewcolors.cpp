@@ -22,7 +22,7 @@
 
 #include "ui_dialogviewcolors.h"
 
-DialogViewColors::DialogViewColors(QWidget *pParent) : QDialog(pParent), ui(new Ui::DialogViewColors)
+DialogViewColors::DialogViewColors(QWidget *pParent) : XShortcutsDialog(pParent), ui(new Ui::DialogViewColors)
 {
     ui->setupUi(this);
 }

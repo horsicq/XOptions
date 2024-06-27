@@ -22,7 +22,7 @@
 #define DIALOGVIEWCOLORS_H
 
 #include <QColorDialog>
-#include <QDialog>
+#include "xshortcutsdialog.h"
 #include <QLineEdit>
 #include <QToolButton>
 
@@ -33,7 +33,7 @@ class DialogViewColors;
 }
 
 // mb TODO TreeView
-class DialogViewColors : public QDialog {
+class DialogViewColors : public XShortcutsDialog {
     Q_OBJECT
 
     enum COLUMN {
@@ -54,6 +54,8 @@ public:
     explicit DialogViewColors(QWidget *pParent = nullptr);
     ~DialogViewColors();
 
+    virtual void adjustView() {}
+
     void setOptions(XOptions *pOptions, const QList<RECORD> &listRecords, const QString &sTitle);
     void save();
 
@@ -64,6 +66,9 @@ private slots:
     void updateRow(qint32 nRow);
     void on_pushButtonOK_clicked();
     void pushButtonSlot();
+
+protected:
+    virtual void registerShortcuts(bool bState) { Q_UNUSED(bState) }
 
 private:
     Ui::DialogViewColors *ui;

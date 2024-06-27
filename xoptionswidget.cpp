@@ -64,7 +64,8 @@ void XOptionsWidget::setOptions(XOptions *pOptions, const QString &sApplicationD
     }
 
     if (g_pOptions->isIDPresent(XOptions::ID_VIEW_FONT_CONTROLS) ||
-        g_pOptions->isIDPresent(XOptions::ID_VIEW_FONT_TABLES))  {
+        g_pOptions->isIDPresent(XOptions::ID_VIEW_FONT_TABLES) ||
+        g_pOptions->isIDPresent(XOptions::ID_VIEW_FONT_TEXTEDITS))  {
         addListRecord(tr("Fonts"), 2);
         ui->pageFile->setProperty("GROUPID", XOptions::GROUPID_FONTS);
     }
@@ -159,6 +160,10 @@ void XOptionsWidget::save()
         g_pOptions->getLineEdit(ui->lineEditViewFontTables, XOptions::ID_VIEW_FONT_TABLES);
     }
 
+    if (g_pOptions->isIDPresent(XOptions::ID_VIEW_FONT_TEXTEDITS)) {
+        g_pOptions->getLineEdit(ui->lineEditViewFontTextEdits, XOptions::ID_VIEW_FONT_TEXTEDITS);
+    }
+
     if (g_pOptions->isIDPresent(XOptions::ID_HEX_FONT)) {
         g_pOptions->getLineEdit(ui->lineEditHexFont, XOptions::ID_HEX_FONT);
     }
@@ -224,6 +229,12 @@ void XOptionsWidget::reload()
         g_pOptions->setLineEdit(ui->lineEditViewFontControls, XOptions::ID_VIEW_FONT_CONTROLS);
     } else {
         ui->groupBoxViewFontControls->hide();
+    }
+
+    if (g_pOptions->isIDPresent(XOptions::ID_VIEW_FONT_TEXTEDITS)) {
+        g_pOptions->setLineEdit(ui->lineEditViewFontTextEdits, XOptions::ID_VIEW_FONT_TEXTEDITS);
+    } else {
+        ui->groupBoxViewFontTextEdits->hide();
     }
 
     if (g_pOptions->isIDPresent(XOptions::ID_VIEW_FONT_TABLES)) {
@@ -332,6 +343,11 @@ void XOptionsWidget::on_toolButtonDisasmFont_clicked()
     XOptions::handleFontButton(this, ui->lineEditDisasmFont);
 }
 
+void XOptionsWidget::on_toolButtonViewFontTextEdits_clicked()
+{
+    XOptions::handleFontButton(this, ui->lineEditViewFontTextEdits);
+}
+
 void XOptionsWidget::on_pushButtonDefault_clicked()
 {
     g_pOptions->resetToDefault();
@@ -359,3 +375,4 @@ void XOptionsWidget::registerShortcuts(bool bState)
 {
     Q_UNUSED(bState)
 }
+

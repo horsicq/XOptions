@@ -95,6 +95,7 @@ XOptions::GROUPID XOptions::getGroupID(ID id)
         case ID_VIEW_FONT:
         case ID_VIEW_FONT_CONTROLS:
         case ID_VIEW_FONT_TABLES:
+        case ID_VIEW_FONT_TEXTEDITS:
         case ID_VIEW_ADVANCED:
         case ID_VIEW_SELECTSTYLE: result = GROUPID_VIEW; break;
         case ID_FILE_SAVELASTDIRECTORY:
@@ -114,8 +115,7 @@ XOptions::GROUPID XOptions::getGroupID(ID id)
         case ID_SCAN_ENGINE_EMPTY:
         case ID_SCAN_DATABASEPATH:
         case ID_SCAN_CUSTOMDATABASEPATH:
-        case ID_SCAN_YARARULESPATH:
-        case ID_SCAN_EDITORFONT: result = GROUPID_SCAN; break;
+        case ID_SCAN_YARARULESPATH: result = GROUPID_SCAN; break;
         case ID_SIGNATURES_PATH: result = GROUPID_SIGNATURES; break;
         case ID_INFO_PATH: result = GROUPID_INFO; break;
         case ID_DISASM_FONT:
@@ -434,6 +434,7 @@ QString XOptions::idToString(ID id)
         case ID_VIEW_FONT: sResult = QString("View/Font"); break;
         case ID_VIEW_FONT_CONTROLS: sResult = QString("View/Font/Controls"); break;
         case ID_VIEW_FONT_TABLES: sResult = QString("View/Font/Tables"); break;
+        case ID_VIEW_FONT_TEXTEDITS: sResult = QString("View/Font/TextEdits"); break;
         case ID_VIEW_ADVANCED: sResult = QString("View/Advanced"); break;
         case ID_VIEW_SELECTSTYLE: sResult = QString("View/SelectStyle"); break;
         case ID_FILE_SAVELASTDIRECTORY: sResult = QString("File/SaveLastDirectory"); break;
@@ -454,7 +455,6 @@ QString XOptions::idToString(ID id)
         case ID_SCAN_DATABASEPATH: sResult = QString("Scan/DatabasePath"); break;
         case ID_SCAN_CUSTOMDATABASEPATH: sResult = QString("Scan/UserDatabasePath"); break;
         case ID_SCAN_YARARULESPATH: sResult = QString("Scan/YaraRulesPath"); break;
-        case ID_SCAN_EDITORFONT: sResult = QString("Scan/EditorFont"); break;
         case ID_SIGNATURES_PATH: sResult = QString("Signatures/Path"); break;
         case ID_INFO_PATH: sResult = QString("Info/Path"); break;
         case ID_ONLINETOOLS_VIRUSTOTAL_APIKEY: sResult = QString("OnlineTools/VirusTotalApi"); break;
