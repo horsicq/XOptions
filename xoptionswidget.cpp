@@ -45,7 +45,6 @@ XOptionsWidget::~XOptionsWidget()
 
 void XOptionsWidget::adjustView()
 {
-
 }
 
 void XOptionsWidget::setOptions(XOptions *pOptions, const QString &sApplicationDisplayName)
@@ -63,10 +62,8 @@ void XOptionsWidget::setOptions(XOptions *pOptions, const QString &sApplicationD
         ui->pageFile->setProperty("GROUPID", XOptions::GROUPID_FILE);
     }
 
-    if (g_pOptions->isIDPresent(XOptions::ID_VIEW_FONT_CONTROLS) ||
-        g_pOptions->isIDPresent(XOptions::ID_VIEW_FONT_TABLEVIEWS) ||
-        g_pOptions->isIDPresent(XOptions::ID_VIEW_FONT_TREEVIEWS) ||
-        g_pOptions->isIDPresent(XOptions::ID_VIEW_FONT_TEXTEDITS))  {
+    if (g_pOptions->isIDPresent(XOptions::ID_VIEW_FONT_CONTROLS) || g_pOptions->isIDPresent(XOptions::ID_VIEW_FONT_TABLEVIEWS) ||
+        g_pOptions->isIDPresent(XOptions::ID_VIEW_FONT_TREEVIEWS) || g_pOptions->isIDPresent(XOptions::ID_VIEW_FONT_TEXTEDITS)) {
         addListRecord(tr("Fonts"), 2);
         ui->pageFile->setProperty("GROUPID", XOptions::GROUPID_FONTS);
     }
@@ -390,4 +387,3 @@ void XOptionsWidget::registerShortcuts(bool bState)
 {
     Q_UNUSED(bState)
 }
-

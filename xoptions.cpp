@@ -1209,7 +1209,7 @@ qint32 XOptions::_getTreeWidgetItemSize(QTreeWidget *pTreeWidget, QTreeWidgetIte
     QFont _font = pTreeWidget->font();
     QString sFont = _font.toString();
 
-    nResult = QFontMetrics(_font).size(Qt::TextSingleLine, sText).width() + ((nIndent + 16) * nLevel); // 16 size of icon
+    nResult = QFontMetrics(_font).size(Qt::TextSingleLine, sText).width() + ((nIndent + 16) * nLevel);  // 16 size of icon
 
     qint32 nNumberOfRecords = pTreeWidgetItem->childCount();
 
