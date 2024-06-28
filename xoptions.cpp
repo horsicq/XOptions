@@ -94,7 +94,8 @@ XOptions::GROUPID XOptions::getGroupID(ID id)
         case ID_VIEW_SHOWLOGO:
         case ID_VIEW_FONT:
         case ID_VIEW_FONT_CONTROLS:
-        case ID_VIEW_FONT_TABLES:
+        case ID_VIEW_FONT_TABLEVIEWS:
+        case ID_VIEW_FONT_TREEVIEWS:
         case ID_VIEW_FONT_TEXTEDITS:
         case ID_VIEW_ADVANCED:
         case ID_VIEW_SELECTSTYLE: result = GROUPID_VIEW; break;
@@ -433,7 +434,8 @@ QString XOptions::idToString(ID id)
         case ID_VIEW_SHOWLOGO: sResult = QString("View/ShowLogo"); break;
         case ID_VIEW_FONT: sResult = QString("View/Font"); break;
         case ID_VIEW_FONT_CONTROLS: sResult = QString("View/Font/Controls"); break;
-        case ID_VIEW_FONT_TABLES: sResult = QString("View/Font/Tables"); break;
+        case ID_VIEW_FONT_TABLEVIEWS: sResult = QString("View/Font/TableViews"); break;
+        case ID_VIEW_FONT_TREEVIEWS: sResult = QString("View/Font/TreeViews"); break;
         case ID_VIEW_FONT_TEXTEDITS: sResult = QString("View/Font/TextEdits"); break;
         case ID_VIEW_ADVANCED: sResult = QString("View/Advanced"); break;
         case ID_VIEW_SELECTSTYLE: sResult = QString("View/SelectStyle"); break;
@@ -756,14 +758,16 @@ void XOptions::_adjustFullScreen(QWidget *pWidget, bool bState)
 }
 #endif
 #ifdef QT_GUI_LIB
-void XOptions::adjustFont(QWidget *pWidget, ID id)
+QFont XOptions::adjustFont(QWidget *pWidget, ID id)
 {
-    QFont _font;
+    QFont result;
     QString sFont = getValue(id).toString();
 
-    if ((sFont != "") && _font.fromString(sFont)) {
-        pWidget->setFont(_font);
+    if ((sFont != "") && result.fromString(sFont)) {
+        pWidget->setFont(result);
     }
+
+    return result;
 }
 #endif
 #ifdef QT_GUI_LIB
@@ -781,6 +785,31 @@ void XOptions::adjustWidget(QWidget *pWidget, ID id)
 {
     if (isIDPresent(id)) {
         adjustFont(pWidget, id);
+    }
+}
+#endif
+#ifdef QT_GUI_LIB
+void XOptions::adjustTableWidget(QTableWidget *pWidget, ID id)
+{
+    if (isIDPresent(id)) {
+        QFont _font = adjustFont(pWidget, id);
+
+        const QFontMetricsF fm(_font);
+
+        qint32 nCharHeight = fm.height();
+
+        pWidget->verticalHeader()->setMinimumSectionSize(nCharHeight);
+        pWidget->verticalHeader()->setDefaultSectionSize(nCharHeight);
+    }
+}
+#endif
+#ifdef QT_GUI_LIB
+void XOptions::adjustTreeWidget(QTreeWidget *pWidget, ID id)
+{
+    if (isIDPresent(id)) {
+        adjustFont(pWidget, id);
+
+        adjustTreeWidgetSize(pWidget);
     }
 }
 #endif
@@ -1155,7 +1184,7 @@ void XOptions::adjustApplicationView(const QString &sTranslationName, XOptions *
 }
 #endif
 #ifdef QT_GUI_LIB
-void XOptions::adjustListWidget(QListWidget *pListWidget, qint32 nMinimumWidth)
+void XOptions::adjustListWidgetSize(QListWidget *pListWidget, qint32 nMinimumWidth)
 {
     qint32 nWidth = nMinimumWidth;
 
@@ -1168,6 +1197,42 @@ void XOptions::adjustListWidget(QListWidget *pListWidget, qint32 nMinimumWidth)
 
     pListWidget->setMinimumWidth(0);
     pListWidget->setMaximumWidth(nWidth);
+}
+#endif
+#ifdef QT_GUI_LIB
+qint32 XOptions::_getTreeWidgetItemSize(QTreeWidget *pTreeWidget, QTreeWidgetItem *pTreeWidgetItem, qint32 nIndent, qint32 nLevel)
+{
+    qint32 nResult = 0;
+
+    QString sText = pTreeWidgetItem->text(0) + "WW";
+
+    QFont _font = pTreeWidget->font();
+    QString sFont = _font.toString();
+
+    nResult = QFontMetrics(_font).size(Qt::TextSingleLine, sText).width() + ((nIndent + 16) * nLevel); // 16 size of icon
+
+    qint32 nNumberOfRecords = pTreeWidgetItem->childCount();
+
+    for (qint32 i = 0; i < nNumberOfRecords; i++) {
+        nResult = qMax(_getTreeWidgetItemSize(pTreeWidget, pTreeWidgetItem->child(i), nIndent, nLevel + 1), nResult);
+    }
+
+    return nResult;
+}
+#endif
+#ifdef QT_GUI_LIB
+void XOptions::adjustTreeWidgetSize(QTreeWidget *pTreeWidget, qint32 nMinimumWidth)
+{
+    qint32 nWidth = nMinimumWidth;
+    qint32 nIndent = pTreeWidget->indentation();
+    qint32 nNumberOfItems = pTreeWidget->topLevelItemCount();
+
+    for (qint32 i = 0; i < nNumberOfItems; i++) {
+        nWidth = qMax(_getTreeWidgetItemSize(pTreeWidget, pTreeWidget->topLevelItem(i), nIndent, 1), nWidth);
+    }
+
+    pTreeWidget->setMinimumWidth(0);
+    pTreeWidget->setMaximumWidth(nWidth);
 }
 #endif
 // #ifdef QT_GUI_LIB

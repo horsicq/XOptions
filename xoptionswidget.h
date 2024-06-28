@@ -51,6 +51,7 @@ private slots:
     void on_checkBoxFileContext_toggled(bool bChecked);
     void on_toolButtonViewFontControls_clicked();
     void on_toolButtonViewFontTables_clicked();
+    void on_toolButtonViewFontTrees_clicked();
     void on_toolButtonHexFont_clicked();
     void on_toolButtonDisasmFont_clicked();
     void on_toolButtonViewFontTextEdits_clicked();

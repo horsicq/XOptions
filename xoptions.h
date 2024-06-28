@@ -60,6 +60,7 @@
 #include <QImageWriter>
 #include <QColorDialog>
 #include <QToolButton>
+#include <QHeaderView>
 #else
 #include <QCoreApplication>
 #endif
@@ -159,7 +160,8 @@ public:
         ID_VIEW_SHOWLOGO,
         ID_VIEW_FONT,
         ID_VIEW_FONT_CONTROLS,
-        ID_VIEW_FONT_TABLES,
+        ID_VIEW_FONT_TABLEVIEWS,
+        ID_VIEW_FONT_TREEVIEWS,
         ID_VIEW_FONT_TEXTEDITS,
         ID_VIEW_ADVANCED,
         ID_VIEW_SELECTSTYLE,
@@ -311,14 +313,18 @@ public:
     static void _adjustApplicationModal(QWidget *pWidget, bool bState);
     static void _adjustFullScreen(QWidget *pWidget, bool bState);
     // mb TODO max/min
-    void adjustFont(QWidget *pWidget, ID id = ID_VIEW_FONT);
+    QFont adjustFont(QWidget *pWidget, ID id = ID_VIEW_FONT);
     void adjustWindow(QWidget *pWidget);
     void adjustWidget(QWidget *pWidget, ID id = ID_VIEW_FONT);
+    void adjustTableWidget(QTableWidget *pWidget, ID id = ID_VIEW_FONT_TABLEVIEWS);
+    void adjustTreeWidget(QTreeWidget *pWidget, ID id = ID_VIEW_FONT_TREEVIEWS);
     static QFont getDefaultFont(qint32 nFontSize = -1);
     static QFont getMonoFont(qint32 nFontSize = -1);
     static void setMonoFont(QWidget *pWidget, qint32 nSize = -1);
     static void adjustApplicationView(const QString &sTranslationName, XOptions *pOptions);
-    static void adjustListWidget(QListWidget *pListWidget, qint32 nMinimumWidth = 100);
+    static void adjustListWidgetSize(QListWidget *pListWidget, qint32 nMinimumWidth = 100);
+    static qint32 _getTreeWidgetItemSize(QTreeWidget *pTreeWidget, QTreeWidgetItem *pTreeWidgetItem, qint32 nIndent, qint32 nLevel);
+    static void adjustTreeWidgetSize(QTreeWidget *pTreeWidget, qint32 nMinimumWidth = 100);
     //    static void adjustApplicationView(QString sApplicationFileName,QString
     //    sTranslationName);
     static QWidget *getMainWidget(QWidget *pWidget);

@@ -64,7 +64,8 @@ void XOptionsWidget::setOptions(XOptions *pOptions, const QString &sApplicationD
     }
 
     if (g_pOptions->isIDPresent(XOptions::ID_VIEW_FONT_CONTROLS) ||
-        g_pOptions->isIDPresent(XOptions::ID_VIEW_FONT_TABLES) ||
+        g_pOptions->isIDPresent(XOptions::ID_VIEW_FONT_TABLEVIEWS) ||
+        g_pOptions->isIDPresent(XOptions::ID_VIEW_FONT_TREEVIEWS) ||
         g_pOptions->isIDPresent(XOptions::ID_VIEW_FONT_TEXTEDITS))  {
         addListRecord(tr("Fonts"), 2);
         ui->pageFile->setProperty("GROUPID", XOptions::GROUPID_FONTS);
@@ -82,7 +83,7 @@ void XOptionsWidget::addListRecord(const QString &sTitle, qint32 nIndex)
 
     ui->listWidgetOptions->addItem(pItem);
 
-    XOptions::adjustListWidget(ui->listWidgetOptions);
+    XOptions::adjustListWidgetSize(ui->listWidgetOptions);
 }
 
 void XOptionsWidget::addPage(QWidget *pWidget, const QString &sTitle)
@@ -156,8 +157,12 @@ void XOptionsWidget::save()
         g_pOptions->getLineEdit(ui->lineEditViewFontControls, XOptions::ID_VIEW_FONT_CONTROLS);
     }
 
-    if (g_pOptions->isIDPresent(XOptions::ID_VIEW_FONT_TABLES)) {
-        g_pOptions->getLineEdit(ui->lineEditViewFontTables, XOptions::ID_VIEW_FONT_TABLES);
+    if (g_pOptions->isIDPresent(XOptions::ID_VIEW_FONT_TABLEVIEWS)) {
+        g_pOptions->getLineEdit(ui->lineEditViewFontTables, XOptions::ID_VIEW_FONT_TABLEVIEWS);
+    }
+
+    if (g_pOptions->isIDPresent(XOptions::ID_VIEW_FONT_TREEVIEWS)) {
+        g_pOptions->getLineEdit(ui->lineEditViewFontTrees, XOptions::ID_VIEW_FONT_TREEVIEWS);
     }
 
     if (g_pOptions->isIDPresent(XOptions::ID_VIEW_FONT_TEXTEDITS)) {
@@ -237,12 +242,17 @@ void XOptionsWidget::reload()
         ui->groupBoxViewFontTextEdits->hide();
     }
 
-    if (g_pOptions->isIDPresent(XOptions::ID_VIEW_FONT_TABLES)) {
-        g_pOptions->setLineEdit(ui->lineEditViewFontTables, XOptions::ID_VIEW_FONT_TABLES);
+    if (g_pOptions->isIDPresent(XOptions::ID_VIEW_FONT_TABLEVIEWS)) {
+        g_pOptions->setLineEdit(ui->lineEditViewFontTables, XOptions::ID_VIEW_FONT_TABLEVIEWS);
     } else {
         ui->groupBoxViewFontTables->hide();
     }
 
+    if (g_pOptions->isIDPresent(XOptions::ID_VIEW_FONT_TREEVIEWS)) {
+        g_pOptions->setLineEdit(ui->lineEditViewFontTrees, XOptions::ID_VIEW_FONT_TREEVIEWS);
+    } else {
+        ui->groupBoxViewFontTrees->hide();
+    }
     if (g_pOptions->isIDPresent(XOptions::ID_HEX_FONT)) {
         g_pOptions->setLineEdit(ui->lineEditHexFont, XOptions::ID_HEX_FONT);
     } else {
@@ -331,6 +341,11 @@ void XOptionsWidget::on_toolButtonViewFontControls_clicked()
 void XOptionsWidget::on_toolButtonViewFontTables_clicked()
 {
     XOptions::handleFontButton(this, ui->lineEditViewFontTables);
+}
+
+void XOptionsWidget::on_toolButtonViewFontTrees_clicked()
+{
+    XOptions::handleFontButton(this, ui->lineEditViewFontTrees);
 }
 
 void XOptionsWidget::on_toolButtonHexFont_clicked()
