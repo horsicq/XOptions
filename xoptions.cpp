@@ -804,12 +804,22 @@ void XOptions::adjustTableWidget(QTableWidget *pWidget, ID id)
 }
 #endif
 #ifdef QT_GUI_LIB
-void XOptions::adjustTreeWidget(QTreeWidget *pWidget, ID id)
+void XOptions::adjustTreeWidget(QTreeWidget *pWidget, ID id, bool bAdjustSize)
 {
     if (isIDPresent(id)) {
         adjustFont(pWidget, id);
+    }
 
+    if (bAdjustSize) {
         adjustTreeWidgetSize(pWidget);
+    }
+}
+#endif
+#ifdef QT_GUI_LIB
+void XOptions::adjustTreeView(QTreeView *pWidget, ID id)
+{
+    if (isIDPresent(id)) {
+        adjustFont(pWidget, id);
     }
 }
 #endif
