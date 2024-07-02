@@ -45,6 +45,14 @@ XOptionsWidget::~XOptionsWidget()
 
 void XOptionsWidget::adjustView()
 {
+    getGlobalOptions()->adjustWidget(this, XOptions::ID_VIEW_FONT_CONTROLS);
+    XShortcutsWidget::adjustViewChildren(this);
+}
+
+void XOptionsWidget::setGlobal(XShortcuts *pShortcuts, XOptions *pXOptions)
+{
+    XShortcutsWidget::setGlobal(pShortcuts, pXOptions);
+    XShortcutsWidget::setGlobalChildren(this, pShortcuts, pXOptions);
 }
 
 void XOptionsWidget::setOptions(XOptions *pOptions, const QString &sApplicationDisplayName)

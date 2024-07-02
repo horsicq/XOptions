@@ -804,6 +804,21 @@ void XOptions::adjustTableWidget(QTableWidget *pWidget, ID id)
 }
 #endif
 #ifdef QT_GUI_LIB
+void XOptions::adjustTableView(QTableView *pWidget, ID id)
+{
+    if (isIDPresent(id)) {
+        QFont _font = adjustFont(pWidget, id);
+
+        const QFontMetricsF fm(_font);
+
+        qint32 nCharHeight = fm.height();
+
+        pWidget->verticalHeader()->setMinimumSectionSize(nCharHeight);
+        pWidget->verticalHeader()->setDefaultSectionSize(nCharHeight);
+    }
+}
+#endif
+#ifdef QT_GUI_LIB
 void XOptions::adjustTreeWidget(QTreeWidget *pWidget, ID id, bool bAdjustSize)
 {
     if (isIDPresent(id)) {

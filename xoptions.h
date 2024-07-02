@@ -317,6 +317,7 @@ public:
     void adjustWindow(QWidget *pWidget);
     void adjustWidget(QWidget *pWidget, ID id = ID_VIEW_FONT);
     void adjustTableWidget(QTableWidget *pWidget, ID id = ID_VIEW_FONT_TABLEVIEWS);
+    void adjustTableView(QTableView *pWidget, ID id = ID_VIEW_FONT_TABLEVIEWS);
     void adjustTreeWidget(QTreeWidget *pWidget, ID id = ID_VIEW_FONT_TREEVIEWS, bool bAdjustSize = false);
     void adjustTreeView(QTreeView *pWidget, ID id = ID_VIEW_FONT_TREEVIEWS);
     static QFont getDefaultFont(qint32 nFontSize = -1);

@@ -35,6 +35,7 @@ public:
     ~XOptionsWidget();
 
     virtual void adjustView();
+    virtual void setGlobal(XShortcuts *pShortcuts, XOptions *pXOptions);
 
     void setOptions(XOptions *pOptions, const QString &sApplicationDisplayName);
     void addListRecord(const QString &sTitle, qint32 nIndex);
