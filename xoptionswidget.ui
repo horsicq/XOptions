@@ -59,7 +59,7 @@
        </sizepolicy>
       </property>
       <property name="currentIndex">
-       <number>2</number>
+       <number>0</number>
       </property>
       <widget class="QWidget" name="pageView">
        <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -91,8 +91,8 @@
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>117</width>
-             <height>232</height>
+             <width>243</width>
+             <height>384</height>
             </rect>
            </property>
            <layout class="QVBoxLayout" name="verticalLayout_8">
