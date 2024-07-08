@@ -204,3 +204,8 @@ void DialogViewColors::pushButtonSlot()
         updateRow(nRow);
     }
 }
+
+void DialogViewColors::registerShortcuts(bool bState)
+{
+    Q_UNUSED(bState)
+}
