@@ -32,6 +32,11 @@ DialogViewColors::~DialogViewColors()
     delete ui;
 }
 
+void DialogViewColors::adjustView()
+{
+
+}
+
 void DialogViewColors::setOptions(XOptions *pOptions, const QList<RECORD> &listRecords, const QString &sTitle)
 {
     g_pOptions = pOptions;
