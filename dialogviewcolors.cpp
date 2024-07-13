@@ -34,7 +34,6 @@ DialogViewColors::~DialogViewColors()
 
 void DialogViewColors::adjustView()
 {
-
 }
 
 void DialogViewColors::setOptions(XOptions *pOptions, const QList<RECORD> &listRecords, const QString &sTitle)
