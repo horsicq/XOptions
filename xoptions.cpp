@@ -104,17 +104,18 @@ XOptions::GROUPID XOptions::getGroupID(ID id)
         case ID_FILE_SAVEBACKUP:
         case ID_FILE_CONTEXT: result = GROUPID_FILE; break;
         case ID_SCAN_SCANAFTEROPEN:
-        case ID_SCAN_RECURSIVE:
-        case ID_SCAN_DEEP:
-        case ID_SCAN_HEURISTIC:
-        case ID_SCAN_VERBOSE:
-        case ID_SCAN_ALLTYPES:
-        case ID_SCAN_PROFILING:
+        case ID_SCAN_FLAG_RECURSIVE:
+        case ID_SCAN_FLAG_DEEP:
+        case ID_SCAN_FLAG_HEURISTIC:
+        case ID_SCAN_FLAG_VERBOSE:
+        case ID_SCAN_FLAG_ALLTYPES:
+        case ID_SCAN_LOG_PROFILING:
         case ID_SCAN_BUFFERSIZE:
         case ID_SCAN_HIGHLIGHT:
         case ID_SCAN_ENGINE:
         case ID_SCAN_ENGINE_EMPTY:
         case ID_SCAN_DATABASEPATH:
+        case ID_SCAN_EXTRADATABASEPATH:
         case ID_SCAN_CUSTOMDATABASEPATH:
         case ID_SCAN_YARARULESPATH: result = GROUPID_SCAN; break;
         case ID_SIGNATURES_PATH: result = GROUPID_SIGNATURES; break;
@@ -315,7 +316,7 @@ void XOptions::load()
         QVariant variant = pSettings->value(sName, varDefault);
 
         if (!variant.toString().contains("$data")) {
-            if ((id == ID_SCAN_DATABASEPATH) || (id == ID_SCAN_CUSTOMDATABASEPATH) || (id == ID_DATAPATH) || (id == ID_SIGNATURES_PATH) || (id == ID_STRUCTS_PATH) ||
+            if ((id == ID_SCAN_DATABASEPATH) || (id == ID_SCAN_EXTRADATABASEPATH)  || (id == ID_SCAN_CUSTOMDATABASEPATH) || (id == ID_DATAPATH) || (id == ID_SIGNATURES_PATH) || (id == ID_STRUCTS_PATH) ||
                 (id == ID_STRUCTSPATH) || (id == ID_INFO_PATH) || (id == ID_SCAN_YARARULESPATH)) {
                 if (!QDir(variant.toString()).exists()) {
                     variant = varDefault;
@@ -444,17 +445,18 @@ QString XOptions::idToString(ID id)
         case ID_FILE_SAVEBACKUP: sResult = QString("File/SaveBackup"); break;
         case ID_FILE_CONTEXT: sResult = QString("File/Context"); break;
         case ID_SCAN_SCANAFTEROPEN: sResult = QString("Scan/ScanAfterOpen"); break;
-        case ID_SCAN_RECURSIVE: sResult = QString("Scan/Recursive"); break;
-        case ID_SCAN_DEEP: sResult = QString("Scan/Deep"); break;
-        case ID_SCAN_HEURISTIC: sResult = QString("Scan/Heuristic"); break;
-        case ID_SCAN_VERBOSE: sResult = QString("Scan/Verbose"); break;
-        case ID_SCAN_ALLTYPES: sResult = QString("Scan/AllTypes"); break;
-        case ID_SCAN_PROFILING: sResult = QString("Scan/Profiling"); break;
+        case ID_SCAN_FLAG_RECURSIVE: sResult = QString("Scan/Flag/Recursive"); break;
+        case ID_SCAN_FLAG_DEEP: sResult = QString("Scan/Flag/Deep"); break;
+        case ID_SCAN_FLAG_HEURISTIC: sResult = QString("Scan/Flag/Heuristic"); break;
+        case ID_SCAN_FLAG_VERBOSE: sResult = QString("Scan/Flag/Verbose"); break;
+        case ID_SCAN_FLAG_ALLTYPES: sResult = QString("Scan/Flag/AllTypes"); break;
+        case ID_SCAN_LOG_PROFILING: sResult = QString("Scan/Log/Profiling"); break;
         case ID_SCAN_BUFFERSIZE: sResult = QString("Scan/BufferSize"); break;
         case ID_SCAN_HIGHLIGHT: sResult = QString("Scan/Highlight"); break;
         case ID_SCAN_ENGINE:
         case ID_SCAN_ENGINE_EMPTY: sResult = QString("Scan/Engine"); break;
         case ID_SCAN_DATABASEPATH: sResult = QString("Scan/DatabasePath"); break;
+        case ID_SCAN_EXTRADATABASEPATH: sResult = QString("Scan/ExtraDatabasePath"); break;
         case ID_SCAN_CUSTOMDATABASEPATH: sResult = QString("Scan/UserDatabasePath"); break;
         case ID_SCAN_YARARULESPATH: sResult = QString("Scan/YaraRulesPath"); break;
         case ID_SIGNATURES_PATH: sResult = QString("Signatures/Path"); break;
@@ -638,6 +640,11 @@ QList<QString> XOptions::getRecentFiles()
 QString XOptions::getDatabasePath()
 {
     return getValue(ID_SCAN_DATABASEPATH).toString();
+}
+
+QString XOptions::getExtraDatabasePath()
+{
+    return getValue(ID_SCAN_EXTRADATABASEPATH).toString();
 }
 
 QString XOptions::getCustomDatabasePath()
@@ -1094,27 +1101,27 @@ bool XOptions::isScanAfterOpen()
 
 bool XOptions::isRecursiveScan()
 {
-    return getValue(XOptions::ID_SCAN_RECURSIVE).toBool();
+    return getValue(XOptions::ID_SCAN_FLAG_RECURSIVE).toBool();
 }
 
 bool XOptions::isDeepScan()
 {
-    return getValue(XOptions::ID_SCAN_DEEP).toBool();
+    return getValue(XOptions::ID_SCAN_FLAG_DEEP).toBool();
 }
 
 bool XOptions::isHeuristicScan()
 {
-    return getValue(XOptions::ID_SCAN_HEURISTIC).toBool();
+    return getValue(XOptions::ID_SCAN_FLAG_HEURISTIC).toBool();
 }
 
 bool XOptions::isVerboseScan()
 {
-    return getValue(XOptions::ID_SCAN_VERBOSE).toBool();
+    return getValue(XOptions::ID_SCAN_FLAG_VERBOSE).toBool();
 }
 
 bool XOptions::isAllTypesScan()
 {
-    return getValue(XOptions::ID_SCAN_ALLTYPES).toBool();
+    return getValue(XOptions::ID_SCAN_FLAG_ALLTYPES).toBool();
 }
 
 bool XOptions::isSingleApplication()

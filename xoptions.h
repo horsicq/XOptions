@@ -170,17 +170,18 @@ public:
         ID_FILE_SAVEBACKUP,
         ID_FILE_CONTEXT,
         ID_SCAN_SCANAFTEROPEN,
-        ID_SCAN_RECURSIVE,
-        ID_SCAN_DEEP,
-        ID_SCAN_HEURISTIC,
-        ID_SCAN_VERBOSE,
-        ID_SCAN_ALLTYPES,
-        ID_SCAN_PROFILING,
+        ID_SCAN_FLAG_RECURSIVE,
+        ID_SCAN_FLAG_DEEP,
+        ID_SCAN_FLAG_HEURISTIC,
+        ID_SCAN_FLAG_VERBOSE,
+        ID_SCAN_FLAG_ALLTYPES,
+        ID_SCAN_LOG_PROFILING,
         ID_SCAN_BUFFERSIZE,
         ID_SCAN_HIGHLIGHT,
         ID_SCAN_ENGINE,
         ID_SCAN_ENGINE_EMPTY,
         ID_SCAN_DATABASEPATH,
+        ID_SCAN_EXTRADATABASEPATH,
         ID_SCAN_CUSTOMDATABASEPATH,
         ID_SCAN_YARARULESPATH,
         ID_SIGNATURES_PATH,
@@ -265,6 +266,7 @@ public:
     void setLastFileName(const QString &sFileName);
     QList<QString> getRecentFiles();
     QString getDatabasePath();
+    QString getExtraDatabasePath();
     QString getCustomDatabasePath();
     QString getScanEngine();
     QString getInfoPath();
