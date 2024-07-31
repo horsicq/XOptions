@@ -114,9 +114,11 @@ XOptions::GROUPID XOptions::getGroupID(ID id)
         case ID_SCAN_HIGHLIGHT:
         case ID_SCAN_ENGINE:
         case ID_SCAN_ENGINE_EMPTY:
-        case ID_SCAN_DATABASEPATH:
-        case ID_SCAN_EXTRADATABASEPATH:
-        case ID_SCAN_CUSTOMDATABASEPATH:
+        case ID_SCAN_DATABASE_MAIN_PATH:
+        case ID_SCAN_DATABASE_EXTRA_PATH:
+        case ID_SCAN_DATABASE_CUSTOM_PATH:
+        case ID_SCAN_DATABASE_EXTRA_ENABLED:
+        case ID_SCAN_DATABASE_CUSTOM_ENABLED:
         case ID_SCAN_YARARULESPATH: result = GROUPID_SCAN; break;
         case ID_SIGNATURES_PATH: result = GROUPID_SIGNATURES; break;
         case ID_INFO_PATH: result = GROUPID_INFO; break;
@@ -316,7 +318,7 @@ void XOptions::load()
         QVariant variant = pSettings->value(sName, varDefault);
 
         if (!variant.toString().contains("$data")) {
-            if ((id == ID_SCAN_DATABASEPATH) || (id == ID_SCAN_EXTRADATABASEPATH)  || (id == ID_SCAN_CUSTOMDATABASEPATH) || (id == ID_DATAPATH) || (id == ID_SIGNATURES_PATH) || (id == ID_STRUCTS_PATH) ||
+            if ((id == ID_SCAN_DATABASE_MAIN_PATH) || (id == ID_SCAN_DATABASE_EXTRA_PATH)  || (id == ID_SCAN_DATABASE_CUSTOM_PATH) || (id == ID_DATAPATH) || (id == ID_SIGNATURES_PATH) || (id == ID_STRUCTS_PATH) ||
                 (id == ID_STRUCTSPATH) || (id == ID_INFO_PATH) || (id == ID_SCAN_YARARULESPATH)) {
                 if (!QDir(variant.toString()).exists()) {
                     variant = varDefault;
@@ -455,9 +457,11 @@ QString XOptions::idToString(ID id)
         case ID_SCAN_HIGHLIGHT: sResult = QString("Scan/Highlight"); break;
         case ID_SCAN_ENGINE:
         case ID_SCAN_ENGINE_EMPTY: sResult = QString("Scan/Engine"); break;
-        case ID_SCAN_DATABASEPATH: sResult = QString("Scan/DatabasePath"); break;
-        case ID_SCAN_EXTRADATABASEPATH: sResult = QString("Scan/ExtraDatabasePath"); break;
-        case ID_SCAN_CUSTOMDATABASEPATH: sResult = QString("Scan/UserDatabasePath"); break;
+        case ID_SCAN_DATABASE_MAIN_PATH: sResult = QString("Scan/Database/Main/Path"); break;
+        case ID_SCAN_DATABASE_EXTRA_PATH: sResult = QString("Scan/Database/Extra/Path"); break;
+        case ID_SCAN_DATABASE_CUSTOM_PATH: sResult = QString("Scan/Database/Custom/Path"); break;
+        case ID_SCAN_DATABASE_EXTRA_ENABLED: sResult = QString("Scan/Database/Extra/Enabled"); break;
+        case ID_SCAN_DATABASE_CUSTOM_ENABLED: sResult = QString("Scan/Database/Custom/Enabled"); break;
         case ID_SCAN_YARARULESPATH: sResult = QString("Scan/YaraRulesPath"); break;
         case ID_SIGNATURES_PATH: sResult = QString("Signatures/Path"); break;
         case ID_INFO_PATH: sResult = QString("Info/Path"); break;
@@ -639,17 +643,17 @@ QList<QString> XOptions::getRecentFiles()
 
 QString XOptions::getDatabasePath()
 {
-    return getValue(ID_SCAN_DATABASEPATH).toString();
+    return getValue(ID_SCAN_DATABASE_MAIN_PATH).toString();
 }
 
 QString XOptions::getExtraDatabasePath()
 {
-    return getValue(ID_SCAN_EXTRADATABASEPATH).toString();
+    return getValue(ID_SCAN_DATABASE_EXTRA_PATH).toString();
 }
 
 QString XOptions::getCustomDatabasePath()
 {
-    return getValue(ID_SCAN_CUSTOMDATABASEPATH).toString();
+    return getValue(ID_SCAN_DATABASE_CUSTOM_PATH).toString();
 }
 
 QString XOptions::getScanEngine()
