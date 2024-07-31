@@ -318,8 +318,8 @@ void XOptions::load()
         QVariant variant = pSettings->value(sName, varDefault);
 
         if (!variant.toString().contains("$data")) {
-            if ((id == ID_SCAN_DATABASE_MAIN_PATH) || (id == ID_SCAN_DATABASE_EXTRA_PATH)  || (id == ID_SCAN_DATABASE_CUSTOM_PATH) || (id == ID_DATAPATH) || (id == ID_SIGNATURES_PATH) || (id == ID_STRUCTS_PATH) ||
-                (id == ID_STRUCTSPATH) || (id == ID_INFO_PATH) || (id == ID_SCAN_YARARULESPATH)) {
+            if ((id == ID_SCAN_DATABASE_MAIN_PATH) || (id == ID_SCAN_DATABASE_EXTRA_PATH) || (id == ID_SCAN_DATABASE_CUSTOM_PATH) || (id == ID_DATAPATH) ||
+                (id == ID_SIGNATURES_PATH) || (id == ID_STRUCTS_PATH) || (id == ID_STRUCTSPATH) || (id == ID_INFO_PATH) || (id == ID_SCAN_YARARULESPATH)) {
                 if (!QDir(variant.toString()).exists()) {
                     variant = varDefault;
                 }
