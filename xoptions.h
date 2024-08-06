@@ -285,11 +285,6 @@ public:
     bool isRestartNeeded();
     bool isStayOnTop();  // TODO remove
     bool isScanAfterOpen();
-    bool isRecursiveScan();
-    bool isDeepScan();
-    bool isHeuristicScan();
-    bool isVerboseScan();
-    bool isAllTypesScan();
     bool isSingleApplication();
     bool isShowLogo();  // TODO remove
     QString getSearchSignaturesPath();

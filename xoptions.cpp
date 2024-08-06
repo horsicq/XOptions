@@ -1103,31 +1103,6 @@ bool XOptions::isScanAfterOpen()
     return getValue(XOptions::ID_SCAN_SCANAFTEROPEN).toBool();
 }
 
-bool XOptions::isRecursiveScan()
-{
-    return getValue(XOptions::ID_SCAN_FLAG_RECURSIVE).toBool();
-}
-
-bool XOptions::isDeepScan()
-{
-    return getValue(XOptions::ID_SCAN_FLAG_DEEP).toBool();
-}
-
-bool XOptions::isHeuristicScan()
-{
-    return getValue(XOptions::ID_SCAN_FLAG_HEURISTIC).toBool();
-}
-
-bool XOptions::isVerboseScan()
-{
-    return getValue(XOptions::ID_SCAN_FLAG_VERBOSE).toBool();
-}
-
-bool XOptions::isAllTypesScan()
-{
-    return getValue(XOptions::ID_SCAN_FLAG_ALLTYPES).toBool();
-}
-
 bool XOptions::isSingleApplication()
 {
     return getValue(XOptions::ID_VIEW_SINGLEAPPLICATION).toBool();
