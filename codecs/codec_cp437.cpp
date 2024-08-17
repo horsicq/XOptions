@@ -84,7 +84,7 @@ QString codec_cp437::convertToUnicode(const char *in, int length, ConverterState
     QString str;
     if (length >= 6 && in[0] == '8' && in[1] == '0' && in[length - 4] == 'F' && in[length - 3] == 'F' && in[length - 2] == 'F' && in[length - 1] == 'F') {
         // UCS-2 string embedded within a 437-encoded string.
-        int nibble = 0;
+        qint32 nibble = 0;
         int value = 0;
         int digit;
         in += 2;
