@@ -106,7 +106,7 @@ QString codec_cp437::convertToUnicode(const char *in, int length, ConverterState
 
     } else {
         // Regular 437-encoded string.
-        while (length-- > 0) str += QChar((unsigned int)cp437ToUnicode[*in++ & 0xFF]);
+        while (length-- > 0) str += QChar((quint32)cp437ToUnicode[*in++ & 0xFF]);
     }
     return str;
 }
@@ -116,7 +116,7 @@ QByteArray codec_cp437::convertFromUnicode(const QChar *in, int length, Converte
     Q_UNUSED(state)
 
     QByteArray result;
-    unsigned int ch;
+    quint32 ch;
     char *out;
 
     // Determine if the string should be encoded using the UCS-2 hack.
