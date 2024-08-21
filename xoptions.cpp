@@ -107,6 +107,7 @@ XOptions::GROUPID XOptions::getGroupID(ID id)
         case ID_SCAN_FLAG_RECURSIVE:
         case ID_SCAN_FLAG_DEEP:
         case ID_SCAN_FLAG_HEURISTIC:
+        case ID_SCAN_FLAG_AGGRESSIVE:
         case ID_SCAN_FLAG_VERBOSE:
         case ID_SCAN_FLAG_ALLTYPES:
         case ID_SCAN_LOG_PROFILING:
@@ -124,7 +125,7 @@ XOptions::GROUPID XOptions::getGroupID(ID id)
         case ID_INFO_PATH: result = GROUPID_INFO; break;
         case ID_DISASM_FONT:
         case ID_DISASM_SYNTAX:
-        case ID_DISASM_ADDRESSCOLON:
+        case ID_DISASM_LOCATIONCOLON:
         case ID_DISASM_UPPERCASE:
         case ID_DISASM_HIGHLIGHT:
         case ID_DISASM_COLOR_ARROWS:
@@ -160,9 +161,9 @@ XOptions::GROUPID XOptions::getGroupID(ID id)
         case ID_DISASM_COLOR_ARM_OPCODE_NOP: result = GROUPID_DISASM; break;
         case ID_DEBUGGER_COLOR_BREAKPOINT: result = GROUPID_DEBUGGER; break;
         case ID_HEX_FONT:
-        case ID_HEX_ADDRESSCOLON: result = GROUPID_HEX; break;
+        case ID_HEX_LOCATIONCOLON: result = GROUPID_HEX; break;
         case ID_STACK_FONT:
-        case ID_STACK_ADDRESSCOLON: result = GROUPID_STACK; break;
+        case ID_STACK_LOCATIONCOLON: result = GROUPID_STACK; break;
         case ID_REGISTERS_FONT: result = GROUPID_REGISTERS; break;
         case ID_IODRIVER_FILENAME:
         case ID_IODRIVER_SERVICENAME: result = GROUPID_IODRIVER; break;
@@ -450,6 +451,7 @@ QString XOptions::idToString(ID id)
         case ID_SCAN_FLAG_RECURSIVE: sResult = QString("Scan/Flag/Recursive"); break;
         case ID_SCAN_FLAG_DEEP: sResult = QString("Scan/Flag/Deep"); break;
         case ID_SCAN_FLAG_HEURISTIC: sResult = QString("Scan/Flag/Heuristic"); break;
+        case ID_SCAN_FLAG_AGGRESSIVE: sResult = QString("Scan/Flag/Aggressive"); break;
         case ID_SCAN_FLAG_VERBOSE: sResult = QString("Scan/Flag/Verbose"); break;
         case ID_SCAN_FLAG_ALLTYPES: sResult = QString("Scan/Flag/AllTypes"); break;
         case ID_SCAN_LOG_PROFILING: sResult = QString("Scan/Log/Profiling"); break;
@@ -467,7 +469,7 @@ QString XOptions::idToString(ID id)
         case ID_INFO_PATH: sResult = QString("Info/Path"); break;
         case ID_ONLINETOOLS_VIRUSTOTAL_APIKEY: sResult = QString("OnlineTools/VirusTotalApi"); break;
         case ID_DISASM_FONT: sResult = QString("Disasm/Font"); break;
-        case ID_DISASM_ADDRESSCOLON: sResult = QString("Disasm/AddressColon"); break;
+        case ID_DISASM_LOCATIONCOLON: sResult = QString("Disasm/LocationColon"); break;
         case ID_DISASM_UPPERCASE: sResult = QString("Disasm/Uppercase"); break;
         case ID_DISASM_HIGHLIGHT: sResult = QString("Disasm/Highlight"); break;
         case ID_DISASM_SYNTAX: sResult = QString("Disasm/Syntax"); break;
@@ -503,9 +505,9 @@ QString XOptions::idToString(ID id)
         case ID_DISASM_COLOR_ARM_OPCODE_POP: sResult = QString("Disasm/Color/arm/Opcode/pop"); break;
         case ID_DISASM_COLOR_ARM_OPCODE_NOP: sResult = QString("Disasm/Color/arm/Opcode/nop"); break;
         case ID_HEX_FONT: sResult = QString("Hex/Font"); break;
-        case ID_HEX_ADDRESSCOLON: sResult = QString("Hex/AddressColon"); break;
+        case ID_HEX_LOCATIONCOLON: sResult = QString("Hex/LocationColon"); break;
         case ID_STACK_FONT: sResult = QString("Stack/Font"); break;
-        case ID_STACK_ADDRESSCOLON: sResult = QString("Stack/AddressColon"); break;
+        case ID_STACK_LOCATIONCOLON: sResult = QString("Stack/LocationColon"); break;
         case ID_REGISTERS_FONT: sResult = QString("Registers/Font"); break;
         case ID_DEBUGGER_COLOR_BREAKPOINT: sResult = QString("Debugger/Color/Breakpoint"); break;
         case ID_IODRIVER_FILENAME: sResult = QString("IODriver/FileName"); break;
