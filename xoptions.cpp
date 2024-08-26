@@ -113,6 +113,7 @@ XOptions::GROUPID XOptions::getGroupID(ID id)
         case ID_SCAN_LOG_PROFILING:
         case ID_SCAN_BUFFERSIZE:
         case ID_SCAN_HIGHLIGHT:
+        case ID_SCAN_SORT:
         case ID_SCAN_ENGINE:
         case ID_SCAN_ENGINE_EMPTY:
         case ID_SCAN_DATABASE_MAIN_PATH:
@@ -457,6 +458,7 @@ QString XOptions::idToString(ID id)
         case ID_SCAN_LOG_PROFILING: sResult = QString("Scan/Log/Profiling"); break;
         case ID_SCAN_BUFFERSIZE: sResult = QString("Scan/BufferSize"); break;
         case ID_SCAN_HIGHLIGHT: sResult = QString("Scan/Highlight"); break;
+        case ID_SCAN_SORT: sResult = QString("Scan/Sort"); break;
         case ID_SCAN_ENGINE:
         case ID_SCAN_ENGINE_EMPTY: sResult = QString("Scan/Engine"); break;
         case ID_SCAN_DATABASE_MAIN_PATH: sResult = QString("Scan/Database/Main/Path"); break;
