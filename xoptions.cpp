@@ -1887,6 +1887,7 @@ void XOptions::registerCodecs()
         if (!pCodec) {
             qFatal("Codec failed");
         }
+        // TODO more codecs
     }
 #endif
 }
