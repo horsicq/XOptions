@@ -260,7 +260,7 @@ public:
     void load();
     void save();
     QVariant getValue(ID id);
-    void setValue(ID id, QVariant vValue);
+    void setValue(ID id, QVariant varValue);
     void clearValue(ID id);
     bool isValuePresent(ID id);
     QVariant getDefaultValue(ID id);

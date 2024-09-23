@@ -390,17 +390,17 @@ QVariant XOptions::getValue(XOptions::ID id)
     return g_mapValues.value(id);
 }
 
-void XOptions::setValue(XOptions::ID id, QVariant vValue)
+void XOptions::setValue(XOptions::ID id, QVariant varValue)
 {
     if ((id == ID_VIEW_STYLE) || (id == ID_VIEW_LANG) || (id == ID_VIEW_QSS)) {
-        QVariant vOld = g_mapValues.value(id);
+        QVariant varOld = g_mapValues.value(id);
 
-        if (vValue != vOld) {
+        if (varValue != varOld) {
             g_bIsNeedRestart = true;
         }
     }
 
-    g_mapValues.insert(id, vValue);
+    g_mapValues.insert(id, varValue);
 }
 
 void XOptions::clearValue(XOptions::ID id)
