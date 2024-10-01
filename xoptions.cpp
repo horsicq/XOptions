@@ -2061,18 +2061,95 @@ QColor XOptions::getColorDialog(QWidget *pParent, const QString &sTitle, QColor 
 }
 #endif
 #ifdef QT_GUI_LIB
-void XOptions::addToolButtonIcon(QToolButton *pToolButton, const QString &sIconName)
+void XOptions::adjustToolButton(QToolButton *pToolButton, ICONTYPE iconType, Qt::ToolButtonStyle style)
 {
-    if (QFile::exists(sIconName)) {
+    QString sIconName = getIconPath(iconType);
+
+    if (sIconName != "") {
         QIcon icon;
         icon.addFile(sIconName, QSize(), QIcon::Normal, QIcon::Off);
         pToolButton->setIcon(icon);
         pToolButton->setIconSize(QSize(16, 16));
+        pToolButton->setToolButtonStyle(style);
     } else {
 #ifdef QT_DEBUG
         qDebug("Icon not found: %s", sIconName.toUtf8().data());
 #endif
     }
+}
+#endif
+#ifdef QT_GUI_LIB
+void XOptions::adjustTreeWidgetItem(QTreeWidgetItem *pTreeWidgetItem, ICONTYPE iconType)
+{
+    QString sIconName = getIconPath(iconType);
+
+    if (sIconName != "") {
+        QIcon icon;
+        icon.addFile(sIconName, QSize(), QIcon::Normal, QIcon::Off);
+        pTreeWidgetItem->setIcon(0, icon);
+    } else {
+#ifdef QT_DEBUG
+        qDebug("Icon not found: %s", sIconName.toUtf8().data());
+#endif
+    }
+}
+#endif
+#ifdef QT_GUI_LIB
+QString XOptions::getIconPath(ICONTYPE iconType)
+{
+    QString sResult;
+
+    if (iconType == ICONTYPE_NONE) {
+        sResult = "://icons/BreakpointDisabled.16.16.png";
+    } else if (iconType == ICONTYPE_GENERIC) {
+        sResult = "://icons/BreakpointEnabled.16.16.png";
+    } else if (iconType == ICONTYPE_HEX) {
+        sResult = "://icons/Binary.16.16.png";
+    } else if (iconType == ICONTYPE_DISASM) {
+        sResult = "://icons/DisassemblyWindow.16.16.png";
+    } else if (iconType == ICONTYPE_ENTROPY) {
+        sResult = "://icons/BreakpointEnabled.16.16.png";
+    } else if (iconType == ICONTYPE_STRING) {
+        sResult = "://icons/String.16.16.png";
+    } else if (iconType == ICONTYPE_SIGNATURE) {
+        sResult = "://icons/Signature.16.16.png";
+    } else if (iconType == ICONTYPE_VALUE) {
+        sResult = ":/icons/Value.16.16.png";
+    } else if (iconType == ICONTYPE_MEMORYMAP) {
+        sResult = "://icons/MemoryMap.16.16.png";
+    } else if (iconType == ICONTYPE_INFO) {
+        sResult = "://icons/Info.16.16.png";
+    } else if (iconType == ICONTYPE_HASH) {
+        sResult = "://icons/BreakpointEnabled.16.16.png";
+    } else if (iconType == ICONTYPE_VISUALIZATION) {
+        sResult = "://icons/Image.16.16.png";
+    } else if (iconType == ICONTYPE_SEARCH) {
+        sResult = "://icons/Search.16.16.png";
+    } else if (iconType == ICONTYPE_OVERLAY) {
+        sResult = "://icons/BreakpointEnabled.16.16.png";
+    } else if (iconType == ICONTYPE_EXTRACTOR) {
+        sResult = "://icons/Extract.16.16.png";
+    } else if (iconType == ICONTYPE_SAVE) {
+        sResult = "://icons/Save.16.16.png";
+    } else if (iconType == ICONTYPE_RELOAD) {
+        sResult = "://icons/Refresh.16.16.png";
+    } else if (iconType == ICONTYPE_SCAN) {
+        sResult = "://icons/Refresh.16.16.png";
+    } else if (iconType == ICONTYPE_DUMP) {
+        sResult = "://icons/Download.16.16.png";
+    } else if (iconType == ICONTYPE_ENTRY) {
+        sResult = "://icons/Entry.16.16.png";
+    } else {
+        sResult = "://icons/BreakpointDisabled.16.16.png";
+    }
+
+    if (sResult != "") {
+        if (!QFile::exists(sResult)) {
+            sResult = "";
+        }
+    }
+
+    return sResult;
 }
 #endif
 XOptions::BUNDLE XOptions::getBundle()

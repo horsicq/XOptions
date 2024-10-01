@@ -244,6 +244,35 @@ public:
         ID_NU_RECENTFILES     // Using if ID_SAVERECENTFILES
     };
 
+    enum ICONTYPE {
+        ICONTYPE_NONE = 0,
+        ICONTYPE_GENERIC,
+        ICONTYPE_INFO,
+        ICONTYPE_HEX,
+        ICONTYPE_DISASM,
+        ICONTYPE_ENTROPY,
+        ICONTYPE_HASH,
+        ICONTYPE_STRING,
+        ICONTYPE_SIGNATURE,
+        ICONTYPE_VALUE,
+        ICONTYPE_MEMORYMAP,
+        ICONTYPE_VISUALIZATION,
+        ICONTYPE_EXTRACTOR,
+        ICONTYPE_SEARCH,
+        ICONTYPE_OVERLAY,
+        ICONTYPE_SAVE,
+        ICONTYPE_RELOAD,
+        ICONTYPE_SCAN,
+        ICONTYPE_DUMP,
+        ICONTYPE_DIE,
+        ICONTYPE_NFD,
+        ICONTYPE_YARA,
+        ICONTYPE_MIME,
+        ICONTYPE_VIRUSTOTAL,
+        ICONTYPE_ENTRY,
+        ICONTYPE_FILE
+    };
+
     explicit XOptions(QObject *pParent = nullptr);
 
     void resetToDefault();
@@ -358,7 +387,9 @@ public:
     static void setTableWidgetHeaderAlignment(QTableWidget *pTableWidget, qint32 nColumn, Qt::Alignment flag);
     static QString getImageFilter();
     static QColor getColorDialog(QWidget *pParent, const QString &sTitle, QColor &color);
-    static void addToolButtonIcon(QToolButton *pToolButton, const QString &sIconName);
+    static void adjustToolButton(QToolButton *pToolButton, ICONTYPE iconType, Qt::ToolButtonStyle style = Qt::ToolButtonTextBesideIcon);
+    static void adjustTreeWidgetItem(QTreeWidgetItem *pTreeWidgetItem, ICONTYPE iconType);
+    static QString getIconPath(ICONTYPE iconType);
 #endif
 #if (QT_VERSION_MAJOR < 6) || defined(QT_CORE5COMPAT_LIB)
     static QList<QString> getCodePages(bool bAll);
