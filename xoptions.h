@@ -261,16 +261,19 @@ public:
         ICONTYPE_SEARCH,
         ICONTYPE_OVERLAY,
         ICONTYPE_SAVE,
+        ICONTYPE_COPY,
         ICONTYPE_RELOAD,
         ICONTYPE_SCAN,
-        ICONTYPE_DUMP,
+        ICONTYPE_DUMPTOFILE,
         ICONTYPE_DIE,
         ICONTYPE_NFD,
         ICONTYPE_YARA,
         ICONTYPE_MIME,
         ICONTYPE_VIRUSTOTAL,
         ICONTYPE_ENTRY,
-        ICONTYPE_FILE
+        ICONTYPE_FILE,
+        ICONTYPE_DATAINSPECTOR,
+        ICONTYPE_GOTO
     };
 
     explicit XOptions(QObject *pParent = nullptr);

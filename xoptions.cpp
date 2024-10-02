@@ -2100,7 +2100,7 @@ QString XOptions::getIconPath(ICONTYPE iconType)
     QString sResult;
 
     if (iconType == ICONTYPE_NONE) {
-        sResult = "://icons/BreakpointDisabled.16.16.png";
+        sResult = "";
     } else if (iconType == ICONTYPE_GENERIC) {
         sResult = "://icons/BreakpointEnabled.16.16.png";
     } else if (iconType == ICONTYPE_HEX) {
@@ -2108,7 +2108,7 @@ QString XOptions::getIconPath(ICONTYPE iconType)
     } else if (iconType == ICONTYPE_DISASM) {
         sResult = "://icons/DisassemblyWindow.16.16.png";
     } else if (iconType == ICONTYPE_ENTROPY) {
-        sResult = "://icons/BreakpointEnabled.16.16.png";
+        sResult = "://icons/Entropy.16.16.png";
     } else if (iconType == ICONTYPE_STRING) {
         sResult = "://icons/String.16.16.png";
     } else if (iconType == ICONTYPE_SIGNATURE) {
@@ -2120,7 +2120,7 @@ QString XOptions::getIconPath(ICONTYPE iconType)
     } else if (iconType == ICONTYPE_INFO) {
         sResult = "://icons/Info.16.16.png";
     } else if (iconType == ICONTYPE_HASH) {
-        sResult = "://icons/BreakpointEnabled.16.16.png";
+        sResult = "://icons/Hash.16.16.png";
     } else if (iconType == ICONTYPE_VISUALIZATION) {
         sResult = "://icons/Image.16.16.png";
     } else if (iconType == ICONTYPE_SEARCH) {
@@ -2131,14 +2131,22 @@ QString XOptions::getIconPath(ICONTYPE iconType)
         sResult = "://icons/Extract.16.16.png";
     } else if (iconType == ICONTYPE_SAVE) {
         sResult = "://icons/Save.16.16.png";
+    } else if (iconType == ICONTYPE_COPY) {
+        sResult = "://icons/Copy.16.16.png";
     } else if (iconType == ICONTYPE_RELOAD) {
         sResult = "://icons/Refresh.16.16.png";
     } else if (iconType == ICONTYPE_SCAN) {
         sResult = "://icons/Refresh.16.16.png";
-    } else if (iconType == ICONTYPE_DUMP) {
+    } else if (iconType == ICONTYPE_DUMPTOFILE) {
         sResult = "://icons/Download.16.16.png";
     } else if (iconType == ICONTYPE_ENTRY) {
         sResult = "://icons/Entry.16.16.png";
+    } else if (iconType == ICONTYPE_YARA) {
+        sResult = "://icons/Yara.16.16.png";
+    } else if (iconType == ICONTYPE_MIME) {
+        sResult = "://icons/Mime.16.16.png";
+    } else if (iconType == ICONTYPE_VIRUSTOTAL) {
+        sResult = "://icons/Virustotal.16.16.png";
     } else {
         sResult = "://icons/BreakpointDisabled.16.16.png";
     }
