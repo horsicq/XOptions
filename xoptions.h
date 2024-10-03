@@ -273,7 +273,12 @@ public:
         ICONTYPE_ENTRY,
         ICONTYPE_FILE,
         ICONTYPE_DATAINSPECTOR,
-        ICONTYPE_GOTO
+        ICONTYPE_GOTO,
+        ICONTYPE_ACTION,
+        ICONTYPE_FOLLOWIN,
+        ICONTYPE_EDIT,
+        ICONTYPE_BACKWARDS,
+        ICONTYPE_FORWARDS
     };
 
     explicit XOptions(QObject *pParent = nullptr);
@@ -393,6 +398,8 @@ public:
     static void adjustToolButton(QToolButton *pToolButton, ICONTYPE iconType, Qt::ToolButtonStyle style = Qt::ToolButtonTextBesideIcon);
     static void adjustTreeWidgetItem(QTreeWidgetItem *pTreeWidgetItem, ICONTYPE iconType);
     static QString getIconPath(ICONTYPE iconType);
+    static void adjustMenu(QMenu *pParentMenu, QMenu *pMenu, QString sText, ICONTYPE iconType);
+    static void adjustAction(QMenu *pParentMenu, QAction *pAction, QString sText, const QObject *pRecv, const char *pMethod, ICONTYPE iconType);
 #endif
 #if (QT_VERSION_MAJOR < 6) || defined(QT_CORE5COMPAT_LIB)
     static QList<QString> getCodePages(bool bAll);

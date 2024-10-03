@@ -2133,6 +2133,8 @@ QString XOptions::getIconPath(ICONTYPE iconType)
         sResult = "://icons/Save.16.16.png";
     } else if (iconType == ICONTYPE_COPY) {
         sResult = "://icons/Copy.16.16.png";
+    } else if (iconType == ICONTYPE_EDIT) {
+        sResult = "://icons/Edit.16.16.png";
     } else if (iconType == ICONTYPE_RELOAD) {
         sResult = "://icons/Refresh.16.16.png";
     } else if (iconType == ICONTYPE_SCAN) {
@@ -2141,6 +2143,10 @@ QString XOptions::getIconPath(ICONTYPE iconType)
         sResult = "://icons/Download.16.16.png";
     } else if (iconType == ICONTYPE_ENTRY) {
         sResult = "://icons/Entry.16.16.png";
+    } else if (iconType == ICONTYPE_BACKWARDS) {
+        sResult = "://icons/Backwards.16.16.png";
+    } else if (iconType == ICONTYPE_FORWARDS) {
+        sResult = "://icons/Forwards.16.16.png";
     } else if (iconType == ICONTYPE_YARA) {
         sResult = "://icons/Yara.16.16.png";
     } else if (iconType == ICONTYPE_MIME) {
@@ -2160,6 +2166,45 @@ QString XOptions::getIconPath(ICONTYPE iconType)
     return sResult;
 }
 #endif
+#ifdef QT_GUI_LIB
+void XOptions::adjustMenu(QMenu *pParentMenu, QMenu *pMenu, QString sText, ICONTYPE iconType)
+{
+    pMenu->setTitle(sText);
+
+    QString sIconPath = XOptions::getIconPath(iconType);
+
+    if (sIconPath != "") {
+        QIcon icon;
+        icon.addFile(sIconPath, QSize(), QIcon::Normal, QIcon::Off);
+        pMenu->setIcon(icon);
+    }
+
+    if (pParentMenu) {
+        pParentMenu->addMenu(pMenu);
+    }
+}
+#endif
+#ifdef QT_GUI_LIB
+void XOptions::adjustAction(QMenu *pParentMenu, QAction *pAction, QString sText, const QObject *pRecv, const char *pMethod, ICONTYPE iconType)
+{
+    connect(pAction, SIGNAL(triggered()), pRecv, pMethod);
+
+    pAction->setText(sText);
+
+    QString sIconPath = XOptions::getIconPath(iconType);
+
+    if (sIconPath != "") {
+        QIcon icon;
+        icon.addFile(sIconPath, QSize(), QIcon::Normal, QIcon::Off);
+        pAction->setIcon(icon);
+    }
+
+    if (pParentMenu) {
+        pParentMenu->addAction(pAction);
+    }
+}
+#endif
+
 XOptions::BUNDLE XOptions::getBundle()
 {
     BUNDLE result = BUNDLE_UNKNOWN;
