@@ -2147,6 +2147,16 @@ QString XOptions::getIconPath(ICONTYPE iconType)
         sResult = "://icons/Backwards.16.16.png";
     } else if (iconType == ICONTYPE_FORWARDS) {
         sResult = "://icons/Forwards.16.16.png";
+    } else if (iconType == ICONTYPE_ADD) {
+        sResult = "://icons/Add.16.16.png";
+    } else if (iconType == ICONTYPE_OPENFILE) {
+        sResult = "://icons/Openfile.16.16.png";
+    } else if (iconType == ICONTYPE_LIST) {
+        sResult = "://icons/List.16.16.png";
+    } else if (iconType == ICONTYPE_NEW) {
+        sResult = "://icons/Add.16.16.png";
+    } else if (iconType == ICONTYPE_OPTIONS) {
+        sResult = "://icons/Options.16.16.png";
     } else if (iconType == ICONTYPE_YARA) {
         sResult = "://icons/Yara.16.16.png";
     } else if (iconType == ICONTYPE_MIME) {
