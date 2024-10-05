@@ -2163,6 +2163,8 @@ QString XOptions::getIconPath(ICONTYPE iconType)
         sResult = "://icons/Mime.16.16.png";
     } else if (iconType == ICONTYPE_VIRUSTOTAL) {
         sResult = "://icons/Virustotal.16.16.png";
+    } else if (iconType == ICONTYPE_TOOLS) {
+        sResult = "://icons/Tools.16.16.png";
     } else {
         sResult = "://icons/BreakpointDisabled.16.16.png";
     }

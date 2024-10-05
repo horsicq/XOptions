@@ -287,7 +287,8 @@ public:
         ICONTYPE_SHORTCUTS,
         ICONTYPE_EXIT,
         ICONTYPE_OPENFILE,
-        ICONTYPE_WEBSITE
+        ICONTYPE_WEBSITE,
+        ICONTYPE_TOOLS
     };
 
     explicit XOptions(QObject *pParent = nullptr);
