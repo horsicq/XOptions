@@ -2106,7 +2106,7 @@ QString XOptions::getIconPath(ICONTYPE iconType)
     } else if (iconType == ICONTYPE_HEX) {
         sResult = "://icons/Binary.16.16.png";
     } else if (iconType == ICONTYPE_DISASM) {
-        sResult = "://icons/DisassemblyWindow.16.16.png";
+        sResult = "://icons/Disasm.16.16.png";
     } else if (iconType == ICONTYPE_ENTROPY) {
         sResult = "://icons/Entropy.16.16.png";
     } else if (iconType == ICONTYPE_STRING) {
@@ -2143,10 +2143,10 @@ QString XOptions::getIconPath(ICONTYPE iconType)
         sResult = "://icons/Download.16.16.png";
     } else if (iconType == ICONTYPE_ENTRY) {
         sResult = "://icons/Entry.16.16.png";
-    } else if (iconType == ICONTYPE_BACKWARDS) {
-        sResult = "://icons/Backwards.16.16.png";
-    } else if (iconType == ICONTYPE_FORWARDS) {
-        sResult = "://icons/Forwards.16.16.png";
+    } else if (iconType == ICONTYPE_BACKWARD) {
+        sResult = "://icons/Backward.16.16.png";
+    } else if (iconType == ICONTYPE_FORWARD) {
+        sResult = "://icons/Forward.16.16.png";
     } else if (iconType == ICONTYPE_ADD) {
         sResult = "://icons/Add.16.16.png";
     } else if (iconType == ICONTYPE_OPENFILE) {
@@ -2155,16 +2155,16 @@ QString XOptions::getIconPath(ICONTYPE iconType)
         sResult = "://icons/List.16.16.png";
     } else if (iconType == ICONTYPE_NEW) {
         sResult = "://icons/Add.16.16.png";
-    } else if (iconType == ICONTYPE_OPTIONS) {
-        sResult = "://icons/Options.16.16.png";
+    } else if (iconType == ICONTYPE_OPTION) {
+        sResult = "://icons/Option.16.16.png";
     } else if (iconType == ICONTYPE_YARA) {
         sResult = "://icons/Yara.16.16.png";
     } else if (iconType == ICONTYPE_MIME) {
         sResult = "://icons/Mime.16.16.png";
     } else if (iconType == ICONTYPE_VIRUSTOTAL) {
         sResult = "://icons/Virustotal.16.16.png";
-    } else if (iconType == ICONTYPE_TOOLS) {
-        sResult = "://icons/Tools.16.16.png";
+    } else if (iconType == ICONTYPE_TOOL) {
+        sResult = "://icons/Tool.16.16.png";
     } else {
         sResult = "://icons/BreakpointDisabled.16.16.png";
     }

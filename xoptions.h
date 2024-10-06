@@ -277,18 +277,18 @@ public:
         ICONTYPE_ACTION,
         ICONTYPE_FOLLOWIN,
         ICONTYPE_EDIT,
-        ICONTYPE_BACKWARDS,
-        ICONTYPE_FORWARDS,
+        ICONTYPE_BACKWARD,
+        ICONTYPE_FORWARD,
         ICONTYPE_ADD,
         ICONTYPE_NEW,
         ICONTYPE_LIST,
         ICONTYPE_DEMANGLE,
-        ICONTYPE_OPTIONS,
-        ICONTYPE_SHORTCUTS,
+        ICONTYPE_OPTION,
+        ICONTYPE_SHORTCUT,
         ICONTYPE_EXIT,
         ICONTYPE_OPENFILE,
         ICONTYPE_WEBSITE,
-        ICONTYPE_TOOLS
+        ICONTYPE_TOOL
     };
 
     explicit XOptions(QObject *pParent = nullptr);
