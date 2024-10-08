@@ -296,6 +296,11 @@ public:
         ICONTYPE_VISUALIZATION,
         ICONTYPE_WEBSITE,
         ICONTYPE_YARA,
+        ICONTYPE_SECTION,
+        ICONTYPE_EXCEPTION,
+        ICONTYPE_CERTIFICATE,
+        ICONTYPE_RELOC,
+        ICONTYPE_DEBUG,
     };
 
     explicit XOptions(QObject *pParent = nullptr);

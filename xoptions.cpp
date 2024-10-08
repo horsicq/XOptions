@@ -2171,6 +2171,8 @@ QString XOptions::getIconPath(ICONTYPE iconType)
         sResult = "://icons/Demangle.16.16.png";
     } else if (iconType == ICONTYPE_SHORTCUT) {
         sResult = "://icons/Shortcut.16.16.png";
+    } else if (iconType == ICONTYPE_GOTO) {
+        sResult = "://icons/Goto.16.16.png";
     } else {
         sResult = "://icons/BreakpointDisabled.16.16.png";
     }
