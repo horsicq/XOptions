@@ -2165,6 +2165,12 @@ QString XOptions::getIconPath(ICONTYPE iconType)
         sResult = "://icons/Virustotal.16.16.png";
     } else if (iconType == ICONTYPE_TOOL) {
         sResult = "://icons/Tool.16.16.png";
+    } else if (iconType == ICONTYPE_EXIT) {
+        sResult = "://icons/Exit.16.16.png";
+    } else if (iconType == ICONTYPE_DEMANGLE) {
+        sResult = "://icons/Demangle.16.16.png";
+    } else if (iconType == ICONTYPE_SHORTCUT) {
+        sResult = "://icons/Shortcut.16.16.png";
     } else {
         sResult = "://icons/BreakpointDisabled.16.16.png";
     }
