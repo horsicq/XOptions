@@ -2197,6 +2197,8 @@ QString XOptions::getIconPath(ICONTYPE iconType)
         sResult = "://icons/DotNet.16.16.png";
     } else if (iconType == ICONTYPE_METADATA) {
         sResult = "://icons/Metadata.16.16.png";
+    } else if (iconType == ICONTYPE_RESOURCE) {
+        sResult = "://icons/Resource.16.16.png";
     } else {
         sResult = "://icons/BreakpointDisabled.16.16.png";
     }
