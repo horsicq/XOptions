@@ -2173,6 +2173,30 @@ QString XOptions::getIconPath(ICONTYPE iconType)
         sResult = "://icons/Shortcut.16.16.png";
     } else if (iconType == ICONTYPE_GOTO) {
         sResult = "://icons/Goto.16.16.png";
+    } else if (iconType == ICONTYPE_SECTION) {
+        sResult = "://icons/Section.16.16.png";
+    } else if (iconType == ICONTYPE_SEGMENT) {
+        sResult = "://icons/Segment.16.16.png";
+    } else if (iconType == ICONTYPE_EXCEPTION) {
+        sResult = "://icons/Exception.16.16.png";
+    } else if (iconType == ICONTYPE_CERTIFICATE) {
+        sResult = "://icons/Certificate.16.16.png";
+    } else if (iconType == ICONTYPE_RELOC) {
+        sResult = "://icons/Reloc.16.16.png";
+    } else if (iconType == ICONTYPE_DEBUG) {
+        sResult = "://icons/Debug.16.16.png";
+    } else if (iconType == ICONTYPE_HEADER) {
+        sResult = "://icons/Header.16.16.png";
+    } else if (iconType == ICONTYPE_LIBRARY) {
+        sResult = "://icons/Library.16.16.png";
+    } else if (iconType == ICONTYPE_SYMBOL) {
+        sResult = "://icons/Symbol.16.16.png";
+    } else if (iconType == ICONTYPE_TABLE) {
+        sResult = "://icons/Table.16.16.png";
+    } else if (iconType == ICONTYPE_DOTNET) {
+        sResult = "://icons/DotNet.16.16.png";
+    } else if (iconType == ICONTYPE_METADATA) {
+        sResult = "://icons/Metadata.16.16.png";
     } else {
         sResult = "://icons/BreakpointDisabled.16.16.png";
     }

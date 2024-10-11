@@ -302,6 +302,11 @@ public:
         ICONTYPE_CERTIFICATE,
         ICONTYPE_RELOC,
         ICONTYPE_DEBUG,
+        ICONTYPE_HEADER,
+        ICONTYPE_LIBRARY,
+        ICONTYPE_SYMBOL,
+        ICONTYPE_TABLE,
+        ICONTYPE_METADATA,
     };
 
     explicit XOptions(QObject *pParent = nullptr);
