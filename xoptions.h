@@ -307,6 +307,7 @@ public:
         ICONTYPE_SYMBOL,
         ICONTYPE_TABLE,
         ICONTYPE_METADATA,
+        ICONTYPE_SELECT,
     };
 
     explicit XOptions(QObject *pParent = nullptr);

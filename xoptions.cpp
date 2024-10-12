@@ -2199,6 +2199,10 @@ QString XOptions::getIconPath(ICONTYPE iconType)
         sResult = "://icons/Metadata.16.16.png";
     } else if (iconType == ICONTYPE_RESOURCE) {
         sResult = "://icons/Resource.16.16.png";
+    } else if (iconType == ICONTYPE_TLS) {
+        sResult = "://icons/TLS.16.16.png";
+    } else if (iconType == ICONTYPE_SELECT) {
+        sResult = "://icons/Select.16.16.png";
     } else {
         sResult = "://icons/BreakpointDisabled.16.16.png";
     }
