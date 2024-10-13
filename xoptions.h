@@ -308,6 +308,8 @@ public:
         ICONTYPE_TABLE,
         ICONTYPE_METADATA,
         ICONTYPE_SELECT,
+        ICONTYPE_ADDRESS,
+        ICONTYPE_OFFSET,
     };
 
     explicit XOptions(QObject *pParent = nullptr);

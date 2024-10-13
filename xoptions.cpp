@@ -2203,6 +2203,10 @@ QString XOptions::getIconPath(ICONTYPE iconType)
         sResult = "://icons/TLS.16.16.png";
     } else if (iconType == ICONTYPE_SELECT) {
         sResult = "://icons/Select.16.16.png";
+    } else if (iconType == ICONTYPE_ADDRESS) {
+        sResult = "://icons/Address.16.16.png";
+    } else if (iconType == ICONTYPE_OFFSET) {
+        sResult = "://icons/Offset.16.16.png";
     } else {
         sResult = "://icons/BreakpointDisabled.16.16.png";
     }
