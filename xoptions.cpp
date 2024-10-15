@@ -114,6 +114,7 @@ XOptions::GROUPID XOptions::getGroupID(ID id)
         case ID_SCAN_BUFFERSIZE:
         case ID_SCAN_HIGHLIGHT:
         case ID_SCAN_SORT:
+        case ID_SCAN_HIDEUNKNOWN:
         case ID_SCAN_ENGINE:
         case ID_SCAN_ENGINE_EMPTY:
         case ID_SCAN_DATABASE_MAIN_PATH:
@@ -459,6 +460,7 @@ QString XOptions::idToString(ID id)
         case ID_SCAN_BUFFERSIZE: sResult = QString("Scan/BufferSize"); break;
         case ID_SCAN_HIGHLIGHT: sResult = QString("Scan/Highlight"); break;
         case ID_SCAN_SORT: sResult = QString("Scan/Sort"); break;
+        case ID_SCAN_HIDEUNKNOWN: sResult = QString("Scan/HideUnknown"); break;
         case ID_SCAN_ENGINE:
         case ID_SCAN_ENGINE_EMPTY: sResult = QString("Scan/Engine"); break;
         case ID_SCAN_DATABASE_MAIN_PATH: sResult = QString("Scan/Database/Main/Path"); break;
@@ -2129,6 +2131,8 @@ QString XOptions::getIconPath(ICONTYPE iconType)
         sResult = "://icons/BreakpointEnabled.16.16.png";
     } else if (iconType == ICONTYPE_EXTRACTOR) {
         sResult = "://icons/Extract.16.16.png";
+    } else if (iconType == ICONTYPE_FILE) {
+        sResult = "://icons/File.16.16.png";
     } else if (iconType == ICONTYPE_SAVE) {
         sResult = "://icons/Save.16.16.png";
     } else if (iconType == ICONTYPE_COPY) {
