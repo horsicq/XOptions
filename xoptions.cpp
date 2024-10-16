@@ -2105,6 +2105,8 @@ QString XOptions::getIconPath(ICONTYPE iconType)
         sResult = "";
     } else if (iconType == ICONTYPE_GENERIC) {
         sResult = "://icons/BreakpointEnabled.16.16.png";
+    // } else if (iconType == ICONTYPE_ACTION) {
+    //     sResult = "://icons/Action.16.16.png";
     } else if (iconType == ICONTYPE_HEX) {
         sResult = "://icons/Binary.16.16.png";
     } else if (iconType == ICONTYPE_DISASM) {
@@ -2153,8 +2155,8 @@ QString XOptions::getIconPath(ICONTYPE iconType)
         sResult = "://icons/Forward.16.16.png";
     } else if (iconType == ICONTYPE_ADD) {
         sResult = "://icons/Add.16.16.png";
-    } else if (iconType == ICONTYPE_OPENFILE) {
-        sResult = "://icons/Openfile.16.16.png";
+    } else if (iconType == ICONTYPE_OPEN) {
+        sResult = "://icons/Open.16.16.png";
     } else if (iconType == ICONTYPE_LIST) {
         sResult = "://icons/List.16.16.png";
     } else if (iconType == ICONTYPE_NEW) {
@@ -2211,6 +2213,12 @@ QString XOptions::getIconPath(ICONTYPE iconType)
         sResult = "://icons/Address.16.16.png";
     } else if (iconType == ICONTYPE_OFFSET) {
         sResult = "://icons/Offset.16.16.png";
+    } else if (iconType == ICONTYPE_IMPORT) {
+        sResult = "://icons/Import.16.16.png";
+    } else if (iconType == ICONTYPE_EXPORT) {
+        sResult = "://icons/Export.16.16.png";
+    } else if (iconType == ICONTYPE_DATA) {
+        sResult = "://icons/Data.16.16.png";
     } else {
         sResult = "://icons/BreakpointDisabled.16.16.png";
     }
