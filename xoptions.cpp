@@ -2233,6 +2233,10 @@ QString XOptions::getIconPath(ICONTYPE iconType)
         sResult = "://icons/DIE.16.16.png";
     } else if (iconType == ICONTYPE_NFD) {
         sResult = "://icons/NFD.16.16.png";
+    } else if (iconType == ICONTYPE_VERSION) {
+        sResult = "://icons/Version.16.16.png";
+    } else if (iconType == ICONTYPE_MANIFEST) {
+        sResult = "://icons/Manifest.16.16.png";
     } else {
         sResult = "://icons/BreakpointDisabled.16.16.png";
     }
