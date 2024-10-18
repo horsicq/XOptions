@@ -1711,6 +1711,16 @@ void XOptions::setTableWidgetHeaderAlignment(QTableWidget *pTableWidget, qint32 
     pTableWidget->model()->setHeaderData(nColumn, Qt::Horizontal, (qint32)flag, Qt::TextAlignmentRole);
 }
 #endif
+
+void XOptions::deleteQObjectList(QList<QObject *> *pList)
+{
+    qint32 nNumberOfRecords = pList->count();
+
+    for (int i = 0; i < nNumberOfRecords; i++) {
+        delete pList->at(i);
+    }
+}
+
 QString XOptions::getApplicationLangPath()
 {
     QString sResult;
@@ -2129,8 +2139,6 @@ QString XOptions::getIconPath(ICONTYPE iconType)
         sResult = "://icons/Image.16.16.png";
     } else if (iconType == ICONTYPE_SEARCH) {
         sResult = "://icons/Search.16.16.png";
-    } else if (iconType == ICONTYPE_OVERLAY) {
-        sResult = "://icons/BreakpointEnabled.16.16.png";
     } else if (iconType == ICONTYPE_EXTRACTOR) {
         sResult = "://icons/Extract.16.16.png";
     } else if (iconType == ICONTYPE_FILE) {
@@ -2141,6 +2149,8 @@ QString XOptions::getIconPath(ICONTYPE iconType)
         sResult = "://icons/Copy.16.16.png";
     } else if (iconType == ICONTYPE_EDIT) {
         sResult = "://icons/Edit.16.16.png";
+    } else if (iconType == ICONTYPE_OVERLAY) {
+        sResult = "://icons/Overlay.16.16.png";
     } else if (iconType == ICONTYPE_RELOAD) {
         sResult = "://icons/Refresh.16.16.png";
     } else if (iconType == ICONTYPE_SCAN) {
