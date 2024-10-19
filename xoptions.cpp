@@ -2115,8 +2115,8 @@ QString XOptions::getIconPath(ICONTYPE iconType)
         sResult = "";
     } else if (iconType == ICONTYPE_GENERIC) {
         sResult = "://icons/BreakpointEnabled.16.16.png";
-    // } else if (iconType == ICONTYPE_ACTION) {
-    //     sResult = "://icons/Action.16.16.png";
+        // } else if (iconType == ICONTYPE_ACTION) {
+        //     sResult = "://icons/Action.16.16.png";
     } else if (iconType == ICONTYPE_HEX) {
         sResult = "://icons/Binary.16.16.png";
     } else if (iconType == ICONTYPE_DISASM) {

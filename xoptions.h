@@ -434,7 +434,7 @@ public:
     static void adjustAction(QMenu *pParentMenu, QAction *pAction, QString sText, const QObject *pRecv, const char *pMethod, ICONTYPE iconType);
 
 #endif
-     static void deleteQObjectList(QList<QObject *> *pList);
+    static void deleteQObjectList(QList<QObject *> *pList);
 #if (QT_VERSION_MAJOR < 6) || defined(QT_CORE5COMPAT_LIB)
     static QList<QString> getCodePages(bool bAll);
 #ifdef QT_GUI_LIB
