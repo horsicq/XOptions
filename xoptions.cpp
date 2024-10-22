@@ -2237,6 +2237,8 @@ QString XOptions::getIconPath(ICONTYPE iconType)
         sResult = "://icons/Version.16.16.png";
     } else if (iconType == ICONTYPE_MANIFEST) {
         sResult = "://icons/Manifest.16.16.png";
+    } else if (iconType == ICONTYPE_FOLLOW) {
+        sResult = "://icons/Follow.16.16.png";
     } else {
         sResult = "://icons/BreakpointDisabled.16.16.png";
     }
