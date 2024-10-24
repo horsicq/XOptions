@@ -1716,7 +1716,7 @@ void XOptions::deleteQObjectList(QList<QObject *> *pList)
 {
     qint32 nNumberOfRecords = pList->count();
 
-    for (int i = 0; i < nNumberOfRecords; i++) {
+    for (qint32 i = 0; i < nNumberOfRecords; i++) {
         delete pList->at(i);
     }
 }
