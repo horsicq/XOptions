@@ -311,6 +311,8 @@ public:
         ICONTYPE_SELECT,
         ICONTYPE_ADDRESS,
         ICONTYPE_OFFSET,
+        ICONTYPE_NEXT,
+        ICONTYPE_ALL
     };
 
     explicit XOptions(QObject *pParent = nullptr);
