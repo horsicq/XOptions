@@ -312,7 +312,9 @@ public:
         ICONTYPE_ADDRESS,
         ICONTYPE_OFFSET,
         ICONTYPE_NEXT,
-        ICONTYPE_ALL
+        ICONTYPE_ALL,
+        ICONTYPE_PATH,
+        ICONTYPE_NOTE
     };
 
     explicit XOptions(QObject *pParent = nullptr);
