@@ -314,7 +314,8 @@ public:
         ICONTYPE_NEXT,
         ICONTYPE_ALL,
         ICONTYPE_PATH,
-        ICONTYPE_NOTE
+        ICONTYPE_NOTE,
+        ICONTYPE_FUNCTION
     };
 
     explicit XOptions(QObject *pParent = nullptr);
