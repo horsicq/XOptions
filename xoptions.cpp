@@ -2243,6 +2243,14 @@ QString XOptions::getIconPath(ICONTYPE iconType)
         sResult = "://icons/Next.16.16.png";
     } else if (iconType == ICONTYPE_ALL) {
         sResult = "://icons/All.16.16.png";
+    } else if (iconType == ICONTYPE_PATH) {
+        sResult = "://icons/Path.16.16.png";
+    } else if (iconType == ICONTYPE_NOTE) {
+        sResult = "://icons/Note.16.16.png";
+    } else if (iconType == ICONTYPE_FUNCTION) {
+        sResult = "://icons/Function.16.16.png";
+    } else if (iconType == ICONTYPE_SCRIPT) {
+        sResult = "://icons/Script.16.16.png";
     } else {
         sResult = "://icons/BreakpointDisabled.16.16.png";
     }
