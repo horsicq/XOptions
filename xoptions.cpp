@@ -2251,6 +2251,12 @@ QString XOptions::getIconPath(ICONTYPE iconType)
         sResult = "://icons/Function.16.16.png";
     } else if (iconType == ICONTYPE_SCRIPT) {
         sResult = "://icons/Script.16.16.png";
+    } else if (iconType == ICONTYPE_PATCH) {
+        sResult = "://icons/Patch.16.16.png";
+    } else if (iconType == ICONTYPE_REMOVE) {
+        sResult = "://icons/Remove.16.16.png";
+    } else if (iconType == ICONTYPE_RESIZE) {
+        sResult = "://icons/Resize.16.16.png";
     } else {
         sResult = "://icons/BreakpointDisabled.16.16.png";
     }
