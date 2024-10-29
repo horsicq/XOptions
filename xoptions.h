@@ -319,7 +319,8 @@ public:
         ICONTYPE_SCRIPT,
         ICONTYPE_PATCH,
         ICONTYPE_REMOVE,
-        ICONTYPE_RESIZE
+        ICONTYPE_RESIZE,
+        ICONTYPE_CODE
     };
 
     explicit XOptions(QObject *pParent = nullptr);
