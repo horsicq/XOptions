@@ -320,7 +320,9 @@ public:
         ICONTYPE_PATCH,
         ICONTYPE_REMOVE,
         ICONTYPE_RESIZE,
-        ICONTYPE_CODE
+        ICONTYPE_CODE,
+        ICONTYPE_REFERENCE,
+        ICONTYPE_BOOKMARK,
     };
 
     explicit XOptions(QObject *pParent = nullptr);
