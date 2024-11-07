@@ -2263,6 +2263,10 @@ QString XOptions::getIconPath(ICONTYPE iconType)
         sResult = "://icons/Reference.16.16.png";
     } else if (iconType == ICONTYPE_BOOKMARK) {
         sResult = "://icons/Bookmark.16.16.png";
+    } else if (iconType == ICONTYPE_INSPECTOR) {
+        sResult = "://icons/Inspector.16.16.png";
+    } else if (iconType == ICONTYPE_CONVERTOR) {
+        sResult = "://icons/Convertor.16.16.png";
     } else {
         sResult = "://icons/BreakpointDisabled.16.16.png";
     }

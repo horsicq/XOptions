@@ -323,6 +323,8 @@ public:
         ICONTYPE_VISUALIZATION,
         ICONTYPE_WEBSITE,
         ICONTYPE_YARA,
+        ICONTYPE_INSPECTOR,
+        ICONTYPE_CONVERTOR,
     };
 
     explicit XOptions(QObject *pParent = nullptr);
