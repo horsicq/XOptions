@@ -781,6 +781,10 @@ QFont XOptions::adjustFont(QWidget *pWidget, ID id)
     QString sFont = getValue(id).toString();
 
     if ((sFont != "") && result.fromString(sFont)) {
+        QFont fontOld = pWidget->font();
+
+        result.setBold(fontOld.bold());
+
         pWidget->setFont(result);
     }
 
