@@ -132,6 +132,12 @@ void XOptionsWidget::setCurrentPage(XOptions::GROUPID groupId)
     }
 }
 
+void XOptionsWidget::reloadData(bool bSaveSelection)
+{
+    Q_UNUSED(bSaveSelection)
+    reload();
+}
+
 void XOptionsWidget::save()
 {
     if (g_pOptions->isIDPresent(XOptions::ID_VIEW_STAYONTOP)) {

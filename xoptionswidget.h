@@ -42,6 +42,7 @@ public:
     void addPage(QWidget *pWidget, const QString &sTitle);
     void setCurrentPage(qint32 nPage);  // TODO Check -> remove
     void setCurrentPage(XOptions::GROUPID groupId);
+    virtual void reloadData(bool bSaveSelection);
 
 public slots:
     void save();
