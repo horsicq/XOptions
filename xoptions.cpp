@@ -1578,6 +1578,16 @@ qint32 XOptions::getCharHeight(QWidget *pWidget)
 }
 #endif
 #ifdef QT_GUI_LIB
+qint32 XOptions::getControlWidth(QWidget *pWidget, qint32 nSymbolSize)
+{
+    QFontMetrics fm(pWidget->font());
+
+    QString sText = QString(nSymbolSize, '0') + QString(2, ' ');
+
+    return fm.boundingRect(sText).width();
+}
+#endif
+#ifdef QT_GUI_LIB
 void XOptions::showInFolder(const QString &sFileName)
 {
     // TODO https://github.com/qt-creator/qt-creator/blob/master/src/plugins/coreplugin/fileutils.cpp#L67

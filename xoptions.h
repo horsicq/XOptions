@@ -432,6 +432,7 @@ public:
     QMenu *createRecentFilesMenu(QWidget *pParent);
     static qint32 getCharWidth(QWidget *pWidget);
     static qint32 getCharHeight(QWidget *pWidget);
+    static qint32 getControlWidth(QWidget *pWidget, qint32 nSymbolSize);
     static void showInFolder(const QString &sFileName);
     static void showFolder(const QString &sDirectory);
     static void handleFontButton(QWidget *pParent, QLineEdit *pLineEdit);
