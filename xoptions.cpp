@@ -2281,6 +2281,8 @@ QString XOptions::getIconPath(ICONTYPE iconType)
         sResult = "://icons/Inspector.16.16.png";
     } else if (iconType == ICONTYPE_CONVERTOR) {
         sResult = "://icons/Convertor.16.16.png";
+    } else if (iconType == ICONTYPE_STRUCTS) {
+        sResult = "://icons/Structs.16.16.png";
     } else {
         sResult = "://icons/BreakpointDisabled.16.16.png";
     }
