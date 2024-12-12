@@ -115,6 +115,13 @@ public:
         // TODO more
     };
 
+    enum WIDGETTYPE {
+        WIDGETTYPE_UNKNOWN = 0,
+        WIDGETTYPE_HEX,
+        WIDGETTYPE_DISASM,
+        WIDGETTYPE_MEMORYMAP
+    };
+
     enum CR {
         CR_SUCCESS = 0,
         CR_CANNOTFINDFILE = 1,
