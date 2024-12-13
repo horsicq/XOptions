@@ -2141,6 +2141,8 @@ QString XOptions::getIconPath(ICONTYPE iconType)
         sResult = "://icons/String.16.16.png";
     } else if (iconType == ICONTYPE_SIGNATURE) {
         sResult = "://icons/Signature.16.16.png";
+    } else if (iconType == ICONTYPE_SIZE) {
+        sResult = "://icons/Size.16.16.png";
     } else if (iconType == ICONTYPE_VALUE) {
         sResult = ":/icons/Value.16.16.png";
     } else if (iconType == ICONTYPE_MEMORYMAP) {
