@@ -7,7 +7,6 @@ endif()
 
 set(XOPTIONSWIDGET_SOURCES
     ${XOPTIONSWIDGET_SOURCES}
-    ${XOPTIONS_SOURCES}
     ${CMAKE_CURRENT_LIST_DIR}/xoptionswidget.cpp
     ${CMAKE_CURRENT_LIST_DIR}/xoptionswidget.h
     ${CMAKE_CURRENT_LIST_DIR}/xoptionswidget.ui
