@@ -119,7 +119,8 @@ public:
         WIDGETTYPE_UNKNOWN = 0,
         WIDGETTYPE_HEX,
         WIDGETTYPE_DISASM,
-        WIDGETTYPE_MEMORYMAP
+        WIDGETTYPE_MEMORYMAP,
+        WIDGETTYPE_CUSTOM
     };
 
     enum CR {
