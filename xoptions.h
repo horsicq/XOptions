@@ -479,6 +479,7 @@ public:
     void setMaxRecentFilesCount(qint32 nValue);
     qint32 getMaxRecentFilesCount();
     static BUNDLE getBundle();
+    static QString getBundleIdToString(BUNDLE bundle);
     static void registerCodecs();
 
 public slots:
