@@ -2007,63 +2007,35 @@ QString XOptions::getBundleIdToString(BUNDLE bundle)
 {
     QString sResult;
 
-    if (bundle == BUNDLE_LINUX_ARCH_X64)
-    {
+    if (bundle == BUNDLE_LINUX_ARCH_X64) {
         sResult = "Linux Arch x64";
-    }
-    else if (bundle == BUNDLE_WINDOWS_QT6_X64)
-    {
+    } else if (bundle == BUNDLE_WINDOWS_QT6_X64) {
         sResult = "Windows Qt6 x64";
-    }
-    else if (bundle == BUNDLE_LINUX_APPIMAGE_X64)
-    {
+    } else if (bundle == BUNDLE_LINUX_APPIMAGE_X64) {
         sResult = "Linux AppImage x64";
-    }
-    else if (bundle == BUNDLE_LINUX_DEBIAN_X64)
-    {
+    } else if (bundle == BUNDLE_LINUX_DEBIAN_X64) {
         sResult = "Linux Debian x64";
-    }
-    else if (bundle == BUNDLE_LINUX_UBUNTU_X64)
-    {
+    } else if (bundle == BUNDLE_LINUX_UBUNTU_X64) {
         sResult = "Linux Ubuntu x64";
-    }
-    else if (bundle == BUNDLE_LINUX_PARROT_X64)
-    {
+    } else if (bundle == BUNDLE_LINUX_PARROT_X64) {
         sResult = "Linux Parrot x64";
-    }
-    else if (bundle == BUNDLE_LINUX_KALI_X64)
-    {
+    } else if (bundle == BUNDLE_LINUX_KALI_X64) {
         sResult = "Linux Kali x64";
-    }
-    else if (bundle == BUNDLE_WINDOWS_XP_X86)
-    {
+    } else if (bundle == BUNDLE_WINDOWS_XP_X86) {
         sResult = "Windows XP x86";
-    }
-    else if (bundle == BUNDLE_WINDOWS_X86)
-    {
+    } else if (bundle == BUNDLE_WINDOWS_X86) {
         sResult = "Windows x86";
-    }
-    else if (bundle == BUNDLE_WINDOWS_X64)
-    {
+    } else if (bundle == BUNDLE_WINDOWS_X64) {
         sResult = "Windows x64";
-    }
-    else if (bundle == BUNDLE_WINDOWS_ARM64)
-    {
+    } else if (bundle == BUNDLE_WINDOWS_ARM64) {
         sResult = "Windows ARM64";
-    }
-    else if (bundle == BUNDLE_MACOS_X64)
-    {
+    } else if (bundle == BUNDLE_MACOS_X64) {
         sResult = "MacOS x64";
-    }
-    else if (bundle == BUNDLE_MACOS_QT6_ARM64)
-    {
+    } else if (bundle == BUNDLE_MACOS_QT6_ARM64) {
         sResult = "MacOS Qt6 ARM64";
-    }
-    else if (bundle == BUNDLE_FREEBSD_X64)
-    {
+    } else if (bundle == BUNDLE_FREEBSD_X64) {
         sResult = "FreeBSD x64";
-    } else
-    {
+    } else {
         sResult = tr("Unknown");
     }
 
