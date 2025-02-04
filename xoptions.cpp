@@ -819,8 +819,8 @@ void XOptions::adjustTableWidget(QTableWidget *pWidget, ID id)
 
         qint32 nCharHeight = fm.height();
 
-        pWidget->verticalHeader()->setMinimumSectionSize(nCharHeight);
-        pWidget->verticalHeader()->setDefaultSectionSize(nCharHeight);
+        pWidget->verticalHeader()->setMinimumSectionSize(nCharHeight + 3);
+        pWidget->verticalHeader()->setDefaultSectionSize(nCharHeight + 3);
     }
 }
 #endif
@@ -834,8 +834,8 @@ void XOptions::adjustTableView(QTableView *pWidget, ID id)
 
         qint32 nCharHeight = fm.height();
 
-        pWidget->verticalHeader()->setMinimumSectionSize(nCharHeight);
-        pWidget->verticalHeader()->setDefaultSectionSize(nCharHeight);
+        pWidget->verticalHeader()->setMinimumSectionSize(nCharHeight + 3);
+        pWidget->verticalHeader()->setDefaultSectionSize(nCharHeight + 3);
     }
 }
 #endif
