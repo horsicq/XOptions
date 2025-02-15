@@ -367,7 +367,6 @@ public:
     QString getCustomDatabasePath();
     QString getScanEngine();
     QString getInfoPath();
-    QString getDisasmSyntax();
     QString getRootPath();
     QString getDataPath();
     QString getJson();
