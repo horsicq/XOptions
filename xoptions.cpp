@@ -2111,6 +2111,7 @@ QColor XOptions::getColorDialog(QWidget *pParent, const QString &sTitle, QColor 
     colorDialog.setCurrentColor(color);
     colorDialog.setWindowTitle(sTitle);
 
+    _adjustApplicationModal(&colorDialog, true);
     _adjustStayOnTop(&colorDialog, true);
 
     if (colorDialog.exec() == QDialog::Accepted) {
