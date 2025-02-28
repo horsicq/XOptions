@@ -498,7 +498,7 @@ signals:
     void setCodePage(const QString &sCodePage);
 
 private:
-    static const qint32 N_MAX_RECENT_FILES_COUNT = 20;  // TODO Set get
+    static const qint32 N_MAX_RECENT_FILES_COUNT = 25;  // TODO Set get
     QString g_sName;
     QList<ID> g_listValueIDs;
     QMap<ID, QVariant> g_mapValues;
