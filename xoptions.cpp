@@ -1822,7 +1822,7 @@ QString XOptions::getApplicationDataPath()
     return sResult;
 }
 
-QString XOptions::getTitle(const QString& sName, const QString& sVersion, bool bShowOS)
+QString XOptions::getTitle(const QString &sName, const QString &sVersion, bool bShowOS)
 {
     QString sResult = QString("%1 v%2").arg(sName, sVersion);
 
@@ -1832,8 +1832,7 @@ QString XOptions::getTitle(const QString& sName, const QString& sVersion, bool b
         QString architecture = QSysInfo::buildCpuArchitecture();
         if (architecture == "x86_64") {
             architecture = "x64";
-        }
-        else if (architecture == "i386" || architecture == "i686") {
+        } else if (architecture == "i386" || architecture == "i686") {
             architecture = "x86";
         }
         sResult += QString(" [%1] (%2)").arg(QSysInfo::prettyProductName(), architecture);
@@ -1844,7 +1843,6 @@ QString XOptions::getTitle(const QString& sName, const QString& sVersion, bool b
 
     return sResult;
 }
-
 
 bool XOptions::isWritable()
 {
