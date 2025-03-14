@@ -2416,16 +2416,15 @@ XOptions::BUNDLE XOptions::getBundle()
     }
 #endif
 #endif
+#ifdef Q_OS_FRREBSD
+    result = BUNDLE_FREEBSD_X64;
+#endif
 #ifdef Q_OS_MACOS
     // TODO
     // TODO QSysInfo::currentCpyArchitecture();
     // M
 #endif
 #endif
-#ifdef Q_OS_FRREBSD
-#ifdef Q_PROCESSOR_X86_64
-    result = BUNDLE_FREEBSD_X64;
-#endif
-#endif
+
     return result;
 }
