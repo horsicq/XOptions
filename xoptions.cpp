@@ -2340,7 +2340,7 @@ QString XOptions::getIconPath(ICONTYPE iconType)
 }
 #endif
 #ifdef QT_GUI_LIB
-void XOptions::adjustMenu(QMenu *pParentMenu, QMenu *pMenu, QString sText, ICONTYPE iconType)
+void XOptions::adjustMenu(QMenu *pParentMenu, QMenu *pMenu, const QString &sText, ICONTYPE iconType)
 {
     pMenu->setTitle(sText);
 

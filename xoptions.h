@@ -455,7 +455,7 @@ public:
     static void adjustToolButton(QToolButton *pToolButton, ICONTYPE iconType, Qt::ToolButtonStyle style = Qt::ToolButtonTextBesideIcon);
     static void adjustTreeWidgetItem(QTreeWidgetItem *pTreeWidgetItem, ICONTYPE iconType);
     static QString getIconPath(ICONTYPE iconType);
-    static void adjustMenu(QMenu *pParentMenu, QMenu *pMenu, QString sText, ICONTYPE iconType);
+    static void adjustMenu(QMenu *pParentMenu, QMenu *pMenu, const QString &sText, ICONTYPE iconType);
     static void adjustAction(QMenu *pParentMenu, QAction *pAction, QString sText, const QObject *pRecv, const char *pMethod, ICONTYPE iconType);
 
 #endif
