@@ -2358,7 +2358,7 @@ void XOptions::adjustMenu(QMenu *pParentMenu, QMenu *pMenu, const QString &sText
 }
 #endif
 #ifdef QT_GUI_LIB
-void XOptions::adjustAction(QMenu *pParentMenu, QAction *pAction, QString sText, const QObject *pRecv, const char *pMethod, ICONTYPE iconType)
+void XOptions::adjustAction(QMenu *pParentMenu, QAction *pAction, const QString &sText, const QObject *pRecv, const char *pMethod, ICONTYPE iconType)
 {
     connect(pAction, SIGNAL(triggered()), pRecv, pMethod);
 
