@@ -1138,7 +1138,25 @@ void XOptions::adjustApplicationInitAttributes()
 #endif
 #endif
 }
+#ifdef QT_GUI_LIB
+QColor XOptions::stringToColor(QString sColor)
+{
+    QColor result;
 
+    if(sColor != "")
+    {
+        result.setNamedColor(sColor);
+    }
+
+    return result;
+}
+#endif
+#ifdef QT_GUI_LIB
+QString XOptions::colorToString(const QColor &color)
+{
+    return color.name();
+}
+#endif
 #ifdef QT_GUI_LIB
 void XOptions::adjustApplicationView(const QString &sTranslationName, XOptions *pOptions)
 {

@@ -457,7 +457,8 @@ public:
     static QString getIconPath(ICONTYPE iconType);
     static void adjustMenu(QMenu *pParentMenu, QMenu *pMenu, const QString &sText, ICONTYPE iconType);
     static void adjustAction(QMenu *pParentMenu, QAction *pAction, const QString &sText, const QObject *pRecv, const char *pMethod, ICONTYPE iconType);
-
+    static QColor stringToColor(QString sColor);
+    static QString colorToString(const QColor &color);
 #endif
     static void deleteQObjectList(QList<QObject *> *pList);
 #if (QT_VERSION_MAJOR < 6) || defined(QT_CORE5COMPAT_LIB)
