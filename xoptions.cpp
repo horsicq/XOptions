@@ -1143,8 +1143,7 @@ QColor XOptions::stringToColor(QString sColor)
 {
     QColor result;
 
-    if(sColor != "")
-    {
+    if (sColor != "") {
         result.setNamedColor(sColor);
     }
 
