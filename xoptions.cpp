@@ -1776,12 +1776,13 @@ bool XOptions::checkNative(const QString &sIniFileName)
 {
     Q_UNUSED(sIniFileName)
 
+    QString sApplicationDirPath = qApp->applicationDirPath();
+    sApplicationDirPath = QDir::cleanPath(sApplicationDirPath);
+
     bool bResult = false;
 #if defined(Q_OS_MAC)
     bResult = true;
 #elif defined(Q_OS_LINUX) || defined(Q_OS_FREEBSD)
-    QString sApplicationDirPath = qApp->applicationDirPath();
-
     if ((sApplicationDirPath == "/bin") || (sApplicationDirPath == "/usr/bin") || (sApplicationDirPath == "/usr/local/bin") || (sApplicationDirPath == "/app/bin") ||
         (sApplicationDirPath.contains("/usr/local/bin$")) || isAppImage()) {
         bResult = true;
@@ -1789,18 +1790,12 @@ bool XOptions::checkNative(const QString &sIniFileName)
         bResult = false;
     }
 #elif defined(Q_OS_WIN)
-    QString sApplicationDirPath = qApp->applicationDirPath();
-
-    if (sApplicationDirPath.contains("C:\\Program Files\\") || sApplicationDirPath.contains("C:\\Program Files (x86)\\")) {
+    if (sApplicationDirPath.toLower().contains(":\\program files")) {
         bResult = true;
     }
 #endif
 
-    //    if (!bResult) {
-    //        QSettings settings(qApp->applicationDirPath() + QDir::separator() + QString("%1").arg(sIniFileName), QSettings::IniFormat);
-
-    //        bResult = !(settings.isWritable());
-    //    }
+    bResult = bResult || (!QFileInfo(sApplicationDirPath).isWritable());
 
     return bResult;
 }
