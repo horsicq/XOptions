@@ -2129,7 +2129,7 @@ QColor XOptions::getColorDialog(QWidget *pParent, const QString &sTitle, QColor 
     colorDialog.setCurrentColor(color);
     colorDialog.setWindowTitle(sTitle);
 
-    _adjustApplicationModal(&colorDialog, true);
+    _adjustApplicationModal(&colorDialog, true); // TODO Check on Ubuntu
     _adjustStayOnTop(&colorDialog, true);
 
     if (colorDialog.exec() == QDialog::Accepted) {
