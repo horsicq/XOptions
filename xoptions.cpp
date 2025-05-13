@@ -1932,7 +1932,122 @@ void XOptions::registerCodecs()
     }
 #endif
 }
+#ifndef QT_GUI_LIB
+void XOptions::printConsole(QString sString, Qt::GlobalColor color)
+{
+#ifdef Q_OS_WIN
+    HANDLE hConsole = 0;
+    WORD wOldAttribute = 0;
 
+    if (color != Qt::transparent) {
+        hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+
+        CONSOLE_SCREEN_BUFFER_INFO csbi = {};
+
+        if (GetConsoleScreenBufferInfo(hConsole, &csbi)) {
+            wOldAttribute = csbi.wAttributes;
+        }
+
+        WORD wAttribute = 0;
+
+        if (color == Qt::black) {
+            wAttribute = 0;  // Black (no bits set)
+        } else if (color == Qt::white) {
+            wAttribute = FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE;
+        } else if (color == Qt::blue) {
+            wAttribute = FOREGROUND_BLUE;
+        } else if (color == Qt::red) {
+            wAttribute = FOREGROUND_RED;
+        } else if (color == Qt::green) {
+            wAttribute = FOREGROUND_GREEN;
+        } else if (color == Qt::yellow) {
+            wAttribute = FOREGROUND_RED | FOREGROUND_GREEN;
+        } else if (color == Qt::magenta) {
+            wAttribute = FOREGROUND_RED | FOREGROUND_BLUE;
+        } else if (color == Qt::cyan) {
+            wAttribute = FOREGROUND_GREEN | FOREGROUND_BLUE;
+        } else if (color == Qt::darkBlue) {
+            wAttribute = FOREGROUND_BLUE | FOREGROUND_INTENSITY;
+        } else if (color == Qt::darkRed) {
+            wAttribute = FOREGROUND_RED | FOREGROUND_INTENSITY;
+        } else if (color == Qt::darkGreen) {
+            wAttribute = FOREGROUND_GREEN | FOREGROUND_INTENSITY;
+        } else if (color == Qt::darkYellow) {
+            wAttribute = FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_INTENSITY;
+        } else if (color == Qt::darkMagenta) {
+            wAttribute = FOREGROUND_RED | FOREGROUND_BLUE | FOREGROUND_INTENSITY;
+        } else if (color == Qt::darkCyan) {
+            wAttribute = FOREGROUND_GREEN | FOREGROUND_BLUE | FOREGROUND_INTENSITY;
+        } else if (color == Qt::gray) {
+            wAttribute = FOREGROUND_INTENSITY;
+        } else if (color == Qt::darkGray) {
+            wAttribute = FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE | FOREGROUND_INTENSITY;
+        } else if (color == Qt::transparent) {
+            // Use default color for transparent
+            wAttribute = FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE;
+        }
+
+        if (wAttribute) {
+            SetConsoleTextAttribute(hConsole, wAttribute);
+        }
+    }
+#else
+    if (color != Qt::transparent) {
+        if (color == Qt::black) {
+            printf("\033[0;30m");  // Black
+        } else if (color == Qt::white) {
+            printf("\033[0;37m");  // White
+        } else if (color == Qt::blue) {
+            printf("\033[0;34m");  // Blue
+        } else if (color == Qt::red) {
+            printf("\033[0;31m");  // Red
+        } else if (color == Qt::green) {
+            printf("\033[0;32m");  // Green
+        } else if (color == Qt::yellow) {
+            printf("\033[0;33m");  // Yellow
+        } else if (color == Qt::magenta) {
+            printf("\033[0;35m");  // Magenta
+        } else if (color == Qt::cyan) {
+            printf("\033[0;36m");  // Cyan
+        } else if (color == Qt::darkBlue) {
+            printf("\033[1;34m");  // Bright Blue
+        } else if (color == Qt::darkRed) {
+            printf("\033[1;31m");  // Bright Red
+        } else if (color == Qt::darkGreen) {
+            printf("\033[1;32m");  // Bright Green
+        } else if (color == Qt::darkYellow) {
+            printf("\033[1;33m");  // Bright Yellow
+        } else if (color == Qt::darkMagenta) {
+            printf("\033[1;35m");  // Bright Magenta
+        } else if (color == Qt::darkCyan) {
+            printf("\033[1;36m");  // Bright Cyan
+        } else if (color == Qt::gray) {
+            printf("\033[0;90m");  // Bright Black (Dark Gray)
+        } else if (color == Qt::darkGray) {
+            printf("\033[1;30m");  // Bold Black (Gray)
+        } else if (color == Qt::transparent) {
+            printf("\033[0m");  // Reset to default for transparent
+        } else {
+            printf("\033[0m");  // Reset to default for unhandled colors
+        }
+    }
+#endif
+
+    printf("%s", sString.toUtf8().data());
+
+#ifdef Q_OS_WIN
+    if (color != Qt::transparent) {
+        if (wOldAttribute) {
+            SetConsoleTextAttribute(hConsole, wOldAttribute);
+        }
+    }
+#else
+    if (color != Qt::transparent) {
+        printf("\033[0m");
+    }
+#endif
+}
+#endif
 #if (QT_VERSION_MAJOR < 6) || defined(QT_CORE5COMPAT_LIB)
 #ifdef QT_GUI_LIB
 QMenu *XOptions::createCodePagesMenu(QWidget *pParent, bool bAll)

@@ -71,6 +71,9 @@
 #if defined(Q_OS_FREEBSD)
 #include <QStandardPaths>
 #endif
+#ifdef Q_OS_WIN
+#include <Windows.h>
+#endif
 
 class XOptions : public QObject {
     Q_OBJECT
@@ -483,6 +486,10 @@ public:
     static BUNDLE getBundle();
     static QString getBundleIdToString(BUNDLE bundle);
     static void registerCodecs();
+
+#ifndef QT_GUI_LIB
+    static void printConsole(QString sString, Qt::GlobalColor color = Qt::transparent);
+#endif
 
 public slots:
     void clearRecentFiles();
