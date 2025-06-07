@@ -20,8 +20,6 @@
  */
 #include "xthreadobject.h"
 
-XThreadObject::XThreadObject(QObject *parent)
-    : QObject(parent)
+XThreadObject::XThreadObject(QObject *parent) : QObject(parent)
 {
-
 }

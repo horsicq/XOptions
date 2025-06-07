@@ -23,8 +23,7 @@
 
 #include <QObject>
 
-class XThreadObject : public QObject
-{
+class XThreadObject : public QObject {
     Q_OBJECT
 public:
     explicit XThreadObject(QObject *parent = nullptr);
@@ -32,4 +31,4 @@ public:
 signals:
 };
 
-#endif // XTHREADOBJECT_H
+#endif  // XTHREADOBJECT_H
