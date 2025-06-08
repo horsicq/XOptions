@@ -23,3 +23,8 @@
 XThreadObject::XThreadObject(QObject *parent) : QObject(parent)
 {
 }
+
+void XThreadObject::_process()
+{
+    process();
+}

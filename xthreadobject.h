@@ -28,7 +28,16 @@ class XThreadObject : public QObject {
 public:
     explicit XThreadObject(QObject *parent = nullptr);
 
+    virtual void process() = 0;
+
+public slots:
+    void _process();
+
 signals:
+    void completed(qint64 nElapsedTime);
+    void errorMessage(const QString &sErrorMessage);
+    void warningMessage(const QString &sWarningMessage);
+    void infoMessage(const QString &sInfoMessage);
 };
 
 #endif  // XTHREADOBJECT_H
