@@ -24,6 +24,11 @@ XThreadObject::XThreadObject(QObject *parent) : QObject(parent)
 {
 }
 
+QString XThreadObject::getTitle()
+{
+    return tr("Process");
+}
+
 void XThreadObject::_process()
 {
     process();
