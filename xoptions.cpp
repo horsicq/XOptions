@@ -1929,6 +1929,8 @@ void XOptions::registerCodecs()
             qFatal("Codec failed");
         }
         // TODO more codecs
+
+		delete pCodec;
     }
 #endif
 }
