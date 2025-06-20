@@ -25,11 +25,13 @@
 
 class XThreadObject : public QObject {
     Q_OBJECT
+
 public:
     explicit XThreadObject(QObject *parent = nullptr);
 
     virtual void process() = 0;
     virtual QString getTitle();
+
 public slots:
     void _process();
 
