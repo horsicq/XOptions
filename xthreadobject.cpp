@@ -31,5 +31,10 @@ QString XThreadObject::getTitle()
 
 void XThreadObject::_process()
 {
+    QElapsedTimer scanTimer;
+    scanTimer.start();
+
     process();
+
+    emit completed(scanTimer.elapsed());
 }

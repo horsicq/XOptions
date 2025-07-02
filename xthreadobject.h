@@ -22,6 +22,7 @@
 #define XTHREADOBJECT_H
 
 #include <QObject>
+#include <QElapsedTimer>
 
 class XThreadObject : public QObject {
     Q_OBJECT

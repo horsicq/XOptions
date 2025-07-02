@@ -1932,7 +1932,7 @@ void XOptions::registerCodecs()
         }
         // TODO more codecs
 
-		delete pCodec;
+        // delete pCodec; // TODO unregisterCodecs
     }
 #endif
 }
