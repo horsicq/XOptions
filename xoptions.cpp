@@ -1816,7 +1816,7 @@ QString XOptions::getApplicationDataPath()
             QString sPrefix = sApplicationDirPath.section("/usr/local/bin", 0, 0);
 
             sResult += sPrefix + QString("/usr/local/lib/%1").arg(qApp->applicationName());
-        } else if (sApplicationDirPath.startsWith("/app/bin")) { // Flatpak
+        } else if (sApplicationDirPath.startsWith("/app/bin")) {  // Flatpak
             sResult += QString("/app/lib/%1").arg(qApp->applicationName());
         } else {
             if (sApplicationDirPath.contains("/tmp/.mount_"))  // AppImage
