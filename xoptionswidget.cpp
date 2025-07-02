@@ -140,64 +140,34 @@ void XOptionsWidget::reloadData(bool bSaveSelection)
 
 void XOptionsWidget::save()
 {
-    if (g_pOptions->isIDPresent(XOptions::ID_VIEW_STAYONTOP)) {
-        g_pOptions->getCheckBox(ui->checkBoxViewStayOnTop, XOptions::ID_VIEW_STAYONTOP);
-    }
+    const QList<QPair<QObject *, XOptions::ID>> optionMappings = {
+        { ui->checkBoxViewStayOnTop, XOptions::ID_VIEW_STAYONTOP },
+        { ui->checkBoxViewSingleApplication, XOptions::ID_VIEW_SINGLEAPPLICATION },
+        { ui->comboBoxViewStyle, XOptions::ID_VIEW_STYLE },
+        { ui->comboBoxViewQss, XOptions::ID_VIEW_QSS },
+        { ui->comboBoxViewLanguage, XOptions::ID_VIEW_LANG },
+        { ui->checkBoxViewShowLogo, XOptions::ID_VIEW_SHOWLOGO },
+        { ui->lineEditViewFontControls, XOptions::ID_VIEW_FONT_CONTROLS },
+        { ui->lineEditViewFontTables, XOptions::ID_VIEW_FONT_TABLEVIEWS },
+        { ui->lineEditViewFontTrees, XOptions::ID_VIEW_FONT_TREEVIEWS },
+        { ui->lineEditViewFontTextEdits, XOptions::ID_VIEW_FONT_TEXTEDITS },
+        { ui->lineEditHexFont, XOptions::ID_HEX_FONT },
+        { ui->lineEditDisasmFont, XOptions::ID_DISASM_FONT },
+        { ui->checkBoxFileSaveLastDirectory, XOptions::ID_FILE_SAVELASTDIRECTORY },
+        { ui->checkBoxFileSaveBackup, XOptions::ID_FILE_SAVEBACKUP },
+        { ui->checkBoxFileSaveHistory, XOptions::ID_FILE_SAVERECENTFILES }
+    };
 
-    if (g_pOptions->isIDPresent(XOptions::ID_VIEW_SINGLEAPPLICATION)) {
-        g_pOptions->getCheckBox(ui->checkBoxViewSingleApplication, XOptions::ID_VIEW_SINGLEAPPLICATION);
-    }
-
-    if (g_pOptions->isIDPresent(XOptions::ID_VIEW_STYLE)) {
-        g_pOptions->getComboBox(ui->comboBoxViewStyle, XOptions::ID_VIEW_STYLE);
-    }
-
-    if (g_pOptions->isIDPresent(XOptions::ID_VIEW_QSS)) {
-        g_pOptions->getComboBox(ui->comboBoxViewQss, XOptions::ID_VIEW_QSS);
-    }
-
-    if (g_pOptions->isIDPresent(XOptions::ID_VIEW_LANG)) {
-        g_pOptions->getComboBox(ui->comboBoxViewLanguage, XOptions::ID_VIEW_LANG);
-    }
-
-    if (g_pOptions->isIDPresent(XOptions::ID_VIEW_SHOWLOGO)) {
-        g_pOptions->getCheckBox(ui->checkBoxViewShowLogo, XOptions::ID_VIEW_SHOWLOGO);
-    }
-
-    if (g_pOptions->isIDPresent(XOptions::ID_VIEW_FONT_CONTROLS)) {
-        g_pOptions->getLineEdit(ui->lineEditViewFontControls, XOptions::ID_VIEW_FONT_CONTROLS);
-    }
-
-    if (g_pOptions->isIDPresent(XOptions::ID_VIEW_FONT_TABLEVIEWS)) {
-        g_pOptions->getLineEdit(ui->lineEditViewFontTables, XOptions::ID_VIEW_FONT_TABLEVIEWS);
-    }
-
-    if (g_pOptions->isIDPresent(XOptions::ID_VIEW_FONT_TREEVIEWS)) {
-        g_pOptions->getLineEdit(ui->lineEditViewFontTrees, XOptions::ID_VIEW_FONT_TREEVIEWS);
-    }
-
-    if (g_pOptions->isIDPresent(XOptions::ID_VIEW_FONT_TEXTEDITS)) {
-        g_pOptions->getLineEdit(ui->lineEditViewFontTextEdits, XOptions::ID_VIEW_FONT_TEXTEDITS);
-    }
-
-    if (g_pOptions->isIDPresent(XOptions::ID_HEX_FONT)) {
-        g_pOptions->getLineEdit(ui->lineEditHexFont, XOptions::ID_HEX_FONT);
-    }
-
-    if (g_pOptions->isIDPresent(XOptions::ID_DISASM_FONT)) {
-        g_pOptions->getLineEdit(ui->lineEditDisasmFont, XOptions::ID_DISASM_FONT);
-    }
-
-    if (g_pOptions->isIDPresent(XOptions::ID_FILE_SAVELASTDIRECTORY)) {
-        g_pOptions->getCheckBox(ui->checkBoxFileSaveLastDirectory, XOptions::ID_FILE_SAVELASTDIRECTORY);
-    }
-
-    if (g_pOptions->isIDPresent(XOptions::ID_FILE_SAVEBACKUP)) {
-        g_pOptions->getCheckBox(ui->checkBoxFileSaveBackup, XOptions::ID_FILE_SAVEBACKUP);
-    }
-
-    if (g_pOptions->isIDPresent(XOptions::ID_FILE_SAVERECENTFILES)) {
-        g_pOptions->getCheckBox(ui->checkBoxFileSaveHistory, XOptions::ID_FILE_SAVERECENTFILES);
+    for (const auto &mapping : optionMappings) {
+        if (g_pOptions->isIDPresent(mapping.second)) {
+            if (auto *checkBox = qobject_cast<QCheckBox *>(mapping.first)) {
+                g_pOptions->getCheckBox(checkBox, mapping.second);
+            } else if (auto *comboBox = qobject_cast<QComboBox *>(mapping.first)) {
+                g_pOptions->getComboBox(comboBox, mapping.second);
+            } else if (auto *lineEdit = qobject_cast<QLineEdit *>(mapping.first)) {
+                g_pOptions->getLineEdit(lineEdit, mapping.second);
+            }
+        }
     }
 
     g_pOptions->save();
@@ -205,109 +175,54 @@ void XOptionsWidget::save()
 
 void XOptionsWidget::reload()
 {
-    if (g_pOptions->isIDPresent(XOptions::ID_VIEW_STAYONTOP)) {
-        g_pOptions->setCheckBox(ui->checkBoxViewStayOnTop, XOptions::ID_VIEW_STAYONTOP);
-    } else {
-        ui->checkBoxViewStayOnTop->hide();
+    const QList<QPair<QPair<QObject *, XOptions::ID>, QObject *>> optionMappings = {
+        { { ui->checkBoxViewStayOnTop, XOptions::ID_VIEW_STAYONTOP }, ui->checkBoxViewStayOnTop },
+        { { ui->checkBoxViewSingleApplication, XOptions::ID_VIEW_SINGLEAPPLICATION }, ui->checkBoxViewSingleApplication },
+        { { ui->comboBoxViewStyle, XOptions::ID_VIEW_STYLE }, ui->groupBoxViewStyle },
+        { { ui->comboBoxViewQss, XOptions::ID_VIEW_QSS }, ui->groupBoxViewQss },
+        { { ui->comboBoxViewLanguage, XOptions::ID_VIEW_LANG }, ui->groupBoxViewLanguage },
+        { { ui->checkBoxViewShowLogo, XOptions::ID_VIEW_SHOWLOGO }, ui->checkBoxViewShowLogo },
+        { { ui->lineEditViewFontControls, XOptions::ID_VIEW_FONT_CONTROLS }, ui->groupBoxViewFontControls },
+        { { ui->lineEditViewFontTextEdits, XOptions::ID_VIEW_FONT_TEXTEDITS }, ui->groupBoxViewFontTextEdits },
+        { { ui->lineEditViewFontTables, XOptions::ID_VIEW_FONT_TABLEVIEWS }, ui->groupBoxViewFontTables },
+        { { ui->lineEditViewFontTrees, XOptions::ID_VIEW_FONT_TREEVIEWS }, ui->groupBoxViewFontTrees },
+        { { ui->lineEditHexFont, XOptions::ID_HEX_FONT }, ui->groupBoxHexFont },
+        { { ui->lineEditDisasmFont, XOptions::ID_DISASM_FONT }, ui->groupBoxDisasmFont },
+        { { ui->checkBoxFileSaveLastDirectory, XOptions::ID_FILE_SAVELASTDIRECTORY }, ui->checkBoxFileSaveLastDirectory },
+        { { ui->checkBoxFileSaveBackup, XOptions::ID_FILE_SAVEBACKUP }, ui->checkBoxFileSaveBackup },
+        { { ui->checkBoxFileSaveHistory, XOptions::ID_FILE_SAVERECENTFILES }, ui->checkBoxFileSaveHistory }
+    };
+
+    for (const auto &mapping : optionMappings) {
+        QObject *control = mapping.first.first;
+        XOptions::ID optionId = mapping.first.second;
+        QObject *hideableWidget = mapping.second;
+
+        if (g_pOptions->isIDPresent(optionId)) {
+            if (auto *checkBox = qobject_cast<QCheckBox *>(control)) {
+                g_pOptions->setCheckBox(checkBox, optionId);
+            } else if (auto *comboBox = qobject_cast<QComboBox *>(control)) {
+                g_pOptions->setComboBox(comboBox, optionId);
+            } else if (auto *lineEdit = qobject_cast<QLineEdit *>(control)) {
+                g_pOptions->setLineEdit(lineEdit, optionId);
+            }
+        } else {
+            if (hideableWidget) {
+                hideableWidget->setProperty("visible", false);
+            }
+        }
     }
 
-    if (g_pOptions->isIDPresent(XOptions::ID_VIEW_SINGLEAPPLICATION)) {
-        g_pOptions->setCheckBox(ui->checkBoxViewSingleApplication, XOptions::ID_VIEW_SINGLEAPPLICATION);
-    } else {
-        ui->checkBoxViewSingleApplication->hide();
-    }
-
-    if (g_pOptions->isIDPresent(XOptions::ID_VIEW_STYLE)) {
-        g_pOptions->setComboBox(ui->comboBoxViewStyle, XOptions::ID_VIEW_STYLE);
-    } else {
-        ui->groupBoxViewStyle->hide();
-    }
-
-    if (g_pOptions->isIDPresent(XOptions::ID_VIEW_QSS)) {
-        g_pOptions->setComboBox(ui->comboBoxViewQss, XOptions::ID_VIEW_QSS);
-    } else {
-        ui->groupBoxViewQss->hide();
-    }
-
-    if (g_pOptions->isIDPresent(XOptions::ID_VIEW_LANG)) {
-        g_pOptions->setComboBox(ui->comboBoxViewLanguage, XOptions::ID_VIEW_LANG);
-    } else {
-        ui->groupBoxViewLanguage->hide();
-    }
-
-    if (g_pOptions->isIDPresent(XOptions::ID_VIEW_SHOWLOGO)) {
-        g_pOptions->setCheckBox(ui->checkBoxViewShowLogo, XOptions::ID_VIEW_SHOWLOGO);
-    } else {
-        ui->checkBoxViewShowLogo->hide();
-    }
-
-    if (g_pOptions->isIDPresent(XOptions::ID_VIEW_FONT_CONTROLS)) {
-        g_pOptions->setLineEdit(ui->lineEditViewFontControls, XOptions::ID_VIEW_FONT_CONTROLS);
-    } else {
-        ui->groupBoxViewFontControls->hide();
-    }
-
-    if (g_pOptions->isIDPresent(XOptions::ID_VIEW_FONT_TEXTEDITS)) {
-        g_pOptions->setLineEdit(ui->lineEditViewFontTextEdits, XOptions::ID_VIEW_FONT_TEXTEDITS);
-    } else {
-        ui->groupBoxViewFontTextEdits->hide();
-    }
-
-    if (g_pOptions->isIDPresent(XOptions::ID_VIEW_FONT_TABLEVIEWS)) {
-        g_pOptions->setLineEdit(ui->lineEditViewFontTables, XOptions::ID_VIEW_FONT_TABLEVIEWS);
-    } else {
-        ui->groupBoxViewFontTables->hide();
-    }
-
-    if (g_pOptions->isIDPresent(XOptions::ID_VIEW_FONT_TREEVIEWS)) {
-        g_pOptions->setLineEdit(ui->lineEditViewFontTrees, XOptions::ID_VIEW_FONT_TREEVIEWS);
-    } else {
-        ui->groupBoxViewFontTrees->hide();
-    }
-    if (g_pOptions->isIDPresent(XOptions::ID_HEX_FONT)) {
-        g_pOptions->setLineEdit(ui->lineEditHexFont, XOptions::ID_HEX_FONT);
-    } else {
-        ui->groupBoxHexFont->hide();
-    }
-
-    if (g_pOptions->isIDPresent(XOptions::ID_DISASM_FONT)) {
-        g_pOptions->setLineEdit(ui->lineEditDisasmFont, XOptions::ID_DISASM_FONT);
-    } else {
-        ui->groupBoxDisasmFont->hide();
-    }
-
-    if (g_pOptions->isIDPresent(XOptions::ID_FILE_SAVELASTDIRECTORY)) {
-        g_pOptions->setCheckBox(ui->checkBoxFileSaveLastDirectory, XOptions::ID_FILE_SAVELASTDIRECTORY);
-    } else {
-        ui->checkBoxFileSaveLastDirectory->hide();
-    }
-
-    if (g_pOptions->isIDPresent(XOptions::ID_FILE_SAVEBACKUP)) {
-        g_pOptions->setCheckBox(ui->checkBoxFileSaveBackup, XOptions::ID_FILE_SAVEBACKUP);
-    } else {
-        ui->checkBoxFileSaveBackup->hide();
-    }
-
-    if (g_pOptions->isIDPresent(XOptions::ID_FILE_SAVERECENTFILES)) {
-        g_pOptions->setCheckBox(ui->checkBoxFileSaveHistory, XOptions::ID_FILE_SAVERECENTFILES);
-    } else {
-        ui->checkBoxFileSaveHistory->hide();
-    }
-
-    if (g_pOptions->isIDPresent(XOptions::ID_FILE_CONTEXT)) {
 #ifdef Q_OS_WIN
-        // bool bAdmin = g_pOptions->checkContext(g_sApplicationDisplayName, g_pOptions->getValue(XOptions::ID_FILE_CONTEXT).toString(), XOptions::USERROLE_ADMIN);
-        // bool bUser = g_pOptions->checkContext(g_sApplicationDisplayName, g_pOptions->getValue(XOptions::ID_FILE_CONTEXT).toString(), XOptions::USERROLE_NORMAL);
-
-        // if (bAdmin &&
-        //     (!bUser)) {
-        //     g_userRole = XOptions::USERROLE_ADMIN;
-        // }
-        ui->checkBoxFileContext->setChecked(g_pOptions->checkContext(g_sApplicationDisplayName, g_pOptions->getValue(XOptions::ID_FILE_CONTEXT).toString(), g_userRole));
-#endif
+    if (g_pOptions->isIDPresent(XOptions::ID_FILE_CONTEXT)) {
+        ui->checkBoxFileContext->setChecked(
+            g_pOptions->checkContext(g_sApplicationDisplayName,
+                                     g_pOptions->getValue(XOptions::ID_FILE_CONTEXT).toString(),
+                                     g_userRole));
     } else {
         ui->checkBoxFileContext->hide();
     }
+#endif
 }
 
 void XOptionsWidget::on_listWidgetOptions_currentRowChanged(int nCurrentRow)
