@@ -972,32 +972,42 @@ void XOptions::setComboBox(QComboBox *pComboBox, XOptions::ID id)
             pComboBox->addItem(sRecord, sRecord);
         }
     } else if (id == ID_VIEW_LANG) {
-        pComboBox->addItem("English", "");
-        pComboBox->addItem("System", "System");
+        const struct LanguageOption {
+            QString displayName;
+            QString value;
+        } languages[] = {
+            {"English", ""},
+            {"System", "System"},
+            {"العربية (Arabic)", "die_ar"},
+            {"বাংলা (Bangla)", "die_bn"},
+            {"Deutsch (German)", "die_de"},
+            {"Español (Spanish)", "die_es"},
+            {"فارسی (Persian)", "die_fa"},
+            {"Français (French)", "die_fr"},
+            {"עברית (Hebrew)", "die_he"},
+            {"Bahasa Indonesia (Indonesian)", "die_id"},
+            {"Italiano (Italian)", "die_it"},
+            {"日本語 (Japanese)", "die_ja"},
+            {"한국어 (Korean)", "die_ko"},
+            {"Polski (Polish)", "die_pl"},
+            {"Português (Brasil)", "die_pt_BR"},
+            {"Português (Portugal)", "die_pt_PT"},
+            {"Русский (Russian)", "die_ru"},
+            {"Svenska (Swedish)", "die_sv"},
+            {"Türkçe (Turkish)", "die_tr"},
+            {"Українська (Ukrainian)", "die_uk"},
+            {"Tiếng Việt (Vietnamese)", "die_vi"},
+            {"简体中文 (Chinese Simplified)", "die_zh"},
+            {"繁體中文 (Chinese Traditional)", "die_zh_TW"}
+        };
 
-        QList<QString> listFileNames = getAllFilesFromDirectory(getApplicationLangPath(), "*.qm");
+        QSet<QString> addedDataValues;
 
-        qint32 nNumberOfRecords = listFileNames.count();
-
-        for (qint32 i = 0; i < nNumberOfRecords; i++) {
-            QFileInfo fi(listFileNames.at(i));
-
-            QString sRecord = fi.completeBaseName();
-
-            QLocale locale(sRecord.section("_", 1, -1));
-            QString sLocale = locale.nativeLanguageName();
-
-            if (sRecord.count("_") == 2) {
-                sLocale += QString("(%1)").arg(locale.nativeCountryName());
+        for (const auto& lang : languages) {
+            if (!addedDataValues.contains(lang.value)) {
+                pComboBox->addItem(lang.displayName, lang.value);
+                addedDataValues.insert(lang.value);
             }
-
-            if (sLocale != "") {
-                sLocale.replace(0, 1, sLocale[0].toUpper());
-            }
-
-            sLocale += QString("[%1]").arg(locale.languageToString(locale.language()));
-
-            pComboBox->addItem(sLocale, sRecord);
         }
     } else if (id == ID_VIEW_QSS) {
         pComboBox->addItem("Default", "");
