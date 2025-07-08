@@ -1841,6 +1841,8 @@ QString XOptions::getApplicationDataPath()
 #endif
 #ifdef Q_OS_LINUX
     if (isNative()) {
+        QString sApplicationDirPath = qApp->applicationDirPath();
+
         if (sApplicationDirPath.contains("/usr/local/bin$")) {
             QString sPrefix = sApplicationDirPath.section("/usr/local/bin", 0, 0);
 
@@ -1856,7 +1858,7 @@ QString XOptions::getApplicationDataPath()
             sResult += QString("/usr/lib/%1").arg(qApp->applicationName());
         }
     } else {
-        sResult = sApplicationDirPath;
+        sResult = qApp->applicationDirPath();
     }
 #endif
 #ifdef X_BUILD_APPIMAGE
