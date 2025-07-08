@@ -26,6 +26,7 @@
 #include <QSettings>
 #include <QSysInfo>
 #include <QTranslator>
+#include <QAbstractItemModel>
 #if (QT_VERSION_MAJOR < 5)  // TODO Check
 #include <QRegExp>
 #else
@@ -488,7 +489,8 @@ public:
     static void registerCodecs();
 
 #ifndef QT_GUI_LIB
-    static void printConsole(QString sString, Qt::GlobalColor color = Qt::transparent);
+    static void printConsole(QString sString, Qt::GlobalColor colorText = Qt::transparent, Qt::GlobalColor colorBackground = Qt::transparent);
+    static void printModel(QAbstractItemModel *pModel);
 #endif
 
 public slots:

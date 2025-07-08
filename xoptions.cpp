@@ -214,18 +214,41 @@ bool XOptions::isGroupIDPresent(GROUPID groupID)
 
 bool XOptions::isNative()
 {
-    return checkNative(g_sName);
+#ifdef X_BUILD_INSTALL
+    return true;
+#else
+    QString sApplicationDirPath = qApp->applicationDirPath();
+    sApplicationDirPath = QDir::cleanPath(sApplicationDirPath);
+
+    bool bResult = false;
+#if defined(Q_OS_MAC)
+    bResult = true;
+#elif defined(Q_OS_LINUX) || defined(Q_OS_FREEBSD)
+    if ((sApplicationDirPath == "/bin") || (sApplicationDirPath == "/usr/bin") || (sApplicationDirPath == "/usr/local/bin") || (sApplicationDirPath == "/app/bin") ||
+        (sApplicationDirPath.contains("/usr/local/bin$")) || isAppImage()) {
+        bResult = true;
+    } else {
+        bResult = false;
+    }
+#elif defined(Q_OS_WIN)
+    if (sApplicationDirPath.toLower().contains(":\\program files")) {
+        bResult = true;
+    }
+#endif
+
+    bResult = bResult || (!QFileInfo(sApplicationDirPath).isWritable());
+
+    return bResult;
+#endif
 }
 
 bool XOptions::isAppImage()
 {
-    bool bResult = false;
-
-    QString sApplicationDirPath = qApp->applicationDirPath();
-
-    bResult = (sApplicationDirPath.contains("/tmp/.mount_"));  // TODO more check
-
-    return bResult;
+#ifdef X_BUILD_APPIMAGE
+    return true;
+#else
+    return false;
+#endif
 }
 
 void XOptions::setName(const QString &sValue)
@@ -1810,11 +1833,13 @@ QString XOptions::getApplicationDataPath()
 {
     QString sResult;
 
-    QString sApplicationDirPath = qApp->applicationDirPath();
-
 #ifdef Q_OS_MAC
     sResult = sApplicationDirPath + "/../Resources";
-#elif defined(Q_OS_LINUX)
+#endif
+#ifdef Q_OS_WIN
+    sResult = qApp->applicationDirPath();
+#endif
+#ifdef Q_OS_LINUX
     if (isNative()) {
         if (sApplicationDirPath.contains("/usr/local/bin$")) {
             QString sPrefix = sApplicationDirPath.section("/usr/local/bin", 0, 0);
@@ -1833,10 +1858,19 @@ QString XOptions::getApplicationDataPath()
     } else {
         sResult = sApplicationDirPath;
     }
-#elif defined(Q_OS_FREEBSD)
+#endif
+#ifdef X_BUILD_APPIMAGE
+    QString sApplicationDirPath = qApp->applicationDirPath();
+    if (sApplicationDirPath.contains("/tmp/.mount_")) {
+        sResult = sApplicationDirPath.section("/", 0, 2);
+    }
+    sResult += QString("/usr/lib/%1").arg(qApp->applicationName());
+#endif
+#ifdef X_BUILD_FLATPACK
+    sResult = QString("/app/lib/%1").arg(qApp->applicationName());
+#endif
+#ifdef Q_OS_FREEBSD
     sResult = QStandardPaths::standardLocations(QStandardPaths::GenericDataLocation).at(1) + QDir::separator() + qApp->applicationName();
-#else
-    sResult = sApplicationDirPath;
 #endif
 
     return sResult;
@@ -1941,13 +1975,13 @@ void XOptions::registerCodecs()
 #endif
 }
 #ifndef QT_GUI_LIB
-void XOptions::printConsole(QString sString, Qt::GlobalColor color)
+void XOptions::printConsole(QString sString, Qt::GlobalColor colorText, Qt::GlobalColor colorBackground)
 {
 #ifdef Q_OS_WIN
     HANDLE hConsole = 0;
     WORD wOldAttribute = 0;
 
-    if (color != Qt::transparent) {
+    if (colorText != Qt::transparent || colorBackground != Qt::transparent) {
         hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
 
         CONSOLE_SCREEN_BUFFER_INFO csbi = {};
@@ -1958,41 +1992,78 @@ void XOptions::printConsole(QString sString, Qt::GlobalColor color)
 
         WORD wAttribute = 0;
 
-        if (color == Qt::black) {
-            wAttribute = 0;  // Black (no bits set)
-        } else if (color == Qt::white) {
-            wAttribute = FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE;
-        } else if (color == Qt::blue) {
-            wAttribute = FOREGROUND_BLUE;
-        } else if (color == Qt::red) {
-            wAttribute = FOREGROUND_RED;
-        } else if (color == Qt::green) {
-            wAttribute = FOREGROUND_GREEN;
-        } else if (color == Qt::yellow) {
-            wAttribute = FOREGROUND_RED | FOREGROUND_GREEN;
-        } else if (color == Qt::magenta) {
-            wAttribute = FOREGROUND_RED | FOREGROUND_BLUE;
-        } else if (color == Qt::cyan) {
-            wAttribute = FOREGROUND_GREEN | FOREGROUND_BLUE;
-        } else if (color == Qt::darkBlue) {
-            wAttribute = FOREGROUND_BLUE | FOREGROUND_INTENSITY;
-        } else if (color == Qt::darkRed) {
-            wAttribute = FOREGROUND_RED | FOREGROUND_INTENSITY;
-        } else if (color == Qt::darkGreen) {
-            wAttribute = FOREGROUND_GREEN | FOREGROUND_INTENSITY;
-        } else if (color == Qt::darkYellow) {
-            wAttribute = FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_INTENSITY;
-        } else if (color == Qt::darkMagenta) {
-            wAttribute = FOREGROUND_RED | FOREGROUND_BLUE | FOREGROUND_INTENSITY;
-        } else if (color == Qt::darkCyan) {
-            wAttribute = FOREGROUND_GREEN | FOREGROUND_BLUE | FOREGROUND_INTENSITY;
-        } else if (color == Qt::gray) {
-            wAttribute = FOREGROUND_INTENSITY;
-        } else if (color == Qt::darkGray) {
-            wAttribute = FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE | FOREGROUND_INTENSITY;
-        } else if (color == Qt::transparent) {
-            // Use default color for transparent
-            wAttribute = FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE;
+        // Foreground (text) color
+        if (colorText == Qt::black) {
+            wAttribute |= 0;
+        } else if (colorText == Qt::white) {
+            wAttribute |= FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE;
+        } else if (colorText == Qt::blue) {
+            wAttribute |= FOREGROUND_BLUE;
+        } else if (colorText == Qt::red) {
+            wAttribute |= FOREGROUND_RED;
+        } else if (colorText == Qt::green) {
+            wAttribute |= FOREGROUND_GREEN;
+        } else if (colorText == Qt::yellow) {
+            wAttribute |= FOREGROUND_RED | FOREGROUND_GREEN;
+        } else if (colorText == Qt::magenta) {
+            wAttribute |= FOREGROUND_RED | FOREGROUND_BLUE;
+        } else if (colorText == Qt::cyan) {
+            wAttribute |= FOREGROUND_GREEN | FOREGROUND_BLUE;
+        } else if (colorText == Qt::darkBlue) {
+            wAttribute |= FOREGROUND_BLUE | FOREGROUND_INTENSITY;
+        } else if (colorText == Qt::darkRed) {
+            wAttribute |= FOREGROUND_RED | FOREGROUND_INTENSITY;
+        } else if (colorText == Qt::darkGreen) {
+            wAttribute |= FOREGROUND_GREEN | FOREGROUND_INTENSITY;
+        } else if (colorText == Qt::darkYellow) {
+            wAttribute |= FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_INTENSITY;
+        } else if (colorText == Qt::darkMagenta) {
+            wAttribute |= FOREGROUND_RED | FOREGROUND_BLUE | FOREGROUND_INTENSITY;
+        } else if (colorText == Qt::darkCyan) {
+            wAttribute |= FOREGROUND_GREEN | FOREGROUND_BLUE | FOREGROUND_INTENSITY;
+        } else if (colorText == Qt::gray) {
+            wAttribute |= FOREGROUND_INTENSITY;
+        } else if (colorText == Qt::darkGray) {
+            wAttribute |= FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE | FOREGROUND_INTENSITY;
+        } else if (colorText == Qt::transparent) {
+            wAttribute |= FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE;
+        }
+
+        // Background color
+        if (colorBackground == Qt::black) {
+            wAttribute |= 0;
+        } else if (colorBackground == Qt::white) {
+            wAttribute |= BACKGROUND_RED | BACKGROUND_GREEN | BACKGROUND_BLUE;
+        } else if (colorBackground == Qt::blue) {
+            wAttribute |= BACKGROUND_BLUE;
+        } else if (colorBackground == Qt::red) {
+            wAttribute |= BACKGROUND_RED;
+        } else if (colorBackground == Qt::green) {
+            wAttribute |= BACKGROUND_GREEN;
+        } else if (colorBackground == Qt::yellow) {
+            wAttribute |= BACKGROUND_RED | BACKGROUND_GREEN;
+        } else if (colorBackground == Qt::magenta) {
+            wAttribute |= BACKGROUND_RED | BACKGROUND_BLUE;
+        } else if (colorBackground == Qt::cyan) {
+            wAttribute |= BACKGROUND_GREEN | BACKGROUND_BLUE;
+        } else if (colorBackground == Qt::darkBlue) {
+            wAttribute |= BACKGROUND_BLUE | BACKGROUND_INTENSITY;
+        } else if (colorBackground == Qt::darkRed) {
+            wAttribute |= BACKGROUND_RED | BACKGROUND_INTENSITY;
+        } else if (colorBackground == Qt::darkGreen) {
+            wAttribute |= BACKGROUND_GREEN | BACKGROUND_INTENSITY;
+        } else if (colorBackground == Qt::darkYellow) {
+            wAttribute |= BACKGROUND_RED | BACKGROUND_GREEN | BACKGROUND_INTENSITY;
+        } else if (colorBackground == Qt::darkMagenta) {
+            wAttribute |= BACKGROUND_RED | BACKGROUND_BLUE | BACKGROUND_INTENSITY;
+        } else if (colorBackground == Qt::darkCyan) {
+            wAttribute |= BACKGROUND_GREEN | BACKGROUND_BLUE | BACKGROUND_INTENSITY;
+        } else if (colorBackground == Qt::gray) {
+            wAttribute |= BACKGROUND_INTENSITY;
+        } else if (colorBackground == Qt::darkGray) {
+            wAttribute |= BACKGROUND_RED | BACKGROUND_GREEN | BACKGROUND_BLUE | BACKGROUND_INTENSITY;
+        } else if (colorBackground == Qt::transparent) {
+            // No background bits set (leave as is)
         }
 
         if (wAttribute) {
@@ -2000,62 +2071,125 @@ void XOptions::printConsole(QString sString, Qt::GlobalColor color)
         }
     }
 #else
-    if (color != Qt::transparent) {
-        if (color == Qt::black) {
-            printf("\033[0;30m");  // Black
-        } else if (color == Qt::white) {
-            printf("\033[0;37m");  // White
-        } else if (color == Qt::blue) {
-            printf("\033[0;34m");  // Blue
-        } else if (color == Qt::red) {
-            printf("\033[0;31m");  // Red
-        } else if (color == Qt::green) {
-            printf("\033[0;32m");  // Green
-        } else if (color == Qt::yellow) {
-            printf("\033[0;33m");  // Yellow
-        } else if (color == Qt::magenta) {
-            printf("\033[0;35m");  // Magenta
-        } else if (color == Qt::cyan) {
-            printf("\033[0;36m");  // Cyan
-        } else if (color == Qt::darkBlue) {
-            printf("\033[1;34m");  // Bright Blue
-        } else if (color == Qt::darkRed) {
-            printf("\033[1;31m");  // Bright Red
-        } else if (color == Qt::darkGreen) {
-            printf("\033[1;32m");  // Bright Green
-        } else if (color == Qt::darkYellow) {
-            printf("\033[1;33m");  // Bright Yellow
-        } else if (color == Qt::darkMagenta) {
-            printf("\033[1;35m");  // Bright Magenta
-        } else if (color == Qt::darkCyan) {
-            printf("\033[1;36m");  // Bright Cyan
-        } else if (color == Qt::gray) {
-            printf("\033[0;90m");  // Bright Black (Dark Gray)
-        } else if (color == Qt::darkGray) {
-            printf("\033[1;30m");  // Bold Black (Gray)
-        } else if (color == Qt::transparent) {
-            printf("\033[0m");  // Reset to default for transparent
-        } else {
-            printf("\033[0m");  // Reset to default for unhandled colors
+    if (colorText != Qt::transparent || colorBackground != Qt::transparent) {
+        // Foreground
+        int fg = 39, bg = 49; // Default
+        // Map Qt::GlobalColor to ANSI codes
+        switch (colorText) {
+        case Qt::black: fg = 30; break;
+        case Qt::red: fg = 31; break;
+        case Qt::green: fg = 32; break;
+        case Qt::yellow: fg = 33; break;
+        case Qt::blue: fg = 34; break;
+        case Qt::magenta: fg = 35; break;
+        case Qt::cyan: fg = 36; break;
+        case Qt::gray: fg = 90; break;
+        case Qt::white: fg = 37; break;
+        case Qt::darkRed: fg = 91; break;
+        case Qt::darkGreen: fg = 92; break;
+        case Qt::darkYellow: fg = 93; break;
+        case Qt::darkBlue: fg = 94; break;
+        case Qt::darkMagenta: fg = 95; break;
+        case Qt::darkCyan: fg = 96; break;
+        case Qt::darkGray: fg = 90; break; // Or 90 as gray
+        default: fg = 39; break;
         }
+        switch (colorBackground) {
+        case Qt::black: bg = 40; break;
+        case Qt::red: bg = 41; break;
+        case Qt::green: bg = 42; break;
+        case Qt::yellow: bg = 43; break;
+        case Qt::blue: bg = 44; break;
+        case Qt::magenta: bg = 45; break;
+        case Qt::cyan: bg = 46; break;
+        case Qt::gray: bg = 100; break;
+        case Qt::white: bg = 47; break;
+        case Qt::darkRed: bg = 101; break;
+        case Qt::darkGreen: bg = 102; break;
+        case Qt::darkYellow: bg = 103; break;
+        case Qt::darkBlue: bg = 104; break;
+        case Qt::darkMagenta: bg = 105; break;
+        case Qt::darkCyan: bg = 106; break;
+        case Qt::darkGray: bg = 100; break;
+        default: bg = 49; break;
+        }
+        printf("\033[%d;%dm", fg, bg);
     }
 #endif
 
     printf("%s", sString.toUtf8().data());
 
 #ifdef Q_OS_WIN
-    if (color != Qt::transparent) {
+    if (colorText != Qt::transparent || colorBackground != Qt::transparent) {
         if (wOldAttribute) {
             SetConsoleTextAttribute(hConsole, wOldAttribute);
         }
     }
 #else
-    if (color != Qt::transparent) {
+    if (colorText != Qt::transparent || colorBackground != Qt::transparent) {
         printf("\033[0m");
     }
 #endif
 }
 #endif
+#ifndef QT_GUI_LIB
+void XOptions::printModel(QAbstractItemModel *pModel)
+{
+    if (pModel) {
+        qint32 nNumberOfRows = pModel->rowCount();
+        qint32 nNumberOfColumns = pModel->columnCount();
+
+        printConsole("TST");
+
+        // QList<QString> listHeaders;
+        // QList<QList<QString>> listListStrings;
+
+        // for (qint32 i = 0; i < nNumberOfColumns; i++) {
+        //     QString sHeader = pModel->headerData(i, Qt::Horizontal, Qt::DisplayRole).toString();
+
+        //     listHeaders.append(sHeader);
+        // }
+
+        // for (qint32 i = 0; i < nNumberOfRows; i++) {
+        //     QList<QString> listStrings;
+
+        //     for (qint32 j = 0; j < nNumberOfColumns; j++) {
+        //         QString sString = pModel->data(pModel->index(i, j)).toString();
+
+        //         listStrings.append(sString);
+        //     }
+
+        //     listListStrings.append(listStrings);
+        // }
+
+        // for (qint32 i = 0; i < nNumberOfColumns; i++) {
+        //     if (i != (nNumberOfColumns - 1)) {
+        //         sResult += QString("%1\t").arg(listHeaders.at(i));
+        //     } else {
+        //         sResult += QString("%1\r\n").arg(listHeaders.at(i));
+        //     }
+        // }
+
+        // // mb TODO csv,tsv,json,xml,json
+        // qint32 _nNumberOfLines = listListStrings.count();
+
+        // for (qint32 i = 0; i < _nNumberOfLines; i++) {
+        //     qint32 _nNumberOfColumns = listListStrings.at(i).count();
+
+        //     for (qint32 j = 0; j < _nNumberOfColumns; j++) {
+        //         QString sString = listListStrings.at(i).at(j);
+
+        //         if (j != (_nNumberOfColumns - 1)) {
+        //             sResult += QString("%1\t").arg(sString);
+        //         } else {
+        //             sResult += QString("%1\r\n").arg(sString);
+        //         }
+        //     }
+        // }
+    }
+}
+#endif
+
 #if (QT_VERSION_MAJOR < 6) || defined(QT_CORE5COMPAT_LIB)
 #ifdef QT_GUI_LIB
 QMenu *XOptions::createCodePagesMenu(QWidget *pParent, bool bAll)
