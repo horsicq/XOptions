@@ -2250,24 +2250,26 @@ qint32 XOptions::getMaxRecentFilesCount()
     return g_nMaxRecentFilesCount;
 }
 
-QString XOptions::getBundleIdToString(BUNDLE bundle)
+QQString XOptions::getBundleIdToString(BUNDLE bundle)
 {
-    static const QMap<BUNDLE, QString> bundleMap = {
-        {BUNDLE_LINUX_ARCH_X64, "Linux Arch x64"},
-        {BUNDLE_WINDOWS_QT6_X64, "Windows Qt6 x64"},
-        {BUNDLE_LINUX_APPIMAGE_X64, "Linux AppImage x64"},
-        {BUNDLE_LINUX_DEBIAN_X64, "Linux Debian x64"},
-        {BUNDLE_LINUX_UBUNTU_X64, "Linux Ubuntu x64"},
-        {BUNDLE_LINUX_PARROT_X64, "Linux Parrot x64"},
-        {BUNDLE_LINUX_KALI_X64, "Linux Kali x64"},
-        {BUNDLE_WINDOWS_XP_X86, "Windows XP x86"},
-        {BUNDLE_WINDOWS_X86, "Windows x86"},
-        {BUNDLE_WINDOWS_X64, "Windows x64"},
-        {BUNDLE_WINDOWS_ARM64, "Windows ARM64"},
-        {BUNDLE_MACOS_X64, "MacOS x64"},
-        {BUNDLE_MACOS_QT6_ARM64, "MacOS Qt6 ARM64"},
-        {BUNDLE_FREEBSD_X64, "FreeBSD x64"}
-    };
+    static const QMap<BUNDLE, QString> bundleMap = []() {
+        QMap<BUNDLE, QString> map;
+        map.insert(BUNDLE_LINUX_ARCH_X64, "Linux Arch x64");
+        map.insert(BUNDLE_WINDOWS_QT6_X64, "Windows Qt6 x64");
+        map.insert(BUNDLE_LINUX_APPIMAGE_X64, "Linux AppImage x64");
+        map.insert(BUNDLE_LINUX_DEBIAN_X64, "Linux Debian x64");
+        map.insert(BUNDLE_LINUX_UBUNTU_X64, "Linux Ubuntu x64");
+        map.insert(BUNDLE_LINUX_PARROT_X64, "Linux Parrot x64");
+        map.insert(BUNDLE_LINUX_KALI_X64, "Linux Kali x64");
+        map.insert(BUNDLE_WINDOWS_XP_X86, "Windows XP x86");
+        map.insert(BUNDLE_WINDOWS_X86, "Windows x86");
+        map.insert(BUNDLE_WINDOWS_X64, "Windows x64");
+        map.insert(BUNDLE_WINDOWS_ARM64, "Windows ARM64");
+        map.insert(BUNDLE_MACOS_X64, "MacOS x64");
+        map.insert(BUNDLE_MACOS_QT6_ARM64, "MacOS Qt6 ARM64");
+        map.insert(BUNDLE_FREEBSD_X64, "FreeBSD x64");
+        return map;
+    }();
 
     return bundleMap.value(bundle, tr("Unknown"));
 }
@@ -2393,88 +2395,90 @@ void XOptions::adjustTreeWidgetItem(QTreeWidgetItem *pTreeWidgetItem, ICONTYPE i
 #ifdef QT_GUI_LIB
 QString XOptions::getIconPath(ICONTYPE iconType)
 {
-    static const QMap<ICONTYPE, QString> iconMap = {
-        {ICONTYPE_NONE, ""},
-        {ICONTYPE_GENERIC, "://icons/BreakpointEnabled.16.16.png"},
-        {ICONTYPE_ACTION, "://icons/Action.16.16.png"},
-        {ICONTYPE_HEX, "://icons/Binary.16.16.png"},
-        {ICONTYPE_DISASM, "://icons/Disasm.16.16.png"},
-        {ICONTYPE_ENTROPY, "://icons/Entropy.16.16.png"},
-        {ICONTYPE_STRING, "://icons/String.16.16.png"},
-        {ICONTYPE_SIGNATURE, "://icons/Signature.16.16.png"},
-        {ICONTYPE_SIZE, "://icons/Size.16.16.png"},
-        {ICONTYPE_VALUE, "://icons/Value.16.16.png"},
-        {ICONTYPE_MEMORYMAP, "://icons/MemoryMap.16.16.png"},
-        {ICONTYPE_INFO, "://icons/Info.16.16.png"},
-        {ICONTYPE_HASH, "://icons/Hash.16.16.png"},
-        {ICONTYPE_VISUALIZATION, "://icons/Image.16.16.png"},
-        {ICONTYPE_SEARCH, "://icons/Search.16.16.png"},
-        {ICONTYPE_EXTRACTOR, "://icons/Extract.16.16.png"},
-        {ICONTYPE_FILE, "://icons/File.16.16.png"},
-        {ICONTYPE_SAVE, "://icons/Save.16.16.png"},
-        {ICONTYPE_COPY, "://icons/Copy.16.16.png"},
-        {ICONTYPE_EDIT, "://icons/Edit.16.16.png"},
-        {ICONTYPE_OVERLAY, "://icons/Overlay.16.16.png"},
-        {ICONTYPE_RELOAD, "://icons/Refresh.16.16.png"},
-        {ICONTYPE_SCAN, "://icons/Refresh.16.16.png"},
-        {ICONTYPE_DUMPTOFILE, "://icons/Download.16.16.png"},
-        {ICONTYPE_ENTRY, "://icons/Entry.16.16.png"},
-        {ICONTYPE_BACKWARD, "://icons/Backward.16.16.png"},
-        {ICONTYPE_FORWARD, "://icons/Forward.16.16.png"},
-        {ICONTYPE_ADD, "://icons/Add.16.16.png"},
-        {ICONTYPE_OPEN, "://icons/Open.16.16.png"},
-        {ICONTYPE_LIST, "://icons/List.16.16.png"},
-        {ICONTYPE_NEW, "://icons/Add.16.16.png"},
-        {ICONTYPE_OPTION, "://icons/Option.16.16.png"},
-        {ICONTYPE_YARA, "://icons/Yara.16.16.png"},
-        {ICONTYPE_MIME, "://icons/Mime.16.16.png"},
-        {ICONTYPE_VIRUSTOTAL, "://icons/Virustotal.16.16.png"},
-        {ICONTYPE_TOOL, "://icons/Tool.16.16.png"},
-        {ICONTYPE_EXIT, "://icons/Exit.16.16.png"},
-        {ICONTYPE_DEMANGLE, "://icons/Demangle.16.16.png"},
-        {ICONTYPE_SHORTCUT, "://icons/Shortcut.16.16.png"},
-        {ICONTYPE_GOTO, "://icons/Goto.16.16.png"},
-        {ICONTYPE_SECTION, "://icons/Section.16.16.png"},
-        {ICONTYPE_SEGMENT, "://icons/Segment.16.16.png"},
-        {ICONTYPE_EXCEPTION, "://icons/Exception.16.16.png"},
-        {ICONTYPE_CERTIFICATE, "://icons/Certificate.16.16.png"},
-        {ICONTYPE_RELOC, "://icons/Reloc.16.16.png"},
-        {ICONTYPE_DEBUG, "://icons/Debug.16.16.png"},
-        {ICONTYPE_HEADER, "://icons/Header.16.16.png"},
-        {ICONTYPE_LIBRARY, "://icons/Library.16.16.png"},
-        {ICONTYPE_SYMBOL, "://icons/Symbol.16.16.png"},
-        {ICONTYPE_TABLE, "://icons/Table.16.16.png"},
-        {ICONTYPE_DOTNET, "://icons/DotNet.16.16.png"},
-        {ICONTYPE_METADATA, "://icons/Metadata.16.16.png"},
-        {ICONTYPE_RESOURCE, "://icons/Resource.16.16.png"},
-        {ICONTYPE_TLS, "://icons/TLS.16.16.png"},
-        {ICONTYPE_SELECT, "://icons/Select.16.16.png"},
-        {ICONTYPE_ADDRESS, "://icons/Address.16.16.png"},
-        {ICONTYPE_OFFSET, "://icons/Offset.16.16.png"},
-        {ICONTYPE_IMPORT, "://icons/Import.16.16.png"},
-        {ICONTYPE_EXPORT, "://icons/Export.16.16.png"},
-        {ICONTYPE_DATA, "://icons/Data.16.16.png"},
-        {ICONTYPE_DIE, "://icons/DIE.16.16.png"},
-        {ICONTYPE_NFD, "://icons/NFD.16.16.png"},
-        {ICONTYPE_VERSION, "://icons/Version.16.16.png"},
-        {ICONTYPE_MANIFEST, "://icons/Manifest.16.16.png"},
-        {ICONTYPE_FOLLOW, "://icons/Follow.16.16.png"},
-        {ICONTYPE_NEXT, "://icons/Next.16.16.png"},
-        {ICONTYPE_ALL, "://icons/All.16.16.png"},
-        {ICONTYPE_PATH, "://icons/Path.16.16.png"},
-        {ICONTYPE_NOTE, "://icons/Note.16.16.png"},
-        {ICONTYPE_FUNCTION, "://icons/Function.16.16.png"},
-        {ICONTYPE_SCRIPT, "://icons/Script.16.16.png"},
-        {ICONTYPE_PATCH, "://icons/Patch.16.16.png"},
-        {ICONTYPE_REMOVE, "://icons/Remove.16.16.png"},
-        {ICONTYPE_RESIZE, "://icons/Resize.16.16.png"},
-        {ICONTYPE_CODE, "://icons/Code.16.16.png"},
-        {ICONTYPE_REFERENCE, "://icons/Reference.16.16.png"},
-        {ICONTYPE_BOOKMARK, "://icons/Bookmark.16.16.png"},
-        {ICONTYPE_INSPECTOR, "://icons/Inspector.16.16.png"},
-        {ICONTYPE_CONVERTOR, "://icons/Convertor.16.16.png"},
-        {ICONTYPE_STRUCTS, "://icons/Structs.16.16.png"}
-    };
+    static const QMap<ICONTYPE, QString> iconMap = []() {
+        QMap<ICONTYPE, QString> map;
+        map.insert(ICONTYPE_NONE, "");
+        map.insert(ICONTYPE_GENERIC, "://icons/BreakpointEnabled.16.16.png");
+        map.insert(ICONTYPE_ACTION, "://icons/Action.16.16.png");
+        map.insert(ICONTYPE_HEX, "://icons/Binary.16.16.png");
+        map.insert(ICONTYPE_DISASM, "://icons/Disasm.16.16.png");
+        map.insert(ICONTYPE_ENTROPY, "://icons/Entropy.16.16.png");
+        map.insert(ICONTYPE_STRING, "://icons/String.16.16.png");
+        map.insert(ICONTYPE_SIGNATURE, "://icons/Signature.16.16.png");
+        map.insert(ICONTYPE_SIZE, "://icons/Size.16.16.png");
+        map.insert(ICONTYPE_VALUE, "://icons/Value.16.16.png");
+        map.insert(ICONTYPE_MEMORYMAP, "://icons/MemoryMap.16.16.png");
+        map.insert(ICONTYPE_INFO, "://icons/Info.16.16.png");
+        map.insert(ICONTYPE_HASH, "://icons/Hash.16.16.png");
+        map.insert(ICONTYPE_VISUALIZATION, "://icons/Image.16.16.png");
+        map.insert(ICONTYPE_SEARCH, "://icons/Search.16.16.png");
+        map.insert(ICONTYPE_EXTRACTOR, "://icons/Extract.16.16.png");
+        map.insert(ICONTYPE_FILE, "://icons/File.16.16.png");
+        map.insert(ICONTYPE_SAVE, "://icons/Save.16.16.png");
+        map.insert(ICONTYPE_COPY, "://icons/Copy.16.16.png");
+        map.insert(ICONTYPE_EDIT, "://icons/Edit.16.16.png");
+        map.insert(ICONTYPE_OVERLAY, "://icons/Overlay.16.16.png");
+        map.insert(ICONTYPE_RELOAD, "://icons/Refresh.16.16.png");
+        map.insert(ICONTYPE_SCAN, "://icons/Refresh.16.16.png");
+        map.insert(ICONTYPE_DUMPTOFILE, "://icons/Download.16.16.png");
+        map.insert(ICONTYPE_ENTRY, "://icons/Entry.16.16.png");
+        map.insert(ICONTYPE_BACKWARD, "://icons/Backward.16.16.png");
+        map.insert(ICONTYPE_FORWARD, "://icons/Forward.16.16.png");
+        map.insert(ICONTYPE_ADD, "://icons/Add.16.16.png");
+        map.insert(ICONTYPE_OPEN, "://icons/Open.16.16.png");
+        map.insert(ICONTYPE_LIST, "://icons/List.16.16.png");
+        map.insert(ICONTYPE_NEW, "://icons/Add.16.16.png");
+        map.insert(ICONTYPE_OPTION, "://icons/Option.16.16.png");
+        map.insert(ICONTYPE_YARA, "://icons/Yara.16.16.png");
+        map.insert(ICONTYPE_MIME, "://icons/Mime.16.16.png");
+        map.insert(ICONTYPE_VIRUSTOTAL, "://icons/Virustotal.16.16.png");
+        map.insert(ICONTYPE_TOOL, "://icons/Tool.16.16.png");
+        map.insert(ICONTYPE_EXIT, "://icons/Exit.16.16.png");
+        map.insert(ICONTYPE_DEMANGLE, "://icons/Demangle.16.16.png");
+        map.insert(ICONTYPE_SHORTCUT, "://icons/Shortcut.16.16.png");
+        map.insert(ICONTYPE_GOTO, "://icons/Goto.16.16.png");
+        map.insert(ICONTYPE_SECTION, "://icons/Section.16.16.png");
+        map.insert(ICONTYPE_SEGMENT, "://icons/Segment.16.16.png");
+        map.insert(ICONTYPE_EXCEPTION, "://icons/Exception.16.16.png");
+        map.insert(ICONTYPE_CERTIFICATE, "://icons/Certificate.16.16.png");
+        map.insert(ICONTYPE_RELOC, "://icons/Reloc.16.16.png");
+        map.insert(ICONTYPE_DEBUG, "://icons/Debug.16.16.png");
+        map.insert(ICONTYPE_HEADER, "://icons/Header.16.16.png");
+        map.insert(ICONTYPE_LIBRARY, "://icons/Library.16.16.png");
+        map.insert(ICONTYPE_SYMBOL, "://icons/Symbol.16.16.png");
+        map.insert(ICONTYPE_TABLE, "://icons/Table.16.16.png");
+        map.insert(ICONTYPE_DOTNET, "://icons/DotNet.16.16.png");
+        map.insert(ICONTYPE_METADATA, "://icons/Metadata.16.16.png");
+        map.insert(ICONTYPE_RESOURCE, "://icons/Resource.16.16.png");
+        map.insert(ICONTYPE_TLS, "://icons/TLS.16.16.png");
+        map.insert(ICONTYPE_SELECT, "://icons/Select.16.16.png");
+        map.insert(ICONTYPE_ADDRESS, "://icons/Address.16.16.png");
+        map.insert(ICONTYPE_OFFSET, "://icons/Offset.16.16.png");
+        map.insert(ICONTYPE_IMPORT, "://icons/Import.16.16.png");
+        map.insert(ICONTYPE_EXPORT, "://icons/Export.16.16.png");
+        map.insert(ICONTYPE_DATA, "://icons/Data.16.16.png");
+        map.insert(ICONTYPE_DIE, "://icons/DIE.16.16.png");
+        map.insert(ICONTYPE_NFD, "://icons/NFD.16.16.png");
+        map.insert(ICONTYPE_VERSION, "://icons/Version.16.16.png");
+        map.insert(ICONTYPE_MANIFEST, "://icons/Manifest.16.16.png");
+        map.insert(ICONTYPE_FOLLOW, "://icons/Follow.16.16.png");
+        map.insert(ICONTYPE_NEXT, "://icons/Next.16.16.png");
+        map.insert(ICONTYPE_ALL, "://icons/All.16.16.png");
+        map.insert(ICONTYPE_PATH, "://icons/Path.16.16.png");
+        map.insert(ICONTYPE_NOTE, "://icons/Note.16.16.png");
+        map.insert(ICONTYPE_FUNCTION, "://icons/Function.16.16.png");
+        map.insert(ICONTYPE_SCRIPT, "://icons/Script.16.16.png");
+        map.insert(ICONTYPE_PATCH, "://icons/Patch.16.16.png");
+        map.insert(ICONTYPE_REMOVE, "://icons/Remove.16.16.png");
+        map.insert(ICONTYPE_RESIZE, "://icons/Resize.16.16.png");
+        map.insert(ICONTYPE_CODE, "://icons/Code.16.16.png");
+        map.insert(ICONTYPE_REFERENCE, "://icons/Reference.16.16.png");
+        map.insert(ICONTYPE_BOOKMARK, "://icons/Bookmark.16.16.png");
+        map.insert(ICONTYPE_INSPECTOR, "://icons/Inspector.16.16.png");
+        map.insert(ICONTYPE_CONVERTOR, "://icons/Convertor.16.16.png");
+        map.insert(ICONTYPE_STRUCTS, "://icons/Structs.16.16.png");
+        return map;
+    }();
 
     QString result = iconMap.value(iconType, "://icons/BreakpointDisabled.16.16.png");
 
