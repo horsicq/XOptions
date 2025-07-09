@@ -1838,7 +1838,14 @@ QString XOptions::getApplicationDataPath()
     sResult = sApplicationDirPath + "/../Resources";
 #endif
 #ifdef Q_OS_WIN
-    sResult = qApp->applicationDirPath();
+    if (isNative()) {
+        sResult = QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation);
+        if (!sResult.isEmpty()) {
+            sResult += QDir::separator() + qApp->applicationName();
+        }
+    } else {
+        sResult = qApp->applicationDirPath();
+    }
 #endif
 #ifdef Q_OS_LINUX
     if (isNative()) {
