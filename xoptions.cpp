@@ -1986,6 +1986,12 @@ void XOptions::printConsole(QString sString, Qt::GlobalColor colorText, Qt::Glob
     if (colorText != Qt::transparent || colorBackground != Qt::transparent) {
         hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
 
+#ifdef QT_DEBUG
+        if (hConsole == 0) {
+            qWarning("GetStdHandle(STD_OUTPUT_HANDLE) failed");
+        }
+#endif
+
         CONSOLE_SCREEN_BUFFER_INFO csbi = {};
 
         if (GetConsoleScreenBufferInfo(hConsole, &csbi)) {
@@ -2119,7 +2125,19 @@ void XOptions::printConsole(QString sString, Qt::GlobalColor colorText, Qt::Glob
     }
 #endif
 
+#ifdef QT_DEBUG
+#ifdef Q_OS_WIN
+    if (hConsole) {
+        printf("%s", sString.toUtf8().data());
+    } else {
+        qDebug("%s", sString.toUtf8().data());
+    }
+#else
     printf("%s", sString.toUtf8().data());
+#endif
+#else
+    printf("%s", sString.toUtf8().data());
+#endif
 
 #ifdef Q_OS_WIN
     if (colorText != Qt::transparent || colorBackground != Qt::transparent) {
@@ -2140,6 +2158,10 @@ void XOptions::printModel(QAbstractItemModel *pModel)
     if (pModel) {
         qint32 nNumberOfRows = pModel->rowCount();
         qint32 nNumberOfColumns = pModel->columnCount();
+
+        for (qint32 i = 0; i < nNumberOfColumns; i++) {
+            printConsole("|");
+        }
 
         printConsole("TST");
 
