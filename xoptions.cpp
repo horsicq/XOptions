@@ -349,8 +349,8 @@ void XOptions::load()
                 if ((!QDir(variant.toString()).exists()) && (!QFile(variant.toString()).exists())) {
                     variant = varDefault;
                 }
-            } else if ((id == ID_DATAPATH) ||
-                (id == ID_SIGNATURES_PATH) || (id == ID_STRUCTS_PATH) || (id == ID_STRUCTSPATH) || (id == ID_INFO_PATH) || (id == ID_SCAN_YARARULESPATH)) {
+            } else if ((id == ID_DATAPATH) || (id == ID_SIGNATURES_PATH) || (id == ID_STRUCTS_PATH) || (id == ID_STRUCTSPATH) || (id == ID_INFO_PATH) ||
+                       (id == ID_SCAN_YARARULESPATH)) {
                 if (!QDir(variant.toString()).exists()) {
                     variant = varDefault;
                 }
@@ -2081,45 +2081,45 @@ void XOptions::printConsole(QString sString, Qt::GlobalColor colorText, Qt::Glob
 #else
     if (colorText != Qt::transparent || colorBackground != Qt::transparent) {
         // Foreground
-        int fg = 39, bg = 49; // Default
+        int fg = 39, bg = 49;  // Default
         // Map Qt::GlobalColor to ANSI codes
         switch (colorText) {
-        case Qt::black: fg = 30; break;
-        case Qt::red: fg = 31; break;
-        case Qt::green: fg = 32; break;
-        case Qt::yellow: fg = 33; break;
-        case Qt::blue: fg = 34; break;
-        case Qt::magenta: fg = 35; break;
-        case Qt::cyan: fg = 36; break;
-        case Qt::gray: fg = 90; break;
-        case Qt::white: fg = 37; break;
-        case Qt::darkRed: fg = 91; break;
-        case Qt::darkGreen: fg = 92; break;
-        case Qt::darkYellow: fg = 93; break;
-        case Qt::darkBlue: fg = 94; break;
-        case Qt::darkMagenta: fg = 95; break;
-        case Qt::darkCyan: fg = 96; break;
-        case Qt::darkGray: fg = 90; break; // Or 90 as gray
-        default: fg = 39; break;
+            case Qt::black: fg = 30; break;
+            case Qt::red: fg = 31; break;
+            case Qt::green: fg = 32; break;
+            case Qt::yellow: fg = 33; break;
+            case Qt::blue: fg = 34; break;
+            case Qt::magenta: fg = 35; break;
+            case Qt::cyan: fg = 36; break;
+            case Qt::gray: fg = 90; break;
+            case Qt::white: fg = 37; break;
+            case Qt::darkRed: fg = 91; break;
+            case Qt::darkGreen: fg = 92; break;
+            case Qt::darkYellow: fg = 93; break;
+            case Qt::darkBlue: fg = 94; break;
+            case Qt::darkMagenta: fg = 95; break;
+            case Qt::darkCyan: fg = 96; break;
+            case Qt::darkGray: fg = 90; break;  // Or 90 as gray
+            default: fg = 39; break;
         }
         switch (colorBackground) {
-        case Qt::black: bg = 40; break;
-        case Qt::red: bg = 41; break;
-        case Qt::green: bg = 42; break;
-        case Qt::yellow: bg = 43; break;
-        case Qt::blue: bg = 44; break;
-        case Qt::magenta: bg = 45; break;
-        case Qt::cyan: bg = 46; break;
-        case Qt::gray: bg = 100; break;
-        case Qt::white: bg = 47; break;
-        case Qt::darkRed: bg = 101; break;
-        case Qt::darkGreen: bg = 102; break;
-        case Qt::darkYellow: bg = 103; break;
-        case Qt::darkBlue: bg = 104; break;
-        case Qt::darkMagenta: bg = 105; break;
-        case Qt::darkCyan: bg = 106; break;
-        case Qt::darkGray: bg = 100; break;
-        default: bg = 49; break;
+            case Qt::black: bg = 40; break;
+            case Qt::red: bg = 41; break;
+            case Qt::green: bg = 42; break;
+            case Qt::yellow: bg = 43; break;
+            case Qt::blue: bg = 44; break;
+            case Qt::magenta: bg = 45; break;
+            case Qt::cyan: bg = 46; break;
+            case Qt::gray: bg = 100; break;
+            case Qt::white: bg = 47; break;
+            case Qt::darkRed: bg = 101; break;
+            case Qt::darkGreen: bg = 102; break;
+            case Qt::darkYellow: bg = 103; break;
+            case Qt::darkBlue: bg = 104; break;
+            case Qt::darkMagenta: bg = 105; break;
+            case Qt::darkCyan: bg = 106; break;
+            case Qt::darkGray: bg = 100; break;
+            default: bg = 49; break;
         }
         printf("\033[%d;%dm", fg, bg);
     }
