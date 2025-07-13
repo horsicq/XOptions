@@ -28,7 +28,7 @@ class XThreadObject : public QObject {
     Q_OBJECT
 
 public:
-    explicit XThreadObject(QObject *parent = nullptr);
+    explicit XThreadObject(QObject *pParent = nullptr);
 
     virtual void process() = 0;
     virtual QString getTitle();
