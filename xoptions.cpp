@@ -2125,19 +2125,7 @@ void XOptions::printConsole(QString sString, Qt::GlobalColor colorText, Qt::Glob
     }
 #endif
 
-#ifdef QT_DEBUG
-#ifdef Q_OS_WIN
-    if (hConsole) {
-        printf("%s", sString.toUtf8().data());
-    } else {
-        qDebug("%s", sString.toUtf8().data());
-    }
-#else
     printf("%s", sString.toUtf8().data());
-#endif
-#else
-    printf("%s", sString.toUtf8().data());
-#endif
 
 #ifdef Q_OS_WIN
     if (colorText != Qt::transparent || colorBackground != Qt::transparent) {
@@ -2159,11 +2147,53 @@ void XOptions::printModel(QAbstractItemModel *pModel)
         qint32 nNumberOfRows = pModel->rowCount();
         qint32 nNumberOfColumns = pModel->columnCount();
 
+        QList<qint32> listColumnSymbolSize;
+        listColumnSymbolSize.reserve(nNumberOfColumns);
+        QChar charSpace(' ');
+
         for (qint32 i = 0; i < nNumberOfColumns; i++) {
-            printConsole("|");
+            qint32 nSymbolSize = 0;
+            nSymbolSize = qMax(nSymbolSize, pModel->headerData(i, Qt::Horizontal).toString().length());
+
+            for (qint32 j = 0; j < nNumberOfRows; j++) {
+                QModelIndex index = pModel->index(j, i);
+                QString sData = pModel->data(index, Qt::DisplayRole).toString();
+
+                nSymbolSize = qMax(nSymbolSize, sData.length());
+            }
+
+            listColumnSymbolSize.append(nSymbolSize);
         }
 
-        printConsole("TST");
+        QString sTableLine;
+
+        {
+            for (qint32 i = 0; i < nNumberOfColumns; i++) {
+                sTableLine += "+";
+
+                for (int j = 0; j < listColumnSymbolSize[i]; j++) {
+                    sTableLine += "-";
+                }
+            }
+
+            sTableLine += "+\n";
+        }
+
+        printConsole(sTableLine);
+
+        {
+            for (qint32 i = 0; i < nNumberOfColumns; i++) {
+                printConsole("|");
+                QString sString = pModel->headerData(i, Qt::Horizontal, Qt::DisplayRole).toString();
+                qint32 nColumnSize = listColumnSymbolSize[i];
+                sString.append(&charSpace, nColumnSize - sString.size());
+                printConsole(sString, Qt::white, Qt::black);
+            }
+
+            printConsole("|\n");
+        }
+
+        printConsole(sTableLine);
 
         // QList<QString> listHeaders;
         // QList<QList<QString>> listListStrings;
