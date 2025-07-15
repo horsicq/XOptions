@@ -1979,19 +1979,83 @@ void XOptions::registerCodecs()
 #ifndef QT_GUI_LIB
 void XOptions::printConsole(QString sString, Qt::GlobalColor colorText, Qt::GlobalColor colorBackground)
 {
+    bool bEscapeMode = false;
+    bool bNativeMode = false;
+
 #ifdef Q_OS_WIN
     HANDLE hConsole = 0;
     WORD wOldAttribute = 0;
+    DWORD dwMode = 0;
 
     if (colorText != Qt::transparent || colorBackground != Qt::transparent) {
         hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
 
+        if (hConsole) {
+            GetConsoleMode(hConsole, &dwMode);
+            if (SetConsoleMode(hConsole, dwMode | ENABLE_VIRTUAL_TERMINAL_PROCESSING)) {
+                bEscapeMode = true;
+            } else {
+                bNativeMode = true;
+            }
+        } else {
 #ifdef QT_DEBUG
-        if (hConsole == 0) {
             qWarning("GetStdHandle(STD_OUTPUT_HANDLE) failed");
+#endif
         }
+    }
+#else
+    if (colorText != Qt::transparent || colorBackground != Qt::transparent) {
+        bEscapeMode = true;
+    }
 #endif
 
+    if (bEscapeMode) {
+        if (colorText != Qt::transparent || colorBackground != Qt::transparent) {
+            // Foreground
+            int fg = 39, bg = 49;  // Default
+            // Map Qt::GlobalColor to ANSI codes
+            switch (colorText) {
+            case Qt::black: fg = 30; break;
+            case Qt::red: fg = 31; break;
+            case Qt::green: fg = 32; break;
+            case Qt::yellow: fg = 33; break;
+            case Qt::blue: fg = 34; break;
+            case Qt::magenta: fg = 35; break;
+            case Qt::cyan: fg = 36; break;
+            case Qt::gray: fg = 90; break;
+            case Qt::white: fg = 37; break;
+            case Qt::darkRed: fg = 91; break;
+            case Qt::darkGreen: fg = 92; break;
+            case Qt::darkYellow: fg = 93; break;
+            case Qt::darkBlue: fg = 94; break;
+            case Qt::darkMagenta: fg = 95; break;
+            case Qt::darkCyan: fg = 96; break;
+            case Qt::darkGray: fg = 90; break;  // Or 90 as gray
+            default: fg = 39; break;
+            }
+            switch (colorBackground) {
+            case Qt::black: bg = 40; break;
+            case Qt::red: bg = 41; break;
+            case Qt::green: bg = 42; break;
+            case Qt::yellow: bg = 43; break;
+            case Qt::blue: bg = 44; break;
+            case Qt::magenta: bg = 45; break;
+            case Qt::cyan: bg = 46; break;
+            case Qt::gray: bg = 100; break;
+            case Qt::white: bg = 47; break;
+            case Qt::darkRed: bg = 101; break;
+            case Qt::darkGreen: bg = 102; break;
+            case Qt::darkYellow: bg = 103; break;
+            case Qt::darkBlue: bg = 104; break;
+            case Qt::darkMagenta: bg = 105; break;
+            case Qt::darkCyan: bg = 106; break;
+            case Qt::darkGray: bg = 100; break;
+            default: bg = 49; break;
+            }
+            printf("\033[%d;%dm", fg, bg);
+        }
+    } else if (bNativeMode) {
+#ifdef Q_OS_WIN
         CONSOLE_SCREEN_BUFFER_INFO csbi = {};
 
         if (GetConsoleScreenBufferInfo(hConsole, &csbi)) {
@@ -2077,67 +2141,27 @@ void XOptions::printConsole(QString sString, Qt::GlobalColor colorText, Qt::Glob
         if (wAttribute) {
             SetConsoleTextAttribute(hConsole, wAttribute);
         }
-    }
-#else
-    if (colorText != Qt::transparent || colorBackground != Qt::transparent) {
-        // Foreground
-        int fg = 39, bg = 49;  // Default
-        // Map Qt::GlobalColor to ANSI codes
-        switch (colorText) {
-            case Qt::black: fg = 30; break;
-            case Qt::red: fg = 31; break;
-            case Qt::green: fg = 32; break;
-            case Qt::yellow: fg = 33; break;
-            case Qt::blue: fg = 34; break;
-            case Qt::magenta: fg = 35; break;
-            case Qt::cyan: fg = 36; break;
-            case Qt::gray: fg = 90; break;
-            case Qt::white: fg = 37; break;
-            case Qt::darkRed: fg = 91; break;
-            case Qt::darkGreen: fg = 92; break;
-            case Qt::darkYellow: fg = 93; break;
-            case Qt::darkBlue: fg = 94; break;
-            case Qt::darkMagenta: fg = 95; break;
-            case Qt::darkCyan: fg = 96; break;
-            case Qt::darkGray: fg = 90; break;  // Or 90 as gray
-            default: fg = 39; break;
-        }
-        switch (colorBackground) {
-            case Qt::black: bg = 40; break;
-            case Qt::red: bg = 41; break;
-            case Qt::green: bg = 42; break;
-            case Qt::yellow: bg = 43; break;
-            case Qt::blue: bg = 44; break;
-            case Qt::magenta: bg = 45; break;
-            case Qt::cyan: bg = 46; break;
-            case Qt::gray: bg = 100; break;
-            case Qt::white: bg = 47; break;
-            case Qt::darkRed: bg = 101; break;
-            case Qt::darkGreen: bg = 102; break;
-            case Qt::darkYellow: bg = 103; break;
-            case Qt::darkBlue: bg = 104; break;
-            case Qt::darkMagenta: bg = 105; break;
-            case Qt::darkCyan: bg = 106; break;
-            case Qt::darkGray: bg = 100; break;
-            default: bg = 49; break;
-        }
-        printf("\033[%d;%dm", fg, bg);
-    }
 #endif
+    }
 
     printf("%s", sString.toUtf8().data());
 
-#ifdef Q_OS_WIN
-    if (colorText != Qt::transparent || colorBackground != Qt::transparent) {
-        if (wOldAttribute) {
-            SetConsoleTextAttribute(hConsole, wOldAttribute);
+    if (bEscapeMode) {
+        if (colorText != Qt::transparent || colorBackground != Qt::transparent) {
+            printf("\033[0m");
         }
-    }
-#else
-    if (colorText != Qt::transparent || colorBackground != Qt::transparent) {
-        printf("\033[0m");
-    }
+#ifdef Q_OS_WIN
+        SetConsoleMode(hConsole, dwMode);  // Restore original console mode TODO optimize
 #endif
+    } else if (bNativeMode) {
+#ifdef Q_OS_WIN
+        if (colorText != Qt::transparent || colorBackground != Qt::transparent) {
+            if (wOldAttribute) {
+                SetConsoleTextAttribute(hConsole, wOldAttribute);
+            }
+        }
+#endif
+    }
 }
 #endif
 #ifndef QT_GUI_LIB
@@ -2179,21 +2203,62 @@ void XOptions::printModel(QAbstractItemModel *pModel)
             sTableLine += "+\n";
         }
 
-        printConsole(sTableLine);
-
         {
+            printConsole(sTableLine);
+
             for (qint32 i = 0; i < nNumberOfColumns; i++) {
                 printConsole("|");
                 QString sString = pModel->headerData(i, Qt::Horizontal, Qt::DisplayRole).toString();
                 qint32 nColumnSize = listColumnSymbolSize[i];
-                sString.append(&charSpace, nColumnSize - sString.size());
-                printConsole(sString, Qt::white, Qt::black);
+                QString sEmpty = QString(nColumnSize - sString.size(), ' ');
+
+                Qt::AlignmentFlag flag = (Qt::AlignmentFlag)(pModel->headerData(i, Qt::Horizontal, Qt::TextAlignmentRole).toInt());
+
+                if (flag & Qt::AlignRight) {
+                    sString.prepend(sEmpty);
+                } else {
+                    sString.append(sEmpty);
+                }
+
+                printConsole(sString, Qt::red);
+
+                if (i == (nNumberOfColumns - 1)) {
+                    printConsole("|\n");
+                }
             }
 
-            printConsole("|\n");
+            printConsole(sTableLine);
         }
 
-        printConsole(sTableLine);
+        {
+            for (qint32 i = 0; i < nNumberOfRows; i++) {
+                for (qint32 j = 0; j < nNumberOfColumns; j++) {
+                    printConsole("|");
+
+                    QModelIndex index = pModel->index(i, j);
+                    QString sString = pModel->data(index, Qt::DisplayRole).toString();
+
+                    qint32 nColumnSize = listColumnSymbolSize[j];
+                    QString sEmpty = QString(nColumnSize - sString.size(), ' ');
+
+                    Qt::AlignmentFlag flag = (Qt::AlignmentFlag)(pModel->data(index, Qt::TextAlignmentRole).toInt());
+
+                    if (flag & Qt::AlignRight) {
+                        sString.prepend(sEmpty);
+                    } else {
+                        sString.append(sEmpty);
+                    }
+
+                    printConsole(sString);
+
+                    if (j == (nNumberOfColumns - 1)) {
+                        printConsole("|\n");
+                    }
+                }
+            }
+
+            printConsole(sTableLine);
+        }
 
         // QList<QString> listHeaders;
         // QList<QList<QString>> listListStrings;
