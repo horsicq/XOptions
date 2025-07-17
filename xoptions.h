@@ -343,6 +343,16 @@ public:
         ICONTYPE_CONVERTOR,
     };
 
+    struct COLOR_RECORD {
+        QString sColorMain;
+        QString sColorBackground;
+    };
+
+    struct GLOBAL_COLOR_RECORD {
+        Qt::GlobalColor colorMain;
+        Qt::GlobalColor colorBackground;
+    };
+
     explicit XOptions(QObject *pParent = nullptr);
 
     void resetToDefault();
