@@ -2259,52 +2259,6 @@ void XOptions::printModel(QAbstractItemModel *pModel)
 
             printConsole(sTableLine);
         }
-
-        // QList<QString> listHeaders;
-        // QList<QList<QString>> listListStrings;
-
-        // for (qint32 i = 0; i < nNumberOfColumns; i++) {
-        //     QString sHeader = pModel->headerData(i, Qt::Horizontal, Qt::DisplayRole).toString();
-
-        //     listHeaders.append(sHeader);
-        // }
-
-        // for (qint32 i = 0; i < nNumberOfRows; i++) {
-        //     QList<QString> listStrings;
-
-        //     for (qint32 j = 0; j < nNumberOfColumns; j++) {
-        //         QString sString = pModel->data(pModel->index(i, j)).toString();
-
-        //         listStrings.append(sString);
-        //     }
-
-        //     listListStrings.append(listStrings);
-        // }
-
-        // for (qint32 i = 0; i < nNumberOfColumns; i++) {
-        //     if (i != (nNumberOfColumns - 1)) {
-        //         sResult += QString("%1\t").arg(listHeaders.at(i));
-        //     } else {
-        //         sResult += QString("%1\r\n").arg(listHeaders.at(i));
-        //     }
-        // }
-
-        // // mb TODO csv,tsv,json,xml,json
-        // qint32 _nNumberOfLines = listListStrings.count();
-
-        // for (qint32 i = 0; i < _nNumberOfLines; i++) {
-        //     qint32 _nNumberOfColumns = listListStrings.at(i).count();
-
-        //     for (qint32 j = 0; j < _nNumberOfColumns; j++) {
-        //         QString sString = listListStrings.at(i).at(j);
-
-        //         if (j != (_nNumberOfColumns - 1)) {
-        //             sResult += QString("%1\t").arg(sString);
-        //         } else {
-        //             sResult += QString("%1\r\n").arg(sString);
-        //         }
-        //     }
-        // }
     }
 }
 #endif
