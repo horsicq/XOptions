@@ -29,11 +29,6 @@ XOptions::XOptions(QObject *pParent) : QObject(pParent)
     g_bIsNeedRestart = false;
     g_nMaxRecentFilesCount = N_MAX_RECENT_FILES_COUNT;
     g_sName = QString("%1.ini").arg(qApp->applicationName());  // default name
-    //    qRegisterMetaType<QVector<int>>("QVector<int>"); // Windows debug messages
-
-    // #ifdef QT_DEBUG
-    //     getBundle();
-    // #endif
 }
 
 void XOptions::resetToDefault()
