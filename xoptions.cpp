@@ -333,6 +333,7 @@ void XOptions::load()
                 case ID_AUTHTOKEN: varDefault = ""; break;
                 case ID_NU_RECENTFILES: varDefault = QList<QVariant>(); break;
                 case ID_NU_LASTDIRECTORY: varDefault = ""; break;
+                case ID_SCAN_BUFFERSIZE: varDefault = 2 * 1024 * 1024; break;
                 default: varDefault = "";
             }
         }
