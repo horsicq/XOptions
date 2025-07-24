@@ -31,7 +31,7 @@ public:
     explicit XThreadObject(QObject *pParent = nullptr);
 
     virtual void process() = 0;
-    virtual QString getTitle();
+    virtual QString getTitle(); // TODO setTitle
 
 public slots:
     void _process();
