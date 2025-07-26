@@ -256,7 +256,8 @@ public:
         ID_STRUCTS_PATH,
         // for internal use.
         ID_NU_LASTDIRECTORY,  // Using if ID_SAVELASTDIRECTORY
-        ID_NU_RECENTFILES     // Using if ID_SAVERECENTFILES
+        ID_NU_RECENTFILES,     // Using if ID_SAVERECENTFILES
+        ID_FILE_SETENV
     };
 
     enum ICONTYPE {
@@ -491,6 +492,9 @@ public:
     bool registerContext(const QString &sApplicationName, const QString &sType, const QString &sApplicationFilePath, USERROLE userRole = USERROLE_ADMIN);
     bool clearContext(const QString &sApplicationName, const QString &sType, USERROLE userRole = USERROLE_ADMIN);
     bool checkContext(const QString &sApplicationName, const QString &sType, USERROLE userRole = USERROLE_ADMIN);
+    bool isPathInUserEnvironment(const QString &checkPath);
+    void appendToUserPathVariable(const QString &newPath);
+    void removeFromUserPathVariable(const QString &targetPath);
 #endif
     void setMaxRecentFilesCount(qint32 nValue);
     qint32 getMaxRecentFilesCount();

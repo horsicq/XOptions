@@ -60,6 +60,8 @@ private slots:
     void on_pushButtonDefault_clicked();
     void on_pushButtonOK_clicked();
     void on_pushButtonCancel_clicked();
+    void on_checkBoxFileSetEnvVar_toggled(bool bChecked);
+
 
 signals:
     void saveSignal();
