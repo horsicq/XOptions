@@ -2301,6 +2301,62 @@ QString XOptions::getClassesPrefix(USERROLE userRole)
 }
 #endif
 #ifdef Q_OS_WIN
+bool XOptions::isPathInUserEnvironment(const QString &checkPath)
+{
+    QSettings settings("HKEY_CURRENT_USER\\Environment", QSettings::NativeFormat);
+    QString currentPath = settings.value("Path").toString();
+
+    QString formattedPath = QDir::toNativeSeparators(checkPath);
+    QStringList pathEntries = currentPath.split(';', Qt::SkipEmptyParts);
+
+    return pathEntries.contains(formattedPath, Qt::CaseInsensitive);
+}
+#endif
+#ifdef Q_OS_WIN
+void XOptions::appendToUserPathVariable(const QString &newPath)
+{
+    QSettings settings("HKEY_CURRENT_USER\\Environment", QSettings::NativeFormat);
+    QString currentPath = settings.value("Path").toString();
+
+    QString formattedPath = QDir::toNativeSeparators(newPath);
+    QStringList pathEntries = currentPath.split(';', Qt::SkipEmptyParts);
+
+    if (!pathEntries.contains(formattedPath, Qt::CaseInsensitive)) {
+        pathEntries.append(formattedPath);
+        settings.setValue("Path", pathEntries.join(';'));
+
+        SendMessageTimeout(HWND_BROADCAST, WM_SETTINGCHANGE, 0,
+                           (LPARAM)L"Environment", SMTO_ABORTIFHUNG, 5000, nullptr);
+
+        qDebug() << "[EnvPath] Created. Appended to Path:" << formattedPath;
+    } else {
+        qDebug() << "[EnvPath] Already present. No action taken.";
+    }
+}
+#endif
+#ifdef Q_OS_WIN
+void XOptions::removeFromUserPathVariable(const QString &targetPath)
+{
+    QSettings settings("HKEY_CURRENT_USER\\Environment", QSettings::NativeFormat);
+    QString currentPath = settings.value("Path").toString();
+
+    QString formattedPath = QDir::toNativeSeparators(targetPath);
+    QStringList pathEntries = currentPath.split(';', Qt::SkipEmptyParts);
+
+    if (pathEntries.contains(formattedPath, Qt::CaseInsensitive)) {
+        pathEntries.removeAll(formattedPath);
+        settings.setValue("Path", pathEntries.join(';'));
+
+        SendMessageTimeout(HWND_BROADCAST, WM_SETTINGCHANGE, 0,
+                           (LPARAM)L"Environment", SMTO_ABORTIFHUNG, 5000, nullptr);
+
+        qDebug() << "[EnvPath] Removed from Path:" << formattedPath;
+    } else {
+        qDebug() << "[EnvPath] Target not found in Path. Nothing to remove.";
+    }
+}
+#endif
+#ifdef Q_OS_WIN
 bool XOptions::registerContext(const QString &sApplicationName, const QString &sType, const QString &sApplicationFilePath, USERROLE userRole)
 {
     QString _sApplicationFilePath = sApplicationFilePath;
