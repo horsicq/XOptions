@@ -2327,10 +2327,6 @@ void XOptions::appendToUserPathVariable(const QString &newPath)
 
         SendMessageTimeout(HWND_BROADCAST, WM_SETTINGCHANGE, 0,
                            (LPARAM)L"Environment", SMTO_ABORTIFHUNG, 5000, nullptr);
-
-        qDebug() << "[EnvPath] Created. Appended to Path:" << formattedPath;
-    } else {
-        qDebug() << "[EnvPath] Already present. No action taken.";
     }
 }
 #endif
@@ -2349,10 +2345,6 @@ void XOptions::removeFromUserPathVariable(const QString &targetPath)
 
         SendMessageTimeout(HWND_BROADCAST, WM_SETTINGCHANGE, 0,
                            (LPARAM)L"Environment", SMTO_ABORTIFHUNG, 5000, nullptr);
-
-        qDebug() << "[EnvPath] Removed from Path:" << formattedPath;
-    } else {
-        qDebug() << "[EnvPath] Target not found in Path. Nothing to remove.";
     }
 }
 #endif
