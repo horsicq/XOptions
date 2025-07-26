@@ -2313,7 +2313,7 @@ bool XOptions::isPathInUserEnvironment(const QString &checkPath)
 }
 #endif
 #ifdef Q_OS_WIN
-void XOptions::appendToUserPathVariable(const QString &newPath)
+void XOptions::appendToUserPathVariable(const QString& newPath)
 {
     QSettings settings("HKEY_CURRENT_USER\\Environment", QSettings::NativeFormat);
     QString currentPath = settings.value("Path").toString();
@@ -2325,13 +2325,15 @@ void XOptions::appendToUserPathVariable(const QString &newPath)
         pathEntries.append(formattedPath);
         settings.setValue("Path", pathEntries.join(';'));
 
+#ifdef QT_GUI_LIB
         SendMessageTimeout(HWND_BROADCAST, WM_SETTINGCHANGE, 0,
-                           (LPARAM)L"Environment", SMTO_ABORTIFHUNG, 5000, nullptr);
+            (LPARAM)L"Environment", SMTO_ABORTIFHUNG, 5000, nullptr);
+#endif
     }
 }
 #endif
 #ifdef Q_OS_WIN
-void XOptions::removeFromUserPathVariable(const QString &targetPath)
+void XOptions::removeFromUserPathVariable(const QString& targetPath)
 {
     QSettings settings("HKEY_CURRENT_USER\\Environment", QSettings::NativeFormat);
     QString currentPath = settings.value("Path").toString();
@@ -2343,8 +2345,10 @@ void XOptions::removeFromUserPathVariable(const QString &targetPath)
         pathEntries.removeAll(formattedPath);
         settings.setValue("Path", pathEntries.join(';'));
 
+#ifdef QT_GUI_LIB
         SendMessageTimeout(HWND_BROADCAST, WM_SETTINGCHANGE, 0,
-                           (LPARAM)L"Environment", SMTO_ABORTIFHUNG, 5000, nullptr);
+            (LPARAM)L"Environment", SMTO_ABORTIFHUNG, 5000, nullptr);
+#endif
     }
 }
 #endif
