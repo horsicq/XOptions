@@ -293,6 +293,13 @@
              </widget>
             </item>
             <item>
+             <widget class="QCheckBox" name="checkBoxFileSetEnvVar">
+              <property name="text">
+               <string>Set system environment variable</string>
+              </property>
+             </widget>
+            </item>
+            <item>
              <spacer name="verticalSpacer_2">
               <property name="orientation">
                <enum>Qt::Vertical</enum>
