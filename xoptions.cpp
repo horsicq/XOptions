@@ -2326,8 +2326,8 @@ void XOptions::appendToUserPathVariable(const QString& newPath)
         settings.setValue("Path", pathEntries.join(';'));
 
 #ifdef QT_GUI_LIB
-        SendMessageTimeout(HWND_BROADCAST, WM_SETTINGCHANGE, 0,
-            (LPARAM)L"Environment", SMTO_ABORTIFHUNG, 5000, nullptr);
+//        SendMessageTimeout(HWND_BROADCAST, WM_SETTINGCHANGE, 0,
+//            (LPARAM)L"Environment", SMTO_ABORTIFHUNG, 5000, nullptr);
 #endif
     }
 }
@@ -2346,8 +2346,8 @@ void XOptions::removeFromUserPathVariable(const QString& targetPath)
         settings.setValue("Path", pathEntries.join(';'));
 
 #ifdef QT_GUI_LIB
-        SendMessageTimeout(HWND_BROADCAST, WM_SETTINGCHANGE, 0,
-            (LPARAM)L"Environment", SMTO_ABORTIFHUNG, 5000, nullptr);
+//        SendMessageTimeout(HWND_BROADCAST, WM_SETTINGCHANGE, 0,
+//            (LPARAM)L"Environment", SMTO_ABORTIFHUNG, 5000, nullptr);
 #endif
     }
 }
