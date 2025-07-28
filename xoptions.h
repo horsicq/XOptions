@@ -256,7 +256,7 @@ public:
         ID_STRUCTS_PATH,
         // for internal use.
         ID_NU_LASTDIRECTORY,  // Using if ID_SAVELASTDIRECTORY
-        ID_NU_RECENTFILES,     // Using if ID_SAVERECENTFILES
+        ID_NU_RECENTFILES,    // Using if ID_SAVERECENTFILES
         ID_FILE_SETENV
     };
 

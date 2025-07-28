@@ -2313,7 +2313,7 @@ bool XOptions::isPathInUserEnvironment(const QString &checkPath)
 }
 #endif
 #ifdef Q_OS_WIN
-void XOptions::appendToUserPathVariable(const QString& newPath)
+void XOptions::appendToUserPathVariable(const QString &newPath)
 {
     QSettings settings("HKEY_CURRENT_USER\\Environment", QSettings::NativeFormat);
     QString currentPath = settings.value("Path").toString();
@@ -2333,7 +2333,7 @@ void XOptions::appendToUserPathVariable(const QString& newPath)
 }
 #endif
 #ifdef Q_OS_WIN
-void XOptions::removeFromUserPathVariable(const QString& targetPath)
+void XOptions::removeFromUserPathVariable(const QString &targetPath)
 {
     QSettings settings("HKEY_CURRENT_USER\\Environment", QSettings::NativeFormat);
     QString currentPath = settings.value("Path").toString();

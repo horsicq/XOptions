@@ -318,21 +318,13 @@ void XOptionsWidget::reload()
         //     (!bUser)) {
         //     g_userRole = XOptions::USERROLE_ADMIN;
         // }
-        ui->checkBoxFileContext->setChecked(
-            g_pOptions->checkContext(
-                g_sApplicationDisplayName,
-                g_pOptions->getValue(XOptions::ID_FILE_CONTEXT).toString(),
-                g_userRole
-                )
-            );
+        ui->checkBoxFileContext->setChecked(g_pOptions->checkContext(g_sApplicationDisplayName, g_pOptions->getValue(XOptions::ID_FILE_CONTEXT).toString(), g_userRole));
 
         // Check if application directory is present in system PATH
         QString appDir = QFileInfo(QCoreApplication::applicationFilePath()).absolutePath();
         QString formattedDir = QDir::toNativeSeparators(appDir);
 
-        ui->checkBoxFileSetEnvVar->setChecked(
-            g_pOptions->isPathInUserEnvironment(formattedDir)
-            );
+        ui->checkBoxFileSetEnvVar->setChecked(g_pOptions->isPathInUserEnvironment(formattedDir));
 #endif
     } else {
         ui->checkBoxFileContext->hide();

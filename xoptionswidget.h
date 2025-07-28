@@ -62,7 +62,6 @@ private slots:
     void on_pushButtonCancel_clicked();
     void on_checkBoxFileSetEnvVar_toggled(bool bChecked);
 
-
 signals:
     void saveSignal();
     void reloadSignal();
