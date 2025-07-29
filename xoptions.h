@@ -408,6 +408,9 @@ public:
     static QString getTitle(const QString &sName, const QString &sVersion, bool bShowOS = true);
     bool isWritable();
     static void adjustApplicationInitAttributes();
+	  bool isPathInUserEnvironment(const QString &checkPath);
+    void appendToUserPathVariable(const QString &newPath);
+    void removeFromUserPathVariable(const QString &targetPath);
 #ifdef QT_GUI_LIB
     void setCheckBox(QCheckBox *pCheckBox, ID id);
     void getCheckBox(QCheckBox *pCheckBox, ID id);
@@ -492,9 +495,7 @@ public:
     bool registerContext(const QString &sApplicationName, const QString &sType, const QString &sApplicationFilePath, USERROLE userRole = USERROLE_ADMIN);
     bool clearContext(const QString &sApplicationName, const QString &sType, USERROLE userRole = USERROLE_ADMIN);
     bool checkContext(const QString &sApplicationName, const QString &sType, USERROLE userRole = USERROLE_ADMIN);
-    bool isPathInUserEnvironment(const QString &checkPath);
-    void appendToUserPathVariable(const QString &newPath);
-    void removeFromUserPathVariable(const QString &targetPath);
+    
 #endif
     void setMaxRecentFilesCount(qint32 nValue);
     qint32 getMaxRecentFilesCount();
