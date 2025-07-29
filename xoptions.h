@@ -27,6 +27,7 @@
 #include <QSysInfo>
 #include <QTranslator>
 #include <QAbstractItemModel>
+#include <QTextStream>
 #if (QT_VERSION_MAJOR < 5)  // TODO Check
 #include <QRegExp>
 #else
