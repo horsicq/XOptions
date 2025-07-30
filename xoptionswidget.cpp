@@ -19,7 +19,7 @@
  * SOFTWARE.
  */
 #include "xoptionswidget.h"
-#include "desktopIntegrationHelper.h"
+#include "desktopintegrationhelper.h"
 #include "guimainwindow.h"
 #include "ui_xoptionswidget.h"
 
