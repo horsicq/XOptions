@@ -15,3 +15,7 @@ DISTFILES += \
     $$PWD/LICENSE \
     $$PWD/README.md \
     $$PWD/xoptions.cmake
+	
+ win32 {
+        LIBS += -luser32
+        }
