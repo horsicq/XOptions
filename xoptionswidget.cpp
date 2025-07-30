@@ -19,7 +19,8 @@
  * SOFTWARE.
  */
 #include "xoptionswidget.h"
-
+#include "desktopIntegrationHelper.h"
+#include "guimainwindow.h"
 #include "ui_xoptionswidget.h"
 
 XOptionsWidget::XOptionsWidget(QWidget *pParent) : XShortcutsWidget(pParent), ui(new Ui::XOptionsWidget)
@@ -220,8 +221,15 @@ void XOptionsWidget::save()
       }
     }
 
+#ifdef Q_OS_WIN
+    if (g_pOptions->isIDPresent(XOptions::ID_FILE_ENABLETRAYMONITORING)) {
+      g_pOptions->getCheckBox(ui->checkBoxEnableTrayMonitoring, XOptions::ID_FILE_ENABLETRAYMONITORING);
+      qDebug() << "[Save] Tray monitoring state saved:" << g_pOptions->getValue(XOptions::ID_FILE_ENABLETRAYMONITORING).toBool();
+    }
+#endif
     g_pOptions->save();
 }
+
 
 void XOptionsWidget::reload()
 {
@@ -337,9 +345,33 @@ void XOptionsWidget::reload()
         // }
         ui->checkBoxFileContext->setChecked(g_pOptions->checkContext(g_sApplicationDisplayName, g_pOptions->getValue(XOptions::ID_FILE_CONTEXT).toString(), g_userRole));
 
+        if (g_pOptions->isIDPresent(XOptions::ID_FILE_ENABLETRAYMONITORING)) {
+          bool bTrayStored = g_pOptions->getValue(XOptions::ID_FILE_ENABLETRAYMONITORING).toBool();
+          bool bTrayRunning = g_pOptions->isTrayMonitoringActive();
+
+          ui->checkBoxEnableTrayMonitoring->blockSignals(true);
+          ui->checkBoxEnableTrayMonitoring->setChecked(bTrayStored);
+          ui->checkBoxEnableTrayMonitoring->blockSignals(false);
+
+          if (bTrayStored && !bTrayRunning) {
+            qDebug() << "[Reload] Tray was enabled in config but not running — setting up without toast.";
+            g_pOptions->setupTrayIconAndDownloadMonitoring(g_pMainWindow, false);
+          }
+
+          if (bTrayStored) {
+            qDebug() << "[Reload] Rebinding tray callbacks to ensure restore works.";
+            g_pOptions->registerTrayCallbacks(false);
+          }
+        }
+        else {
+          ui->checkBoxEnableTrayMonitoring->hide();
+          qDebug() << "[Reload] Tray monitoring not configured — hiding checkbox.";
+        }
+
 #endif
     } else {
         ui->checkBoxFileContext->hide();
+				ui->checkBoxEnableTrayMonitoring->hide();
     }
 }
 
@@ -408,6 +440,27 @@ void XOptionsWidget::on_checkBoxFileSetEnvVar_toggled(bool bChecked)
         }
     }
 }
+#ifdef Q_OS_WIN
+void XOptionsWidget::on_checkBoxEnableTrayMonitoring_toggled(bool bChecked)
+{
+  qDebug() << "[Tray Monitor] Toggled to:" << bChecked;
+  g_pOptions->setValue(XOptions::ID_FILE_ENABLETRAYMONITORING, bChecked);
+
+  if (bChecked) {
+    if (!g_pOptions->isTrayMonitoringActive()) {
+      g_pOptions->setupTrayIconAndDownloadMonitoring(g_pMainWindow, true);
+      qDebug() << "[Tray Monitor] Setup triggered.";
+    }
+    else {
+      qDebug() << "[Tray Monitor] Already active.";
+      g_pOptions->registerTrayCallbacks(true);
+    }
+  }
+  else {
+    g_pOptions->cleanupTrayMonitoring();
+  }
+}
+#endif
 
 void XOptionsWidget::on_toolButtonViewFontControls_clicked()
 {
