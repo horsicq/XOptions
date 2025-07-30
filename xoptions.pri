@@ -15,3 +15,5 @@ DISTFILES += \
     $$PWD/LICENSE \
     $$PWD/README.md \
     $$PWD/xoptions.cmake
+	
+LIBS += -lUser32
