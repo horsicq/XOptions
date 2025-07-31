@@ -1,6 +1,8 @@
 INCLUDEPATH += $$PWD
 DEPENDPATH += $$PWD
 
+QT += widgets
+
 HEADERS += \
     $$PWD/dialogviewcolors.h \
     $$PWD/xoptionswidget.h
