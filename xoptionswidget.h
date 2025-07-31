@@ -61,13 +61,10 @@ private slots:
     void on_pushButtonOK_clicked();
     void on_pushButtonCancel_clicked();
     void on_checkBoxFileSetEnvVar_toggled(bool bChecked);
-    void on_checkBoxEnableTrayMonitoring_toggled(bool bChecked);
-
 
 signals:
     void saveSignal();
     void reloadSignal();
-
 
 protected:
     virtual void registerShortcuts(bool bState);
@@ -77,8 +74,6 @@ private:
     QWidget *g_pParent;
     XOptions *g_pOptions;
     QString g_sApplicationDisplayName;
-
-
 #ifdef Q_OS_WIN
     XOptions::USERROLE g_userRole;
 #endif

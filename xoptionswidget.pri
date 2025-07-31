@@ -22,4 +22,3 @@ DISTFILES += \
     $$PWD/LICENSE \
     $$PWD/README.md \
     $$PWD/xoptionswidget.cmake
-
