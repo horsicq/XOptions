@@ -28,6 +28,8 @@
 #include <QTranslator>
 #include <QAbstractItemModel>
 #include <QTextStream>
+#include <QSystemTrayIcon>
+#include <QTimer>
 #if (QT_VERSION_MAJOR < 5)  // TODO Check
 #include <QRegExp>
 #else
@@ -258,7 +260,8 @@ public:
         // for internal use.
         ID_NU_LASTDIRECTORY,  // Using if ID_SAVELASTDIRECTORY
         ID_NU_RECENTFILES,    // Using if ID_SAVERECENTFILES
-        ID_FILE_SETENV
+        ID_FILE_SETENV,
+        ID_FILE_ENABLETRAYMONITORING
     };
 
     enum ICONTYPE {
@@ -496,6 +499,16 @@ public:
     bool registerContext(const QString &sApplicationName, const QString &sType, const QString &sApplicationFilePath, USERROLE userRole = USERROLE_ADMIN);
     bool clearContext(const QString &sApplicationName, const QString &sType, USERROLE userRole = USERROLE_ADMIN);
     bool checkContext(const QString &sApplicationName, const QString &sType, USERROLE userRole = USERROLE_ADMIN);
+
+    void initializeTrayIcon();
+    void registerTrayCallbacks(bool showNotification);
+    void setupDownloadMonitoring();
+    void setupTrayIconAndDownloadMonitoring(QWidget* guiMainWindow, bool forceNotify);
+    void startPollingOnDownload(const QString& path);
+    void cleanupTrayMonitoring();
+
+    bool isTrayMonitoringActive() const;
+    bool m_trayMonitoringActive = false;
     
 #endif
     void setMaxRecentFilesCount(qint32 nValue);
@@ -533,6 +546,11 @@ private:
     QMap<ID, QVariant> g_mapDefaultValues;
     bool g_bIsNeedRestart;
     qint32 g_nMaxRecentFilesCount;
+#ifdef Q_OS_WIN
+    QSystemTrayIcon* m_trayIcon = nullptr;
+    QMenu* m_trayMenu = nullptr;
+    QPointer<QWidget> m_guiMainWindow;
+#endif
 #ifdef QT_GUI_LIB
     QMenu *g_pRecentFilesMenu;
     QMenu *g_pCodePagesMenu;
