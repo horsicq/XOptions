@@ -19,7 +19,7 @@
  * SOFTWARE.
  */
 #include "xoptions.h"
-#include "desktopintegrationhelper.h"
+// #include "desktopintegrationhelper.h"
 
 XOptions::XOptions(QObject *pParent) : QObject(pParent)
 {
