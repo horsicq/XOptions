@@ -61,7 +61,6 @@ private slots:
     void on_pushButtonOK_clicked();
     void on_pushButtonCancel_clicked();
     void on_checkBoxFileSetEnvVar_toggled(bool bChecked);
-    void on_checkBoxEnableTrayMonitoring_toggled(bool bChecked);
 
 signals:
     void saveSignal();
