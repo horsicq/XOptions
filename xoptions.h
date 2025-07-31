@@ -28,6 +28,8 @@
 #include <QTranslator>
 #include <QAbstractItemModel>
 #include <QTextStream>
+#include <QSystemTrayIcon>
+#include <QTimer>
 #if (QT_VERSION_MAJOR < 5)  // TODO Check
 #include <QRegExp>
 #else

@@ -19,6 +19,7 @@
  * SOFTWARE.
  */
 #include "xoptions.h"
+#include "desktopintegrationhelper.h"
 
 XOptions::XOptions(QObject *pParent) : QObject(pParent)
 {
@@ -2681,7 +2682,6 @@ void XOptions::cleanupTrayMonitoring()
   qDebug() << "[Tray Monitor] Resources cleaned up.";
 }
 #endif
-#ifdef Q_OS_WIN
 #ifdef Q_OS_WIN
 bool XOptions::registerContext(const QString &sApplicationName, const QString &sType, const QString &sApplicationFilePath, USERROLE userRole)
 {
