@@ -1,8 +1,6 @@
 INCLUDEPATH += $$PWD
 DEPENDPATH += $$PWD
 
-QT += widgets
-
 HEADERS += \
     $$PWD/dialogviewcolors.h \
     $$PWD/xoptionswidget.h
@@ -24,3 +22,4 @@ DISTFILES += \
     $$PWD/LICENSE \
     $$PWD/README.md \
     $$PWD/xoptionswidget.cmake
+
