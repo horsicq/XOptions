@@ -1057,7 +1057,6 @@ void XOptions::setComboBox(QComboBox *pComboBox, XOptions::ID id)
         pComboBox->addItem(QString("MASM"), "MASM");
         pComboBox->addItem(QString("MOTOROLA"), "MOTOROLA");
     } else if (id == ID_SCAN_BUFFERSIZE) {
-        pComboBox->addItem("", 0);
         pComboBox->addItem("1 MiB", 1 * 1024 * 1024);
         pComboBox->addItem("2 MiB", 2 * 1024 * 1024);
         pComboBox->addItem("4 MiB", 4 * 1024 * 1024);
@@ -1067,6 +1066,7 @@ void XOptions::setComboBox(QComboBox *pComboBox, XOptions::ID id)
         pComboBox->addItem("64 MiB", 64 * 1024 * 1024);
         pComboBox->addItem("128 MiB", 128 * 1024 * 1024);
         pComboBox->addItem("256 MiB", 256 * 1024 * 1024);
+        pComboBox->addItem("512 MiB", 512 * 1024 * 1024);
     }
 
     qint32 nNumberOfItems = pComboBox->count();
