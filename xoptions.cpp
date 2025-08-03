@@ -1067,6 +1067,7 @@ void XOptions::setComboBox(QComboBox *pComboBox, XOptions::ID id)
         pComboBox->addItem("64 MiB", 64 * 1024 * 1024);
         pComboBox->addItem("128 MiB", 128 * 1024 * 1024);
         pComboBox->addItem("256 MiB", 256 * 1024 * 1024);
+        pComboBox->addItem("512 MiB", 512 * 1024 * 1024);
     }
 
     qint32 nNumberOfItems = pComboBox->count();
