@@ -199,12 +199,16 @@ void XOptionsWidget::save()
     if (g_pOptions->isIDPresent(XOptions::ID_FILE_SAVERECENTFILES)) {
         g_pOptions->getCheckBox(ui->checkBoxFileSaveHistory, XOptions::ID_FILE_SAVERECENTFILES);
     }
-#ifdef Q_OS_WIN
     if (g_pOptions->isIDPresent(XOptions::ID_FILE_SETENV)) {
         g_pOptions->getCheckBox(ui->checkBoxFileSetEnvVar, XOptions::ID_FILE_SETENV);
 
         QString appDir = QFileInfo(QCoreApplication::applicationFilePath()).absolutePath();
+
+#ifdef Q_OS_WIN
         QString formattedDir = QDir::toNativeSeparators(appDir);
+#else
+        QString formattedDir = QDir(appDir).absolutePath();
+#endif
 
         if (ui->checkBoxFileSetEnvVar->isChecked()) {
             g_pOptions->appendToUserPathVariable(formattedDir);
@@ -214,7 +218,6 @@ void XOptionsWidget::save()
             qDebug() << "[Save] Removed from user PATH:" << formattedDir;
         }
     }
-#endif
     g_pOptions->save();
 }
 
@@ -309,6 +312,17 @@ void XOptionsWidget::reload()
         ui->checkBoxFileSaveHistory->hide();
     }
 
+    QString appDir = QFileInfo(QCoreApplication::applicationFilePath()).absolutePath();
+#ifdef Q_OS_WIN
+    QString formattedDir = QDir::toNativeSeparators(appDir);
+#else
+    QString formattedDir = QDir(appDir).absolutePath();
+#endif
+
+    ui->checkBoxFileSetEnvVar->setChecked(
+        g_pOptions->isPathInUserEnvironment(formattedDir)
+        );
+
     if (g_pOptions->isIDPresent(XOptions::ID_FILE_CONTEXT)) {
 #ifdef Q_OS_WIN
         // bool bAdmin = g_pOptions->checkContext(g_sApplicationDisplayName, g_pOptions->getValue(XOptions::ID_FILE_CONTEXT).toString(), XOptions::USERROLE_ADMIN);
@@ -320,11 +334,6 @@ void XOptionsWidget::reload()
         // }
         ui->checkBoxFileContext->setChecked(g_pOptions->checkContext(g_sApplicationDisplayName, g_pOptions->getValue(XOptions::ID_FILE_CONTEXT).toString(), g_userRole));
 
-        // Check if application directory is present in system PATH
-        QString appDir = QFileInfo(QCoreApplication::applicationFilePath()).absolutePath();
-        QString formattedDir = QDir::toNativeSeparators(appDir);
-
-        ui->checkBoxFileSetEnvVar->setChecked(g_pOptions->isPathInUserEnvironment(formattedDir));
 #endif
     } else {
         ui->checkBoxFileContext->hide();
@@ -368,9 +377,13 @@ void XOptionsWidget::on_checkBoxFileContext_toggled(bool bChecked)
 
 void XOptionsWidget::on_checkBoxFileSetEnvVar_toggled(bool bChecked)
 {
-#ifdef Q_OS_WIN
     QString appDir = QFileInfo(QCoreApplication::applicationFilePath()).absolutePath();
+
+#ifdef Q_OS_WIN
     QString formattedDir = QDir::toNativeSeparators(appDir);
+#else
+    QString formattedDir = QDir(appDir).absolutePath();
+#endif
 
     qDebug() << "[EnvCheckbox] Toggled:" << (bChecked ? "Checked" : "Unchecked");
     qDebug() << "[EnvCheckbox] Directory:" << formattedDir;
@@ -392,9 +405,6 @@ void XOptionsWidget::on_checkBoxFileSetEnvVar_toggled(bool bChecked)
             qDebug() << "[EnvPath] Not present. Nothing to remove.";
         }
     }
-#else
-    Q_UNUSED(bChecked)
-#endif
 }
 
 void XOptionsWidget::on_toolButtonViewFontControls_clicked()
