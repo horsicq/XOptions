@@ -337,7 +337,6 @@ void XOptionsWidget::reload()
 #endif
     } else {
         ui->checkBoxFileContext->hide();
-        ui->checkBoxFileSetEnvVar->hide();
     }
 }
 
