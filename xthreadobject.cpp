@@ -29,6 +29,13 @@ QString XThreadObject::getTitle()
     return tr("Process");
 }
 
+void XThreadObject::_connect(XThreadObject *pThreadObject)
+{
+    connect(pThreadObject, &XThreadObject::errorMessage, this, &XThreadObject::errorMessage);
+    connect(pThreadObject, &XThreadObject::warningMessage, this, &XThreadObject::warningMessage);
+    connect(pThreadObject, &XThreadObject::infoMessage, this, &XThreadObject::infoMessage);
+}
+
 void XThreadObject::_process()
 {
     QElapsedTimer scanTimer;

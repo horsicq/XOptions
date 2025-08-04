@@ -33,6 +33,8 @@ public:
     virtual void process() = 0;
     virtual QString getTitle();  // TODO setTitle
 
+    void _connect(XThreadObject *pThreadObject);
+
 public slots:
     void _process();
 
