@@ -208,10 +208,8 @@ void XOptionsWidget::save()
 
         if (ui->checkBoxFileSetEnvVar->isChecked()) {
             g_pOptions->appendToUserPathVariable(formattedDir);
-            qDebug() << "[Save] Appended to user PATH:" << formattedDir;
         } else {
             g_pOptions->removeFromUserPathVariable(formattedDir);
-            qDebug() << "[Save] Removed from user PATH:" << formattedDir;
         }
     }
 #endif
@@ -372,24 +370,15 @@ void XOptionsWidget::on_checkBoxFileSetEnvVar_toggled(bool bChecked)
     QString appDir = QFileInfo(QCoreApplication::applicationFilePath()).absolutePath();
     QString formattedDir = QDir::toNativeSeparators(appDir);
 
-    qDebug() << "[EnvCheckbox] Toggled:" << (bChecked ? "Checked" : "Unchecked");
-    qDebug() << "[EnvCheckbox] Directory:" << formattedDir;
-
     bool isCurrentlySet = g_pOptions->isPathInUserEnvironment(formattedDir);
 
     if (bChecked) {
         if (!isCurrentlySet) {
             g_pOptions->appendToUserPathVariable(formattedDir);
-            qDebug() << "[EnvPath] Appended to Path:" << formattedDir;
-        } else {
-            qDebug() << "[EnvPath] Already present. No action taken.";
         }
     } else {
         if (isCurrentlySet) {
             g_pOptions->removeFromUserPathVariable(formattedDir);
-            qDebug() << "[EnvPath] Removed from Path:" << formattedDir;
-        } else {
-            qDebug() << "[EnvPath] Not present. Nothing to remove.";
         }
     }
 #else
