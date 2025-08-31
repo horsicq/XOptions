@@ -33,20 +33,15 @@ XOptions::XOptions(QObject *pParent) : QObject(pParent)
 
 void XOptions::resetToDefault()
 {
-    qint32 nNumberOfRecords = g_listValueIDs.count();
-
-    for (qint32 i = 0; i < nNumberOfRecords; i++) {
-        XOptions::ID id = g_listValueIDs.at(i);
-
-        bool bInsert = false;
-
-        if ((id != ID_NU_LASTDIRECTORY) && (id != ID_NU_RECENTFILES)) {
-            bInsert = true;
+    const qint32 nCount = g_listValueIDs.count();
+    for (qint32 i = 0; i < nCount; ++i) {
+        const ID id = g_listValueIDs.at(i);
+        if ((id == ID_NU_LASTDIRECTORY) || (id == ID_NU_RECENTFILES)) {
+            continue;
         }
 
-        if (bInsert) {
-            g_mapValues.insert(id, g_mapDefaultValues.value(id));
-        }
+        const auto it = g_mapDefaultValues.constFind(id);
+        g_mapValues.insert(id, (it != g_mapDefaultValues.constEnd()) ? it.value() : QVariant());
     }
 }
 
