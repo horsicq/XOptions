@@ -34,14 +34,30 @@ XOptions::XOptions(QObject *pParent) : QObject(pParent)
 void XOptions::resetToDefault()
 {
     const qint32 nCount = g_listValueIDs.count();
+    if (!nCount) {
+        return;
+    }
+
+    const QMap<ID, QVariant>::const_iterator itEnd = g_mapDefaultValues.constEnd();
+
     for (qint32 i = 0; i < nCount; ++i) {
         const ID id = g_listValueIDs.at(i);
+
+        // Skip non-user (runtime) entries
         if ((id == ID_NU_LASTDIRECTORY) || (id == ID_NU_RECENTFILES)) {
             continue;
         }
 
-        const auto it = g_mapDefaultValues.constFind(id);
-        g_mapValues.insert(id, (it != g_mapDefaultValues.constEnd()) ? it.value() : QVariant());
+        QVariant varDefault;  // invalid by default
+        QMap<ID, QVariant>::const_iterator it = g_mapDefaultValues.constFind(id);
+        if (it != itEnd) {
+            varDefault = it.value();
+        }
+
+        // Avoid unnecessary insert if value is already equal
+        if (g_mapValues.value(id) != varDefault) {
+            g_mapValues.insert(id, varDefault);
+        }
     }
 }
 
