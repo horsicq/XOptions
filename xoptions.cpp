@@ -491,6 +491,7 @@ QString XOptions::idToString(ID id)
         case ID_SCAN_FLAG_AGGRESSIVE: sResult = QString("Scan/Flag/Aggressive"); break;
         case ID_SCAN_FLAG_VERBOSE: sResult = QString("Scan/Flag/Verbose"); break;
         case ID_SCAN_FLAG_ALLTYPES: sResult = QString("Scan/Flag/AllTypes"); break;
+        case ID_SCAN_USECACHE: sResult = QString("Scan/UseCache"); break;
         case ID_SCAN_FORMATRESULT: sResult = QString("Scan/FormatResult"); break;
         case ID_SCAN_LOG_PROFILING: sResult = QString("Scan/Log/Profiling"); break;
         case ID_SCAN_BUFFERSIZE: sResult = QString("Scan/BufferSize"); break;
