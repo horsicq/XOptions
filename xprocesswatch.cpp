@@ -20,8 +20,7 @@
  */
 #include "xprocesswatch.h"
 
-XProcessWatch::XProcessWatch(QObject *parent)
-    : QObject(parent)
+XProcessWatch::XProcessWatch(QObject *parent) : QObject(parent)
 {
     m_pPdStruct = nullptr;
     m_pTimer = nullptr;

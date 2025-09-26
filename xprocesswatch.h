@@ -24,8 +24,7 @@
 #include <QTimer>
 #include "xbinary.h"
 
-class XProcessWatch : public QObject
-{
+class XProcessWatch : public QObject {
     Q_OBJECT
 
 public:
@@ -43,4 +42,4 @@ private:
     QTimer *m_pTimer;
 };
 
-#endif // XPROCESSWATCH_H
+#endif  // XPROCESSWATCH_H
