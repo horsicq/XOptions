@@ -72,8 +72,8 @@ protected:
 
 private:
     Ui::DialogViewColors *ui;
-    XOptions *g_pOptions;
-    QMap<XOptions::ID, QString> g_mapColors;
+    XOptions *m_pOptions;
+    QMap<XOptions::ID, QString> m_mapColors;
 };
 
 #endif  // DIALOGVIEWCOLORS_H

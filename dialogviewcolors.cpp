@@ -38,7 +38,7 @@ void DialogViewColors::adjustView()
 
 void DialogViewColors::setOptions(XOptions *pOptions, const QList<RECORD> &listRecords, const QString &sTitle)
 {
-    g_pOptions = pOptions;
+    m_pOptions = pOptions;
 
     qint32 nNumberOfRecords = listRecords.count();
 
@@ -61,7 +61,7 @@ void DialogViewColors::setOptions(XOptions *pOptions, const QList<RECORD> &listR
 
 void DialogViewColors::save()
 {
-    QMapIterator<XOptions::ID, QString> iter(g_mapColors);
+    QMapIterator<XOptions::ID, QString> iter(m_mapColors);
 
     while (iter.hasNext()) {
         iter.next();
@@ -69,7 +69,7 @@ void DialogViewColors::save()
         XOptions::ID id = iter.key();
         QString sValue = iter.value();
 
-        g_pOptions->setValue(id, sValue);
+        m_pOptions->setValue(id, sValue);
     }
 }
 
@@ -131,7 +131,7 @@ void DialogViewColors::addRecord(qint32 nRow, const QString &sGroup, const QStri
 
     ui->tableWidgetColors->setCellWidget(nRow, COLUMN_STRING, pLineEdit);
 
-    g_mapColors.insert(id, g_pOptions->getValue(id).toString());
+    m_mapColors.insert(id, m_pOptions->getValue(id).toString());
 
     updateRow(nRow);
 }
@@ -145,7 +145,7 @@ void DialogViewColors::updateRow(qint32 nRow)
 {
     XOptions::ID id = (XOptions::ID)(ui->tableWidgetColors->cellWidget(nRow, COLUMN_TEXT_COLOR)->property("ID").toUInt());
 
-    QString sColor = g_mapColors.value(id);
+    QString sColor = m_mapColors.value(id);
     QString sTextColor = sColor.section("|", 0, 0);
     QString sBackgroundColor = sColor.section("|", 1, 1);
 
@@ -173,7 +173,7 @@ void DialogViewColors::pushButtonSlot()
         qint32 nColumn = pPushButton->property("COLUMN").toInt();
         XOptions::ID id = (XOptions::ID)(pPushButton->property("ID").toUInt());
 
-        QString sColor = g_mapColors.value(id);
+        QString sColor = m_mapColors.value(id);
         QString sTextColor = sColor.section("|", 0, 0);
         QString sBackgroundColor = sColor.section("|", 1, 1);
 
@@ -203,7 +203,7 @@ void DialogViewColors::pushButtonSlot()
             sColor = "";
         }
 
-        g_mapColors.insert(id, sColor);
+        m_mapColors.insert(id, sColor);
 
         updateRow(nRow);
     }
