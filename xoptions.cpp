@@ -28,7 +28,7 @@ XOptions::XOptions(QObject *pParent) : QObject(pParent)
 #endif
     g_bIsNeedRestart = false;
     g_nMaxRecentFilesCount = N_MAX_RECENT_FILES_COUNT;
-    g_sName = QString("%1.ini").arg(qApp->applicationName());  // default name
+    m_sName = QString("%1.ini").arg(qApp->applicationName());  // default name
 }
 
 void XOptions::resetToDefault()
@@ -259,7 +259,7 @@ bool XOptions::isAppImage()
 
 void XOptions::setName(const QString &sValue)
 {
-    g_sName = sValue;
+    m_sName = sValue;
 #ifdef QT_DEBUG
 #ifdef Q_OS_WIN
 #ifndef Q_OS_WIN64
@@ -269,7 +269,7 @@ void XOptions::setName(const QString &sValue)
 #endif
 #endif
 #ifdef Q_OS_LINUX
-    g_sName += "linux.debug.ini";
+    m_sName += "linux.debug.ini";
 #endif
 #ifdef Q_OS_MACOS
     g_sName += "macos.debug.ini";
@@ -286,7 +286,7 @@ void XOptions::load()
     if (bIsNative) {
         pSettings = new QSettings;
     } else {
-        pSettings = new QSettings(getApplicationDataPath() + QDir::separator() + QString("%1").arg(g_sName), QSettings::IniFormat);
+        pSettings = new QSettings(getApplicationDataPath() + QDir::separator() + QString("%1").arg(m_sName), QSettings::IniFormat);
     }
 
 #ifdef QT_DEBUG
@@ -395,7 +395,7 @@ void XOptions::save()
     if (bIsNative) {
         pSettings = new QSettings;
     } else {
-        pSettings = new QSettings(getApplicationDataPath() + QDir::separator() + QString("%1").arg(g_sName), QSettings::IniFormat);
+        pSettings = new QSettings(getApplicationDataPath() + QDir::separator() + QString("%1").arg(m_sName), QSettings::IniFormat);
     }
 
 #ifdef QT_DEBUG
@@ -1919,7 +1919,7 @@ bool XOptions::isWritable()
     if (bIsNative) {
         pSettings = new QSettings;
     } else {
-        pSettings = new QSettings(getApplicationDataPath() + QDir::separator() + QString("%1").arg(g_sName), QSettings::IniFormat);
+        pSettings = new QSettings(getApplicationDataPath() + QDir::separator() + QString("%1").arg(m_sName), QSettings::IniFormat);
     }
 
     bResult = pSettings->isWritable();

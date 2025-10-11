@@ -526,7 +526,7 @@ signals:
 
 private:
     static const qint32 N_MAX_RECENT_FILES_COUNT = 25;
-    QString g_sName;
+    QString m_sName;
     QList<ID> g_listValueIDs;
     QMap<ID, QVariant> g_mapValues;
     QMap<ID, QVariant> g_mapDefaultValues;
