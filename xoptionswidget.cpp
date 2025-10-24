@@ -26,15 +26,15 @@ XOptionsWidget::XOptionsWidget(QWidget *pParent) : XShortcutsWidget(pParent), ui
 {
     ui->setupUi(this);
 
-    g_pParent = pParent;
-    g_pOptions = nullptr;
-    g_sApplicationDisplayName = "";
+    m_pParent = pParent;
+    m_pOptions = nullptr;
+    m_sApplicationDisplayName = "";
 
     connect(this, SIGNAL(saveSignal()), this, SLOT(save()), Qt::DirectConnection);
     connect(this, SIGNAL(reloadSignal()), this, SLOT(reload()), Qt::DirectConnection);
 
 #ifdef Q_OS_WIN
-    g_userRole = XOptions::USERROLE_NORMAL;
+    m_userRole = XOptions::USERROLE_NORMAL;
 #endif
 }
 
@@ -57,21 +57,21 @@ void XOptionsWidget::setGlobal(XShortcuts *pShortcuts, XOptions *pXOptions)
 
 void XOptionsWidget::setOptions(XOptions *pOptions, const QString &sApplicationDisplayName)
 {
-    g_pOptions = pOptions;
-    g_sApplicationDisplayName = sApplicationDisplayName;
+    m_pOptions = pOptions;
+    m_sApplicationDisplayName = sApplicationDisplayName;
 
-    if (g_pOptions->isGroupIDPresent(XOptions::GROUPID_VIEW)) {
+    if (m_pOptions->isGroupIDPresent(XOptions::GROUPID_VIEW)) {
         addListRecord(tr("Appearance"), 0);
         ui->pageView->setProperty("GROUPID", XOptions::GROUPID_VIEW);
     }
 
-    if (g_pOptions->isGroupIDPresent(XOptions::GROUPID_FILE)) {
+    if (m_pOptions->isGroupIDPresent(XOptions::GROUPID_FILE)) {
         addListRecord(tr("File"), 1);
         ui->pageFile->setProperty("GROUPID", XOptions::GROUPID_FILE);
     }
 
-    if (g_pOptions->isIDPresent(XOptions::ID_VIEW_FONT_CONTROLS) || g_pOptions->isIDPresent(XOptions::ID_VIEW_FONT_TABLEVIEWS) ||
-        g_pOptions->isIDPresent(XOptions::ID_VIEW_FONT_TREEVIEWS) || g_pOptions->isIDPresent(XOptions::ID_VIEW_FONT_TEXTEDITS)) {
+    if (m_pOptions->isIDPresent(XOptions::ID_VIEW_FONT_CONTROLS) || m_pOptions->isIDPresent(XOptions::ID_VIEW_FONT_TABLEVIEWS) ||
+        m_pOptions->isIDPresent(XOptions::ID_VIEW_FONT_TREEVIEWS) || m_pOptions->isIDPresent(XOptions::ID_VIEW_FONT_TEXTEDITS)) {
         addListRecord(tr("Fonts"), 2);
         ui->pageFile->setProperty("GROUPID", XOptions::GROUPID_FONTS);
     }
@@ -140,189 +140,189 @@ void XOptionsWidget::reloadData(bool bSaveSelection)
 
 void XOptionsWidget::save()
 {
-    if (g_pOptions->isIDPresent(XOptions::ID_VIEW_STAYONTOP)) {
-        g_pOptions->getCheckBox(ui->checkBoxViewStayOnTop, XOptions::ID_VIEW_STAYONTOP);
+    if (m_pOptions->isIDPresent(XOptions::ID_VIEW_STAYONTOP)) {
+        m_pOptions->getCheckBox(ui->checkBoxViewStayOnTop, XOptions::ID_VIEW_STAYONTOP);
     }
 
-    if (g_pOptions->isIDPresent(XOptions::ID_VIEW_SINGLEAPPLICATION)) {
-        g_pOptions->getCheckBox(ui->checkBoxViewSingleApplication, XOptions::ID_VIEW_SINGLEAPPLICATION);
+    if (m_pOptions->isIDPresent(XOptions::ID_VIEW_SINGLEAPPLICATION)) {
+        m_pOptions->getCheckBox(ui->checkBoxViewSingleApplication, XOptions::ID_VIEW_SINGLEAPPLICATION);
     }
 
-    if (g_pOptions->isIDPresent(XOptions::ID_VIEW_STYLE)) {
-        g_pOptions->getComboBox(ui->comboBoxViewStyle, XOptions::ID_VIEW_STYLE);
+    if (m_pOptions->isIDPresent(XOptions::ID_VIEW_STYLE)) {
+        m_pOptions->getComboBox(ui->comboBoxViewStyle, XOptions::ID_VIEW_STYLE);
     }
 
-    if (g_pOptions->isIDPresent(XOptions::ID_VIEW_QSS)) {
-        g_pOptions->getComboBox(ui->comboBoxViewQss, XOptions::ID_VIEW_QSS);
+    if (m_pOptions->isIDPresent(XOptions::ID_VIEW_QSS)) {
+        m_pOptions->getComboBox(ui->comboBoxViewQss, XOptions::ID_VIEW_QSS);
     }
 
-    if (g_pOptions->isIDPresent(XOptions::ID_VIEW_LANG)) {
-        g_pOptions->getComboBox(ui->comboBoxViewLanguage, XOptions::ID_VIEW_LANG);
+    if (m_pOptions->isIDPresent(XOptions::ID_VIEW_LANG)) {
+        m_pOptions->getComboBox(ui->comboBoxViewLanguage, XOptions::ID_VIEW_LANG);
     }
 
-    if (g_pOptions->isIDPresent(XOptions::ID_VIEW_SHOWLOGO)) {
-        g_pOptions->getCheckBox(ui->checkBoxViewShowLogo, XOptions::ID_VIEW_SHOWLOGO);
+    if (m_pOptions->isIDPresent(XOptions::ID_VIEW_SHOWLOGO)) {
+        m_pOptions->getCheckBox(ui->checkBoxViewShowLogo, XOptions::ID_VIEW_SHOWLOGO);
     }
 
-    if (g_pOptions->isIDPresent(XOptions::ID_VIEW_FONT_CONTROLS)) {
-        g_pOptions->getLineEdit(ui->lineEditViewFontControls, XOptions::ID_VIEW_FONT_CONTROLS);
+    if (m_pOptions->isIDPresent(XOptions::ID_VIEW_FONT_CONTROLS)) {
+        m_pOptions->getLineEdit(ui->lineEditViewFontControls, XOptions::ID_VIEW_FONT_CONTROLS);
     }
 
-    if (g_pOptions->isIDPresent(XOptions::ID_VIEW_FONT_TABLEVIEWS)) {
-        g_pOptions->getLineEdit(ui->lineEditViewFontTables, XOptions::ID_VIEW_FONT_TABLEVIEWS);
+    if (m_pOptions->isIDPresent(XOptions::ID_VIEW_FONT_TABLEVIEWS)) {
+        m_pOptions->getLineEdit(ui->lineEditViewFontTables, XOptions::ID_VIEW_FONT_TABLEVIEWS);
     }
 
-    if (g_pOptions->isIDPresent(XOptions::ID_VIEW_FONT_TREEVIEWS)) {
-        g_pOptions->getLineEdit(ui->lineEditViewFontTrees, XOptions::ID_VIEW_FONT_TREEVIEWS);
+    if (m_pOptions->isIDPresent(XOptions::ID_VIEW_FONT_TREEVIEWS)) {
+        m_pOptions->getLineEdit(ui->lineEditViewFontTrees, XOptions::ID_VIEW_FONT_TREEVIEWS);
     }
 
-    if (g_pOptions->isIDPresent(XOptions::ID_VIEW_FONT_TEXTEDITS)) {
-        g_pOptions->getLineEdit(ui->lineEditViewFontTextEdits, XOptions::ID_VIEW_FONT_TEXTEDITS);
+    if (m_pOptions->isIDPresent(XOptions::ID_VIEW_FONT_TEXTEDITS)) {
+        m_pOptions->getLineEdit(ui->lineEditViewFontTextEdits, XOptions::ID_VIEW_FONT_TEXTEDITS);
     }
 
-    if (g_pOptions->isIDPresent(XOptions::ID_HEX_FONT)) {
-        g_pOptions->getLineEdit(ui->lineEditHexFont, XOptions::ID_HEX_FONT);
+    if (m_pOptions->isIDPresent(XOptions::ID_HEX_FONT)) {
+        m_pOptions->getLineEdit(ui->lineEditHexFont, XOptions::ID_HEX_FONT);
     }
 
-    if (g_pOptions->isIDPresent(XOptions::ID_DISASM_FONT)) {
-        g_pOptions->getLineEdit(ui->lineEditDisasmFont, XOptions::ID_DISASM_FONT);
+    if (m_pOptions->isIDPresent(XOptions::ID_DISASM_FONT)) {
+        m_pOptions->getLineEdit(ui->lineEditDisasmFont, XOptions::ID_DISASM_FONT);
     }
 
-    if (g_pOptions->isIDPresent(XOptions::ID_FILE_SAVELASTDIRECTORY)) {
-        g_pOptions->getCheckBox(ui->checkBoxFileSaveLastDirectory, XOptions::ID_FILE_SAVELASTDIRECTORY);
+    if (m_pOptions->isIDPresent(XOptions::ID_FILE_SAVELASTDIRECTORY)) {
+        m_pOptions->getCheckBox(ui->checkBoxFileSaveLastDirectory, XOptions::ID_FILE_SAVELASTDIRECTORY);
     }
 
-    if (g_pOptions->isIDPresent(XOptions::ID_FILE_SAVEBACKUP)) {
-        g_pOptions->getCheckBox(ui->checkBoxFileSaveBackup, XOptions::ID_FILE_SAVEBACKUP);
+    if (m_pOptions->isIDPresent(XOptions::ID_FILE_SAVEBACKUP)) {
+        m_pOptions->getCheckBox(ui->checkBoxFileSaveBackup, XOptions::ID_FILE_SAVEBACKUP);
     }
 
-    if (g_pOptions->isIDPresent(XOptions::ID_FILE_SAVERECENTFILES)) {
-        g_pOptions->getCheckBox(ui->checkBoxFileSaveHistory, XOptions::ID_FILE_SAVERECENTFILES);
+    if (m_pOptions->isIDPresent(XOptions::ID_FILE_SAVERECENTFILES)) {
+        m_pOptions->getCheckBox(ui->checkBoxFileSaveHistory, XOptions::ID_FILE_SAVERECENTFILES);
     }
 #ifdef Q_OS_WIN
-    if (g_pOptions->isIDPresent(XOptions::ID_FILE_SETENV)) {
-        g_pOptions->getCheckBox(ui->checkBoxFileSetEnvVar, XOptions::ID_FILE_SETENV);
+    if (m_pOptions->isIDPresent(XOptions::ID_FILE_SETENV)) {
+        m_pOptions->getCheckBox(ui->checkBoxFileSetEnvVar, XOptions::ID_FILE_SETENV);
 
         QString appDir = QFileInfo(QCoreApplication::applicationFilePath()).absolutePath();
         QString formattedDir = QDir::toNativeSeparators(appDir);
 
         if (ui->checkBoxFileSetEnvVar->isChecked()) {
-            g_pOptions->appendToUserPathVariable(formattedDir);
+            m_pOptions->appendToUserPathVariable(formattedDir);
         } else {
-            g_pOptions->removeFromUserPathVariable(formattedDir);
+            m_pOptions->removeFromUserPathVariable(formattedDir);
         }
     }
 #endif
-    g_pOptions->save();
+    m_pOptions->save();
 }
 
 void XOptionsWidget::reload()
 {
-    if (g_pOptions->isIDPresent(XOptions::ID_VIEW_STAYONTOP)) {
-        g_pOptions->setCheckBox(ui->checkBoxViewStayOnTop, XOptions::ID_VIEW_STAYONTOP);
+    if (m_pOptions->isIDPresent(XOptions::ID_VIEW_STAYONTOP)) {
+        m_pOptions->setCheckBox(ui->checkBoxViewStayOnTop, XOptions::ID_VIEW_STAYONTOP);
     } else {
         ui->checkBoxViewStayOnTop->hide();
     }
 
-    if (g_pOptions->isIDPresent(XOptions::ID_VIEW_SINGLEAPPLICATION)) {
-        g_pOptions->setCheckBox(ui->checkBoxViewSingleApplication, XOptions::ID_VIEW_SINGLEAPPLICATION);
+    if (m_pOptions->isIDPresent(XOptions::ID_VIEW_SINGLEAPPLICATION)) {
+        m_pOptions->setCheckBox(ui->checkBoxViewSingleApplication, XOptions::ID_VIEW_SINGLEAPPLICATION);
     } else {
         ui->checkBoxViewSingleApplication->hide();
     }
 
-    if (g_pOptions->isIDPresent(XOptions::ID_VIEW_STYLE)) {
-        g_pOptions->setComboBox(ui->comboBoxViewStyle, XOptions::ID_VIEW_STYLE);
+    if (m_pOptions->isIDPresent(XOptions::ID_VIEW_STYLE)) {
+        m_pOptions->setComboBox(ui->comboBoxViewStyle, XOptions::ID_VIEW_STYLE);
     } else {
         ui->groupBoxViewStyle->hide();
     }
 
-    if (g_pOptions->isIDPresent(XOptions::ID_VIEW_QSS)) {
-        g_pOptions->setComboBox(ui->comboBoxViewQss, XOptions::ID_VIEW_QSS);
+    if (m_pOptions->isIDPresent(XOptions::ID_VIEW_QSS)) {
+        m_pOptions->setComboBox(ui->comboBoxViewQss, XOptions::ID_VIEW_QSS);
     } else {
         ui->groupBoxViewQss->hide();
     }
 
-    if (g_pOptions->isIDPresent(XOptions::ID_VIEW_LANG)) {
-        g_pOptions->setComboBox(ui->comboBoxViewLanguage, XOptions::ID_VIEW_LANG);
+    if (m_pOptions->isIDPresent(XOptions::ID_VIEW_LANG)) {
+        m_pOptions->setComboBox(ui->comboBoxViewLanguage, XOptions::ID_VIEW_LANG);
     } else {
         ui->groupBoxViewLanguage->hide();
     }
 
-    if (g_pOptions->isIDPresent(XOptions::ID_VIEW_SHOWLOGO)) {
-        g_pOptions->setCheckBox(ui->checkBoxViewShowLogo, XOptions::ID_VIEW_SHOWLOGO);
+    if (m_pOptions->isIDPresent(XOptions::ID_VIEW_SHOWLOGO)) {
+        m_pOptions->setCheckBox(ui->checkBoxViewShowLogo, XOptions::ID_VIEW_SHOWLOGO);
     } else {
         ui->checkBoxViewShowLogo->hide();
     }
 
-    if (g_pOptions->isIDPresent(XOptions::ID_VIEW_FONT_CONTROLS)) {
-        g_pOptions->setLineEdit(ui->lineEditViewFontControls, XOptions::ID_VIEW_FONT_CONTROLS);
+    if (m_pOptions->isIDPresent(XOptions::ID_VIEW_FONT_CONTROLS)) {
+        m_pOptions->setLineEdit(ui->lineEditViewFontControls, XOptions::ID_VIEW_FONT_CONTROLS);
     } else {
         ui->groupBoxViewFontControls->hide();
     }
 
-    if (g_pOptions->isIDPresent(XOptions::ID_VIEW_FONT_TEXTEDITS)) {
-        g_pOptions->setLineEdit(ui->lineEditViewFontTextEdits, XOptions::ID_VIEW_FONT_TEXTEDITS);
+    if (m_pOptions->isIDPresent(XOptions::ID_VIEW_FONT_TEXTEDITS)) {
+        m_pOptions->setLineEdit(ui->lineEditViewFontTextEdits, XOptions::ID_VIEW_FONT_TEXTEDITS);
     } else {
         ui->groupBoxViewFontTextEdits->hide();
     }
 
-    if (g_pOptions->isIDPresent(XOptions::ID_VIEW_FONT_TABLEVIEWS)) {
-        g_pOptions->setLineEdit(ui->lineEditViewFontTables, XOptions::ID_VIEW_FONT_TABLEVIEWS);
+    if (m_pOptions->isIDPresent(XOptions::ID_VIEW_FONT_TABLEVIEWS)) {
+        m_pOptions->setLineEdit(ui->lineEditViewFontTables, XOptions::ID_VIEW_FONT_TABLEVIEWS);
     } else {
         ui->groupBoxViewFontTables->hide();
     }
 
-    if (g_pOptions->isIDPresent(XOptions::ID_VIEW_FONT_TREEVIEWS)) {
-        g_pOptions->setLineEdit(ui->lineEditViewFontTrees, XOptions::ID_VIEW_FONT_TREEVIEWS);
+    if (m_pOptions->isIDPresent(XOptions::ID_VIEW_FONT_TREEVIEWS)) {
+        m_pOptions->setLineEdit(ui->lineEditViewFontTrees, XOptions::ID_VIEW_FONT_TREEVIEWS);
     } else {
         ui->groupBoxViewFontTrees->hide();
     }
-    if (g_pOptions->isIDPresent(XOptions::ID_HEX_FONT)) {
-        g_pOptions->setLineEdit(ui->lineEditHexFont, XOptions::ID_HEX_FONT);
+    if (m_pOptions->isIDPresent(XOptions::ID_HEX_FONT)) {
+        m_pOptions->setLineEdit(ui->lineEditHexFont, XOptions::ID_HEX_FONT);
     } else {
         ui->groupBoxHexFont->hide();
     }
 
-    if (g_pOptions->isIDPresent(XOptions::ID_DISASM_FONT)) {
-        g_pOptions->setLineEdit(ui->lineEditDisasmFont, XOptions::ID_DISASM_FONT);
+    if (m_pOptions->isIDPresent(XOptions::ID_DISASM_FONT)) {
+        m_pOptions->setLineEdit(ui->lineEditDisasmFont, XOptions::ID_DISASM_FONT);
     } else {
         ui->groupBoxDisasmFont->hide();
     }
 
-    if (g_pOptions->isIDPresent(XOptions::ID_FILE_SAVELASTDIRECTORY)) {
-        g_pOptions->setCheckBox(ui->checkBoxFileSaveLastDirectory, XOptions::ID_FILE_SAVELASTDIRECTORY);
+    if (m_pOptions->isIDPresent(XOptions::ID_FILE_SAVELASTDIRECTORY)) {
+        m_pOptions->setCheckBox(ui->checkBoxFileSaveLastDirectory, XOptions::ID_FILE_SAVELASTDIRECTORY);
     } else {
         ui->checkBoxFileSaveLastDirectory->hide();
     }
 
-    if (g_pOptions->isIDPresent(XOptions::ID_FILE_SAVEBACKUP)) {
-        g_pOptions->setCheckBox(ui->checkBoxFileSaveBackup, XOptions::ID_FILE_SAVEBACKUP);
+    if (m_pOptions->isIDPresent(XOptions::ID_FILE_SAVEBACKUP)) {
+        m_pOptions->setCheckBox(ui->checkBoxFileSaveBackup, XOptions::ID_FILE_SAVEBACKUP);
     } else {
         ui->checkBoxFileSaveBackup->hide();
     }
 
-    if (g_pOptions->isIDPresent(XOptions::ID_FILE_SAVERECENTFILES)) {
-        g_pOptions->setCheckBox(ui->checkBoxFileSaveHistory, XOptions::ID_FILE_SAVERECENTFILES);
+    if (m_pOptions->isIDPresent(XOptions::ID_FILE_SAVERECENTFILES)) {
+        m_pOptions->setCheckBox(ui->checkBoxFileSaveHistory, XOptions::ID_FILE_SAVERECENTFILES);
     } else {
         ui->checkBoxFileSaveHistory->hide();
     }
 
-    if (g_pOptions->isIDPresent(XOptions::ID_FILE_CONTEXT)) {
+    if (m_pOptions->isIDPresent(XOptions::ID_FILE_CONTEXT)) {
 #ifdef Q_OS_WIN
-        // bool bAdmin = g_pOptions->checkContext(g_sApplicationDisplayName, g_pOptions->getValue(XOptions::ID_FILE_CONTEXT).toString(), XOptions::USERROLE_ADMIN);
-        // bool bUser = g_pOptions->checkContext(g_sApplicationDisplayName, g_pOptions->getValue(XOptions::ID_FILE_CONTEXT).toString(), XOptions::USERROLE_NORMAL);
+        // bool bAdmin = m_pOptions->checkContext(m_sApplicationDisplayName, m_pOptions->getValue(XOptions::ID_FILE_CONTEXT).toString(), XOptions::USERROLE_ADMIN);
+        // bool bUser = m_pOptions->checkContext(m_sApplicationDisplayName, m_pOptions->getValue(XOptions::ID_FILE_CONTEXT).toString(), XOptions::USERROLE_NORMAL);
 
         // if (bAdmin &&
         //     (!bUser)) {
-        //     g_userRole = XOptions::USERROLE_ADMIN;
+        //     m_userRole = XOptions::USERROLE_ADMIN;
         // }
-        ui->checkBoxFileContext->setChecked(g_pOptions->checkContext(g_sApplicationDisplayName, g_pOptions->getValue(XOptions::ID_FILE_CONTEXT).toString(), g_userRole));
+        ui->checkBoxFileContext->setChecked(m_pOptions->checkContext(m_sApplicationDisplayName, m_pOptions->getValue(XOptions::ID_FILE_CONTEXT).toString(), m_userRole));
 
         // Check if application directory is present in system PATH
         QString appDir = QFileInfo(QCoreApplication::applicationFilePath()).absolutePath();
         QString formattedDir = QDir::toNativeSeparators(appDir);
 
-        ui->checkBoxFileSetEnvVar->setChecked(g_pOptions->isPathInUserEnvironment(formattedDir));
+        ui->checkBoxFileSetEnvVar->setChecked(m_pOptions->isPathInUserEnvironment(formattedDir));
 #endif
     } else {
         ui->checkBoxFileContext->hide();
@@ -340,16 +340,16 @@ void XOptionsWidget::on_listWidgetOptions_currentRowChanged(int nCurrentRow)
 
 void XOptionsWidget::on_checkBoxFileContext_toggled(bool bChecked)
 {
-    if (g_pOptions->isIDPresent(XOptions::ID_FILE_CONTEXT)) {
+    if (m_pOptions->isIDPresent(XOptions::ID_FILE_CONTEXT)) {
 #ifdef Q_OS_WIN
-        if (g_pOptions->checkContext(g_sApplicationDisplayName, g_pOptions->getValue(XOptions::ID_FILE_CONTEXT).toString(), g_userRole) != bChecked) {
+        if (m_pOptions->checkContext(m_sApplicationDisplayName, m_pOptions->getValue(XOptions::ID_FILE_CONTEXT).toString(), m_userRole) != bChecked) {
             bool bSuccess = false;
 
             if (bChecked) {
-                bSuccess = g_pOptions->registerContext(g_sApplicationDisplayName, g_pOptions->getValue(XOptions::ID_FILE_CONTEXT).toString(), qApp->applicationFilePath(),
-                                                       g_userRole);
+                bSuccess = m_pOptions->registerContext(m_sApplicationDisplayName, m_pOptions->getValue(XOptions::ID_FILE_CONTEXT).toString(), qApp->applicationFilePath(),
+                                                       m_userRole);
             } else {
-                bSuccess = g_pOptions->clearContext(g_sApplicationDisplayName, g_pOptions->getValue(XOptions::ID_FILE_CONTEXT).toString(), g_userRole);
+                bSuccess = m_pOptions->clearContext(m_sApplicationDisplayName, m_pOptions->getValue(XOptions::ID_FILE_CONTEXT).toString(), m_userRole);
             }
 
             if (!bSuccess) {
@@ -370,15 +370,15 @@ void XOptionsWidget::on_checkBoxFileSetEnvVar_toggled(bool bChecked)
     QString appDir = QFileInfo(QCoreApplication::applicationFilePath()).absolutePath();
     QString formattedDir = QDir::toNativeSeparators(appDir);
 
-    bool isCurrentlySet = g_pOptions->isPathInUserEnvironment(formattedDir);
+    bool isCurrentlySet = m_pOptions->isPathInUserEnvironment(formattedDir);
 
     if (bChecked) {
         if (!isCurrentlySet) {
-            g_pOptions->appendToUserPathVariable(formattedDir);
+            m_pOptions->appendToUserPathVariable(formattedDir);
         }
     } else {
         if (isCurrentlySet) {
-            g_pOptions->removeFromUserPathVariable(formattedDir);
+            m_pOptions->removeFromUserPathVariable(formattedDir);
         }
     }
 #else
@@ -418,7 +418,7 @@ void XOptionsWidget::on_toolButtonViewFontTextEdits_clicked()
 
 void XOptionsWidget::on_pushButtonDefault_clicked()
 {
-    g_pOptions->resetToDefault();
+    m_pOptions->resetToDefault();
 
     emit reloadSignal();
 }
@@ -427,16 +427,16 @@ void XOptionsWidget::on_pushButtonOK_clicked()
 {
     emit saveSignal();
 
-    if (g_pOptions->isRestartNeeded()) {
+    if (m_pOptions->isRestartNeeded()) {
         QMessageBox::information(this, tr("Information"), tr("Please restart the application"));
     }
 
-    g_pParent->close();
+    m_pParent->close();
 }
 
 void XOptionsWidget::on_pushButtonCancel_clicked()
 {
-    g_pParent->close();
+    m_pParent->close();
 }
 
 void XOptionsWidget::registerShortcuts(bool bState)
