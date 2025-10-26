@@ -23,25 +23,25 @@
 XOptions::XOptions(QObject *pParent) : QObject(pParent)
 {
 #ifdef QT_GUI_LIB
-    g_pRecentFilesMenu = nullptr;
-    g_pCodePagesMenu = nullptr;
+    m_pRecentFilesMenu = nullptr;
+    m_pCodePagesMenu = nullptr;
 #endif
-    g_bIsNeedRestart = false;
-    g_nMaxRecentFilesCount = N_MAX_RECENT_FILES_COUNT;
+    m_bIsNeedRestart = false;
+    m_nMaxRecentFilesCount = N_MAX_RECENT_FILES_COUNT;
     m_sName = QString("%1.ini").arg(qApp->applicationName());  // default name
 }
 
 void XOptions::resetToDefault()
 {
-    const qint32 nCount = g_listValueIDs.count();
+    const qint32 nCount = m_listValueIDs.count();
     if (!nCount) {
         return;
     }
 
-    const QMap<ID, QVariant>::const_iterator itEnd = g_mapDefaultValues.constEnd();
+    const QMap<ID, QVariant>::const_iterator itEnd = m_mapDefaultValues.constEnd();
 
     for (qint32 i = 0; i < nCount; ++i) {
-        const ID id = g_listValueIDs.at(i);
+        const ID id = m_listValueIDs.at(i);
 
         // Skip non-user (runtime) entries
         if ((id == ID_NU_LASTDIRECTORY) || (id == ID_NU_RECENTFILES)) {
@@ -49,42 +49,42 @@ void XOptions::resetToDefault()
         }
 
         QVariant varDefault;  // invalid by default
-        QMap<ID, QVariant>::const_iterator it = g_mapDefaultValues.constFind(id);
+        QMap<ID, QVariant>::const_iterator it = m_mapDefaultValues.constFind(id);
         if (it != itEnd) {
             varDefault = it.value();
         }
 
         // Avoid unnecessary insert if value is already equal
-        if (g_mapValues.value(id) != varDefault) {
-            g_mapValues.insert(id, varDefault);
+        if (m_mapValues.value(id) != varDefault) {
+            m_mapValues.insert(id, varDefault);
         }
     }
 }
 
 void XOptions::setValueIDs(const QList<ID> &listVariantIDs)
 {
-    g_listValueIDs = listVariantIDs;
+    m_listValueIDs = listVariantIDs;
 }
 
 void XOptions::setDefaultValues(QMap<XOptions::ID, QVariant> mapDefaultValues)
 {
-    g_mapDefaultValues = mapDefaultValues;
+    m_mapDefaultValues = mapDefaultValues;
 }
 
 void XOptions::addID(ID id, QVariant varDefaultValue)
 {
-    g_listValueIDs.append(id);
+    m_listValueIDs.append(id);
 
     if (varDefaultValue.isValid()) {
-        g_mapDefaultValues.insert(id, varDefaultValue);
+        m_mapDefaultValues.insert(id, varDefaultValue);
     }
 }
 
 void XOptions::removeID(ID id)
 {
-    g_listValueIDs.removeOne(id);
-    g_mapDefaultValues.remove(id);
-    g_mapValues.remove(id);
+    m_listValueIDs.removeOne(id);
+    m_mapDefaultValues.remove(id);
+    m_mapValues.remove(id);
 }
 
 XOptions::GROUPID XOptions::getGroupID(ID id)
@@ -190,10 +190,10 @@ bool XOptions::isIDPresent(ID id)
 {
     bool bResult = false;
 
-    qint32 nNumberOfRecords = g_listValueIDs.count();
+    qint32 nNumberOfRecords = m_listValueIDs.count();
 
     for (qint32 i = 0; i < nNumberOfRecords; i++) {
-        if (g_listValueIDs.at(i) == id) {
+        if (m_listValueIDs.at(i) == id) {
             bResult = true;
             break;
         }
@@ -206,10 +206,10 @@ bool XOptions::isGroupIDPresent(GROUPID groupID)
 {
     bool bResult = false;
 
-    qint32 nNumberOfRecords = g_listValueIDs.count();
+    qint32 nNumberOfRecords = m_listValueIDs.count();
 
     for (qint32 i = 0; i < nNumberOfRecords; i++) {
-        if (getGroupID(g_listValueIDs.at(i)) == groupID) {
+        if (getGroupID(m_listValueIDs.at(i)) == groupID) {
             bResult = true;
             break;
         }
@@ -295,7 +295,7 @@ void XOptions::load()
     }
 #endif
 
-    qint32 nNumberOfIDs = g_listValueIDs.count();
+    qint32 nNumberOfIDs = m_listValueIDs.count();
 
     bool bSaveLastDirectory = false;
     bool bLastDirectory = false;
@@ -303,35 +303,35 @@ void XOptions::load()
     bool bRecentFiles = false;
 
     for (qint32 i = 0; i < nNumberOfIDs; i++) {
-        if (g_listValueIDs.at(i) == ID_FILE_SAVELASTDIRECTORY) {
+        if (m_listValueIDs.at(i) == ID_FILE_SAVELASTDIRECTORY) {
             bSaveLastDirectory = true;
-        } else if (g_listValueIDs.at(i) == ID_NU_LASTDIRECTORY) {
+        } else if (m_listValueIDs.at(i) == ID_NU_LASTDIRECTORY) {
             bLastDirectory = true;
-        } else if (g_listValueIDs.at(i) == ID_FILE_SAVERECENTFILES) {
+        } else if (m_listValueIDs.at(i) == ID_FILE_SAVERECENTFILES) {
             bSaveRecentFiles = true;
-        } else if (g_listValueIDs.at(i) == ID_NU_RECENTFILES) {
+        } else if (m_listValueIDs.at(i) == ID_NU_RECENTFILES) {
             bRecentFiles = true;
         }
     }
 
     if (bSaveLastDirectory && (!bLastDirectory)) {
-        g_listValueIDs.append(ID_NU_LASTDIRECTORY);
+        m_listValueIDs.append(ID_NU_LASTDIRECTORY);
     }
 
     if (bSaveRecentFiles && (!bRecentFiles)) {
-        g_listValueIDs.append(ID_NU_RECENTFILES);
+        m_listValueIDs.append(ID_NU_RECENTFILES);
     }
 
-    nNumberOfIDs = g_listValueIDs.count();
+    nNumberOfIDs = m_listValueIDs.count();
 
     for (qint32 i = 0; i < nNumberOfIDs; i++) {
-        ID id = g_listValueIDs.at(i);
+        ID id = m_listValueIDs.at(i);
         QString sName = idToString(id);
 
         QVariant varDefault;
 
-        if (g_mapDefaultValues.contains(id)) {
-            varDefault = g_mapDefaultValues.value(id);
+        if (m_mapDefaultValues.contains(id)) {
+            varDefault = m_mapDefaultValues.value(id);
         } else {
             // TODO remove,use addID
             switch (id) {
@@ -372,14 +372,14 @@ void XOptions::load()
             }
         }
 
-        g_mapValues.insert(id, variant);
+        m_mapValues.insert(id, variant);
     }
 
-    QString sLastDirectory = g_mapValues.value(ID_NU_LASTDIRECTORY).toString();
+    QString sLastDirectory = m_mapValues.value(ID_NU_LASTDIRECTORY).toString();
 
     if (sLastDirectory != "") {
         if (!QDir(sLastDirectory).exists()) {
-            g_mapValues.insert(ID_NU_LASTDIRECTORY, "");
+            m_mapValues.insert(ID_NU_LASTDIRECTORY, "");
         }
     }
 
@@ -404,16 +404,16 @@ void XOptions::save()
     }
 #endif
 
-    qint32 nNumberOfIDs = g_listValueIDs.count();
+    qint32 nNumberOfIDs = m_listValueIDs.count();
 
     for (qint32 i = 0; i < nNumberOfIDs; i++) {
-        ID id = g_listValueIDs.at(i);
+        ID id = m_listValueIDs.at(i);
         QString sName = idToString(id);
-        pSettings->setValue(sName, g_mapValues.value(id));
+        pSettings->setValue(sName, m_mapValues.value(id));
 
-        if ((id == ID_FILE_SAVELASTDIRECTORY) && (g_mapValues.value(id).toBool() == false)) {
+        if ((id == ID_FILE_SAVELASTDIRECTORY) && (m_mapValues.value(id).toBool() == false)) {
             pSettings->setValue(idToString(ID_NU_LASTDIRECTORY), "");
-        } else if ((id == ID_FILE_SAVERECENTFILES) && (g_mapValues.value(id).toBool() == false)) {
+        } else if ((id == ID_FILE_SAVERECENTFILES) && (m_mapValues.value(id).toBool() == false)) {
             clearRecentFiles();
         }
     }
@@ -423,35 +423,35 @@ void XOptions::save()
 
 QVariant XOptions::getValue(XOptions::ID id)
 {
-    return g_mapValues.value(id);
+    return m_mapValues.value(id);
 }
 
 void XOptions::setValue(XOptions::ID id, QVariant varValue)
 {
     if ((id == ID_VIEW_STYLE) || (id == ID_VIEW_LANG) || (id == ID_VIEW_QSS)) {
-        QVariant varOld = g_mapValues.value(id);
+        QVariant varOld = m_mapValues.value(id);
 
         if (varValue != varOld) {
-            g_bIsNeedRestart = true;
+            m_bIsNeedRestart = true;
         }
     }
 
-    g_mapValues.insert(id, varValue);
+    m_mapValues.insert(id, varValue);
 }
 
 void XOptions::clearValue(XOptions::ID id)
 {
-    g_mapValues.insert(id, "");
+    m_mapValues.insert(id, "");
 }
 
 bool XOptions::isValuePresent(ID id)
 {
-    return g_mapValues.contains(id);
+    return m_mapValues.contains(id);
 }
 
 QVariant XOptions::getDefaultValue(ID id)
 {
-    return g_mapDefaultValues.value(id);
+    return m_mapDefaultValues.value(id);
 }
 
 QString XOptions::idToString(ID id)
@@ -617,11 +617,11 @@ void XOptions::setLastFileName(const QString &sFileName)
 
             listFiles.append(QVariant(_sFileName));
 
-            if (listFiles.count() > g_nMaxRecentFilesCount) {
+            if (listFiles.count() > m_nMaxRecentFilesCount) {
                 listFiles.removeFirst();
             }
 
-            g_mapValues.insert(ID_NU_RECENTFILES, listFiles);
+            m_mapValues.insert(ID_NU_RECENTFILES, listFiles);
 
 #ifdef QT_GUI_LIB
             _updateRecentFilesMenu();
@@ -632,7 +632,7 @@ void XOptions::setLastFileName(const QString &sFileName)
 
 void XOptions::clearRecentFiles()
 {
-    g_mapValues.insert(ID_NU_RECENTFILES, QList<QVariant>());
+    m_mapValues.insert(ID_NU_RECENTFILES, QList<QVariant>());
 
 #ifdef QT_GUI_LIB
     _updateRecentFilesMenu();
@@ -1133,7 +1133,7 @@ bool XOptions::isSaveRecentFiles()
 
 bool XOptions::isRestartNeeded()
 {
-    return g_bIsNeedRestart;
+    return m_bIsNeedRestart;
 }
 
 bool XOptions::isStayOnTop()
@@ -1604,11 +1604,11 @@ bool XOptions::saveTextBrowserHtml(QTextBrowser *pTextBrowser, const QString &sF
 #ifdef QT_GUI_LIB
 QMenu *XOptions::createRecentFilesMenu(QWidget *pParent)
 {
-    g_pRecentFilesMenu = new QMenu(tr("Recent files"), pParent);
+    m_pRecentFilesMenu = new QMenu(tr("Recent files"), pParent);
 
     _updateRecentFilesMenu();
 
-    return g_pRecentFilesMenu;
+    return m_pRecentFilesMenu;
 }
 #endif
 #ifdef QT_GUI_LIB
@@ -2276,26 +2276,26 @@ void XOptions::printModel(QAbstractItemModel *pModel)
 #ifdef QT_GUI_LIB
 QMenu *XOptions::createCodePagesMenu(QWidget *pParent, bool bAll)
 {
-    g_pCodePagesMenu = new QMenu(tr("Code pages"), pParent);
+    m_pCodePagesMenu = new QMenu(tr("Code pages"), pParent);
 
-    if (g_pCodePagesMenu) {
-        g_pCodePagesMenu->clear();  // TODO Check
+    if (m_pCodePagesMenu) {
+        m_pCodePagesMenu->clear();  // TODO Check
 
         QList<QString> listCodePages = getCodePages(bAll);
 
         qint32 nNumberOfRecords = listCodePages.count();
 
         for (qint32 i = 0; i < nNumberOfRecords; i++) {
-            QAction *pAction = new QAction(listCodePages.at(i), g_pCodePagesMenu);
+            QAction *pAction = new QAction(listCodePages.at(i), m_pCodePagesMenu);
             pAction->setData(listCodePages.at(i));
 
             connect(pAction, SIGNAL(triggered()), this, SLOT(setCodePageSlot()));
 
-            g_pCodePagesMenu->addAction(pAction);
+            m_pCodePagesMenu->addAction(pAction);
         }
     }
 
-    return g_pCodePagesMenu;
+    return m_pCodePagesMenu;
 }
 #endif
 #endif
@@ -2401,12 +2401,12 @@ bool XOptions::checkContext(const QString &sApplicationName, const QString &sTyp
 
 void XOptions::setMaxRecentFilesCount(qint32 nValue)
 {
-    g_nMaxRecentFilesCount = nValue;
+    m_nMaxRecentFilesCount = nValue;
 }
 
 qint32 XOptions::getMaxRecentFilesCount()
 {
-    return g_nMaxRecentFilesCount;
+    return m_nMaxRecentFilesCount;
 }
 
 QString XOptions::getBundleIdToString(BUNDLE bundle)
@@ -2451,33 +2451,33 @@ QString XOptions::getBundleIdToString(BUNDLE bundle)
 #ifdef QT_GUI_LIB
 void XOptions::_updateRecentFilesMenu()
 {
-    if (g_pRecentFilesMenu) {
-        g_pRecentFilesMenu->clear();
+    if (m_pRecentFilesMenu) {
+        m_pRecentFilesMenu->clear();
 
         QList<QString> listRecentFiles = getRecentFiles();
 
         qint32 nNumberOfRecentFiles = listRecentFiles.count();
 
         for (qint32 i = nNumberOfRecentFiles - 1; i >= 0; i--) {
-            QAction *pAction = new QAction(listRecentFiles.at(i), g_pRecentFilesMenu);
+            QAction *pAction = new QAction(listRecentFiles.at(i), m_pRecentFilesMenu);
             pAction->setData(listRecentFiles.at(i));
 
             connect(pAction, SIGNAL(triggered()), this, SLOT(openRecentFile()));
 
-            g_pRecentFilesMenu->addAction(pAction);
+            m_pRecentFilesMenu->addAction(pAction);
         }
 
         if (nNumberOfRecentFiles) {
-            g_pRecentFilesMenu->addSeparator();
+            m_pRecentFilesMenu->addSeparator();
 
-            QAction *pAction = new QAction(tr("Clear"), g_pRecentFilesMenu);
+            QAction *pAction = new QAction(tr("Clear"), m_pRecentFilesMenu);
 
             connect(pAction, SIGNAL(triggered()), this, SLOT(clearRecentFiles()));
 
-            g_pRecentFilesMenu->addAction(pAction);
+            m_pRecentFilesMenu->addAction(pAction);
         }
 
-        g_pRecentFilesMenu->setEnabled(nNumberOfRecentFiles);
+        m_pRecentFilesMenu->setEnabled(nNumberOfRecentFiles);
     }
 }
 #endif
