@@ -2320,7 +2320,11 @@ bool XOptions::isPathInUserEnvironment(const QString &checkPath)
     QString currentPath = settings.value("Path").toString();
 
     QString formattedPath = QDir::toNativeSeparators(checkPath);
+#if QT_VERSION >= QT_VERSION_CHECK(5, 14, 0)
     QStringList pathEntries = currentPath.split(';', Qt::SkipEmptyParts);
+#else
+    QStringList pathEntries = currentPath.split(';', QString::SkipEmptyParts);
+#endif
 
     return pathEntries.contains(formattedPath, Qt::CaseInsensitive);
 }
@@ -2332,7 +2336,11 @@ void XOptions::appendToUserPathVariable(const QString &newPath)
     QString currentPath = settings.value("Path").toString();
 
     QString formattedPath = QDir::toNativeSeparators(newPath);
+#if QT_VERSION >= QT_VERSION_CHECK(5, 14, 0)
     QStringList pathEntries = currentPath.split(';', Qt::SkipEmptyParts);
+#else
+    QStringList pathEntries = currentPath.split(';', QString::SkipEmptyParts);
+#endif
 
     if (!pathEntries.contains(formattedPath, Qt::CaseInsensitive)) {
         pathEntries.append(formattedPath);
@@ -2352,7 +2360,11 @@ void XOptions::removeFromUserPathVariable(const QString &targetPath)
     QString currentPath = settings.value("Path").toString();
 
     QString formattedPath = QDir::toNativeSeparators(targetPath);
+#if QT_VERSION >= QT_VERSION_CHECK(5, 14, 0)
     QStringList pathEntries = currentPath.split(';', Qt::SkipEmptyParts);
+#else
+    QStringList pathEntries = currentPath.split(';', QString::SkipEmptyParts);
+#endif
 
     if (pathEntries.contains(formattedPath, Qt::CaseInsensitive)) {
         pathEntries.removeAll(formattedPath);
