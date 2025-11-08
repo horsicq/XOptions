@@ -133,6 +133,7 @@ public:
         CR_CANNOTFINDFILE = 1,
         CR_CANNOTOPENFILE = 2,
         CR_CANNOTFINDDATABASE = 3,
+        CR_INVALIDPARAMETER = 4
         // TODO more
     };
 
