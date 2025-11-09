@@ -1898,7 +1898,7 @@ QString XOptions::getTitle(const QString &sName, const QString &sVersion, bool b
 #if QT_VERSION >= QT_VERSION_CHECK(5, 4, 0)
         // TODO Check Windows 11
         QString architecture = QSysInfo::buildCpuArchitecture();
-        if (architecture == "x86_64") {
+        if (architecture == "x86_64" || architecture == "amd64") {
             architecture = "x64";
         } else if (architecture == "i386" || architecture == "i686") {
             architecture = "x86";
@@ -2842,7 +2842,6 @@ XOptions::BUNDLE XOptions::getBundle()
 #ifdef Q_OS_MACOS
     // TODO
     // TODO QSysInfo::currentCpyArchitecture();
-    // M
 #endif
 #endif
 
