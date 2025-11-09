@@ -133,6 +133,7 @@ public:
         CR_CANNOTFINDFILE = 1,
         CR_CANNOTOPENFILE = 2,
         CR_CANNOTFINDDATABASE = 3,
+        CR_INVALIDPARAMETER = 4
         // TODO more
     };
 
@@ -189,6 +190,7 @@ public:
         ID_SCAN_FLAG_AGGRESSIVE,
         ID_SCAN_FLAG_VERBOSE,
         ID_SCAN_FLAG_ALLTYPES,
+        ID_SCAN_USECACHE,
         ID_SCAN_FORMATRESULT,
         ID_SCAN_LOG_PROFILING,
         ID_SCAN_BUFFERSIZE,
@@ -525,15 +527,15 @@ signals:
 
 private:
     static const qint32 N_MAX_RECENT_FILES_COUNT = 25;
-    QString g_sName;
-    QList<ID> g_listValueIDs;
-    QMap<ID, QVariant> g_mapValues;
-    QMap<ID, QVariant> g_mapDefaultValues;
-    bool g_bIsNeedRestart;
-    qint32 g_nMaxRecentFilesCount;
+    QString m_sName;
+    QList<ID> m_listValueIDs;
+    QMap<ID, QVariant> m_mapValues;
+    QMap<ID, QVariant> m_mapDefaultValues;
+    bool m_bIsNeedRestart;
+    qint32 m_nMaxRecentFilesCount;
 #ifdef QT_GUI_LIB
-    QMenu *g_pRecentFilesMenu;
-    QMenu *g_pCodePagesMenu;
+    QMenu *m_pRecentFilesMenu;
+    QMenu *m_pCodePagesMenu;
 #endif
 };
 

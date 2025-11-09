@@ -18,31 +18,28 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-#ifndef XTHREADOBJECT_H
-#define XTHREADOBJECT_H
+#ifndef XPROCESSWATCH_H
+#define XPROCESSWATCH_H
 
-#include <QObject>
-#include <QElapsedTimer>
+#include <QTimer>
+#include "xbinary.h"
 
-class XThreadObject : public QObject {
+class XProcessWatch : public QObject {
     Q_OBJECT
 
 public:
-    explicit XThreadObject(QObject *pParent = nullptr);
+    explicit XProcessWatch(QObject *parent = nullptr);
+    ~XProcessWatch();
 
-    virtual void process() = 0;
-    virtual QString getTitle();  // TODO setTitle
+    void start(XBinary::PDSTRUCT *pPdStruct);
+    void stop();
 
-    void _connect(XThreadObject *pThreadObject);
+private slots:
+    void _timeout();
 
-public slots:
-    void _process();
-
-signals:
-    void completed(qint64 nElapsedTime);
-    void errorMessage(const QString &sErrorMessage);
-    void warningMessage(const QString &sWarningMessage);
-    void infoMessage(const QString &sInfoMessage);
+private:
+    XBinary::PDSTRUCT *m_pPdStruct;
+    QTimer *m_pTimer;
 };
 
-#endif  // XTHREADOBJECT_H
+#endif  // XPROCESSWATCH_H

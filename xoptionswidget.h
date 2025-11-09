@@ -71,11 +71,11 @@ protected:
 
 private:
     Ui::XOptionsWidget *ui;
-    QWidget *g_pParent;
-    XOptions *g_pOptions;
-    QString g_sApplicationDisplayName;
+    QWidget *m_pParent;
+    XOptions *m_pOptions;
+    QString m_sApplicationDisplayName;
 #ifdef Q_OS_WIN
-    XOptions::USERROLE g_userRole;
+    XOptions::USERROLE m_userRole;
 #endif
 };
 

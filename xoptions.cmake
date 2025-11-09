@@ -8,4 +8,6 @@ set(XOPTIONS_SOURCES
     ${CMAKE_CURRENT_LIST_DIR}/codecs/codec_cp437.h
     ${CMAKE_CURRENT_LIST_DIR}/xthreadobject.cpp
     ${CMAKE_CURRENT_LIST_DIR}/xthreadobject.h
+    ${CMAKE_CURRENT_LIST_DIR}/xprocesswatch.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/xprocesswatch.h
 )

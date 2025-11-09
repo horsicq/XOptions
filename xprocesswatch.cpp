@@ -18,31 +18,39 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-#ifndef XTHREADOBJECT_H
-#define XTHREADOBJECT_H
+#include "xprocesswatch.h"
 
-#include <QObject>
-#include <QElapsedTimer>
+XProcessWatch::XProcessWatch(QObject *parent) : QObject(parent)
+{
+    m_pPdStruct = nullptr;
+    m_pTimer = nullptr;
+}
 
-class XThreadObject : public QObject {
-    Q_OBJECT
+XProcessWatch::~XProcessWatch()
+{
+    stop();
+}
 
-public:
-    explicit XThreadObject(QObject *pParent = nullptr);
+void XProcessWatch::start(XBinary::PDSTRUCT *pPdStruct)
+{
+    m_pPdStruct = pPdStruct;
 
-    virtual void process() = 0;
-    virtual QString getTitle();  // TODO setTitle
+    stop();
+    m_pTimer = new QTimer;
+    connect(m_pTimer, SIGNAL(timeout()), this, SLOT(_timeout()));
+    m_pTimer->start(1000);
+}
 
-    void _connect(XThreadObject *pThreadObject);
+void XProcessWatch::stop()
+{
+    if (m_pTimer) {
+        m_pTimer->stop();
+        delete m_pTimer;
+        m_pTimer = nullptr;
+    }
+}
 
-public slots:
-    void _process();
-
-signals:
-    void completed(qint64 nElapsedTime);
-    void errorMessage(const QString &sErrorMessage);
-    void warningMessage(const QString &sWarningMessage);
-    void infoMessage(const QString &sInfoMessage);
-};
-
-#endif  // XTHREADOBJECT_H
+void XProcessWatch::_timeout()
+{
+    qDebug("void XProcessWatch::_timeout()");
+}
