@@ -2810,16 +2810,21 @@ XOptions::BUNDLE XOptions::getBundle()
 #endif
 
 #ifdef Q_OS_WIN
-#if QT_VERSION <= QT_VERSION_CHECK(5, 6, 3)
+#if defined(Q_PROCESSOR_ARM64)
+    result = BUNDLE_WINDOWS_ARM64;
+#elif QT_VERSION <= QT_VERSION_CHECK(5, 6, 3)
     result = BUNDLE_WINDOWS_XP_X86;
 #elif (QT_VERSION_MAJOR >= 6)
-    // TODO ARM
+#ifdef Q_OS_WIN64
     result = BUNDLE_WINDOWS_QT6_X64;
 #else
-#ifndef Q_OS_WIN64
-    result = BUNDLE_WINDOWS_X86;
+    result = BUNDLE_WINDOWS_QT6_X86;
+#endif
 #else
+#ifdef Q_OS_WIN64
     result = BUNDLE_WINDOWS_X64;
+#else
+    result = BUNDLE_WINDOWS_X86;
 #endif
 #endif
 #endif
