@@ -1896,7 +1896,7 @@ QString XOptions::getTitle(const QString &sName, const QString &sVersion, bool b
 
     if (bShowOS) {
 #if QT_VERSION >= QT_VERSION_CHECK(5, 4, 0)
-        // TODO Check Windows 11
+        // TODO Check Windows 11 (DiE currently detectes Windows 11 as Windows 10)
         QString architecture = QSysInfo::buildCpuArchitecture();
         if (architecture == "x86_64" || architecture == "amd64") {
             architecture = "x64";
