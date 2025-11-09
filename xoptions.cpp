@@ -2841,7 +2841,7 @@ XOptions::BUNDLE XOptions::getBundle()
 #endif
 #ifdef Q_OS_MACOS
     // TODO
-    // TODO QSysInfo::currentCpyArchitecture();
+    // TODO QSysInfo::currentCpuArchitecture();
 #endif
 #endif
 
