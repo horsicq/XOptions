@@ -62,6 +62,7 @@
 #include <QColorDialog>
 #include <QToolButton>
 #include <QHeaderView>
+#include <QPainter>
 #else
 #include <QCoreApplication>
 #endif
@@ -477,7 +478,10 @@ public:
     static void adjustAction(QMenu *pParentMenu, QAction *pAction, const QString &sText, const QObject *pRecv, const char *pMethod, ICONTYPE iconType);
     static QColor stringToColor(QString sColor);
     static QString colorToString(const QColor &color);
+    static QIcon createIcon(QChar unicode, qint32 nWidth, qint32 nHeight);
+    static QIcon createIcon(quint32 codepoint, qint32 nWidth, qint32 nHeight);
 #endif
+    static quint32 iconTypeToUnicodeSymbol(ICONTYPE iconType);
     static void deleteQObjectList(QList<QObject *> *pList);
 #if (QT_VERSION_MAJOR < 6) || defined(QT_CORE5COMPAT_LIB)
     static QList<QString> getCodePages(bool bAll);

@@ -1198,6 +1198,159 @@ QString XOptions::colorToString(const QColor &color)
 }
 #endif
 #ifdef QT_GUI_LIB
+QIcon XOptions::createIcon(QChar unicode, qint32 nWidth, qint32 nHeight)
+{
+    return createIcon(unicode.unicode(), nWidth, nHeight);
+}
+
+QIcon XOptions::createIcon(quint32 codepoint, qint32 nWidth, qint32 nHeight)
+{
+    // Create a pixmap with the specified dimensions
+    QPixmap pixmap(nWidth, nHeight);
+    pixmap.fill(Qt::transparent);
+
+    // Setup painter
+    QPainter painter(&pixmap);
+    painter.setRenderHint(QPainter::Antialiasing);
+    painter.setRenderHint(QPainter::TextAntialiasing);
+
+    // Setup font - try multiple emoji fonts
+    QFont font;
+    font.setPixelSize(qMin(nWidth, nHeight) * 0.8); // 80% of size for better fit
+    
+    font.setFamily("Segoe UI Emoji");
+    
+    painter.setFont(font);
+
+    // Draw the Unicode character centered
+    painter.setPen(Qt::black);
+    
+    // Convert codepoint to QString properly
+    QString text;
+    if (codepoint <= 0xFFFF) {
+        text = QString(QChar(codepoint));
+    } else {
+        // Handle surrogate pairs for codepoints > U+FFFF
+        text = QString::fromUcs4(&codepoint, 1);
+    }
+    
+    painter.drawText(pixmap.rect(), Qt::AlignCenter, text);
+
+    painter.end();
+
+//     // Debug: Save icon to C:\tmp
+//     static bool debugDumpEnabled = true;
+//     if (debugDumpEnabled) {
+//         QString filename = QString("C:/tmp/icon_%1_%2x%3_U%4.png")
+//             .arg(QDateTime::currentMSecsSinceEpoch())
+//             .arg(nWidth)
+//             .arg(nHeight)
+//             .arg(codepoint, 4, 16, QChar('0'));
+//         pixmap.save(filename);
+// #ifdef QT_DEBUG
+//         qDebug() << "Saved icon:" << filename << "text:" << text << "code:" << QString("U+%1").arg(codepoint, 4, 16, QChar('0'));
+// #endif
+//     }
+
+    return QIcon(pixmap);
+}
+
+quint32 XOptions::iconTypeToUnicodeSymbol(ICONTYPE iconType)
+{
+    quint32 result;
+
+    switch (iconType) {
+        case ICONTYPE_ACTION:       result = 0x26A1;   break;  // ⚡ - High Voltage Sign (action/execute)
+        case ICONTYPE_ADD:          result = 0x2795;   break;  // ➕ - Heavy Plus Sign
+        case ICONTYPE_ADDRESS:      result = 0x1F4CD;  break;  // 📍 - Round Pushpin (location/address)
+        case ICONTYPE_ALL:          result = 0x2261;   break;  // ≡ - Identical To (all/everything)
+        case ICONTYPE_BACKWARD:     result = 0x23EA;   break;  // ⏪ - Black Left-Pointing Double Triangle
+        case ICONTYPE_BOOKMARK:     result = 0x1F516;  break;  // 🔖 - Bookmark
+        case ICONTYPE_CERTIFICATE:  result = 0x1F4DC;  break;  // 📜 - Scroll (certificate)
+        case ICONTYPE_CODE:         result = 0x1F5CB;  break;  // 🗋 - Document (code file)
+        case ICONTYPE_COPY:         result = 0x1F4CB;  break;  // 📋 - Clipboard
+        case ICONTYPE_DATA:         result = 0x1F4CA;  break;  // 📊 - Bar Chart (data)
+        case ICONTYPE_DEBUG:        result = 0x1F41E;  break;  // 🐞 - Lady Beetle (debug)
+        case ICONTYPE_DEMANGLE:     result = 0x1F9F5;  break;  // 🧵 - Thread (untangle)
+        case ICONTYPE_DIE:          result = 0x1F3B2;  break;  // 🎲 - Game Die
+        case ICONTYPE_DISASM:       result = 0x2699;   break;  // ⚙ - Gear (disassembly)
+        case ICONTYPE_DOTNET:       result = 0x1F310;  break;  // 🌐 - Globe With Meridians (.NET)
+        case ICONTYPE_DUMPTOFILE:   result = 0x1F4BE;  break;  // 💾 - Floppy Disk (save/dump)
+        case ICONTYPE_EDIT:         result = 0x270E;   break;  // ✎ - Lower Right Pencil
+        case ICONTYPE_ENTROPY:      result = 0x1F300;  break;  // 🌀 - Cyclone (chaos/entropy)
+        case ICONTYPE_ENTRY:        result = 0x1F6AA;  break;  // 🚪 - Door (entry point)
+        case ICONTYPE_EXCEPTION:    result = 0x26A0;   break;  // ⚠ - Warning Sign
+        case ICONTYPE_EXIT:         result = 0x1F6AA;  break;  // 🚪 - Door (exit)
+        case ICONTYPE_EXPORT:       result = 0x1F4E4;  break;  // 📤 - Outbox Tray
+        case ICONTYPE_EXTRACTOR:    result = 0x1F5C4;  break;  // 🗄 - File Cabinet (extract)
+        case ICONTYPE_FILE:         result = 0x1F4C4;  break;  // 📄 - Page Facing Up
+        case ICONTYPE_FOLLOW:       result = 0x1F517;  break;  // 🔗 - Link Symbol
+        case ICONTYPE_FORWARD:      result = 0x23E9;   break;  // ⏩ - Black Right-Pointing Double Triangle
+        case ICONTYPE_FUNCTION:     result = 0x0192;   break;  // ƒ - Latin Small Letter F With Hook
+        case ICONTYPE_GENERIC:      result = 0x25A0;   break;  // ■ - Black Square
+        case ICONTYPE_GOTO:         result = 0x21E8;   break;  // ⇨ - Rightwards White Arrow
+        case ICONTYPE_HASH:         result = 0x0023;   break;  // # - Number Sign
+        case ICONTYPE_HEADER:       result = 0x1F4C3;  break;  // 📃 - Page With Curl
+        case ICONTYPE_HEX:          result = 0x0023;   break;  // # - Number Sign (hex)
+        case ICONTYPE_IMPORT:       result = 0x1F4E5;  break;  // 📥 - Inbox Tray
+        case ICONTYPE_INFO:         result = 0x2139;   break;  // ℹ - Information Source
+        case ICONTYPE_LIBRARY:      result = 0x1F4DA;  break;  // 📚 - Books
+        case ICONTYPE_LIST:         result = 0x1F4CB;  break;  // 📋 - Clipboard (list)
+        case ICONTYPE_MANIFEST:     result = 0x1F4DC;  break;  // 📜 - Scroll (manifest)
+        case ICONTYPE_MEMORYMAP:    result = 0x1F5FA;  break;  // 🗺 - World Map
+        case ICONTYPE_METADATA:     result = 0x1F3F7;  break;  // 🏷 - Label (metadata)
+        case ICONTYPE_MIME:         result = 0x1F4CE;  break;  // 📎 - Paperclip (MIME type)
+        case ICONTYPE_NEW:          result = 0x2795;   break;  // ➕ - Heavy Plus Sign (new/add)
+        case ICONTYPE_NEXT:         result = 0x25B6;   break;  // ▶ - Black Right-Pointing Triangle
+        case ICONTYPE_NFD:          result = 0x1F4C2;  break;  // 📂 - Open File Folder
+        case ICONTYPE_NOTE:         result = 0x1F4DD;  break;  // 📝 - Memo
+        case ICONTYPE_OFFSET:       result = 0x21F1;   break;  // ⇱ - North West Arrow To Corner
+        case ICONTYPE_OPEN:         result = 0x1F4C2;  break;  // 📂 - Open File Folder
+        case ICONTYPE_OPTION:       result = 0x2699;   break;  // ⚙ - Gear (option/setting)
+        case ICONTYPE_OVERLAY:      result = 0x1F5C4;  break;  // 🗄 - File Cabinet (overlay)
+        case ICONTYPE_PATCH:        result = 0x1FA79;  break;  // 🩹 - Adhesive Bandage
+        case ICONTYPE_PATH:         result = 0x1F6E4;  break;  // 🛤 - Railway Track (path)
+        case ICONTYPE_REFERENCE:    result = 0x1F517;  break;  // 🔗 - Link Symbol (reference)
+        case ICONTYPE_RELOAD:       result = 0x21BB;   break;  // ↻ - Clockwise Open Circle Arrow (refresh/reload)
+        case ICONTYPE_RELOC:        result = 0x1F4CD;  break;  // 📍 - Round Pushpin (relocation)
+        case ICONTYPE_REMOVE:       result = 0x2796;   break;  // ➖ - Heavy Minus Sign
+        case ICONTYPE_RESIZE:       result = 0x21D4;   break;  // ⇔ - Left Right Double Arrow
+        case ICONTYPE_RESOURCE:     result = 0x1F4E6;  break;  // 📦 - Package
+        case ICONTYPE_SAVE:         result = 0x1F5AB;  break;  // 🖫 - White Hard Shell Floppy Disk
+        case ICONTYPE_SCAN:         result = 0x1F50D;  break;  // 🔍 - Left-Pointing Magnifying Glass (scan/search)
+        case ICONTYPE_SCRIPT:       result = 0x1F4DC;  break;  // 📜 - Scroll (script)
+        case ICONTYPE_SEARCH:       result = 0x1F50D;  break;  // 🔍 - Left-Pointing Magnifying Glass
+        case ICONTYPE_SECTION:      result = 0x00A7;   break;  // § - Section Sign
+        case ICONTYPE_SEGMENT:      result = 0x25A8;   break;  // ▨ - Square With Upper Right To Lower Left Fill
+        case ICONTYPE_SELECT:       result = 0x1F5F1;  break;  // 🗱 - Ballot Box With Check
+        case ICONTYPE_SHORTCUT:     result = 0x1F517;  break;  // 🔗 - Link Symbol (shortcut)
+        case ICONTYPE_SIGNATURE:    result = 0x270D;   break;  // ✍ - Writing Hand
+        case ICONTYPE_SIZE:         result = 0x1F4CF;  break;  // 📏 - Straight Ruler
+        case ICONTYPE_STRING:       result = 0x1F4AC;  break;  // 💬 - Speech Balloon
+        case ICONTYPE_STRUCTS:      result = 0x1F9F1;  break;  // 🧱 - Brick (structure)
+        case ICONTYPE_SYMBOL:       result = 0x1F523;  break;  // 🔣 - Input Symbol For Symbols
+        case ICONTYPE_TABLE:        result = 0x1F5C3;  break;  // 🗃 - Card File Box
+        case ICONTYPE_TLS:          result = 0x1F512;  break;  // 🔒 - Lock (TLS/security)
+        case ICONTYPE_TOOL:         result = 0x1F527;  break;  // 🔧 - Wrench
+        case ICONTYPE_VALUE:        result = 0x1F4B0;  break;  // 💰 - Money Bag (value)
+        case ICONTYPE_VERSION:      result = 0x1F4C5;  break;  // 📅 - Calendar (version)
+        case ICONTYPE_VIRUSTOTAL:   result = 0x1F9A0;  break;  // 🦠 - Microbe (virus)
+        case ICONTYPE_VISUALIZATION: result = 0x1F4CA; break;  // 📊 - Bar Chart
+        case ICONTYPE_WEBSITE:      result = 0x1F310;  break;  // 🌐 - Globe With Meridians
+        case ICONTYPE_YARA:         result = 0x1F50E;  break;  // 🔎 - Right-Pointing Magnifying Glass (Yara scan)
+        case ICONTYPE_INSPECTOR:    result = 0x1F50D;  break;  // 🔍 - Left-Pointing Magnifying Glass
+        case ICONTYPE_CONVERTOR:    result = 0x21C4;   break;  // ⇄ - Rightwards Arrow Over Leftwards Arrow
+
+        case ICONTYPE_NONE:
+        default:
+            result = 0;  // Null character for unmapped types
+            break;
+    }
+
+    return result;
+}
+#endif
+#ifdef QT_GUI_LIB
 void XOptions::adjustApplicationView(const QString &sTranslationName, XOptions *pOptions)
 {
     if (pOptions->isIDPresent(XOptions::ID_VIEW_STYLE)) {
@@ -1896,12 +2049,10 @@ QString XOptions::getTitle(const QString &sName, const QString &sVersion, bool b
 
     if (bShowOS) {
 #if QT_VERSION >= QT_VERSION_CHECK(5, 4, 0)
-        // TODO Check Windows 11 (DiE currently detectes Windows 11 as Windows 10)
+        // TODO Check Windows 11
         QString architecture = QSysInfo::buildCpuArchitecture();
-        if (architecture == "x86_64" || architecture == "amd64") {
+        if (architecture == "x86_64") {
             architecture = "x64";
-        } else if (architecture == "arm64" || architecture == "aarch64") {
-            architecture = "ARM64";
         } else if (architecture == "i386" || architecture == "i686") {
             architecture = "x86";
         }
@@ -2555,8 +2706,8 @@ void XOptions::adjustToolButton(QToolButton *pToolButton, ICONTYPE iconType, Qt:
     QString sIconName = getIconPath(iconType);
 
     if (sIconName != "") {
-        QIcon icon;
-        icon.addFile(sIconName, QSize(), QIcon::Normal, QIcon::Off);
+        QIcon icon = createIcon(iconTypeToUnicodeSymbol(iconType), 256, 256);
+        // icon.addFile(sIconName, QSize(), QIcon::Normal, QIcon::Off);
         pToolButton->setIcon(icon);
         pToolButton->setIconSize(QSize(16, 16));
         pToolButton->setToolButtonStyle(style);
@@ -2591,165 +2742,165 @@ QString XOptions::getIconPath(ICONTYPE iconType)
     if (iconType == ICONTYPE_NONE) {
         sResult = "";
     } else if (iconType == ICONTYPE_GENERIC) {
-        sResult = "://icons/BreakpointEnabled.16.16.png";
+        sResult = ":/XStyles/icons/BreakpointEnabled.16.16.png";
     } else if (iconType == ICONTYPE_ACTION) {
-        sResult = "://icons/Action.16.16.png";
+        sResult = ":/XStyles/icons/Action.16.16.png";
     } else if (iconType == ICONTYPE_HEX) {
-        sResult = "://icons/Binary.16.16.png";
+        sResult = ":/XStyles/icons/Binary.16.16.png";
     } else if (iconType == ICONTYPE_DISASM) {
-        sResult = "://icons/Disasm.16.16.png";
+        sResult = ":/XStyles/icons/Disasm.16.16.png";
     } else if (iconType == ICONTYPE_ENTROPY) {
-        sResult = "://icons/Entropy.16.16.png";
+        sResult = ":/XStyles/icons/Entropy.16.16.png";
     } else if (iconType == ICONTYPE_STRING) {
-        sResult = "://icons/String.16.16.png";
+        sResult = ":/XStyles/icons/String.16.16.png";
     } else if (iconType == ICONTYPE_SIGNATURE) {
-        sResult = "://icons/Signature.16.16.png";
+        sResult = ":/XStyles/icons/Signature.16.16.png";
     } else if (iconType == ICONTYPE_SIZE) {
-        sResult = "://icons/Size.16.16.png";
+        sResult = ":/XStyles/icons/Size.16.16.png";
     } else if (iconType == ICONTYPE_VALUE) {
-        sResult = ":/icons/Value.16.16.png";
+        sResult = ":/XStyles/icons/Value.16.16.png";
     } else if (iconType == ICONTYPE_MEMORYMAP) {
-        sResult = "://icons/MemoryMap.16.16.png";
+        sResult = ":/XStyles/icons/MemoryMap.16.16.png";
     } else if (iconType == ICONTYPE_INFO) {
-        sResult = "://icons/Info.16.16.png";
+        sResult = ":/XStyles/icons/Info.16.16.png";
     } else if (iconType == ICONTYPE_HASH) {
-        sResult = "://icons/Hash.16.16.png";
+        sResult = ":/XStyles/icons/Hash.16.16.png";
     } else if (iconType == ICONTYPE_VISUALIZATION) {
-        sResult = "://icons/Image.16.16.png";
+        sResult = ":/XStyles/icons/Image.16.16.png";
     } else if (iconType == ICONTYPE_SEARCH) {
-        sResult = "://icons/Search.16.16.png";
+        sResult = ":/XStyles/icons/Search.16.16.png";
     } else if (iconType == ICONTYPE_EXTRACTOR) {
-        sResult = "://icons/Extract.16.16.png";
+        sResult = ":/XStyles/icons/Extract.16.16.png";
     } else if (iconType == ICONTYPE_FILE) {
-        sResult = "://icons/File.16.16.png";
+        sResult = ":/XStyles/icons/File.16.16.png";
     } else if (iconType == ICONTYPE_SAVE) {
-        sResult = "://icons/Save.16.16.png";
+        sResult = ":/XStyles/icons/Save.16.16.png";
     } else if (iconType == ICONTYPE_COPY) {
-        sResult = "://icons/Copy.16.16.png";
+        sResult = ":/XStyles/icons/Copy.16.16.png";
     } else if (iconType == ICONTYPE_EDIT) {
-        sResult = "://icons/Edit.16.16.png";
+        sResult = ":/XStyles/icons/Edit.16.16.png";
     } else if (iconType == ICONTYPE_OVERLAY) {
-        sResult = "://icons/Overlay.16.16.png";
+        sResult = ":/XStyles/icons/Overlay.16.16.png";
     } else if (iconType == ICONTYPE_RELOAD) {
-        sResult = "://icons/Refresh.16.16.png";
+        sResult = ":/XStyles/icons/Refresh.16.16.png";
     } else if (iconType == ICONTYPE_SCAN) {
-        sResult = "://icons/Refresh.16.16.png";
+        sResult = ":/XStyles/icons/Search.16.16.png";
     } else if (iconType == ICONTYPE_DUMPTOFILE) {
-        sResult = "://icons/Download.16.16.png";
+        sResult = ":/XStyles/icons/Download.16.16.png";
     } else if (iconType == ICONTYPE_ENTRY) {
-        sResult = "://icons/Entry.16.16.png";
+        sResult = ":/XStyles/icons/Entry.16.16.png";
     } else if (iconType == ICONTYPE_BACKWARD) {
-        sResult = "://icons/Backward.16.16.png";
+        sResult = ":/XStyles/icons/Backward.16.16.png";
     } else if (iconType == ICONTYPE_FORWARD) {
-        sResult = "://icons/Forward.16.16.png";
+        sResult = ":/XStyles/icons/Forward.16.16.png";
     } else if (iconType == ICONTYPE_ADD) {
-        sResult = "://icons/Add.16.16.png";
+        sResult = ":/XStyles/icons/Add.16.16.png";
     } else if (iconType == ICONTYPE_OPEN) {
-        sResult = "://icons/Open.16.16.png";
+        sResult = ":/XStyles/icons/Open.16.16.png";
     } else if (iconType == ICONTYPE_LIST) {
-        sResult = "://icons/List.16.16.png";
+        sResult = ":/XStyles/icons/List.16.16.png";
     } else if (iconType == ICONTYPE_NEW) {
-        sResult = "://icons/Add.16.16.png";
+        sResult = ":/XStyles/icons/Add.16.16.png";
     } else if (iconType == ICONTYPE_OPTION) {
-        sResult = "://icons/Option.16.16.png";
+        sResult = ":/XStyles/icons/Option.16.16.png";
     } else if (iconType == ICONTYPE_YARA) {
-        sResult = "://icons/Yara.16.16.png";
+        sResult = ":/XStyles/icons/Yara.16.16.png";
     } else if (iconType == ICONTYPE_MIME) {
-        sResult = "://icons/Mime.16.16.png";
+        sResult = ":/XStyles/icons/Mime.16.16.png";
     } else if (iconType == ICONTYPE_VIRUSTOTAL) {
-        sResult = "://icons/Virustotal.16.16.png";
+        sResult = ":/XStyles/icons/Virustotal.16.16.png";
     } else if (iconType == ICONTYPE_TOOL) {
-        sResult = "://icons/Tool.16.16.png";
+        sResult = ":/XStyles/icons/Tool.16.16.png";
     } else if (iconType == ICONTYPE_EXIT) {
-        sResult = "://icons/Exit.16.16.png";
+        sResult = ":/XStyles/icons/Exit.16.16.png";
     } else if (iconType == ICONTYPE_DEMANGLE) {
-        sResult = "://icons/Demangle.16.16.png";
+        sResult = ":/XStyles/icons/Demangle.16.16.png";
     } else if (iconType == ICONTYPE_SHORTCUT) {
-        sResult = "://icons/Shortcut.16.16.png";
+        sResult = ":/XStyles/icons/Shortcut.16.16.png";
     } else if (iconType == ICONTYPE_GOTO) {
-        sResult = "://icons/Goto.16.16.png";
+        sResult = ":/XStyles/icons/Goto.16.16.png";
     } else if (iconType == ICONTYPE_SECTION) {
-        sResult = "://icons/Section.16.16.png";
+        sResult = ":/XStyles/icons/Section.16.16.png";
     } else if (iconType == ICONTYPE_SEGMENT) {
-        sResult = "://icons/Segment.16.16.png";
+        sResult = ":/XStyles/icons/Segment.16.16.png";
     } else if (iconType == ICONTYPE_EXCEPTION) {
-        sResult = "://icons/Exception.16.16.png";
+        sResult = ":/XStyles/icons/Exception.16.16.png";
     } else if (iconType == ICONTYPE_CERTIFICATE) {
-        sResult = "://icons/Certificate.16.16.png";
+        sResult = ":/XStyles/icons/Certificate.16.16.png";
     } else if (iconType == ICONTYPE_RELOC) {
-        sResult = "://icons/Reloc.16.16.png";
+        sResult = ":/XStyles/icons/Reloc.16.16.png";
     } else if (iconType == ICONTYPE_DEBUG) {
-        sResult = "://icons/Debug.16.16.png";
+        sResult = ":/XStyles/icons/Debug.16.16.png";
     } else if (iconType == ICONTYPE_HEADER) {
-        sResult = "://icons/Header.16.16.png";
+        sResult = ":/XStyles/icons/Header.16.16.png";
     } else if (iconType == ICONTYPE_LIBRARY) {
-        sResult = "://icons/Library.16.16.png";
+        sResult = ":/XStyles/icons/Library.16.16.png";
     } else if (iconType == ICONTYPE_SYMBOL) {
-        sResult = "://icons/Symbol.16.16.png";
+        sResult = ":/XStyles/icons/Symbol.16.16.png";
     } else if (iconType == ICONTYPE_TABLE) {
-        sResult = "://icons/Table.16.16.png";
+        sResult = ":/XStyles/icons/Table.16.16.png";
     } else if (iconType == ICONTYPE_DOTNET) {
-        sResult = "://icons/DotNet.16.16.png";
+        sResult = ":/XStyles/icons/DotNet.16.16.png";
     } else if (iconType == ICONTYPE_METADATA) {
-        sResult = "://icons/Metadata.16.16.png";
+        sResult = ":/XStyles/icons/Metadata.16.16.png";
     } else if (iconType == ICONTYPE_RESOURCE) {
-        sResult = "://icons/Resource.16.16.png";
+        sResult = ":/XStyles/icons/Resource.16.16.png";
     } else if (iconType == ICONTYPE_TLS) {
-        sResult = "://icons/TLS.16.16.png";
+        sResult = ":/XStyles/icons/TLS.16.16.png";
     } else if (iconType == ICONTYPE_SELECT) {
-        sResult = "://icons/Select.16.16.png";
+        sResult = ":/XStyles/icons/Select.16.16.png";
     } else if (iconType == ICONTYPE_ADDRESS) {
-        sResult = "://icons/Address.16.16.png";
+        sResult = ":/XStyles/icons/Address.16.16.png";
     } else if (iconType == ICONTYPE_OFFSET) {
-        sResult = "://icons/Offset.16.16.png";
+        sResult = ":/XStyles/icons/Offset.16.16.png";
     } else if (iconType == ICONTYPE_IMPORT) {
-        sResult = "://icons/Import.16.16.png";
+        sResult = ":/XStyles/icons/Import.16.16.png";
     } else if (iconType == ICONTYPE_EXPORT) {
-        sResult = "://icons/Export.16.16.png";
+        sResult = ":/XStyles/icons/Export.16.16.png";
     } else if (iconType == ICONTYPE_DATA) {
-        sResult = "://icons/Data.16.16.png";
+        sResult = ":/XStyles/icons/Data.16.16.png";
     } else if (iconType == ICONTYPE_DIE) {
-        sResult = "://icons/DIE.16.16.png";
+        sResult = ":/XStyles/icons/DIE.16.16.png";
     } else if (iconType == ICONTYPE_NFD) {
-        sResult = "://icons/NFD.16.16.png";
+        sResult = ":/XStyles/icons/NFD.16.16.png";
     } else if (iconType == ICONTYPE_VERSION) {
-        sResult = "://icons/Version.16.16.png";
+        sResult = ":/XStyles/icons/Version.16.16.png";
     } else if (iconType == ICONTYPE_MANIFEST) {
-        sResult = "://icons/Manifest.16.16.png";
+        sResult = ":/XStyles/icons/Manifest.16.16.png";
     } else if (iconType == ICONTYPE_FOLLOW) {
-        sResult = "://icons/Follow.16.16.png";
+        sResult = ":/XStyles/icons/Follow.16.16.png";
     } else if (iconType == ICONTYPE_NEXT) {
-        sResult = "://icons/Next.16.16.png";
+        sResult = ":/XStyles/icons/Next.16.16.png";
     } else if (iconType == ICONTYPE_ALL) {
-        sResult = "://icons/All.16.16.png";
+        sResult = ":/XStyles/icons/All.16.16.png";
     } else if (iconType == ICONTYPE_PATH) {
-        sResult = "://icons/Path.16.16.png";
+        sResult = ":/XStyles/icons/Path.16.16.png";
     } else if (iconType == ICONTYPE_NOTE) {
-        sResult = "://icons/Note.16.16.png";
+        sResult = ":/XStyles/icons/Note.16.16.png";
     } else if (iconType == ICONTYPE_FUNCTION) {
-        sResult = "://icons/Function.16.16.png";
+        sResult = ":/XStyles/icons/Function.16.16.png";
     } else if (iconType == ICONTYPE_SCRIPT) {
-        sResult = "://icons/Script.16.16.png";
+        sResult = ":/XStyles/icons/Script.16.16.png";
     } else if (iconType == ICONTYPE_PATCH) {
-        sResult = "://icons/Patch.16.16.png";
+        sResult = ":/XStyles/icons/Patch.16.16.png";
     } else if (iconType == ICONTYPE_REMOVE) {
-        sResult = "://icons/Remove.16.16.png";
+        sResult = ":/XStyles/icons/Remove.16.16.png";
     } else if (iconType == ICONTYPE_RESIZE) {
-        sResult = "://icons/Resize.16.16.png";
+        sResult = ":/XStyles/icons/Resize.16.16.png";
     } else if (iconType == ICONTYPE_CODE) {
-        sResult = "://icons/Code.16.16.png";
+        sResult = ":/XStyles/icons/Code.16.16.png";
     } else if (iconType == ICONTYPE_REFERENCE) {
-        sResult = "://icons/Reference.16.16.png";
+        sResult = ":/XStyles/icons/Reference.16.16.png";
     } else if (iconType == ICONTYPE_BOOKMARK) {
-        sResult = "://icons/Bookmark.16.16.png";
+        sResult = ":/XStyles/icons/Bookmark.16.16.png";
     } else if (iconType == ICONTYPE_INSPECTOR) {
-        sResult = "://icons/Inspector.16.16.png";
+        sResult = ":/XStyles/icons/Inspector.16.16.png";
     } else if (iconType == ICONTYPE_CONVERTOR) {
-        sResult = "://icons/Convertor.16.16.png";
+        sResult = ":/XStyles/icons/Convertor.16.16.png";
     } else if (iconType == ICONTYPE_STRUCTS) {
-        sResult = "://icons/Structs.16.16.png";
+        sResult = ":/XStyles/icons/Structs.16.16.png";
     } else {
-        sResult = "://icons/BreakpointDisabled.16.16.png";
+        sResult = ":/XStyles/icons/BreakpointDisabled.16.16.png";
     }
 
     if (sResult != "") {
@@ -2812,21 +2963,16 @@ XOptions::BUNDLE XOptions::getBundle()
 #endif
 
 #ifdef Q_OS_WIN
-#if defined(Q_PROCESSOR_ARM64)
-    result = BUNDLE_WINDOWS_ARM64;
-#elif QT_VERSION <= QT_VERSION_CHECK(5, 6, 3)
+#if QT_VERSION <= QT_VERSION_CHECK(5, 6, 3)
     result = BUNDLE_WINDOWS_XP_X86;
 #elif (QT_VERSION_MAJOR >= 6)
-#ifdef Q_OS_WIN64
+    // TODO ARM
     result = BUNDLE_WINDOWS_QT6_X64;
 #else
-    result = BUNDLE_WINDOWS_QT6_X86;
-#endif
-#else
-#ifdef Q_OS_WIN64
-    result = BUNDLE_WINDOWS_X64;
-#else
+#ifndef Q_OS_WIN64
     result = BUNDLE_WINDOWS_X86;
+#else
+    result = BUNDLE_WINDOWS_X64;
 #endif
 #endif
 #endif
@@ -2848,7 +2994,8 @@ XOptions::BUNDLE XOptions::getBundle()
 #endif
 #ifdef Q_OS_MACOS
     // TODO
-    // TODO QSysInfo::currentCpuArchitecture();
+    // TODO QSysInfo::currentCpyArchitecture();
+    // M
 #endif
 #endif
 
