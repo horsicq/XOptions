@@ -2469,28 +2469,54 @@ QString XOptions::getClassesPrefix(USERROLE userRole)
     return sResult;
 }
 #endif
-#ifdef Q_OS_WIN
 bool XOptions::isPathInUserEnvironment(const QString &checkPath)
 {
+#ifdef Q_OS_WIN
     QSettings settings("HKEY_CURRENT_USER\\Environment", QSettings::NativeFormat);
     QString currentPath = settings.value("Path").toString();
-
     QString formattedPath = QDir::toNativeSeparators(checkPath);
 #if QT_VERSION >= QT_VERSION_CHECK(5, 14, 0)
     QStringList pathEntries = currentPath.split(';', Qt::SkipEmptyParts);
-#else
-    QStringList pathEntries = currentPath.split(';', QString::SkipEmptyParts);
-#endif
 
     return pathEntries.contains(formattedPath, Qt::CaseInsensitive);
-}
+
+#elif defined(Q_OS_LINUX)
+    QString formattedPath = QDir(checkPath).absolutePath();
+    QByteArray pathEnv = qgetenv("PATH");
+    QStringList pathEntries = QString(pathEnv).split(':', Qt::SkipEmptyParts);
+
+    if (pathEntries.contains(formattedPath)) {
+        return true;
+    }
+
+    QString bashrcPath = QDir::homePath() + "/.bashrc";
+    QFile file(bashrcPath);
+    if (file.open(QIODevice::ReadOnly | QIODevice::Text)) {
+        QTextStream stream(&file);
+        QString contents = stream.readAll();
+        QString exportLine = QString("export PATH=\"$PATH:%1\"").arg(formattedPath);
+        if (contents.contains(exportLine)) {
+            return true;
+        }
+    }
+
+    return false;
+
+#elif defined(Q_OS_MACOS)
+    // TODO
+
+    return false;
+
+#else
+    // Unsupported platform
+    return false;
 #endif
-#ifdef Q_OS_WIN
+}
 void XOptions::appendToUserPathVariable(const QString &newPath)
 {
+#ifdef Q_OS_WIN
     QSettings settings("HKEY_CURRENT_USER\\Environment", QSettings::NativeFormat);
     QString currentPath = settings.value("Path").toString();
-
     QString formattedPath = QDir::toNativeSeparators(newPath);
 #if QT_VERSION >= QT_VERSION_CHECK(5, 14, 0)
     QStringList pathEntries = currentPath.split(';', Qt::SkipEmptyParts);
@@ -2502,19 +2528,49 @@ void XOptions::appendToUserPathVariable(const QString &newPath)
         pathEntries.append(formattedPath);
         settings.setValue("Path", pathEntries.join(';'));
 
-#ifdef QT_GUI_LIB
-//        SendMessageTimeout(HWND_BROADCAST, WM_SETTINGCHANGE, 0,
-//            (LPARAM)L"Environment", SMTO_ABORTIFHUNG, 5000, nullptr);
+#ifndef BUILD_CI
+        SendMessageTimeout(HWND_BROADCAST, WM_SETTINGCHANGE, 0,
+                           (LPARAM)L"Environment", SMTO_ABORTIFHUNG, 5000, nullptr);
 #endif
+
     }
-}
+
+#elif defined(Q_OS_LINUX)
+    QByteArray pathEnv = qgetenv("PATH");
+    QStringList pathEntries = QString(pathEnv).split(':', Qt::SkipEmptyParts);
+    QString formattedPath = QDir(newPath).absolutePath();
+
+    if (!pathEntries.contains(formattedPath)) {
+        pathEntries.append(formattedPath);
+        qputenv("PATH", pathEntries.join(':').toUtf8());
+
+        QString bashrcPath = QDir::homePath() + "/.bashrc";
+        QFile file(bashrcPath);
+        if (file.open(QIODevice::ReadWrite | QIODevice::Text)) {
+            QTextStream stream(&file);
+            QString contents = stream.readAll();
+
+            QString exportLine = QString("export PATH=\"$PATH:%1\"").arg(formattedPath);
+
+            if (!contents.contains(exportLine)) {
+                stream << "\n" << exportLine << "\n";
+            }
+            file.close();
+        }
+    }
+
+#elif defined(Q_OS_MACOS)
+    //TODO
+
+#else
+    // Unsupported platform
 #endif
-#ifdef Q_OS_WIN
+}
 void XOptions::removeFromUserPathVariable(const QString &targetPath)
 {
+#ifdef Q_OS_WIN
     QSettings settings("HKEY_CURRENT_USER\\Environment", QSettings::NativeFormat);
     QString currentPath = settings.value("Path").toString();
-
     QString formattedPath = QDir::toNativeSeparators(targetPath);
 #if QT_VERSION >= QT_VERSION_CHECK(5, 14, 0)
     QStringList pathEntries = currentPath.split(';', Qt::SkipEmptyParts);
@@ -2526,13 +2582,45 @@ void XOptions::removeFromUserPathVariable(const QString &targetPath)
         pathEntries.removeAll(formattedPath);
         settings.setValue("Path", pathEntries.join(';'));
 
-#ifdef QT_GUI_LIB
-//        SendMessageTimeout(HWND_BROADCAST, WM_SETTINGCHANGE, 0,
-//            (LPARAM)L"Environment", SMTO_ABORTIFHUNG, 5000, nullptr);
+#ifndef BUILD_CI
+        SendMessageTimeout(HWND_BROADCAST, WM_SETTINGCHANGE, 0,
+                           (LPARAM)L"Environment", SMTO_ABORTIFHUNG, 5000, nullptr);
 #endif
+
     }
-}
+
+#elif defined(Q_OS_LINUX)
+    QByteArray pathEnv = qgetenv("PATH");
+    QStringList pathEntries = QString(pathEnv).split(':', Qt::SkipEmptyParts);
+    QString formattedPath = QDir(targetPath).absolutePath();
+
+    if (pathEntries.contains(formattedPath)) {
+        pathEntries.removeAll(formattedPath);
+        qputenv("PATH", pathEntries.join(':').toUtf8());
+    }
+
+    QString bashrcPath = QDir::homePath() + "/.bashrc";
+    QFile file(bashrcPath);
+    if (file.open(QIODevice::ReadWrite | QIODevice::Text)) {
+        QTextStream stream(&file);
+        QString contents = stream.readAll();
+        file.resize(0);
+
+        QString exportLine = QString("export PATH=\"$PATH:%1\"").arg(formattedPath);
+        QStringList lines = contents.split('\n');
+        for (const QString &line : lines) {
+            if (line.trimmed() != exportLine) {
+                stream << line << "\n";
+            }
+        }
+        file.close();
+    }
+
+#elif defined(Q_OS_MACOS)
+    //TODO
+
 #endif
+}
 #ifdef Q_OS_WIN
 bool XOptions::registerContext(const QString &sApplicationName, const QString &sType, const QString &sApplicationFilePath, USERROLE userRole)
 {
