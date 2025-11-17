@@ -3,6 +3,8 @@ INCLUDEPATH += $$PWD/../gui_source
 DEPENDPATH += $$PWD/../gui_source
 DEPENDPATH += $$PWD
 
+QT += widgets
+
 win32:LIBS += -luser32 -lshell32 -lole32
 
 HEADERS += \
@@ -23,4 +25,5 @@ DISTFILES += \
     $$PWD/LICENSE \
     $$PWD/README.md \
     $$PWD/xoptions.cmake
+
 
