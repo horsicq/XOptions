@@ -551,10 +551,15 @@ private:
     QMap<ID, QVariant> m_mapDefaultValues;
     bool m_bIsNeedRestart;
     qint32 m_nMaxRecentFilesCount;
-#if defined(Q_OS_WIN) && defined(QT_GUI_LIB)
+#ifdef Q_OS_WIN
+#ifdef QT_GUI_LIB
     QSystemTrayIcon *m_trayIcon = nullptr;
     QMenu *m_trayMenu = nullptr;
     QPointer<QWidget> m_guiMainWindow;
+#endif
+#endif
+
+#ifdef QT_GUI_LIB
     QMenu *m_pRecentFilesMenu;
     QMenu *m_pCodePagesMenu;
 #endif
@@ -562,3 +567,4 @@ private:
 };
 
 #endif  // XOPTIONS_H
+
