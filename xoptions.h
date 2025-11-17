@@ -21,14 +21,12 @@
 #ifndef XOPTIONS_H
 #define XOPTIONS_H
 
-#include "qsystemtrayicon.h"
 #include <QDir>
 #include <QMap>
 #include <QSettings>
 #include <QSysInfo>
 #include <QTranslator>
 #include <QAbstractItemModel>
-#include <QSystemTrayIcon>
 #include <QTimer>
 #if (QT_VERSION_MAJOR < 5)  // TODO Check
 #include <QRegExp>
@@ -38,7 +36,9 @@
 #endif
 // #include <QVector>
 #ifdef QT_GUI_LIB
+#include "desktopintegrationhelper.h"
 #include <QApplication>
+#include <QSystemTrayIcon>
 #include <QCheckBox>
 #include <QComboBox>
 #include <QDesktopServices>
@@ -551,15 +551,14 @@ private:
     QMap<ID, QVariant> m_mapDefaultValues;
     bool m_bIsNeedRestart;
     qint32 m_nMaxRecentFilesCount;
-#ifdef Q_OS_WIN
+#if defined(Q_OS_WIN) && defined(QT_GUI_LIB)
     QSystemTrayIcon *m_trayIcon = nullptr;
     QMenu *m_trayMenu = nullptr;
     QPointer<QWidget> m_guiMainWindow;
-#endif
-#ifdef QT_GUI_LIB
     QMenu *m_pRecentFilesMenu;
     QMenu *m_pCodePagesMenu;
 #endif
+
 };
 
 #endif  // XOPTIONS_H

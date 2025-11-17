@@ -19,7 +19,6 @@
  * SOFTWARE.
  */
 #include "xoptions.h"
-#include "desktopintegrationhelper.h"
 
 XOptions::XOptions(QObject *pParent) : QObject(pParent)
 {
@@ -93,96 +92,96 @@ XOptions::GROUPID XOptions::getGroupID(ID id)
     GROUPID result = GROUPID_UNKNOWN;
 
     switch (id) {
-        case ID_VIEW_STAYONTOP:
-        case ID_VIEW_STYLE:
-        case ID_VIEW_QSS:
-        case ID_VIEW_LANG:
-        case ID_VIEW_SINGLEAPPLICATION:
-        case ID_VIEW_SHOWLOGO:
-        case ID_VIEW_FONT:
-        case ID_VIEW_FONT_CONTROLS:
-        case ID_VIEW_FONT_TABLEVIEWS:
-        case ID_VIEW_FONT_TREEVIEWS:
-        case ID_VIEW_FONT_TEXTEDITS:
-        case ID_VIEW_ADVANCED:
-        case ID_VIEW_SELECTSTYLE: result = GROUPID_VIEW; break;
-        case ID_FILE_SAVELASTDIRECTORY:
-        case ID_FILE_SAVERECENTFILES:
-        case ID_FILE_SAVEBACKUP:
-        case ID_FILE_CONTEXT: result = GROUPID_FILE; break;
-        case ID_FILE_ENABLETRAYMONITORING: result = GROUPID_FILE; break;
-        case ID_SCAN_SCANAFTEROPEN:
-        case ID_SCAN_FLAG_RECURSIVE:
-        case ID_SCAN_FLAG_DEEP:
-        case ID_SCAN_FLAG_HEURISTIC:
-        case ID_SCAN_FLAG_AGGRESSIVE:
-        case ID_SCAN_FLAG_VERBOSE:
-        case ID_SCAN_FLAG_ALLTYPES:
-        case ID_SCAN_FORMATRESULT:
-        case ID_SCAN_LOG_PROFILING:
-        case ID_SCAN_BUFFERSIZE:
-        case ID_SCAN_HIGHLIGHT:
-        case ID_SCAN_SORT:
-        case ID_SCAN_HIDEUNKNOWN:
-        case ID_SCAN_ENGINE:
-        case ID_SCAN_ENGINE_EMPTY:
-        case ID_SCAN_DATABASE_MAIN_PATH:
-        case ID_SCAN_DATABASE_EXTRA_PATH:
-        case ID_SCAN_DATABASE_CUSTOM_PATH:
-        case ID_SCAN_DATABASE_EXTRA_ENABLED:
-        case ID_SCAN_DATABASE_CUSTOM_ENABLED:
-        case ID_SCAN_YARARULESPATH: result = GROUPID_SCAN; break;
-        case ID_SIGNATURES_PATH: result = GROUPID_SIGNATURES; break;
-        case ID_INFO_PATH: result = GROUPID_INFO; break;
-        case ID_DISASM_FONT:
-        case ID_DISASM_SYNTAX:
-        case ID_DISASM_LOCATIONCOLON:
-        case ID_DISASM_UPPERCASE:
-        case ID_DISASM_HIGHLIGHT:
-        case ID_DISASM_COLOR_ARROWS:
-        case ID_DISASM_COLOR_ARROWS_SELECTED:
-        case ID_DISASM_COLOR_REGS:
-        case ID_DISASM_COLOR_NUMBERS:
-        case ID_DISASM_COLOR_OPCODE:
-        case ID_DISASM_COLOR_REFS:
-        case ID_DISASM_COLOR_X86_REGS_GENERAL:
-        case ID_DISASM_COLOR_X86_REGS_STACK:
-        case ID_DISASM_COLOR_X86_REGS_SEGMENT:
-        case ID_DISASM_COLOR_X86_REGS_DEBUG:
-        case ID_DISASM_COLOR_X86_REGS_IP:
-        case ID_DISASM_COLOR_X86_REGS_FLAGS:
-        case ID_DISASM_COLOR_X86_REGS_FPU:
-        case ID_DISASM_COLOR_X86_REGS_XMM:
-        case ID_DISASM_COLOR_X86_OPCODE_CALL:
-        case ID_DISASM_COLOR_X86_OPCODE_RET:
-        case ID_DISASM_COLOR_X86_OPCODE_COND_JMP:
-        case ID_DISASM_COLOR_X86_OPCODE_PUSH:
-        case ID_DISASM_COLOR_X86_OPCODE_POP:
-        case ID_DISASM_COLOR_X86_OPCODE_NOP:
-        case ID_DISASM_COLOR_X86_OPCODE_JMP:
-        case ID_DISASM_COLOR_X86_OPCODE_INT3:
-        case ID_DISASM_COLOR_X86_OPCODE_SYSCALL:
-        case ID_DISASM_COLOR_ARM_REGS_GENERAL:
-        case ID_DISASM_COLOR_ARM_REGS_STACK:
-        case ID_DISASM_COLOR_ARM_OPCODE_B:
-        case ID_DISASM_COLOR_ARM_OPCODE_BL:
-        case ID_DISASM_COLOR_ARM_OPCODE_RET:
-        case ID_DISASM_COLOR_ARM_OPCODE_PUSH:
-        case ID_DISASM_COLOR_ARM_OPCODE_POP:
-        case ID_DISASM_COLOR_ARM_OPCODE_NOP: result = GROUPID_DISASM; break;
-        case ID_DEBUGGER_COLOR_BREAKPOINT: result = GROUPID_DEBUGGER; break;
-        case ID_HEX_FONT:
-        case ID_HEX_LOCATIONCOLON: result = GROUPID_HEX; break;
-        case ID_STACK_FONT:
-        case ID_STACK_LOCATIONCOLON: result = GROUPID_STACK; break;
-        case ID_REGISTERS_FONT: result = GROUPID_REGISTERS; break;
-        case ID_IODRIVER_FILENAME:
-        case ID_IODRIVER_SERVICENAME: result = GROUPID_IODRIVER; break;
-        default:
+    case ID_VIEW_STAYONTOP:
+    case ID_VIEW_STYLE:
+    case ID_VIEW_QSS:
+    case ID_VIEW_LANG:
+    case ID_VIEW_SINGLEAPPLICATION:
+    case ID_VIEW_SHOWLOGO:
+    case ID_VIEW_FONT:
+    case ID_VIEW_FONT_CONTROLS:
+    case ID_VIEW_FONT_TABLEVIEWS:
+    case ID_VIEW_FONT_TREEVIEWS:
+    case ID_VIEW_FONT_TEXTEDITS:
+    case ID_VIEW_ADVANCED:
+    case ID_VIEW_SELECTSTYLE: result = GROUPID_VIEW; break;
+    case ID_FILE_SAVELASTDIRECTORY:
+    case ID_FILE_SAVERECENTFILES:
+    case ID_FILE_SAVEBACKUP:
+    case ID_FILE_CONTEXT: result = GROUPID_FILE; break;
+    case ID_FILE_ENABLETRAYMONITORING: result = GROUPID_FILE; break;
+    case ID_SCAN_SCANAFTEROPEN:
+    case ID_SCAN_FLAG_RECURSIVE:
+    case ID_SCAN_FLAG_DEEP:
+    case ID_SCAN_FLAG_HEURISTIC:
+    case ID_SCAN_FLAG_AGGRESSIVE:
+    case ID_SCAN_FLAG_VERBOSE:
+    case ID_SCAN_FLAG_ALLTYPES:
+    case ID_SCAN_FORMATRESULT:
+    case ID_SCAN_LOG_PROFILING:
+    case ID_SCAN_BUFFERSIZE:
+    case ID_SCAN_HIGHLIGHT:
+    case ID_SCAN_SORT:
+    case ID_SCAN_HIDEUNKNOWN:
+    case ID_SCAN_ENGINE:
+    case ID_SCAN_ENGINE_EMPTY:
+    case ID_SCAN_DATABASE_MAIN_PATH:
+    case ID_SCAN_DATABASE_EXTRA_PATH:
+    case ID_SCAN_DATABASE_CUSTOM_PATH:
+    case ID_SCAN_DATABASE_EXTRA_ENABLED:
+    case ID_SCAN_DATABASE_CUSTOM_ENABLED:
+    case ID_SCAN_YARARULESPATH: result = GROUPID_SCAN; break;
+    case ID_SIGNATURES_PATH: result = GROUPID_SIGNATURES; break;
+    case ID_INFO_PATH: result = GROUPID_INFO; break;
+    case ID_DISASM_FONT:
+    case ID_DISASM_SYNTAX:
+    case ID_DISASM_LOCATIONCOLON:
+    case ID_DISASM_UPPERCASE:
+    case ID_DISASM_HIGHLIGHT:
+    case ID_DISASM_COLOR_ARROWS:
+    case ID_DISASM_COLOR_ARROWS_SELECTED:
+    case ID_DISASM_COLOR_REGS:
+    case ID_DISASM_COLOR_NUMBERS:
+    case ID_DISASM_COLOR_OPCODE:
+    case ID_DISASM_COLOR_REFS:
+    case ID_DISASM_COLOR_X86_REGS_GENERAL:
+    case ID_DISASM_COLOR_X86_REGS_STACK:
+    case ID_DISASM_COLOR_X86_REGS_SEGMENT:
+    case ID_DISASM_COLOR_X86_REGS_DEBUG:
+    case ID_DISASM_COLOR_X86_REGS_IP:
+    case ID_DISASM_COLOR_X86_REGS_FLAGS:
+    case ID_DISASM_COLOR_X86_REGS_FPU:
+    case ID_DISASM_COLOR_X86_REGS_XMM:
+    case ID_DISASM_COLOR_X86_OPCODE_CALL:
+    case ID_DISASM_COLOR_X86_OPCODE_RET:
+    case ID_DISASM_COLOR_X86_OPCODE_COND_JMP:
+    case ID_DISASM_COLOR_X86_OPCODE_PUSH:
+    case ID_DISASM_COLOR_X86_OPCODE_POP:
+    case ID_DISASM_COLOR_X86_OPCODE_NOP:
+    case ID_DISASM_COLOR_X86_OPCODE_JMP:
+    case ID_DISASM_COLOR_X86_OPCODE_INT3:
+    case ID_DISASM_COLOR_X86_OPCODE_SYSCALL:
+    case ID_DISASM_COLOR_ARM_REGS_GENERAL:
+    case ID_DISASM_COLOR_ARM_REGS_STACK:
+    case ID_DISASM_COLOR_ARM_OPCODE_B:
+    case ID_DISASM_COLOR_ARM_OPCODE_BL:
+    case ID_DISASM_COLOR_ARM_OPCODE_RET:
+    case ID_DISASM_COLOR_ARM_OPCODE_PUSH:
+    case ID_DISASM_COLOR_ARM_OPCODE_POP:
+    case ID_DISASM_COLOR_ARM_OPCODE_NOP: result = GROUPID_DISASM; break;
+    case ID_DEBUGGER_COLOR_BREAKPOINT: result = GROUPID_DEBUGGER; break;
+    case ID_HEX_FONT:
+    case ID_HEX_LOCATIONCOLON: result = GROUPID_HEX; break;
+    case ID_STACK_FONT:
+    case ID_STACK_LOCATIONCOLON: result = GROUPID_STACK; break;
+    case ID_REGISTERS_FONT: result = GROUPID_REGISTERS; break;
+    case ID_IODRIVER_FILENAME:
+    case ID_IODRIVER_SERVICENAME: result = GROUPID_IODRIVER; break;
+    default:
 #ifdef QT_DEBUG
-            qDebug("Unknown GroupID");
+        qDebug("Unknown GroupID");
 #endif
-            result = GROUPID_UNKNOWN;
+        result = GROUPID_UNKNOWN;
     }
 
     return result;
@@ -340,17 +339,17 @@ void XOptions::load()
         } else {
             // TODO remove,use addID
             switch (id) {
-                case ID_ROOTPATH: varDefault = ""; break;
-                case ID_DATAPATH: varDefault = "$data/data"; break;
-                case ID_JSON: varDefault = ""; break;
-                case ID_STRUCTSPATH: varDefault = "$data/structs"; break;
-                case ID_STRUCTS_PATH: varDefault = "$data/structs"; break;
-                case ID_AUTHUSER: varDefault = ""; break;
-                case ID_AUTHTOKEN: varDefault = ""; break;
-                case ID_NU_RECENTFILES: varDefault = QList<QVariant>(); break;
-                case ID_NU_LASTDIRECTORY: varDefault = ""; break;
-                case ID_SCAN_BUFFERSIZE: varDefault = 2 * 1024 * 1024; break;
-                default: varDefault = "";
+            case ID_ROOTPATH: varDefault = ""; break;
+            case ID_DATAPATH: varDefault = "$data/data"; break;
+            case ID_JSON: varDefault = ""; break;
+            case ID_STRUCTSPATH: varDefault = "$data/structs"; break;
+            case ID_STRUCTS_PATH: varDefault = "$data/structs"; break;
+            case ID_AUTHUSER: varDefault = ""; break;
+            case ID_AUTHTOKEN: varDefault = ""; break;
+            case ID_NU_RECENTFILES: varDefault = QList<QVariant>(); break;
+            case ID_NU_LASTDIRECTORY: varDefault = ""; break;
+            case ID_SCAN_BUFFERSIZE: varDefault = 2 * 1024 * 1024; break;
+            default: varDefault = "";
             }
         }
 
@@ -464,105 +463,105 @@ QString XOptions::idToString(ID id)
     QString sResult;
 
     switch (id) {
-        // TODO remove
-        case ID_ROOTPATH: sResult = QString("RootPath"); break;
-        case ID_DATAPATH: sResult = QString("DataPath"); break;
-        case ID_JSON: sResult = QString("Json"); break;
-        case ID_STRUCTSPATH: sResult = QString("StructsPath"); break;
-        case ID_AUTHUSER: sResult = QString("AuthUser"); break;
-        case ID_AUTHTOKEN: sResult = QString("AuthToken"); break;
-        // new
-        case ID_VIEW_STAYONTOP: sResult = QString("View/StayOnTop"); break;
-        case ID_VIEW_STYLE: sResult = QString("View/Style"); break;
-        case ID_VIEW_QSS: sResult = QString("View/Qss"); break;
-        case ID_VIEW_LANG: sResult = QString("View/Lang"); break;
-        case ID_VIEW_SINGLEAPPLICATION: sResult = QString("View/SingleApplication"); break;
-        case ID_VIEW_SHOWLOGO: sResult = QString("View/ShowLogo"); break;
-        case ID_VIEW_FONT: sResult = QString("View/Font"); break;
-        case ID_VIEW_FONT_CONTROLS: sResult = QString("View/Font/Controls"); break;
-        case ID_VIEW_FONT_TABLEVIEWS: sResult = QString("View/Font/TableViews"); break;
-        case ID_VIEW_FONT_TREEVIEWS: sResult = QString("View/Font/TreeViews"); break;
-        case ID_VIEW_FONT_TEXTEDITS: sResult = QString("View/Font/TextEdits"); break;
-        case ID_VIEW_ADVANCED: sResult = QString("View/Advanced"); break;
-        case ID_VIEW_SELECTSTYLE: sResult = QString("View/SelectStyle"); break;
-        case ID_FILE_SAVELASTDIRECTORY: sResult = QString("File/SaveLastDirectory"); break;
-        case ID_FILE_SAVERECENTFILES: sResult = QString("File/SaveRecentFiles"); break;
-        case ID_FILE_SAVEBACKUP: sResult = QString("File/SaveBackup"); break;
-        case ID_FILE_CONTEXT: sResult = QString("File/Context"); break;
-        case ID_FILE_ENABLETRAYMONITORING: sResult = QString("File/TrayMonitoringEnabled"); break;
-        case ID_SCAN_SCANAFTEROPEN: sResult = QString("Scan/ScanAfterOpen"); break;
-        case ID_SCAN_FLAG_RECURSIVE: sResult = QString("Scan/Flag/Recursive"); break;
-        case ID_SCAN_FLAG_DEEP: sResult = QString("Scan/Flag/Deep"); break;
-        case ID_SCAN_FLAG_HEURISTIC: sResult = QString("Scan/Flag/Heuristic"); break;
-        case ID_SCAN_FLAG_AGGRESSIVE: sResult = QString("Scan/Flag/Aggressive"); break;
-        case ID_SCAN_FLAG_VERBOSE: sResult = QString("Scan/Flag/Verbose"); break;
-        case ID_SCAN_FLAG_ALLTYPES: sResult = QString("Scan/Flag/AllTypes"); break;
-        case ID_SCAN_USECACHE: sResult = QString("Scan/UseCache"); break;
-        case ID_SCAN_FORMATRESULT: sResult = QString("Scan/FormatResult"); break;
-        case ID_SCAN_LOG_PROFILING: sResult = QString("Scan/Log/Profiling"); break;
-        case ID_SCAN_BUFFERSIZE: sResult = QString("Scan/BufferSize"); break;
-        case ID_SCAN_HIGHLIGHT: sResult = QString("Scan/Highlight"); break;
-        case ID_SCAN_SORT: sResult = QString("Scan/Sort"); break;
-        case ID_SCAN_HIDEUNKNOWN: sResult = QString("Scan/HideUnknown"); break;
-        case ID_SCAN_ENGINE:
-        case ID_SCAN_ENGINE_EMPTY: sResult = QString("Scan/Engine"); break;
-        case ID_SCAN_DATABASE_MAIN_PATH: sResult = QString("Scan/Database/Main/Path"); break;
-        case ID_SCAN_DATABASE_EXTRA_PATH: sResult = QString("Scan/Database/Extra/Path"); break;
-        case ID_SCAN_DATABASE_CUSTOM_PATH: sResult = QString("Scan/Database/Custom/Path"); break;
-        case ID_SCAN_DATABASE_EXTRA_ENABLED: sResult = QString("Scan/Database/Extra/Enabled"); break;
-        case ID_SCAN_DATABASE_CUSTOM_ENABLED: sResult = QString("Scan/Database/Custom/Enabled"); break;
-        case ID_SCAN_YARARULESPATH: sResult = QString("Scan/YaraRulesPath"); break;
-        case ID_SIGNATURES_PATH: sResult = QString("Signatures/Path"); break;
-        case ID_INFO_PATH: sResult = QString("Info/Path"); break;
-        case ID_ONLINETOOLS_VIRUSTOTAL_APIKEY: sResult = QString("OnlineTools/VirusTotalApi"); break;
-        case ID_DISASM_FONT: sResult = QString("Disasm/Font"); break;
-        case ID_DISASM_LOCATIONCOLON: sResult = QString("Disasm/LocationColon"); break;
-        case ID_DISASM_UPPERCASE: sResult = QString("Disasm/Uppercase"); break;
-        case ID_DISASM_HIGHLIGHT: sResult = QString("Disasm/Highlight"); break;
-        case ID_DISASM_SYNTAX: sResult = QString("Disasm/Syntax"); break;
-        case ID_DISASM_COLOR_ARROWS: sResult = QString("Disasm/Color/Arrows"); break;
-        case ID_DISASM_COLOR_ARROWS_SELECTED: sResult = QString("Disasm/Color/Arrows/Selected"); break;
-        case ID_DISASM_COLOR_REGS: sResult = QString("Disasm/Color/Regs"); break;
-        case ID_DISASM_COLOR_NUMBERS: sResult = QString("Disasm/Color/Numbers"); break;
-        case ID_DISASM_COLOR_OPCODE: sResult = QString("Disasm/Color/Opcode"); break;
-        case ID_DISASM_COLOR_REFS: sResult = QString("Disasm/Color/Refs"); break;
-        case ID_DISASM_COLOR_X86_REGS_GENERAL: sResult = QString("Disasm/Color/x86/Regs/General"); break;
-        case ID_DISASM_COLOR_X86_REGS_STACK: sResult = QString("Disasm/Color/x86/Regs/Stack"); break;
-        case ID_DISASM_COLOR_X86_REGS_SEGMENT: sResult = QString("Disasm/Color/x86/Regs/Segment"); break;
-        case ID_DISASM_COLOR_X86_REGS_DEBUG: sResult = QString("Disasm/Color/x86/Regs/Debug"); break;
-        case ID_DISASM_COLOR_X86_REGS_IP: sResult = QString("Disasm/Color/x86/Regs/IP"); break;
-        case ID_DISASM_COLOR_X86_REGS_FLAGS: sResult = QString("Disasm/Color/x86/Regs/Flags"); break;
-        case ID_DISASM_COLOR_X86_REGS_FPU: sResult = QString("Disasm/Color/x86/Regs/Float"); break;
-        case ID_DISASM_COLOR_X86_REGS_XMM: sResult = QString("Disasm/Color/x86/Regs/XMM"); break;
-        case ID_DISASM_COLOR_X86_OPCODE_CALL: sResult = QString("Disasm/Color/x86/Opcode/call"); break;
-        case ID_DISASM_COLOR_X86_OPCODE_RET: sResult = QString("Disasm/Color/x86/Opcode/ret"); break;
-        case ID_DISASM_COLOR_X86_OPCODE_COND_JMP: sResult = QString("Disasm/Color/x86/Opcode/cond_jmp"); break;
-        case ID_DISASM_COLOR_X86_OPCODE_PUSH: sResult = QString("Disasm/Color/x86/Opcode/push"); break;
-        case ID_DISASM_COLOR_X86_OPCODE_POP: sResult = QString("Disasm/Color/x86/Opcode/pop"); break;
-        case ID_DISASM_COLOR_X86_OPCODE_NOP: sResult = QString("Disasm/Color/x86/Opcode/nop"); break;
-        case ID_DISASM_COLOR_X86_OPCODE_JMP: sResult = QString("Disasm/Color/x86/Opcode/jmp"); break;
-        case ID_DISASM_COLOR_X86_OPCODE_INT3: sResult = QString("Disasm/Color/x86/Opcode/int3"); break;
-        case ID_DISASM_COLOR_X86_OPCODE_SYSCALL: sResult = QString("Disasm/Color/x86/Opcode/syscall"); break;
-        case ID_DISASM_COLOR_ARM_REGS_GENERAL: sResult = QString("Disasm/Color/arm/Regs/General"); break;
-        case ID_DISASM_COLOR_ARM_REGS_STACK: sResult = QString("Disasm/Color/arm/Regs/Stack"); break;
-        case ID_DISASM_COLOR_ARM_OPCODE_B: sResult = QString("Disasm/Color/arm/Opcode/b"); break;
-        case ID_DISASM_COLOR_ARM_OPCODE_BL: sResult = QString("Disasm/Color/arm/Opcode/bl"); break;
-        case ID_DISASM_COLOR_ARM_OPCODE_RET: sResult = QString("Disasm/Color/arm/Opcode/ret"); break;
-        case ID_DISASM_COLOR_ARM_OPCODE_PUSH: sResult = QString("Disasm/Color/arm/Opcode/push"); break;
-        case ID_DISASM_COLOR_ARM_OPCODE_POP: sResult = QString("Disasm/Color/arm/Opcode/pop"); break;
-        case ID_DISASM_COLOR_ARM_OPCODE_NOP: sResult = QString("Disasm/Color/arm/Opcode/nop"); break;
-        case ID_HEX_FONT: sResult = QString("Hex/Font"); break;
-        case ID_HEX_LOCATIONCOLON: sResult = QString("Hex/LocationColon"); break;
-        case ID_STACK_FONT: sResult = QString("Stack/Font"); break;
-        case ID_STACK_LOCATIONCOLON: sResult = QString("Stack/LocationColon"); break;
-        case ID_REGISTERS_FONT: sResult = QString("Registers/Font"); break;
-        case ID_DEBUGGER_COLOR_BREAKPOINT: sResult = QString("Debugger/Color/Breakpoint"); break;
-        case ID_IODRIVER_FILENAME: sResult = QString("IODriver/FileName"); break;
-        case ID_IODRIVER_SERVICENAME: sResult = QString("IODriver/ServiceName"); break;
-        case ID_STRUCTS_PATH: sResult = QString("Structs/Path"); break;
-        case ID_NU_RECENTFILES: sResult = QString("RecentFiles"); break;
-        case ID_NU_LASTDIRECTORY: sResult = QString("LastDirectory"); break;
-        default: sResult = QString("Unknown");
+    // TODO remove
+    case ID_ROOTPATH: sResult = QString("RootPath"); break;
+    case ID_DATAPATH: sResult = QString("DataPath"); break;
+    case ID_JSON: sResult = QString("Json"); break;
+    case ID_STRUCTSPATH: sResult = QString("StructsPath"); break;
+    case ID_AUTHUSER: sResult = QString("AuthUser"); break;
+    case ID_AUTHTOKEN: sResult = QString("AuthToken"); break;
+    // new
+    case ID_VIEW_STAYONTOP: sResult = QString("View/StayOnTop"); break;
+    case ID_VIEW_STYLE: sResult = QString("View/Style"); break;
+    case ID_VIEW_QSS: sResult = QString("View/Qss"); break;
+    case ID_VIEW_LANG: sResult = QString("View/Lang"); break;
+    case ID_VIEW_SINGLEAPPLICATION: sResult = QString("View/SingleApplication"); break;
+    case ID_VIEW_SHOWLOGO: sResult = QString("View/ShowLogo"); break;
+    case ID_VIEW_FONT: sResult = QString("View/Font"); break;
+    case ID_VIEW_FONT_CONTROLS: sResult = QString("View/Font/Controls"); break;
+    case ID_VIEW_FONT_TABLEVIEWS: sResult = QString("View/Font/TableViews"); break;
+    case ID_VIEW_FONT_TREEVIEWS: sResult = QString("View/Font/TreeViews"); break;
+    case ID_VIEW_FONT_TEXTEDITS: sResult = QString("View/Font/TextEdits"); break;
+    case ID_VIEW_ADVANCED: sResult = QString("View/Advanced"); break;
+    case ID_VIEW_SELECTSTYLE: sResult = QString("View/SelectStyle"); break;
+    case ID_FILE_SAVELASTDIRECTORY: sResult = QString("File/SaveLastDirectory"); break;
+    case ID_FILE_SAVERECENTFILES: sResult = QString("File/SaveRecentFiles"); break;
+    case ID_FILE_SAVEBACKUP: sResult = QString("File/SaveBackup"); break;
+    case ID_FILE_CONTEXT: sResult = QString("File/Context"); break;
+    case ID_FILE_ENABLETRAYMONITORING: sResult = QString("File/TrayMonitoringEnabled"); break;
+    case ID_SCAN_SCANAFTEROPEN: sResult = QString("Scan/ScanAfterOpen"); break;
+    case ID_SCAN_FLAG_RECURSIVE: sResult = QString("Scan/Flag/Recursive"); break;
+    case ID_SCAN_FLAG_DEEP: sResult = QString("Scan/Flag/Deep"); break;
+    case ID_SCAN_FLAG_HEURISTIC: sResult = QString("Scan/Flag/Heuristic"); break;
+    case ID_SCAN_FLAG_AGGRESSIVE: sResult = QString("Scan/Flag/Aggressive"); break;
+    case ID_SCAN_FLAG_VERBOSE: sResult = QString("Scan/Flag/Verbose"); break;
+    case ID_SCAN_FLAG_ALLTYPES: sResult = QString("Scan/Flag/AllTypes"); break;
+    case ID_SCAN_USECACHE: sResult = QString("Scan/UseCache"); break;
+    case ID_SCAN_FORMATRESULT: sResult = QString("Scan/FormatResult"); break;
+    case ID_SCAN_LOG_PROFILING: sResult = QString("Scan/Log/Profiling"); break;
+    case ID_SCAN_BUFFERSIZE: sResult = QString("Scan/BufferSize"); break;
+    case ID_SCAN_HIGHLIGHT: sResult = QString("Scan/Highlight"); break;
+    case ID_SCAN_SORT: sResult = QString("Scan/Sort"); break;
+    case ID_SCAN_HIDEUNKNOWN: sResult = QString("Scan/HideUnknown"); break;
+    case ID_SCAN_ENGINE:
+    case ID_SCAN_ENGINE_EMPTY: sResult = QString("Scan/Engine"); break;
+    case ID_SCAN_DATABASE_MAIN_PATH: sResult = QString("Scan/Database/Main/Path"); break;
+    case ID_SCAN_DATABASE_EXTRA_PATH: sResult = QString("Scan/Database/Extra/Path"); break;
+    case ID_SCAN_DATABASE_CUSTOM_PATH: sResult = QString("Scan/Database/Custom/Path"); break;
+    case ID_SCAN_DATABASE_EXTRA_ENABLED: sResult = QString("Scan/Database/Extra/Enabled"); break;
+    case ID_SCAN_DATABASE_CUSTOM_ENABLED: sResult = QString("Scan/Database/Custom/Enabled"); break;
+    case ID_SCAN_YARARULESPATH: sResult = QString("Scan/YaraRulesPath"); break;
+    case ID_SIGNATURES_PATH: sResult = QString("Signatures/Path"); break;
+    case ID_INFO_PATH: sResult = QString("Info/Path"); break;
+    case ID_ONLINETOOLS_VIRUSTOTAL_APIKEY: sResult = QString("OnlineTools/VirusTotalApi"); break;
+    case ID_DISASM_FONT: sResult = QString("Disasm/Font"); break;
+    case ID_DISASM_LOCATIONCOLON: sResult = QString("Disasm/LocationColon"); break;
+    case ID_DISASM_UPPERCASE: sResult = QString("Disasm/Uppercase"); break;
+    case ID_DISASM_HIGHLIGHT: sResult = QString("Disasm/Highlight"); break;
+    case ID_DISASM_SYNTAX: sResult = QString("Disasm/Syntax"); break;
+    case ID_DISASM_COLOR_ARROWS: sResult = QString("Disasm/Color/Arrows"); break;
+    case ID_DISASM_COLOR_ARROWS_SELECTED: sResult = QString("Disasm/Color/Arrows/Selected"); break;
+    case ID_DISASM_COLOR_REGS: sResult = QString("Disasm/Color/Regs"); break;
+    case ID_DISASM_COLOR_NUMBERS: sResult = QString("Disasm/Color/Numbers"); break;
+    case ID_DISASM_COLOR_OPCODE: sResult = QString("Disasm/Color/Opcode"); break;
+    case ID_DISASM_COLOR_REFS: sResult = QString("Disasm/Color/Refs"); break;
+    case ID_DISASM_COLOR_X86_REGS_GENERAL: sResult = QString("Disasm/Color/x86/Regs/General"); break;
+    case ID_DISASM_COLOR_X86_REGS_STACK: sResult = QString("Disasm/Color/x86/Regs/Stack"); break;
+    case ID_DISASM_COLOR_X86_REGS_SEGMENT: sResult = QString("Disasm/Color/x86/Regs/Segment"); break;
+    case ID_DISASM_COLOR_X86_REGS_DEBUG: sResult = QString("Disasm/Color/x86/Regs/Debug"); break;
+    case ID_DISASM_COLOR_X86_REGS_IP: sResult = QString("Disasm/Color/x86/Regs/IP"); break;
+    case ID_DISASM_COLOR_X86_REGS_FLAGS: sResult = QString("Disasm/Color/x86/Regs/Flags"); break;
+    case ID_DISASM_COLOR_X86_REGS_FPU: sResult = QString("Disasm/Color/x86/Regs/Float"); break;
+    case ID_DISASM_COLOR_X86_REGS_XMM: sResult = QString("Disasm/Color/x86/Regs/XMM"); break;
+    case ID_DISASM_COLOR_X86_OPCODE_CALL: sResult = QString("Disasm/Color/x86/Opcode/call"); break;
+    case ID_DISASM_COLOR_X86_OPCODE_RET: sResult = QString("Disasm/Color/x86/Opcode/ret"); break;
+    case ID_DISASM_COLOR_X86_OPCODE_COND_JMP: sResult = QString("Disasm/Color/x86/Opcode/cond_jmp"); break;
+    case ID_DISASM_COLOR_X86_OPCODE_PUSH: sResult = QString("Disasm/Color/x86/Opcode/push"); break;
+    case ID_DISASM_COLOR_X86_OPCODE_POP: sResult = QString("Disasm/Color/x86/Opcode/pop"); break;
+    case ID_DISASM_COLOR_X86_OPCODE_NOP: sResult = QString("Disasm/Color/x86/Opcode/nop"); break;
+    case ID_DISASM_COLOR_X86_OPCODE_JMP: sResult = QString("Disasm/Color/x86/Opcode/jmp"); break;
+    case ID_DISASM_COLOR_X86_OPCODE_INT3: sResult = QString("Disasm/Color/x86/Opcode/int3"); break;
+    case ID_DISASM_COLOR_X86_OPCODE_SYSCALL: sResult = QString("Disasm/Color/x86/Opcode/syscall"); break;
+    case ID_DISASM_COLOR_ARM_REGS_GENERAL: sResult = QString("Disasm/Color/arm/Regs/General"); break;
+    case ID_DISASM_COLOR_ARM_REGS_STACK: sResult = QString("Disasm/Color/arm/Regs/Stack"); break;
+    case ID_DISASM_COLOR_ARM_OPCODE_B: sResult = QString("Disasm/Color/arm/Opcode/b"); break;
+    case ID_DISASM_COLOR_ARM_OPCODE_BL: sResult = QString("Disasm/Color/arm/Opcode/bl"); break;
+    case ID_DISASM_COLOR_ARM_OPCODE_RET: sResult = QString("Disasm/Color/arm/Opcode/ret"); break;
+    case ID_DISASM_COLOR_ARM_OPCODE_PUSH: sResult = QString("Disasm/Color/arm/Opcode/push"); break;
+    case ID_DISASM_COLOR_ARM_OPCODE_POP: sResult = QString("Disasm/Color/arm/Opcode/pop"); break;
+    case ID_DISASM_COLOR_ARM_OPCODE_NOP: sResult = QString("Disasm/Color/arm/Opcode/nop"); break;
+    case ID_HEX_FONT: sResult = QString("Hex/Font"); break;
+    case ID_HEX_LOCATIONCOLON: sResult = QString("Hex/LocationColon"); break;
+    case ID_STACK_FONT: sResult = QString("Stack/Font"); break;
+    case ID_STACK_LOCATIONCOLON: sResult = QString("Stack/LocationColon"); break;
+    case ID_REGISTERS_FONT: sResult = QString("Registers/Font"); break;
+    case ID_DEBUGGER_COLOR_BREAKPOINT: sResult = QString("Debugger/Color/Breakpoint"); break;
+    case ID_IODRIVER_FILENAME: sResult = QString("IODriver/FileName"); break;
+    case ID_IODRIVER_SERVICENAME: sResult = QString("IODriver/ServiceName"); break;
+    case ID_STRUCTS_PATH: sResult = QString("Structs/Path"); break;
+    case ID_NU_RECENTFILES: sResult = QString("RecentFiles"); break;
+    case ID_NU_LASTDIRECTORY: sResult = QString("LastDirectory"); break;
+    default: sResult = QString("Unknown");
     }
 
     return sResult;
@@ -1223,14 +1222,14 @@ QIcon XOptions::createIcon(quint32 codepoint, qint32 nWidth, qint32 nHeight)
     // Setup font - try multiple emoji fonts
     QFont font;
     font.setPixelSize(qMin(nWidth, nHeight) * 0.8); // 80% of size for better fit
-    
+
     font.setFamily("Segoe UI Emoji");
-    
+
     painter.setFont(font);
 
     // Draw the Unicode character centered
     painter.setPen(Qt::black);
-    
+
     // Convert codepoint to QString properly
     QString text;
     if (codepoint <= 0xFFFF) {
@@ -1239,24 +1238,24 @@ QIcon XOptions::createIcon(quint32 codepoint, qint32 nWidth, qint32 nHeight)
         // Handle surrogate pairs for codepoints > U+FFFF
         text = QString::fromUcs4(&codepoint, 1);
     }
-    
+
     painter.drawText(pixmap.rect(), Qt::AlignCenter, text);
 
     painter.end();
 
-//     // Debug: Save icon to C:\tmp
-//     static bool debugDumpEnabled = true;
-//     if (debugDumpEnabled) {
-//         QString filename = QString("C:/tmp/icon_%1_%2x%3_U%4.png")
-//             .arg(QDateTime::currentMSecsSinceEpoch())
-//             .arg(nWidth)
-//             .arg(nHeight)
-//             .arg(codepoint, 4, 16, QChar('0'));
-//         pixmap.save(filename);
-// #ifdef QT_DEBUG
-//         qDebug() << "Saved icon:" << filename << "text:" << text << "code:" << QString("U+%1").arg(codepoint, 4, 16, QChar('0'));
-// #endif
-//     }
+    //     // Debug: Save icon to C:\tmp
+    //     static bool debugDumpEnabled = true;
+    //     if (debugDumpEnabled) {
+    //         QString filename = QString("C:/tmp/icon_%1_%2x%3_U%4.png")
+    //             .arg(QDateTime::currentMSecsSinceEpoch())
+    //             .arg(nWidth)
+    //             .arg(nHeight)
+    //             .arg(codepoint, 4, 16, QChar('0'));
+    //         pixmap.save(filename);
+    // #ifdef QT_DEBUG
+    //         qDebug() << "Saved icon:" << filename << "text:" << text << "code:" << QString("U+%1").arg(codepoint, 4, 16, QChar('0'));
+    // #endif
+    //     }
 
     return QIcon(pixmap);
 }
@@ -1266,91 +1265,91 @@ quint32 XOptions::iconTypeToUnicodeSymbol(ICONTYPE iconType)
     quint32 result;
 
     switch (iconType) {
-        case ICONTYPE_ACTION:       result = 0x26A1;   break;  // ⚡ - High Voltage Sign (action/execute)
-        case ICONTYPE_ADD:          result = 0x2795;   break;  // ➕ - Heavy Plus Sign
-        case ICONTYPE_ADDRESS:      result = 0x1F4CD;  break;  // 📍 - Round Pushpin (location/address)
-        case ICONTYPE_ALL:          result = 0x2261;   break;  // ≡ - Identical To (all/everything)
-        case ICONTYPE_BACKWARD:     result = 0x23EA;   break;  // ⏪ - Black Left-Pointing Double Triangle
-        case ICONTYPE_BOOKMARK:     result = 0x1F516;  break;  // 🔖 - Bookmark
-        case ICONTYPE_CERTIFICATE:  result = 0x1F4DC;  break;  // 📜 - Scroll (certificate)
-        case ICONTYPE_CODE:         result = 0x1F5CB;  break;  // 🗋 - Document (code file)
-        case ICONTYPE_COPY:         result = 0x1F4CB;  break;  // 📋 - Clipboard
-        case ICONTYPE_DATA:         result = 0x1F4CA;  break;  // 📊 - Bar Chart (data)
-        case ICONTYPE_DEBUG:        result = 0x1F41E;  break;  // 🐞 - Lady Beetle (debug)
-        case ICONTYPE_DEMANGLE:     result = 0x1F9F5;  break;  // 🧵 - Thread (untangle)
-        case ICONTYPE_DIE:          result = 0x1F3B2;  break;  // 🎲 - Game Die
-        case ICONTYPE_DISASM:       result = 0x2699;   break;  // ⚙ - Gear (disassembly)
-        case ICONTYPE_DOTNET:       result = 0x1F310;  break;  // 🌐 - Globe With Meridians (.NET)
-        case ICONTYPE_DUMPTOFILE:   result = 0x1F4BE;  break;  // 💾 - Floppy Disk (save/dump)
-        case ICONTYPE_EDIT:         result = 0x270E;   break;  // ✎ - Lower Right Pencil
-        case ICONTYPE_ENTROPY:      result = 0x1F300;  break;  // 🌀 - Cyclone (chaos/entropy)
-        case ICONTYPE_ENTRY:        result = 0x1F6AA;  break;  // 🚪 - Door (entry point)
-        case ICONTYPE_EXCEPTION:    result = 0x26A0;   break;  // ⚠ - Warning Sign
-        case ICONTYPE_EXIT:         result = 0x1F6AA;  break;  // 🚪 - Door (exit)
-        case ICONTYPE_EXPORT:       result = 0x1F4E4;  break;  // 📤 - Outbox Tray
-        case ICONTYPE_EXTRACTOR:    result = 0x1F5C4;  break;  // 🗄 - File Cabinet (extract)
-        case ICONTYPE_FILE:         result = 0x1F4C4;  break;  // 📄 - Page Facing Up
-        case ICONTYPE_FOLLOW:       result = 0x1F517;  break;  // 🔗 - Link Symbol
-        case ICONTYPE_FORWARD:      result = 0x23E9;   break;  // ⏩ - Black Right-Pointing Double Triangle
-        case ICONTYPE_FUNCTION:     result = 0x0192;   break;  // ƒ - Latin Small Letter F With Hook
-        case ICONTYPE_GENERIC:      result = 0x25A0;   break;  // ■ - Black Square
-        case ICONTYPE_GOTO:         result = 0x21E8;   break;  // ⇨ - Rightwards White Arrow
-        case ICONTYPE_HASH:         result = 0x0023;   break;  // # - Number Sign
-        case ICONTYPE_HEADER:       result = 0x1F4C3;  break;  // 📃 - Page With Curl
-        case ICONTYPE_HEX:          result = 0x0023;   break;  // # - Number Sign (hex)
-        case ICONTYPE_IMPORT:       result = 0x1F4E5;  break;  // 📥 - Inbox Tray
-        case ICONTYPE_INFO:         result = 0x2139;   break;  // ℹ - Information Source
-        case ICONTYPE_LIBRARY:      result = 0x1F4DA;  break;  // 📚 - Books
-        case ICONTYPE_LIST:         result = 0x1F4CB;  break;  // 📋 - Clipboard (list)
-        case ICONTYPE_MANIFEST:     result = 0x1F4DC;  break;  // 📜 - Scroll (manifest)
-        case ICONTYPE_MEMORYMAP:    result = 0x1F5FA;  break;  // 🗺 - World Map
-        case ICONTYPE_METADATA:     result = 0x1F3F7;  break;  // 🏷 - Label (metadata)
-        case ICONTYPE_MIME:         result = 0x1F4CE;  break;  // 📎 - Paperclip (MIME type)
-        case ICONTYPE_NEW:          result = 0x2795;   break;  // ➕ - Heavy Plus Sign (new/add)
-        case ICONTYPE_NEXT:         result = 0x25B6;   break;  // ▶ - Black Right-Pointing Triangle
-        case ICONTYPE_NFD:          result = 0x1F4C2;  break;  // 📂 - Open File Folder
-        case ICONTYPE_NOTE:         result = 0x1F4DD;  break;  // 📝 - Memo
-        case ICONTYPE_OFFSET:       result = 0x21F1;   break;  // ⇱ - North West Arrow To Corner
-        case ICONTYPE_OPEN:         result = 0x1F4C2;  break;  // 📂 - Open File Folder
-        case ICONTYPE_OPTION:       result = 0x2699;   break;  // ⚙ - Gear (option/setting)
-        case ICONTYPE_OVERLAY:      result = 0x1F5C4;  break;  // 🗄 - File Cabinet (overlay)
-        case ICONTYPE_PATCH:        result = 0x1FA79;  break;  // 🩹 - Adhesive Bandage
-        case ICONTYPE_PATH:         result = 0x1F6E4;  break;  // 🛤 - Railway Track (path)
-        case ICONTYPE_REFERENCE:    result = 0x1F517;  break;  // 🔗 - Link Symbol (reference)
-        case ICONTYPE_RELOAD:       result = 0x21BB;   break;  // ↻ - Clockwise Open Circle Arrow (refresh/reload)
-        case ICONTYPE_RELOC:        result = 0x1F4CD;  break;  // 📍 - Round Pushpin (relocation)
-        case ICONTYPE_REMOVE:       result = 0x2796;   break;  // ➖ - Heavy Minus Sign
-        case ICONTYPE_RESIZE:       result = 0x21D4;   break;  // ⇔ - Left Right Double Arrow
-        case ICONTYPE_RESOURCE:     result = 0x1F4E6;  break;  // 📦 - Package
-        case ICONTYPE_SAVE:         result = 0x1F5AB;  break;  // 🖫 - White Hard Shell Floppy Disk
-        case ICONTYPE_SCAN:         result = 0x1F50D;  break;  // 🔍 - Left-Pointing Magnifying Glass (scan/search)
-        case ICONTYPE_SCRIPT:       result = 0x1F4DC;  break;  // 📜 - Scroll (script)
-        case ICONTYPE_SEARCH:       result = 0x1F50D;  break;  // 🔍 - Left-Pointing Magnifying Glass
-        case ICONTYPE_SECTION:      result = 0x00A7;   break;  // § - Section Sign
-        case ICONTYPE_SEGMENT:      result = 0x25A8;   break;  // ▨ - Square With Upper Right To Lower Left Fill
-        case ICONTYPE_SELECT:       result = 0x1F5F1;  break;  // 🗱 - Ballot Box With Check
-        case ICONTYPE_SHORTCUT:     result = 0x1F517;  break;  // 🔗 - Link Symbol (shortcut)
-        case ICONTYPE_SIGNATURE:    result = 0x270D;   break;  // ✍ - Writing Hand
-        case ICONTYPE_SIZE:         result = 0x1F4CF;  break;  // 📏 - Straight Ruler
-        case ICONTYPE_STRING:       result = 0x1F4AC;  break;  // 💬 - Speech Balloon
-        case ICONTYPE_STRUCTS:      result = 0x1F9F1;  break;  // 🧱 - Brick (structure)
-        case ICONTYPE_SYMBOL:       result = 0x1F523;  break;  // 🔣 - Input Symbol For Symbols
-        case ICONTYPE_TABLE:        result = 0x1F5C3;  break;  // 🗃 - Card File Box
-        case ICONTYPE_TLS:          result = 0x1F512;  break;  // 🔒 - Lock (TLS/security)
-        case ICONTYPE_TOOL:         result = 0x1F527;  break;  // 🔧 - Wrench
-        case ICONTYPE_VALUE:        result = 0x1F4B0;  break;  // 💰 - Money Bag (value)
-        case ICONTYPE_VERSION:      result = 0x1F4C5;  break;  // 📅 - Calendar (version)
-        case ICONTYPE_VIRUSTOTAL:   result = 0x1F9A0;  break;  // 🦠 - Microbe (virus)
-        case ICONTYPE_VISUALIZATION: result = 0x1F4CA; break;  // 📊 - Bar Chart
-        case ICONTYPE_WEBSITE:      result = 0x1F310;  break;  // 🌐 - Globe With Meridians
-        case ICONTYPE_YARA:         result = 0x1F50E;  break;  // 🔎 - Right-Pointing Magnifying Glass (Yara scan)
-        case ICONTYPE_INSPECTOR:    result = 0x1F50D;  break;  // 🔍 - Left-Pointing Magnifying Glass
-        case ICONTYPE_CONVERTOR:    result = 0x21C4;   break;  // ⇄ - Rightwards Arrow Over Leftwards Arrow
+    case ICONTYPE_ACTION:       result = 0x26A1;   break;  // ⚡ - High Voltage Sign (action/execute)
+    case ICONTYPE_ADD:          result = 0x2795;   break;  // ➕ - Heavy Plus Sign
+    case ICONTYPE_ADDRESS:      result = 0x1F4CD;  break;  // 📍 - Round Pushpin (location/address)
+    case ICONTYPE_ALL:          result = 0x2261;   break;  // ≡ - Identical To (all/everything)
+    case ICONTYPE_BACKWARD:     result = 0x23EA;   break;  // ⏪ - Black Left-Pointing Double Triangle
+    case ICONTYPE_BOOKMARK:     result = 0x1F516;  break;  // 🔖 - Bookmark
+    case ICONTYPE_CERTIFICATE:  result = 0x1F4DC;  break;  // 📜 - Scroll (certificate)
+    case ICONTYPE_CODE:         result = 0x1F5CB;  break;  // 🗋 - Document (code file)
+    case ICONTYPE_COPY:         result = 0x1F4CB;  break;  // 📋 - Clipboard
+    case ICONTYPE_DATA:         result = 0x1F4CA;  break;  // 📊 - Bar Chart (data)
+    case ICONTYPE_DEBUG:        result = 0x1F41E;  break;  // 🐞 - Lady Beetle (debug)
+    case ICONTYPE_DEMANGLE:     result = 0x1F9F5;  break;  // 🧵 - Thread (untangle)
+    case ICONTYPE_DIE:          result = 0x1F3B2;  break;  // 🎲 - Game Die
+    case ICONTYPE_DISASM:       result = 0x2699;   break;  // ⚙ - Gear (disassembly)
+    case ICONTYPE_DOTNET:       result = 0x1F310;  break;  // 🌐 - Globe With Meridians (.NET)
+    case ICONTYPE_DUMPTOFILE:   result = 0x1F4BE;  break;  // 💾 - Floppy Disk (save/dump)
+    case ICONTYPE_EDIT:         result = 0x270E;   break;  // ✎ - Lower Right Pencil
+    case ICONTYPE_ENTROPY:      result = 0x1F300;  break;  // 🌀 - Cyclone (chaos/entropy)
+    case ICONTYPE_ENTRY:        result = 0x1F6AA;  break;  // 🚪 - Door (entry point)
+    case ICONTYPE_EXCEPTION:    result = 0x26A0;   break;  // ⚠ - Warning Sign
+    case ICONTYPE_EXIT:         result = 0x1F6AA;  break;  // 🚪 - Door (exit)
+    case ICONTYPE_EXPORT:       result = 0x1F4E4;  break;  // 📤 - Outbox Tray
+    case ICONTYPE_EXTRACTOR:    result = 0x1F5C4;  break;  // 🗄 - File Cabinet (extract)
+    case ICONTYPE_FILE:         result = 0x1F4C4;  break;  // 📄 - Page Facing Up
+    case ICONTYPE_FOLLOW:       result = 0x1F517;  break;  // 🔗 - Link Symbol
+    case ICONTYPE_FORWARD:      result = 0x23E9;   break;  // ⏩ - Black Right-Pointing Double Triangle
+    case ICONTYPE_FUNCTION:     result = 0x0192;   break;  // ƒ - Latin Small Letter F With Hook
+    case ICONTYPE_GENERIC:      result = 0x25A0;   break;  // ■ - Black Square
+    case ICONTYPE_GOTO:         result = 0x21E8;   break;  // ⇨ - Rightwards White Arrow
+    case ICONTYPE_HASH:         result = 0x0023;   break;  // # - Number Sign
+    case ICONTYPE_HEADER:       result = 0x1F4C3;  break;  // 📃 - Page With Curl
+    case ICONTYPE_HEX:          result = 0x0023;   break;  // # - Number Sign (hex)
+    case ICONTYPE_IMPORT:       result = 0x1F4E5;  break;  // 📥 - Inbox Tray
+    case ICONTYPE_INFO:         result = 0x2139;   break;  // ℹ - Information Source
+    case ICONTYPE_LIBRARY:      result = 0x1F4DA;  break;  // 📚 - Books
+    case ICONTYPE_LIST:         result = 0x1F4CB;  break;  // 📋 - Clipboard (list)
+    case ICONTYPE_MANIFEST:     result = 0x1F4DC;  break;  // 📜 - Scroll (manifest)
+    case ICONTYPE_MEMORYMAP:    result = 0x1F5FA;  break;  // 🗺 - World Map
+    case ICONTYPE_METADATA:     result = 0x1F3F7;  break;  // 🏷 - Label (metadata)
+    case ICONTYPE_MIME:         result = 0x1F4CE;  break;  // 📎 - Paperclip (MIME type)
+    case ICONTYPE_NEW:          result = 0x2795;   break;  // ➕ - Heavy Plus Sign (new/add)
+    case ICONTYPE_NEXT:         result = 0x25B6;   break;  // ▶ - Black Right-Pointing Triangle
+    case ICONTYPE_NFD:          result = 0x1F4C2;  break;  // 📂 - Open File Folder
+    case ICONTYPE_NOTE:         result = 0x1F4DD;  break;  // 📝 - Memo
+    case ICONTYPE_OFFSET:       result = 0x21F1;   break;  // ⇱ - North West Arrow To Corner
+    case ICONTYPE_OPEN:         result = 0x1F4C2;  break;  // 📂 - Open File Folder
+    case ICONTYPE_OPTION:       result = 0x2699;   break;  // ⚙ - Gear (option/setting)
+    case ICONTYPE_OVERLAY:      result = 0x1F5C4;  break;  // 🗄 - File Cabinet (overlay)
+    case ICONTYPE_PATCH:        result = 0x1FA79;  break;  // 🩹 - Adhesive Bandage
+    case ICONTYPE_PATH:         result = 0x1F6E4;  break;  // 🛤 - Railway Track (path)
+    case ICONTYPE_REFERENCE:    result = 0x1F517;  break;  // 🔗 - Link Symbol (reference)
+    case ICONTYPE_RELOAD:       result = 0x21BB;   break;  // ↻ - Clockwise Open Circle Arrow (refresh/reload)
+    case ICONTYPE_RELOC:        result = 0x1F4CD;  break;  // 📍 - Round Pushpin (relocation)
+    case ICONTYPE_REMOVE:       result = 0x2796;   break;  // ➖ - Heavy Minus Sign
+    case ICONTYPE_RESIZE:       result = 0x21D4;   break;  // ⇔ - Left Right Double Arrow
+    case ICONTYPE_RESOURCE:     result = 0x1F4E6;  break;  // 📦 - Package
+    case ICONTYPE_SAVE:         result = 0x1F5AB;  break;  // 🖫 - White Hard Shell Floppy Disk
+    case ICONTYPE_SCAN:         result = 0x1F50D;  break;  // 🔍 - Left-Pointing Magnifying Glass (scan/search)
+    case ICONTYPE_SCRIPT:       result = 0x1F4DC;  break;  // 📜 - Scroll (script)
+    case ICONTYPE_SEARCH:       result = 0x1F50D;  break;  // 🔍 - Left-Pointing Magnifying Glass
+    case ICONTYPE_SECTION:      result = 0x00A7;   break;  // § - Section Sign
+    case ICONTYPE_SEGMENT:      result = 0x25A8;   break;  // ▨ - Square With Upper Right To Lower Left Fill
+    case ICONTYPE_SELECT:       result = 0x1F5F1;  break;  // 🗱 - Ballot Box With Check
+    case ICONTYPE_SHORTCUT:     result = 0x1F517;  break;  // 🔗 - Link Symbol (shortcut)
+    case ICONTYPE_SIGNATURE:    result = 0x270D;   break;  // ✍ - Writing Hand
+    case ICONTYPE_SIZE:         result = 0x1F4CF;  break;  // 📏 - Straight Ruler
+    case ICONTYPE_STRING:       result = 0x1F4AC;  break;  // 💬 - Speech Balloon
+    case ICONTYPE_STRUCTS:      result = 0x1F9F1;  break;  // 🧱 - Brick (structure)
+    case ICONTYPE_SYMBOL:       result = 0x1F523;  break;  // 🔣 - Input Symbol For Symbols
+    case ICONTYPE_TABLE:        result = 0x1F5C3;  break;  // 🗃 - Card File Box
+    case ICONTYPE_TLS:          result = 0x1F512;  break;  // 🔒 - Lock (TLS/security)
+    case ICONTYPE_TOOL:         result = 0x1F527;  break;  // 🔧 - Wrench
+    case ICONTYPE_VALUE:        result = 0x1F4B0;  break;  // 💰 - Money Bag (value)
+    case ICONTYPE_VERSION:      result = 0x1F4C5;  break;  // 📅 - Calendar (version)
+    case ICONTYPE_VIRUSTOTAL:   result = 0x1F9A0;  break;  // 🦠 - Microbe (virus)
+    case ICONTYPE_VISUALIZATION: result = 0x1F4CA; break;  // 📊 - Bar Chart
+    case ICONTYPE_WEBSITE:      result = 0x1F310;  break;  // 🌐 - Globe With Meridians
+    case ICONTYPE_YARA:         result = 0x1F50E;  break;  // 🔎 - Right-Pointing Magnifying Glass (Yara scan)
+    case ICONTYPE_INSPECTOR:    result = 0x1F50D;  break;  // 🔍 - Left-Pointing Magnifying Glass
+    case ICONTYPE_CONVERTOR:    result = 0x21C4;   break;  // ⇄ - Rightwards Arrow Over Leftwards Arrow
 
-        case ICONTYPE_NONE:
-        default:
-            result = 0;  // Null character for unmapped types
-            break;
+    case ICONTYPE_NONE:
+    default:
+        result = 0;  // Null character for unmapped types
+        break;
     }
 
     return result;
@@ -2188,42 +2187,42 @@ void XOptions::printConsole(QString sString, Qt::GlobalColor colorText, Qt::Glob
             int fg = 39, bg = 49;  // Default
             // Map Qt::GlobalColor to ANSI codes
             switch (colorText) {
-                case Qt::black: fg = 30; break;
-                case Qt::red: fg = 31; break;
-                case Qt::green: fg = 32; break;
-                case Qt::yellow: fg = 33; break;
-                case Qt::blue: fg = 34; break;
-                case Qt::magenta: fg = 35; break;
-                case Qt::cyan: fg = 36; break;
-                case Qt::gray: fg = 90; break;
-                case Qt::white: fg = 37; break;
-                case Qt::darkRed: fg = 91; break;
-                case Qt::darkGreen: fg = 92; break;
-                case Qt::darkYellow: fg = 93; break;
-                case Qt::darkBlue: fg = 94; break;
-                case Qt::darkMagenta: fg = 95; break;
-                case Qt::darkCyan: fg = 96; break;
-                case Qt::darkGray: fg = 90; break;  // Or 90 as gray
-                default: fg = 39; break;
+            case Qt::black: fg = 30; break;
+            case Qt::red: fg = 31; break;
+            case Qt::green: fg = 32; break;
+            case Qt::yellow: fg = 33; break;
+            case Qt::blue: fg = 34; break;
+            case Qt::magenta: fg = 35; break;
+            case Qt::cyan: fg = 36; break;
+            case Qt::gray: fg = 90; break;
+            case Qt::white: fg = 37; break;
+            case Qt::darkRed: fg = 91; break;
+            case Qt::darkGreen: fg = 92; break;
+            case Qt::darkYellow: fg = 93; break;
+            case Qt::darkBlue: fg = 94; break;
+            case Qt::darkMagenta: fg = 95; break;
+            case Qt::darkCyan: fg = 96; break;
+            case Qt::darkGray: fg = 90; break;  // Or 90 as gray
+            default: fg = 39; break;
             }
             switch (colorBackground) {
-                case Qt::black: bg = 40; break;
-                case Qt::red: bg = 41; break;
-                case Qt::green: bg = 42; break;
-                case Qt::yellow: bg = 43; break;
-                case Qt::blue: bg = 44; break;
-                case Qt::magenta: bg = 45; break;
-                case Qt::cyan: bg = 46; break;
-                case Qt::gray: bg = 100; break;
-                case Qt::white: bg = 47; break;
-                case Qt::darkRed: bg = 101; break;
-                case Qt::darkGreen: bg = 102; break;
-                case Qt::darkYellow: bg = 103; break;
-                case Qt::darkBlue: bg = 104; break;
-                case Qt::darkMagenta: bg = 105; break;
-                case Qt::darkCyan: bg = 106; break;
-                case Qt::darkGray: bg = 100; break;
-                default: bg = 49; break;
+            case Qt::black: bg = 40; break;
+            case Qt::red: bg = 41; break;
+            case Qt::green: bg = 42; break;
+            case Qt::yellow: bg = 43; break;
+            case Qt::blue: bg = 44; break;
+            case Qt::magenta: bg = 45; break;
+            case Qt::cyan: bg = 46; break;
+            case Qt::gray: bg = 100; break;
+            case Qt::white: bg = 47; break;
+            case Qt::darkRed: bg = 101; break;
+            case Qt::darkGreen: bg = 102; break;
+            case Qt::darkYellow: bg = 103; break;
+            case Qt::darkBlue: bg = 104; break;
+            case Qt::darkMagenta: bg = 105; break;
+            case Qt::darkCyan: bg = 106; break;
+            case Qt::darkGray: bg = 100; break;
+            default: bg = 49; break;
             }
             printf("\033[%d;%dm", fg, bg);
         }
@@ -2541,13 +2540,12 @@ void XOptions::removeFromUserPathVariable(const QString &targetPath)
     }
 }
 #endif
-#ifdef Q_OS_WIN
+#if defined(Q_OS_WIN) && defined(QT_GUI_LIB)
 bool XOptions::isTrayMonitoringActive() const
 {
     return m_trayMonitoringActive;
 }
-#endif
-#ifdef Q_OS_WIN
+
 void XOptions::setupTrayIconAndDownloadMonitoring(QWidget* guiMainWindow, bool forceNotify)
 {
     if (!QSystemTrayIcon::isSystemTrayAvailable()) {
@@ -2569,8 +2567,7 @@ void XOptions::setupTrayIconAndDownloadMonitoring(QWidget* guiMainWindow, bool f
     m_trayMonitoringActive = true;
     qDebug() << "[Tray Monitor] Setup complete.";
 }
-#endif
-#ifdef Q_OS_WIN
+
 void XOptions::initializeTrayIcon()
 {
     if (m_trayIcon && m_trayIcon->isVisible()) {
@@ -2611,8 +2608,7 @@ void XOptions::initializeTrayIcon()
     m_trayIcon->setToolTip(tr("Detect-It-Easy"));
     m_trayIcon->show();
 }
-#endif
-#ifdef Q_OS_WIN
+
 void XOptions::registerTrayCallbacks(bool showNotification)
 {
 
@@ -2636,8 +2632,7 @@ void XOptions::registerTrayCallbacks(bool showNotification)
             );
     }
 }
-#endif
-#ifdef Q_OS_WIN
+
 void XOptions::setupDownloadMonitoring()
 {
     if (!m_guiMainWindow) return;
@@ -2674,9 +2669,7 @@ void XOptions::setupDownloadMonitoring()
         }
     });
 }
-#endif
 
-#ifdef Q_OS_WIN
 QString getScanSummary(const QString& path)
 {
     // Example placeholder – replace with actual scan logic
@@ -2762,8 +2755,7 @@ void XOptions::startPollingOnDownload(const QString& path)
     });
     pollTimer->start(delayMs);
 }
-#endif
-#ifdef Q_OS_WIN
+
 void XOptions::cleanupTrayMonitoring()
 {
     DesktopIntegrationHelper::stopMonitoring();
@@ -2783,8 +2775,7 @@ void XOptions::cleanupTrayMonitoring()
     m_trayMonitoringActive = false;
     qDebug() << "[Tray Monitor] Resources cleaned up.";
 }
-#endif
-#ifdef Q_OS_WIN
+
 void XOptions::updateTrayTooltipWithProgress(const QString& path, qint64 received, qint64 total)
 {
     QString fileName = QFileInfo(path).fileName();
@@ -3273,4 +3264,3 @@ XOptions::BUNDLE XOptions::getBundle()
 
     return result;
 }
-
