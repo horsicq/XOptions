@@ -415,9 +415,11 @@ public:
     static QString getTitle(const QString &sName, const QString &sVersion, bool bShowOS = true);
     bool isWritable();
     static void adjustApplicationInitAttributes();
+#ifdef Q_OS_WIN
     bool isPathInUserEnvironment(const QString &checkPath);
     void appendToUserPathVariable(const QString &newPath);
     void removeFromUserPathVariable(const QString &targetPath);
+#endif
 #ifdef QT_GUI_LIB
     void setCheckBox(QCheckBox *pCheckBox, ID id);
     void getCheckBox(QCheckBox *pCheckBox, ID id);
@@ -568,4 +570,5 @@ private:
 };
 
 #endif  // XOPTIONS_H
+
 
