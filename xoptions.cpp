@@ -2708,8 +2708,8 @@ void XOptions::adjustToolButton(QToolButton *pToolButton, ICONTYPE iconType, Qt:
     QString sIconName = getIconPath(iconType);
 
     if (sIconName != "") {
-        QIcon icon = createIcon(iconTypeToUnicodeSymbol(iconType), 256, 256);
-        // icon.addFile(sIconName, QSize(), QIcon::Normal, QIcon::Off);
+        QIcon icon;
+        icon.addFile(sIconName, QSize(), QIcon::Normal, QIcon::Off);
         pToolButton->setIcon(icon);
         pToolButton->setIconSize(QSize(16, 16));
         pToolButton->setToolButtonStyle(style);
