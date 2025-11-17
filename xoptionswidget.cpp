@@ -209,6 +209,7 @@ void XOptionsWidget::save()
 #else
         QString formattedDir = QDir(appDir).absolutePath();  // normalized for Unix-like systems
 #endif
+
 #ifdef Q_OS_WIN
         if (ui->checkBoxFileSetEnvVar->isChecked()) {
             m_pOptions->appendToUserPathVariable(formattedDir);
@@ -217,14 +218,16 @@ void XOptionsWidget::save()
             m_pOptions->removeFromUserPathVariable(formattedDir);
             qDebug() << "[Save] Removed from user PATH:" << formattedDir;
         }
-    }
 #endif
+    }
+
 #ifdef Q_OS_WIN
     if (m_pOptions->isIDPresent(XOptions::ID_FILE_ENABLETRAYMONITORING)) {
         m_pOptions->getCheckBox(ui->checkBoxEnableTrayMonitoring, XOptions::ID_FILE_ENABLETRAYMONITORING);
         qDebug() << "[Save] Tray monitoring state saved:" << m_pOptions->getValue(XOptions::ID_FILE_ENABLETRAYMONITORING).toBool();
     }
 #endif
+
     m_pOptions->save();
 }
 
