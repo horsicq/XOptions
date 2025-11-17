@@ -19,6 +19,8 @@
  * SOFTWARE.
  */
 #include "xoptions.h"
+#include "qnetworkaccessmanager.h"
+#include "desktopintegrationhelper.h"
 
 XOptions::XOptions(QObject *pParent) : QObject(pParent)
 {
@@ -109,6 +111,7 @@ XOptions::GROUPID XOptions::getGroupID(ID id)
         case ID_FILE_SAVERECENTFILES:
         case ID_FILE_SAVEBACKUP:
         case ID_FILE_CONTEXT: result = GROUPID_FILE; break;
+        case ID_FILE_ENABLETRAYMONITORING: result = GROUPID_FILE; break;
         case ID_SCAN_SCANAFTEROPEN:
         case ID_SCAN_FLAG_RECURSIVE:
         case ID_SCAN_FLAG_DEEP:
@@ -312,6 +315,9 @@ void XOptions::load()
         } else if (m_listValueIDs.at(i) == ID_NU_RECENTFILES) {
             bRecentFiles = true;
         }
+        if (!m_listValueIDs.contains(ID_FILE_ENABLETRAYMONITORING)) {
+            m_listValueIDs.append(ID_FILE_ENABLETRAYMONITORING);
+        }
     }
 
     if (bSaveLastDirectory && (!bLastDirectory)) {
@@ -484,6 +490,7 @@ QString XOptions::idToString(ID id)
         case ID_FILE_SAVERECENTFILES: sResult = QString("File/SaveRecentFiles"); break;
         case ID_FILE_SAVEBACKUP: sResult = QString("File/SaveBackup"); break;
         case ID_FILE_CONTEXT: sResult = QString("File/Context"); break;
+        case ID_FILE_ENABLETRAYMONITORING: sResult = QString("File/TrayMonitoringEnabled"); break;
         case ID_SCAN_SCANAFTEROPEN: sResult = QString("Scan/ScanAfterOpen"); break;
         case ID_SCAN_FLAG_RECURSIVE: sResult = QString("Scan/Flag/Recursive"); break;
         case ID_SCAN_FLAG_DEEP: sResult = QString("Scan/Flag/Deep"); break;
@@ -2533,6 +2540,266 @@ void XOptions::removeFromUserPathVariable(const QString &targetPath)
 //            (LPARAM)L"Environment", SMTO_ABORTIFHUNG, 5000, nullptr);
 #endif
     }
+}
+#endif
+#ifdef Q_OS_WIN
+bool XOptions::isTrayMonitoringActive() const
+{
+    return m_trayMonitoringActive;
+}
+#endif
+#ifdef Q_OS_WIN
+void XOptions::setupTrayIconAndDownloadMonitoring(QWidget* guiMainWindow, bool forceNotify)
+{
+    if (!QSystemTrayIcon::isSystemTrayAvailable()) {
+        qDebug() << "[Tray Monitor] System tray not available.";
+        return;
+    }
+
+    if (m_trayMonitoringActive) {
+        qDebug() << "[Tray Monitor] Already active — skipping setup.";
+        return;
+    }
+
+    m_guiMainWindow = guiMainWindow;
+
+    initializeTrayIcon();
+    registerTrayCallbacks(forceNotify);
+    setupDownloadMonitoring();
+
+    m_trayMonitoringActive = true;
+    qDebug() << "[Tray Monitor] Setup complete.";
+}
+#endif
+#ifdef Q_OS_WIN
+void XOptions::initializeTrayIcon()
+{
+    if (m_trayIcon && m_trayIcon->isVisible()) {
+        qDebug() << "[Tray Monitor] Tray icon already initialized.";
+        return;
+    }
+    if (m_trayIcon) {
+        m_trayIcon->hide();
+        delete m_trayIcon;
+        m_trayIcon = nullptr;
+    }
+    if (m_trayMenu) {
+        delete m_trayMenu;
+        m_trayMenu = nullptr;
+    }
+
+    m_trayIcon = new QSystemTrayIcon(QIcon(":/icons/main.ico"));
+    m_trayMenu = new QMenu();
+
+    QAction* restoreAction = new QAction(tr("Restore"));
+    connect(restoreAction, &QAction::triggered, this, [this]() {
+        if (m_guiMainWindow) {
+            m_guiMainWindow->setWindowState(Qt::WindowNoState);
+            m_guiMainWindow->show();
+            m_guiMainWindow->raise();
+            m_guiMainWindow->activateWindow();
+        }
+    });
+
+    QAction* quitAction = new QAction(tr("Quit"));
+    connect(quitAction, &QAction::triggered, qApp, &QCoreApplication::quit);
+
+    m_trayMenu->addAction(restoreAction);
+    m_trayMenu->addSeparator();
+    m_trayMenu->addAction(quitAction);
+
+    m_trayIcon->setContextMenu(m_trayMenu);
+    m_trayIcon->setToolTip(tr("Detect-It-Easy"));
+    m_trayIcon->show();
+}
+#endif
+#ifdef Q_OS_WIN
+void XOptions::registerTrayCallbacks(bool showNotification)
+{
+
+    connect(m_trayIcon, &QSystemTrayIcon::activated, this, [this](QSystemTrayIcon::ActivationReason reason) {
+        if ((reason == QSystemTrayIcon::Trigger || reason == QSystemTrayIcon::DoubleClick) && m_guiMainWindow) {
+            m_guiMainWindow->setWindowState(Qt::WindowNoState);
+            m_guiMainWindow->show();
+            m_guiMainWindow->raise();
+            m_guiMainWindow->activateWindow();
+        } else {
+            qDebug() << "[Tray Callback] guiMainWindow is no longer valid.";
+        }
+    });
+
+    if (showNotification) {
+        m_trayIcon->showMessage(
+            tr("Tray Monitoring"),
+            tr("Tray monitoring is enabled."),
+            QSystemTrayIcon::Information,
+            4000
+            );
+    }
+}
+#endif
+#ifdef Q_OS_WIN
+void XOptions::setupDownloadMonitoring()
+{
+    if (!m_guiMainWindow) return;
+
+    // Initialize desktop integration
+    DesktopIntegrationHelper::Initialize(m_guiMainWindow);
+    DesktopIntegrationHelper::SetTrayIcon(m_trayIcon);
+
+    // Detect and register browser download folders
+    QStringList downloadFolders = DesktopIntegrationHelper::detectBrowserDownloadFolders();
+    for (const QString& folder : downloadFolders) {
+        DesktopIntegrationHelper::addPath(folder);
+        qDebug() << "[Monitor] Registered download path:" << folder;
+    }
+
+    // Start monitoring those paths
+    DesktopIntegrationHelper::startMonitoring();
+    qDebug() << "[Monitor] Monitoring started.";
+
+    // Set up progress callback
+    DesktopIntegrationHelper::setProgressCallback([this](const QString& path, qint64 received, qint64 total) {
+        qDebug() << "[CALLBACK] Download progress update:";
+        qDebug() << "→ Path:" << path;
+        qDebug() << "→ Received:" << received << " bytes";
+        qDebug() << "→ Total:" << total << " bytes";
+
+        // Update tray tooltip with live progress
+        updateTrayTooltipWithProgress(path, received, total);
+
+        // If download is complete, trigger post-download logic
+        if (received >= total && total > 0) {
+            qDebug() << "[CALLBACK] Download complete!";
+            startPollingOnDownload(path);
+        }
+    });
+}
+#endif
+
+#ifdef Q_OS_WIN
+QString getScanSummary(const QString& path)
+{
+    // Example placeholder – replace with actual scan logic
+    return "Format: PE32, Sections: 3, Entropy: Normal";
+}
+void XOptions::startPollingOnDownload(const QString& path)
+{
+    constexpr int maxAttempts = 15;
+    constexpr int delayMs = 300;
+    int attempts = 0;
+
+    if (!m_guiMainWindow) {
+        qDebug() << "[Polling] Main window not available.";
+        return;
+    }
+
+    QTimer* pollTimer = new QTimer(m_guiMainWindow);
+    connect(pollTimer, &QTimer::timeout, m_guiMainWindow, [=]() mutable {
+        QFile file(path);
+        if (file.exists() && file.size() > 0 && file.open(QIODevice::ReadOnly)) {
+            file.close();
+            pollTimer->stop();
+            pollTimer->deleteLater();
+            qDebug() << "[Polling] File ready and unlocked. Scanning...";
+
+#ifdef QT_DEBUG
+            QString scanSummary = getScanSummary(path);
+            QString fileName = QFileInfo(path).fileName();
+            if (m_trayIcon) {
+                m_trayIcon->showMessage(
+                    tr("Scan Complete"),
+                    tr("File: %1\nResult: %2").arg(fileName, scanSummary),
+                    QSystemTrayIcon::Information,
+                    4000
+                    );
+                connect(m_trayIcon, &QSystemTrayIcon::messageClicked, m_guiMainWindow, [=]() {
+                    if (m_guiMainWindow->isMinimized()) {
+                        m_guiMainWindow->showNormal();
+                    } else if (m_guiMainWindow->isHidden()) {
+                        m_guiMainWindow->show();
+                    } else {
+                        m_guiMainWindow->showNormal();
+                    }
+                    m_guiMainWindow->raise();
+                    m_guiMainWindow->activateWindow();
+                    qDebug() << "[Tray] Notification clicked, opening main window";
+                }, Qt::DirectConnection);
+            } else {
+                qDebug() << "[Tray] System tray icon not available.";
+            }
+            qDebug() << "[Tray] Toast message:" << fileName << "—" << scanSummary;
+#else
+            if (m_trayIcon) {
+                m_trayIcon->showMessage(
+                    tr("Scan Complete"),
+                    tr("Your download has been analyzed: %1").arg(path),
+                    QSystemTrayIcon::Information,
+                    4000
+                    );
+                connect(m_trayIcon, &QSystemTrayIcon::messageClicked, m_guiMainWindow, [=]() {
+                    if (m_guiMainWindow->isMinimized()) {
+                        m_guiMainWindow->showNormal();
+                    } else if (m_guiMainWindow->isHidden()) {
+                        m_guiMainWindow->show();
+                    } else {
+                        m_guiMainWindow->showNormal();
+                    }
+                    m_guiMainWindow->raise();
+                    m_guiMainWindow->activateWindow();
+                    qDebug() << "[Tray] Notification clicked, opening main window";
+                }, Qt::SingleShotConnection);
+            } else {
+                qDebug() << "[Tray] System tray icon not available.";
+            }
+#endif
+        } else if (++attempts >= maxAttempts) {
+            pollTimer->stop();
+            pollTimer->deleteLater();
+            qDebug() << "[Polling] File still locked or unavailable. Aborting scan.";
+        } else {
+            qDebug() << "[Polling] Attempt" << attempts << "— File still not accessible.";
+        }
+    });
+    pollTimer->start(delayMs);
+}
+#endif
+#ifdef Q_OS_WIN
+void XOptions::cleanupTrayMonitoring()
+{
+    DesktopIntegrationHelper::stopMonitoring();
+
+    if (m_trayIcon) {
+        m_trayIcon->hide();
+        delete m_trayIcon;
+        m_trayIcon = nullptr;
+    }
+
+    if (m_trayMenu) {
+        delete m_trayMenu;
+        m_trayMenu = nullptr;
+    }
+
+    m_guiMainWindow = nullptr;
+    m_trayMonitoringActive = false;
+    qDebug() << "[Tray Monitor] Resources cleaned up.";
+}
+#endif
+#ifdef Q_OS_WIN
+void XOptions::updateTrayTooltipWithProgress(const QString& path, qint64 received, qint64 total)
+{
+    QString fileName = QFileInfo(path).fileName();
+    QString receivedStr = DesktopIntegrationHelper::formatBytes(received);
+    QString totalStr = (total > 0) ? DesktopIntegrationHelper::formatBytes(total) : "unknown size";
+
+    QString tooltip;
+    if (total > 0) {
+        tooltip = QString("Downloading %1 — %2 of %3 received").arg(fileName, receivedStr, totalStr);
+    } else {
+        tooltip = QString("Downloading %1 — %2 received").arg(fileName, receivedStr);
+    }
+
+    m_trayIcon->setToolTip(tooltip);
 }
 #endif
 #ifdef Q_OS_WIN
