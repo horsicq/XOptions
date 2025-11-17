@@ -1,4 +1,6 @@
 INCLUDEPATH += $$PWD
+INCLUDEPATH += $$PWD/../gui_source
+DEPENDPATH += $$PWD/../gui_source
 DEPENDPATH += $$PWD
 
 win32:LIBS += -luser32 -lshell32 -lole32
@@ -21,3 +23,4 @@ DISTFILES += \
     $$PWD/LICENSE \
     $$PWD/README.md \
     $$PWD/xoptions.cmake
+
