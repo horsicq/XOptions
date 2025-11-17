@@ -435,10 +435,9 @@ void XOptionsWidget::on_checkBoxEnableTrayMonitoring_toggled(bool bChecked)
     Q_UNUSED(bChecked)
 #endif
 }
-#ifdef Q_OS_WIN
 void XOptionsWidget::on_checkBoxFileSetEnvVar_toggled(bool bChecked)
 {
-
+#ifdef Q_OS_WIN
     QString appDir = QFileInfo(QCoreApplication::applicationFilePath()).absolutePath();
     QString formattedDir = QDir::toNativeSeparators(appDir);
 
