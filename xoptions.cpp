@@ -19,7 +19,6 @@
  * SOFTWARE.
  */
 #include "xoptions.h"
-#include "qnetworkaccessmanager.h"
 #include "desktopintegrationhelper.h"
 
 XOptions::XOptions(QObject *pParent) : QObject(pParent)
@@ -3274,3 +3273,4 @@ XOptions::BUNDLE XOptions::getBundle()
 
     return result;
 }
+
