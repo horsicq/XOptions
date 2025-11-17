@@ -209,7 +209,7 @@ void XOptionsWidget::save()
 #else
         QString formattedDir = QDir(appDir).absolutePath();  // normalized for Unix-like systems
 #endif
-
+#ifdef Q_OS_WIN
         if (ui->checkBoxFileSetEnvVar->isChecked()) {
             m_pOptions->appendToUserPathVariable(formattedDir);
             qDebug() << "[Save] Appended to user PATH:" << formattedDir;
@@ -218,7 +218,7 @@ void XOptionsWidget::save()
             qDebug() << "[Save] Removed from user PATH:" << formattedDir;
         }
     }
-
+#endif
 #ifdef Q_OS_WIN
     if (m_pOptions->isIDPresent(XOptions::ID_FILE_ENABLETRAYMONITORING)) {
         m_pOptions->getCheckBox(ui->checkBoxEnableTrayMonitoring, XOptions::ID_FILE_ENABLETRAYMONITORING);
@@ -326,11 +326,11 @@ void XOptionsWidget::reload()
 #else
     QString formattedDir = QDir(appDir).absolutePath();
 #endif
-
-
+#ifdef Q_OS_WIN
     ui->checkBoxFileSetEnvVar->setChecked(
         m_pOptions->isPathInUserEnvironment(formattedDir)
         );
+#endif
     if (m_pOptions->isIDPresent(XOptions::ID_FILE_CONTEXT)) {
 #ifdef Q_OS_WIN
         // bool bAdmin = m_pOptions->checkContext(m_sApplicationDisplayName, m_pOptions->getValue(XOptions::ID_FILE_CONTEXT).toString(), XOptions::USERROLE_ADMIN);
@@ -432,10 +432,10 @@ void XOptionsWidget::on_checkBoxEnableTrayMonitoring_toggled(bool bChecked)
     Q_UNUSED(bChecked)
 #endif
 }
-
+#ifdef Q_OS_WIN
 void XOptionsWidget::on_checkBoxFileSetEnvVar_toggled(bool bChecked)
 {
-#ifdef Q_OS_WIN
+
     QString appDir = QFileInfo(QCoreApplication::applicationFilePath()).absolutePath();
     QString formattedDir = QDir::toNativeSeparators(appDir);
 
@@ -454,6 +454,7 @@ void XOptionsWidget::on_checkBoxFileSetEnvVar_toggled(bool bChecked)
     Q_UNUSED(bChecked)
 #endif
 }
+
 
 void XOptionsWidget::on_toolButtonViewFontControls_clicked()
 {

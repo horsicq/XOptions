@@ -570,5 +570,3 @@ private:
 };
 
 #endif  // XOPTIONS_H
-
-
