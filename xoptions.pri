@@ -1,11 +1,19 @@
 INCLUDEPATH += $$PWD
+INCLUDEPATH += $$PWD/../gui_source
+DEPENDPATH += $$PWD/../gui_source
 DEPENDPATH += $$PWD
+
+QT += widgets
+
+win32:LIBS += -luser32 -lshell32 -lole32
 
 HEADERS += \
     $$PWD/codecs/codec_cp437.h \
     $$PWD/xoptions.h \
     $$PWD/xthreadobject.h \
-    $$PWD/xprocesswatch.h
+    $$PWD/xprocesswatch.h \
+    $$PWD/../gui_source/desktopintegrationhelper.h
+
 
 SOURCES += \
     $$PWD/codecs/codec_cp437.cpp \
@@ -17,3 +25,5 @@ DISTFILES += \
     $$PWD/LICENSE \
     $$PWD/README.md \
     $$PWD/xoptions.cmake
+
+
