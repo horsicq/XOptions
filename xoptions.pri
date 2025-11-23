@@ -10,7 +10,7 @@ HEADERS += \
     $$PWD/xprocesswatch.h
 
 contains(QT, widgets) {
-    HEADERS += $$PWD/../gui_source/desktopintegrationhelper.h
+    INCLUDEPATH += $$PWD/../gui_source
 }
 
 SOURCES += \
