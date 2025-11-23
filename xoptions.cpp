@@ -2695,7 +2695,6 @@ void XOptions::startPollingOnDownload(const QString& path)
             pollTimer->deleteLater();
             qDebug() << "[Polling] File ready and unlocked. Scanning...";
 
-#ifdef QT_DEBUG
             QString scanSummary = getScanSummary(path);
             QString fileName = QFileInfo(path).fileName();
             if (m_trayIcon) {
@@ -2721,30 +2720,7 @@ void XOptions::startPollingOnDownload(const QString& path)
                 qDebug() << "[Tray] System tray icon not available.";
             }
             qDebug() << "[Tray] Toast message:" << fileName << "—" << scanSummary;
-#else
-            if (m_trayIcon) {
-                m_trayIcon->showMessage(
-                    tr("Scan Complete"),
-                    tr("Your download has been analyzed: %1").arg(path),
-                    QSystemTrayIcon::Information,
-                    4000
-                    );
-                connect(m_trayIcon, &QSystemTrayIcon::messageClicked, m_guiMainWindow, [=]() {
-                    if (m_guiMainWindow->isMinimized()) {
-                        m_guiMainWindow->showNormal();
-                    } else if (m_guiMainWindow->isHidden()) {
-                        m_guiMainWindow->show();
-                    } else {
-                        m_guiMainWindow->showNormal();
-                    }
-                    m_guiMainWindow->raise();
-                    m_guiMainWindow->activateWindow();
-                    qDebug() << "[Tray] Notification clicked, opening main window";
-                }, Qt::SingleShotConnection);
-            } else {
-                qDebug() << "[Tray] System tray icon not available.";
-            }
-#endif
+
         } else if (++attempts >= maxAttempts) {
             pollTimer->stop();
             pollTimer->deleteLater();
@@ -2965,8 +2941,8 @@ void XOptions::adjustToolButton(QToolButton *pToolButton, ICONTYPE iconType, Qt:
     QString sIconName = getIconPath(iconType);
 
     if (sIconName != "") {
-        QIcon icon;
-        icon.addFile(sIconName, QSize(), QIcon::Normal, QIcon::Off);
+        QIcon icon = createIcon(iconTypeToUnicodeSymbol(iconType), 256, 256);
+        // icon.addFile(sIconName, QSize(), QIcon::Normal, QIcon::Off);
         pToolButton->setIcon(icon);
         pToolButton->setIconSize(QSize(16, 16));
         pToolButton->setToolButtonStyle(style);
