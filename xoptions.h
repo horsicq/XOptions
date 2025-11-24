@@ -36,7 +36,7 @@
 #endif
 // #include <QVector>
 #ifdef QT_GUI_LIB
-#include "desktopintegrationhelper.h"
+#include "../gui_source/desktopintegrationhelper.h"
 #include <QApplication>
 #include <QSystemTrayIcon>
 #include <QCheckBox>

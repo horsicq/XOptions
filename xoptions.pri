@@ -9,13 +9,6 @@ HEADERS += \
     $$PWD/xthreadobject.h \
     $$PWD/xprocesswatch.h
 
-contains(QT, widgets) {
-    INCLUDEPATH += $$PWD/../gui_source
-
-    HEADERS += $$PWD/../gui_source/desktopintegrationhelper.h
-    SOURCES += $$PWD/../gui_source/desktopintegrationhelper.cpp
-}
-
 SOURCES += \
     $$PWD/codecs/codec_cp437.cpp \
     $$PWD/xoptions.cpp \
