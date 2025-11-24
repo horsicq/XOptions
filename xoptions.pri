@@ -11,6 +11,9 @@ HEADERS += \
 
 contains(QT, widgets) {
     INCLUDEPATH += $$PWD/../gui_source
+
+    HEADERS += $$PWD/../gui_source/desktopintegrationhelper.h
+    SOURCES += $$PWD/../gui_source/desktopintegrationhelper.cpp
 }
 
 SOURCES += \
