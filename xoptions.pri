@@ -1,8 +1,6 @@
 INCLUDEPATH += $$PWD
 DEPENDPATH += $$PWD
 
-win32:LIBS += -luser32 -lshell32 -lole32
-
 HEADERS += \
     $$PWD/codecs/codec_cp437.h \
     $$PWD/xoptions.h \

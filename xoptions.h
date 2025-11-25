@@ -27,7 +27,6 @@
 #include <QSysInfo>
 #include <QTranslator>
 #include <QAbstractItemModel>
-#include <QTimer>
 #if (QT_VERSION_MAJOR < 5)  // TODO Check
 #include <QRegExp>
 #else
@@ -36,9 +35,7 @@
 #endif
 // #include <QVector>
 #ifdef QT_GUI_LIB
-#include "../gui_source/desktopintegrationhelper.h"
 #include <QApplication>
-#include <QSystemTrayIcon>
 #include <QCheckBox>
 #include <QComboBox>
 #include <QDesktopServices>
@@ -263,8 +260,7 @@ public:
         // for internal use.
         ID_NU_LASTDIRECTORY,  // Using if ID_SAVELASTDIRECTORY
         ID_NU_RECENTFILES,    // Using if ID_SAVERECENTFILES
-        ID_FILE_SETENV,
-        ID_FILE_ENABLETRAYMONITORING
+        ID_FILE_SETENV
     };
 
     enum ICONTYPE {
@@ -415,11 +411,6 @@ public:
     static QString getTitle(const QString &sName, const QString &sVersion, bool bShowOS = true);
     bool isWritable();
     static void adjustApplicationInitAttributes();
-#ifdef Q_OS_WIN
-    bool isPathInUserEnvironment(const QString &checkPath);
-    void appendToUserPathVariable(const QString &newPath);
-    void removeFromUserPathVariable(const QString &targetPath);
-#endif
 #ifdef QT_GUI_LIB
     void setCheckBox(QCheckBox *pCheckBox, ID id);
     void getCheckBox(QCheckBox *pCheckBox, ID id);
@@ -507,16 +498,9 @@ public:
     bool registerContext(const QString &sApplicationName, const QString &sType, const QString &sApplicationFilePath, USERROLE userRole = USERROLE_ADMIN);
     bool clearContext(const QString &sApplicationName, const QString &sType, USERROLE userRole = USERROLE_ADMIN);
     bool checkContext(const QString &sApplicationName, const QString &sType, USERROLE userRole = USERROLE_ADMIN);
-
-    void initializeTrayIcon();
-    void registerTrayCallbacks(bool showNotification);
-    void setupDownloadMonitoring();
-    void setupTrayIconAndDownloadMonitoring(QWidget* guiMainWindow, bool forceNotify);
-    void startPollingOnDownload(const QString& path);
-    void cleanupTrayMonitoring();
-    void updateTrayTooltipWithProgress(const QString& filePath, qint64 bytesReceived, qint64 totalBytes);
-    bool isTrayMonitoringActive() const;
-    bool m_trayMonitoringActive = false;
+    bool isPathInUserEnvironment(const QString &checkPath);
+    void appendToUserPathVariable(const QString &newPath);
+    void removeFromUserPathVariable(const QString &targetPath);
 #endif
     void setMaxRecentFilesCount(qint32 nValue);
     qint32 getMaxRecentFilesCount();
@@ -553,20 +537,10 @@ private:
     QMap<ID, QVariant> m_mapDefaultValues;
     bool m_bIsNeedRestart;
     qint32 m_nMaxRecentFilesCount;
-#ifdef Q_OS_WIN
-#ifdef QT_GUI_LIB
-    QSystemTrayIcon *m_trayIcon = nullptr;
-    QMenu *m_trayMenu = nullptr;
-    QPointer<QWidget> m_guiMainWindow;
-#endif
-#endif
-
 #ifdef QT_GUI_LIB
     QMenu *m_pRecentFilesMenu;
     QMenu *m_pCodePagesMenu;
 #endif
-
-
 };
 
 #endif  // XOPTIONS_H

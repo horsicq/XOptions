@@ -19,7 +19,7 @@
  * SOFTWARE.
  */
 #include "xoptionswidget.h"
-#include "guimainwindow.h"
+
 #include "ui_xoptionswidget.h"
 
 XOptionsWidget::XOptionsWidget(QWidget *pParent) : XShortcutsWidget(pParent), ui(new Ui::XOptionsWidget)
@@ -199,35 +199,20 @@ void XOptionsWidget::save()
     if (m_pOptions->isIDPresent(XOptions::ID_FILE_SAVERECENTFILES)) {
         m_pOptions->getCheckBox(ui->checkBoxFileSaveHistory, XOptions::ID_FILE_SAVERECENTFILES);
     }
+#ifdef Q_OS_WIN
     if (m_pOptions->isIDPresent(XOptions::ID_FILE_SETENV)) {
         m_pOptions->getCheckBox(ui->checkBoxFileSetEnvVar, XOptions::ID_FILE_SETENV);
 
         QString appDir = QFileInfo(QCoreApplication::applicationFilePath()).absolutePath();
-
-#ifdef Q_OS_WIN
         QString formattedDir = QDir::toNativeSeparators(appDir);
-#else
-        QString formattedDir = QDir(appDir).absolutePath();  // normalized for Unix-like systems
-#endif
 
-#ifdef Q_OS_WIN
         if (ui->checkBoxFileSetEnvVar->isChecked()) {
             m_pOptions->appendToUserPathVariable(formattedDir);
-            qDebug() << "[Save] Appended to user PATH:" << formattedDir;
         } else {
             m_pOptions->removeFromUserPathVariable(formattedDir);
-            qDebug() << "[Save] Removed from user PATH:" << formattedDir;
         }
-#endif
-    }
-
-#ifdef Q_OS_WIN
-    if (m_pOptions->isIDPresent(XOptions::ID_FILE_ENABLETRAYMONITORING)) {
-        m_pOptions->getCheckBox(ui->checkBoxEnableTrayMonitoring, XOptions::ID_FILE_ENABLETRAYMONITORING);
-        qDebug() << "[Save] Tray monitoring state saved:" << m_pOptions->getValue(XOptions::ID_FILE_ENABLETRAYMONITORING).toBool();
     }
 #endif
-
     m_pOptions->save();
 }
 
@@ -322,18 +307,6 @@ void XOptionsWidget::reload()
         ui->checkBoxFileSaveHistory->hide();
     }
 
-    QString appDir = QFileInfo(QCoreApplication::applicationFilePath()).absolutePath();
-
-#ifdef Q_OS_WIN
-    QString formattedDir = QDir::toNativeSeparators(appDir);
-#else
-    QString formattedDir = QDir(appDir).absolutePath();
-#endif
-#ifdef Q_OS_WIN
-    ui->checkBoxFileSetEnvVar->setChecked(
-        m_pOptions->isPathInUserEnvironment(formattedDir)
-        );
-#endif
     if (m_pOptions->isIDPresent(XOptions::ID_FILE_CONTEXT)) {
 #ifdef Q_OS_WIN
         // bool bAdmin = m_pOptions->checkContext(m_sApplicationDisplayName, m_pOptions->getValue(XOptions::ID_FILE_CONTEXT).toString(), XOptions::USERROLE_ADMIN);
@@ -343,39 +316,17 @@ void XOptionsWidget::reload()
         //     (!bUser)) {
         //     m_userRole = XOptions::USERROLE_ADMIN;
         // }
-        ui->checkBoxFileContext->setChecked(
-            m_pOptions->checkContext(
-                m_sApplicationDisplayName,
-                m_pOptions->getValue(XOptions::ID_FILE_CONTEXT).toString(),
-                m_userRole
-                )
-            );
-        if (m_pOptions->isIDPresent(XOptions::ID_FILE_ENABLETRAYMONITORING)) {
-            bool bTrayStored = m_pOptions->getValue(XOptions::ID_FILE_ENABLETRAYMONITORING).toBool();
-            bool bTrayRunning = m_pOptions->isTrayMonitoringActive();
+        ui->checkBoxFileContext->setChecked(m_pOptions->checkContext(m_sApplicationDisplayName, m_pOptions->getValue(XOptions::ID_FILE_CONTEXT).toString(), m_userRole));
 
-            ui->checkBoxEnableTrayMonitoring->blockSignals(true);
-            ui->checkBoxEnableTrayMonitoring->setChecked(bTrayStored);
-            ui->checkBoxEnableTrayMonitoring->blockSignals(false);
+        // Check if application directory is present in system PATH
+        QString appDir = QFileInfo(QCoreApplication::applicationFilePath()).absolutePath();
+        QString formattedDir = QDir::toNativeSeparators(appDir);
 
-            if (bTrayStored && !bTrayRunning) {
-                qDebug() << "[Reload] Tray was enabled in config but not running — setting up without toast.";
-                m_pOptions->setupTrayIconAndDownloadMonitoring(g_pMainWindow, false);
-            }
-
-            if (bTrayStored) {
-                qDebug() << "[Reload] Rebinding tray callbacks to ensure restore works.";
-                m_pOptions->registerTrayCallbacks(false);
-            }
-        } else {
-            ui->checkBoxEnableTrayMonitoring->hide();
-            qDebug() << "[Reload] Tray monitoring not configured — hiding checkbox.";
-        }
+        ui->checkBoxFileSetEnvVar->setChecked(m_pOptions->isPathInUserEnvironment(formattedDir));
 #endif
     } else {
         ui->checkBoxFileContext->hide();
-        // ui->checkBoxFileSetEnvVar->hide();
-        ui->checkBoxEnableTrayMonitoring->hide();
+        ui->checkBoxFileSetEnvVar->hide();
     }
 }
 
@@ -413,28 +364,6 @@ void XOptionsWidget::on_checkBoxFileContext_toggled(bool bChecked)
     }
 }
 
-void XOptionsWidget::on_checkBoxEnableTrayMonitoring_toggled(bool bChecked)
-{
-#ifdef Q_OS_WIN
-    qDebug() << "[Tray Monitor] Toggled to:" << bChecked;
-    m_pOptions->setValue(XOptions::ID_FILE_ENABLETRAYMONITORING, bChecked);
-    //g_pOptions->save();
-
-    if (bChecked) {
-        if (!m_pOptions->isTrayMonitoringActive()) {
-            m_pOptions->setupTrayIconAndDownloadMonitoring(g_pMainWindow, true);
-            qDebug() << "[Tray Monitor] Setup triggered.";
-        } else {
-            qDebug() << "[Tray Monitor] Already active.";
-            m_pOptions->registerTrayCallbacks(true);
-        }
-    } else {
-        m_pOptions->cleanupTrayMonitoring();
-    }
-#else
-    Q_UNUSED(bChecked)
-#endif
-}
 void XOptionsWidget::on_checkBoxFileSetEnvVar_toggled(bool bChecked)
 {
 #ifdef Q_OS_WIN
@@ -456,7 +385,6 @@ void XOptionsWidget::on_checkBoxFileSetEnvVar_toggled(bool bChecked)
     Q_UNUSED(bChecked)
 #endif
 }
-
 
 void XOptionsWidget::on_toolButtonViewFontControls_clicked()
 {
