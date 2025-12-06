@@ -1216,15 +1216,15 @@ QIcon XOptions::createIcon(quint32 codepoint, qint32 nWidth, qint32 nHeight)
 
     // Setup font - try multiple emoji fonts
     QFont font;
-    font.setPixelSize(qMin(nWidth, nHeight) * 0.8); // 80% of size for better fit
-    
+    font.setPixelSize(qMin(nWidth, nHeight) * 0.8);  // 80% of size for better fit
+
     font.setFamily("Segoe UI Emoji");
-    
+
     painter.setFont(font);
 
     // Draw the Unicode character centered
     painter.setPen(Qt::black);
-    
+
     // Convert codepoint to QString properly
     QString text;
     if (codepoint <= 0xFFFF) {
@@ -1233,24 +1233,24 @@ QIcon XOptions::createIcon(quint32 codepoint, qint32 nWidth, qint32 nHeight)
         // Handle surrogate pairs for codepoints > U+FFFF
         text = QString::fromUcs4(&codepoint, 1);
     }
-    
+
     painter.drawText(pixmap.rect(), Qt::AlignCenter, text);
 
     painter.end();
 
-//     // Debug: Save icon to C:\tmp
-//     static bool debugDumpEnabled = true;
-//     if (debugDumpEnabled) {
-//         QString filename = QString("C:/tmp/icon_%1_%2x%3_U%4.png")
-//             .arg(QDateTime::currentMSecsSinceEpoch())
-//             .arg(nWidth)
-//             .arg(nHeight)
-//             .arg(codepoint, 4, 16, QChar('0'));
-//         pixmap.save(filename);
-// #ifdef QT_DEBUG
-//         qDebug() << "Saved icon:" << filename << "text:" << text << "code:" << QString("U+%1").arg(codepoint, 4, 16, QChar('0'));
-// #endif
-//     }
+    //     // Debug: Save icon to C:\tmp
+    //     static bool debugDumpEnabled = true;
+    //     if (debugDumpEnabled) {
+    //         QString filename = QString("C:/tmp/icon_%1_%2x%3_U%4.png")
+    //             .arg(QDateTime::currentMSecsSinceEpoch())
+    //             .arg(nWidth)
+    //             .arg(nHeight)
+    //             .arg(codepoint, 4, 16, QChar('0'));
+    //         pixmap.save(filename);
+    // #ifdef QT_DEBUG
+    //         qDebug() << "Saved icon:" << filename << "text:" << text << "code:" << QString("U+%1").arg(codepoint, 4, 16, QChar('0'));
+    // #endif
+    //     }
 
     return QIcon(pixmap);
 }
@@ -1260,86 +1260,86 @@ quint32 XOptions::iconTypeToUnicodeSymbol(ICONTYPE iconType)
     quint32 result;
 
     switch (iconType) {
-        case ICONTYPE_ACTION:       result = 0x26A1;   break;  // ⚡ - High Voltage Sign (action/execute)
-        case ICONTYPE_ADD:          result = 0x2795;   break;  // ➕ - Heavy Plus Sign
-        case ICONTYPE_ADDRESS:      result = 0x1F4CD;  break;  // 📍 - Round Pushpin (location/address)
-        case ICONTYPE_ALL:          result = 0x2261;   break;  // ≡ - Identical To (all/everything)
-        case ICONTYPE_BACKWARD:     result = 0x23EA;   break;  // ⏪ - Black Left-Pointing Double Triangle
-        case ICONTYPE_BOOKMARK:     result = 0x1F516;  break;  // 🔖 - Bookmark
-        case ICONTYPE_CERTIFICATE:  result = 0x1F4DC;  break;  // 📜 - Scroll (certificate)
-        case ICONTYPE_CODE:         result = 0x1F5CB;  break;  // 🗋 - Document (code file)
-        case ICONTYPE_COPY:         result = 0x1F4CB;  break;  // 📋 - Clipboard
-        case ICONTYPE_DATA:         result = 0x1F4CA;  break;  // 📊 - Bar Chart (data)
-        case ICONTYPE_DEBUG:        result = 0x1F41E;  break;  // 🐞 - Lady Beetle (debug)
-        case ICONTYPE_DEMANGLE:     result = 0x1F9F5;  break;  // 🧵 - Thread (untangle)
-        case ICONTYPE_DIE:          result = 0x1F3B2;  break;  // 🎲 - Game Die
-        case ICONTYPE_DISASM:       result = 0x2699;   break;  // ⚙ - Gear (disassembly)
-        case ICONTYPE_DOTNET:       result = 0x1F310;  break;  // 🌐 - Globe With Meridians (.NET)
-        case ICONTYPE_DUMPTOFILE:   result = 0x1F4BE;  break;  // 💾 - Floppy Disk (save/dump)
-        case ICONTYPE_EDIT:         result = 0x270E;   break;  // ✎ - Lower Right Pencil
-        case ICONTYPE_ENTROPY:      result = 0x1F300;  break;  // 🌀 - Cyclone (chaos/entropy)
-        case ICONTYPE_ENTRY:        result = 0x1F6AA;  break;  // 🚪 - Door (entry point)
-        case ICONTYPE_EXCEPTION:    result = 0x26A0;   break;  // ⚠ - Warning Sign
-        case ICONTYPE_EXIT:         result = 0x1F6AA;  break;  // 🚪 - Door (exit)
-        case ICONTYPE_EXPORT:       result = 0x1F4E4;  break;  // 📤 - Outbox Tray
-        case ICONTYPE_EXTRACTOR:    result = 0x1F5C4;  break;  // 🗄 - File Cabinet (extract)
-        case ICONTYPE_FILE:         result = 0x1F4C4;  break;  // 📄 - Page Facing Up
-        case ICONTYPE_FOLLOW:       result = 0x1F517;  break;  // 🔗 - Link Symbol
-        case ICONTYPE_FORWARD:      result = 0x23E9;   break;  // ⏩ - Black Right-Pointing Double Triangle
-        case ICONTYPE_FUNCTION:     result = 0x0192;   break;  // ƒ - Latin Small Letter F With Hook
-        case ICONTYPE_GENERIC:      result = 0x25A0;   break;  // ■ - Black Square
-        case ICONTYPE_GOTO:         result = 0x21E8;   break;  // ⇨ - Rightwards White Arrow
-        case ICONTYPE_HASH:         result = 0x0023;   break;  // # - Number Sign
-        case ICONTYPE_HEADER:       result = 0x1F4C3;  break;  // 📃 - Page With Curl
-        case ICONTYPE_HEX:          result = 0x0023;   break;  // # - Number Sign (hex)
-        case ICONTYPE_IMPORT:       result = 0x1F4E5;  break;  // 📥 - Inbox Tray
-        case ICONTYPE_INFO:         result = 0x2139;   break;  // ℹ - Information Source
-        case ICONTYPE_LIBRARY:      result = 0x1F4DA;  break;  // 📚 - Books
-        case ICONTYPE_LIST:         result = 0x1F4CB;  break;  // 📋 - Clipboard (list)
-        case ICONTYPE_MANIFEST:     result = 0x1F4DC;  break;  // 📜 - Scroll (manifest)
-        case ICONTYPE_MEMORYMAP:    result = 0x1F5FA;  break;  // 🗺 - World Map
-        case ICONTYPE_METADATA:     result = 0x1F3F7;  break;  // 🏷 - Label (metadata)
-        case ICONTYPE_MIME:         result = 0x1F4CE;  break;  // 📎 - Paperclip (MIME type)
-        case ICONTYPE_NEW:          result = 0x2795;   break;  // ➕ - Heavy Plus Sign (new/add)
-        case ICONTYPE_NEXT:         result = 0x25B6;   break;  // ▶ - Black Right-Pointing Triangle
-        case ICONTYPE_NFD:          result = 0x1F4C2;  break;  // 📂 - Open File Folder
-        case ICONTYPE_NOTE:         result = 0x1F4DD;  break;  // 📝 - Memo
-        case ICONTYPE_OFFSET:       result = 0x21F1;   break;  // ⇱ - North West Arrow To Corner
-        case ICONTYPE_OPEN:         result = 0x1F4C2;  break;  // 📂 - Open File Folder
-        case ICONTYPE_OPTION:       result = 0x2699;   break;  // ⚙ - Gear (option/setting)
-        case ICONTYPE_OVERLAY:      result = 0x1F5C4;  break;  // 🗄 - File Cabinet (overlay)
-        case ICONTYPE_PATCH:        result = 0x1FA79;  break;  // 🩹 - Adhesive Bandage
-        case ICONTYPE_PATH:         result = 0x1F6E4;  break;  // 🛤 - Railway Track (path)
-        case ICONTYPE_REFERENCE:    result = 0x1F517;  break;  // 🔗 - Link Symbol (reference)
-        case ICONTYPE_RELOAD:       result = 0x21BB;   break;  // ↻ - Clockwise Open Circle Arrow (refresh/reload)
-        case ICONTYPE_RELOC:        result = 0x1F4CD;  break;  // 📍 - Round Pushpin (relocation)
-        case ICONTYPE_REMOVE:       result = 0x2796;   break;  // ➖ - Heavy Minus Sign
-        case ICONTYPE_RESIZE:       result = 0x21D4;   break;  // ⇔ - Left Right Double Arrow
-        case ICONTYPE_RESOURCE:     result = 0x1F4E6;  break;  // 📦 - Package
-        case ICONTYPE_SAVE:         result = 0x1F5AB;  break;  // 🖫 - White Hard Shell Floppy Disk
-        case ICONTYPE_SCAN:         result = 0x1F50D;  break;  // 🔍 - Left-Pointing Magnifying Glass (scan/search)
-        case ICONTYPE_SCRIPT:       result = 0x1F4DC;  break;  // 📜 - Scroll (script)
-        case ICONTYPE_SEARCH:       result = 0x1F50D;  break;  // 🔍 - Left-Pointing Magnifying Glass
-        case ICONTYPE_SECTION:      result = 0x00A7;   break;  // § - Section Sign
-        case ICONTYPE_SEGMENT:      result = 0x25A8;   break;  // ▨ - Square With Upper Right To Lower Left Fill
-        case ICONTYPE_SELECT:       result = 0x1F5F1;  break;  // 🗱 - Ballot Box With Check
-        case ICONTYPE_SHORTCUT:     result = 0x1F517;  break;  // 🔗 - Link Symbol (shortcut)
-        case ICONTYPE_SIGNATURE:    result = 0x270D;   break;  // ✍ - Writing Hand
-        case ICONTYPE_SIZE:         result = 0x1F4CF;  break;  // 📏 - Straight Ruler
-        case ICONTYPE_STRING:       result = 0x1F4AC;  break;  // 💬 - Speech Balloon
-        case ICONTYPE_STRUCTS:      result = 0x1F9F1;  break;  // 🧱 - Brick (structure)
-        case ICONTYPE_SYMBOL:       result = 0x1F523;  break;  // 🔣 - Input Symbol For Symbols
-        case ICONTYPE_TABLE:        result = 0x1F5C3;  break;  // 🗃 - Card File Box
-        case ICONTYPE_TLS:          result = 0x1F512;  break;  // 🔒 - Lock (TLS/security)
-        case ICONTYPE_TOOL:         result = 0x1F527;  break;  // 🔧 - Wrench
-        case ICONTYPE_VALUE:        result = 0x1F4B0;  break;  // 💰 - Money Bag (value)
-        case ICONTYPE_VERSION:      result = 0x1F4C5;  break;  // 📅 - Calendar (version)
-        case ICONTYPE_VIRUSTOTAL:   result = 0x1F9A0;  break;  // 🦠 - Microbe (virus)
+        case ICONTYPE_ACTION: result = 0x26A1; break;          // ⚡ - High Voltage Sign (action/execute)
+        case ICONTYPE_ADD: result = 0x2795; break;             // ➕ - Heavy Plus Sign
+        case ICONTYPE_ADDRESS: result = 0x1F4CD; break;        // 📍 - Round Pushpin (location/address)
+        case ICONTYPE_ALL: result = 0x2261; break;             // ≡ - Identical To (all/everything)
+        case ICONTYPE_BACKWARD: result = 0x23EA; break;        // ⏪ - Black Left-Pointing Double Triangle
+        case ICONTYPE_BOOKMARK: result = 0x1F516; break;       // 🔖 - Bookmark
+        case ICONTYPE_CERTIFICATE: result = 0x1F4DC; break;    // 📜 - Scroll (certificate)
+        case ICONTYPE_CODE: result = 0x1F5CB; break;           // 🗋 - Document (code file)
+        case ICONTYPE_COPY: result = 0x1F4CB; break;           // 📋 - Clipboard
+        case ICONTYPE_DATA: result = 0x1F4CA; break;           // 📊 - Bar Chart (data)
+        case ICONTYPE_DEBUG: result = 0x1F41E; break;          // 🐞 - Lady Beetle (debug)
+        case ICONTYPE_DEMANGLE: result = 0x1F9F5; break;       // 🧵 - Thread (untangle)
+        case ICONTYPE_DIE: result = 0x1F3B2; break;            // 🎲 - Game Die
+        case ICONTYPE_DISASM: result = 0x2699; break;          // ⚙ - Gear (disassembly)
+        case ICONTYPE_DOTNET: result = 0x1F310; break;         // 🌐 - Globe With Meridians (.NET)
+        case ICONTYPE_DUMPTOFILE: result = 0x1F4BE; break;     // 💾 - Floppy Disk (save/dump)
+        case ICONTYPE_EDIT: result = 0x270E; break;            // ✎ - Lower Right Pencil
+        case ICONTYPE_ENTROPY: result = 0x1F300; break;        // 🌀 - Cyclone (chaos/entropy)
+        case ICONTYPE_ENTRY: result = 0x1F6AA; break;          // 🚪 - Door (entry point)
+        case ICONTYPE_EXCEPTION: result = 0x26A0; break;       // ⚠ - Warning Sign
+        case ICONTYPE_EXIT: result = 0x1F6AA; break;           // 🚪 - Door (exit)
+        case ICONTYPE_EXPORT: result = 0x1F4E4; break;         // 📤 - Outbox Tray
+        case ICONTYPE_EXTRACTOR: result = 0x1F5C4; break;      // 🗄 - File Cabinet (extract)
+        case ICONTYPE_FILE: result = 0x1F4C4; break;           // 📄 - Page Facing Up
+        case ICONTYPE_FOLLOW: result = 0x1F517; break;         // 🔗 - Link Symbol
+        case ICONTYPE_FORWARD: result = 0x23E9; break;         // ⏩ - Black Right-Pointing Double Triangle
+        case ICONTYPE_FUNCTION: result = 0x0192; break;        // ƒ - Latin Small Letter F With Hook
+        case ICONTYPE_GENERIC: result = 0x25A0; break;         // ■ - Black Square
+        case ICONTYPE_GOTO: result = 0x21E8; break;            // ⇨ - Rightwards White Arrow
+        case ICONTYPE_HASH: result = 0x0023; break;            // # - Number Sign
+        case ICONTYPE_HEADER: result = 0x1F4C3; break;         // 📃 - Page With Curl
+        case ICONTYPE_HEX: result = 0x0023; break;             // # - Number Sign (hex)
+        case ICONTYPE_IMPORT: result = 0x1F4E5; break;         // 📥 - Inbox Tray
+        case ICONTYPE_INFO: result = 0x2139; break;            // ℹ - Information Source
+        case ICONTYPE_LIBRARY: result = 0x1F4DA; break;        // 📚 - Books
+        case ICONTYPE_LIST: result = 0x1F4CB; break;           // 📋 - Clipboard (list)
+        case ICONTYPE_MANIFEST: result = 0x1F4DC; break;       // 📜 - Scroll (manifest)
+        case ICONTYPE_MEMORYMAP: result = 0x1F5FA; break;      // 🗺 - World Map
+        case ICONTYPE_METADATA: result = 0x1F3F7; break;       // 🏷 - Label (metadata)
+        case ICONTYPE_MIME: result = 0x1F4CE; break;           // 📎 - Paperclip (MIME type)
+        case ICONTYPE_NEW: result = 0x2795; break;             // ➕ - Heavy Plus Sign (new/add)
+        case ICONTYPE_NEXT: result = 0x25B6; break;            // ▶ - Black Right-Pointing Triangle
+        case ICONTYPE_NFD: result = 0x1F4C2; break;            // 📂 - Open File Folder
+        case ICONTYPE_NOTE: result = 0x1F4DD; break;           // 📝 - Memo
+        case ICONTYPE_OFFSET: result = 0x21F1; break;          // ⇱ - North West Arrow To Corner
+        case ICONTYPE_OPEN: result = 0x1F4C2; break;           // 📂 - Open File Folder
+        case ICONTYPE_OPTION: result = 0x2699; break;          // ⚙ - Gear (option/setting)
+        case ICONTYPE_OVERLAY: result = 0x1F5C4; break;        // 🗄 - File Cabinet (overlay)
+        case ICONTYPE_PATCH: result = 0x1FA79; break;          // 🩹 - Adhesive Bandage
+        case ICONTYPE_PATH: result = 0x1F6E4; break;           // 🛤 - Railway Track (path)
+        case ICONTYPE_REFERENCE: result = 0x1F517; break;      // 🔗 - Link Symbol (reference)
+        case ICONTYPE_RELOAD: result = 0x21BB; break;          // ↻ - Clockwise Open Circle Arrow (refresh/reload)
+        case ICONTYPE_RELOC: result = 0x1F4CD; break;          // 📍 - Round Pushpin (relocation)
+        case ICONTYPE_REMOVE: result = 0x2796; break;          // ➖ - Heavy Minus Sign
+        case ICONTYPE_RESIZE: result = 0x21D4; break;          // ⇔ - Left Right Double Arrow
+        case ICONTYPE_RESOURCE: result = 0x1F4E6; break;       // 📦 - Package
+        case ICONTYPE_SAVE: result = 0x1F5AB; break;           // 🖫 - White Hard Shell Floppy Disk
+        case ICONTYPE_SCAN: result = 0x1F50D; break;           // 🔍 - Left-Pointing Magnifying Glass (scan/search)
+        case ICONTYPE_SCRIPT: result = 0x1F4DC; break;         // 📜 - Scroll (script)
+        case ICONTYPE_SEARCH: result = 0x1F50D; break;         // 🔍 - Left-Pointing Magnifying Glass
+        case ICONTYPE_SECTION: result = 0x00A7; break;         // § - Section Sign
+        case ICONTYPE_SEGMENT: result = 0x25A8; break;         // ▨ - Square With Upper Right To Lower Left Fill
+        case ICONTYPE_SELECT: result = 0x1F5F1; break;         // 🗱 - Ballot Box With Check
+        case ICONTYPE_SHORTCUT: result = 0x1F517; break;       // 🔗 - Link Symbol (shortcut)
+        case ICONTYPE_SIGNATURE: result = 0x270D; break;       // ✍ - Writing Hand
+        case ICONTYPE_SIZE: result = 0x1F4CF; break;           // 📏 - Straight Ruler
+        case ICONTYPE_STRING: result = 0x1F4AC; break;         // 💬 - Speech Balloon
+        case ICONTYPE_STRUCTS: result = 0x1F9F1; break;        // 🧱 - Brick (structure)
+        case ICONTYPE_SYMBOL: result = 0x1F523; break;         // 🔣 - Input Symbol For Symbols
+        case ICONTYPE_TABLE: result = 0x1F5C3; break;          // 🗃 - Card File Box
+        case ICONTYPE_TLS: result = 0x1F512; break;            // 🔒 - Lock (TLS/security)
+        case ICONTYPE_TOOL: result = 0x1F527; break;           // 🔧 - Wrench
+        case ICONTYPE_VALUE: result = 0x1F4B0; break;          // 💰 - Money Bag (value)
+        case ICONTYPE_VERSION: result = 0x1F4C5; break;        // 📅 - Calendar (version)
+        case ICONTYPE_VIRUSTOTAL: result = 0x1F9A0; break;     // 🦠 - Microbe (virus)
         case ICONTYPE_VISUALIZATION: result = 0x1F4CA; break;  // 📊 - Bar Chart
-        case ICONTYPE_WEBSITE:      result = 0x1F310;  break;  // 🌐 - Globe With Meridians
-        case ICONTYPE_YARA:         result = 0x1F50E;  break;  // 🔎 - Right-Pointing Magnifying Glass (Yara scan)
-        case ICONTYPE_INSPECTOR:    result = 0x1F50D;  break;  // 🔍 - Left-Pointing Magnifying Glass
-        case ICONTYPE_CONVERTOR:    result = 0x21C4;   break;  // ⇄ - Rightwards Arrow Over Leftwards Arrow
+        case ICONTYPE_WEBSITE: result = 0x1F310; break;        // 🌐 - Globe With Meridians
+        case ICONTYPE_YARA: result = 0x1F50E; break;           // 🔎 - Right-Pointing Magnifying Glass (Yara scan)
+        case ICONTYPE_INSPECTOR: result = 0x1F50D; break;      // 🔍 - Left-Pointing Magnifying Glass
+        case ICONTYPE_CONVERTOR: result = 0x21C4; break;       // ⇄ - Rightwards Arrow Over Leftwards Arrow
 
         case ICONTYPE_NONE:
         default:
