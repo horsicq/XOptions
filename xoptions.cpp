@@ -237,13 +237,15 @@ bool XOptions::isNative()
         bResult = false;
     }
 #elif defined(Q_OS_WIN)
-    if (sApplicationDirPath.toLower().contains(":\\program files")) {
+    QString sLowerPath = sApplicationDirPath.toLower();
+    bool bWindowsApps = sLowerPath.contains("\\windowsapps\\");
+    bool bProgramFiles = sLowerPath.contains(":\\program files");
+
+    if (bWindowsApps || bProgramFiles) {
         bResult = true;
     }
 #endif
-
     bResult = bResult || (!QFileInfo(sApplicationDirPath).isWritable());
-
     return bResult;
 #endif
 }
@@ -3007,3 +3009,4 @@ XOptions::BUNDLE XOptions::getBundle()
 
     return result;
 }
+
