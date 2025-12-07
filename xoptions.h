@@ -367,7 +367,7 @@ public:
     GROUPID getGroupID(ID id);
     bool isIDPresent(ID id);
     bool isGroupIDPresent(GROUPID groupID);
-    bool isNative();
+    static bool isNative();
     static bool isAppImage();
     void setName(const QString &sValue);
     void load();
@@ -544,3 +544,4 @@ private:
 };
 
 #endif  // XOPTIONS_H
+
