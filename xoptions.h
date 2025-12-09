@@ -77,6 +77,8 @@
 #include <Windows.h>
 #endif
 
+typedef quint64 XVPOS;
+
 class XOptions : public QObject {
     Q_OBJECT
 
