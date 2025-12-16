@@ -76,7 +76,7 @@ void XOptionsWidget::setOptions(XOptions *pOptions, const QString &sApplicationD
         ui->pageFile->setProperty("GROUPID", XOptions::GROUPID_FONTS);
     }
 
-    if (m_pOptions->isIDPresent(XOptions::ID_FEATURE_BUFFERSIZE) || m_pOptions->isIDPresent(XOptions::ID_FEATURE_SSE2) ||
+    if (m_pOptions->isIDPresent(XOptions::ID_FEATURE_READBUFFERSIZE) || m_pOptions->isIDPresent(XOptions::ID_FEATURE_FILEBUFFERSIZE) || m_pOptions->isIDPresent(XOptions::ID_FEATURE_SSE2) ||
         m_pOptions->isIDPresent(XOptions::ID_FEATURE_AVX) || m_pOptions->isIDPresent(XOptions::ID_FEATURE_AVX2)) {
         addListRecord(tr("Features"), 3);
         ui->pageFile->setProperty("GROUPID", XOptions::GROUPID_FEATURES);
@@ -219,6 +219,15 @@ void XOptionsWidget::save()
         }
     }
 #endif
+
+    if (m_pOptions->isIDPresent(XOptions::ID_FEATURE_READBUFFERSIZE)) {
+        m_pOptions->getComboBox(ui->comboBoxReadBufferSize, XOptions::ID_FEATURE_READBUFFERSIZE);
+    }
+
+    if (m_pOptions->isIDPresent(XOptions::ID_FEATURE_FILEBUFFERSIZE)) {
+        m_pOptions->getComboBox(ui->comboBoxFileBufferSize, XOptions::ID_FEATURE_FILEBUFFERSIZE);
+    }
+
     m_pOptions->save();
 }
 
@@ -333,6 +342,18 @@ void XOptionsWidget::reload()
     } else {
         ui->checkBoxFileContext->hide();
         ui->checkBoxFileSetEnvVar->hide();
+    }
+
+    if (m_pOptions->isIDPresent(XOptions::ID_FEATURE_READBUFFERSIZE)) {
+        m_pOptions->setComboBox(ui->comboBoxReadBufferSize, XOptions::ID_FEATURE_READBUFFERSIZE);
+    } else {
+        ui->comboBoxReadBufferSize->hide();
+    }
+
+    if (m_pOptions->isIDPresent(XOptions::ID_FEATURE_FILEBUFFERSIZE)) {
+        m_pOptions->setComboBox(ui->comboBoxFileBufferSize, XOptions::ID_FEATURE_FILEBUFFERSIZE);
+    } else {
+        ui->comboBoxFileBufferSize->hide();
     }
 }
 

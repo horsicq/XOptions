@@ -486,7 +486,13 @@ QString XOptions::idToString(ID id)
         case ID_FILE_SAVERECENTFILES: sResult = QString("File/SaveRecentFiles"); break;
         case ID_FILE_SAVEBACKUP: sResult = QString("File/SaveBackup"); break;
         case ID_FILE_CONTEXT: sResult = QString("File/Context"); break;
+        case ID_FEATURE_READBUFFERSIZE: sResult = QString("Feature/ReadBufferSize"); break;
+        case ID_FEATURE_FILEBUFFERSIZE: sResult = QString("Feature/FileBufferSize"); break;
+        case ID_FEATURE_SSE2: sResult = QString("Feature/SSE2"); break;
+        case ID_FEATURE_AVX: sResult = QString("Feature/AVX"); break;
+        case ID_FEATURE_AVX2: sResult = QString("Feature/AVX2"); break;
         case ID_ENGINE_BUFFERSIZE: sResult = QString("Engine/BufferSize"); break;
+        case ID_SCAN_BUFFERSIZE: sResult = QString("Scan/BufferSize"); break;
         case ID_SCAN_SCANAFTEROPEN: sResult = QString("Scan/ScanAfterOpen"); break;
         case ID_SCAN_FLAG_RECURSIVE: sResult = QString("Scan/Flag/Recursive"); break;
         case ID_SCAN_FLAG_DEEP: sResult = QString("Scan/Flag/Deep"); break;
@@ -1070,7 +1076,14 @@ void XOptions::setComboBox(QComboBox *pComboBox, XOptions::ID id)
         pComboBox->addItem(QString("INTEL"), "INTEL");
         pComboBox->addItem(QString("MASM"), "MASM");
         pComboBox->addItem(QString("MOTOROLA"), "MOTOROLA");
-    } else if (id == ID_ENGINE_BUFFERSIZE) {
+    } else if (id == ID_FEATURE_READBUFFERSIZE) {
+        pComboBox->addItem("", 0);
+        pComboBox->addItem("1 KiB", 1 * 1024);
+        pComboBox->addItem("2 KiB", 2 * 1024);
+        pComboBox->addItem("4 KiB", 4 * 1024);
+        pComboBox->addItem("8 KiB", 8 * 1024);
+        pComboBox->addItem("16 KiB", 16 * 1024);
+    } else if (id == ID_FEATURE_FILEBUFFERSIZE) {
         pComboBox->addItem("", 0);
         pComboBox->addItem("1 MiB", 1 * 1024 * 1024);
         pComboBox->addItem("2 MiB", 2 * 1024 * 1024);

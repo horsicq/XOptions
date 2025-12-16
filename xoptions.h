@@ -75,6 +75,7 @@
 #endif
 #ifdef Q_OS_WIN
 #include <Windows.h>
+#include <WinCon.h>
 #endif
 
 typedef quint64 XVPOS;
@@ -187,7 +188,8 @@ public:
         ID_FILE_SAVERECENTFILES,
         ID_FILE_SAVEBACKUP,
         ID_FILE_CONTEXT,
-        ID_FEATURE_BUFFERSIZE,
+        ID_FEATURE_READBUFFERSIZE,
+        ID_FEATURE_FILEBUFFERSIZE,
         ID_FEATURE_SSE2,
         ID_FEATURE_AVX,
         ID_FEATURE_AVX2,
