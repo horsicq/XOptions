@@ -76,6 +76,12 @@ void XOptionsWidget::setOptions(XOptions *pOptions, const QString &sApplicationD
         ui->pageFile->setProperty("GROUPID", XOptions::GROUPID_FONTS);
     }
 
+    if (m_pOptions->isIDPresent(XOptions::ID_FEATURE_BUFFERSIZE) || m_pOptions->isIDPresent(XOptions::ID_FEATURE_SSE2) ||
+        m_pOptions->isIDPresent(XOptions::ID_FEATURE_AVX) || m_pOptions->isIDPresent(XOptions::ID_FEATURE_AVX2)) {
+        addListRecord(tr("Features"), 3);
+        ui->pageFile->setProperty("GROUPID", XOptions::GROUPID_FEATURES);
+    }
+
     reload();
 }
 
@@ -370,14 +376,14 @@ void XOptionsWidget::on_checkBoxFileSetEnvVar_toggled(bool bChecked)
     QString appDir = QFileInfo(QCoreApplication::applicationFilePath()).absolutePath();
     QString formattedDir = QDir::toNativeSeparators(appDir);
 
-    bool isCurrentlySet = m_pOptions->isPathInUserEnvironment(formattedDir);
+    bool bIsSet = m_pOptions->isPathInUserEnvironment(formattedDir);
 
     if (bChecked) {
-        if (!isCurrentlySet) {
+        if (!bIsSet) {
             m_pOptions->appendToUserPathVariable(formattedDir);
         }
     } else {
-        if (isCurrentlySet) {
+        if (bIsSet) {
             m_pOptions->removeFromUserPathVariable(formattedDir);
         }
     }
