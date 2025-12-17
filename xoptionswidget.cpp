@@ -228,6 +228,18 @@ void XOptionsWidget::save()
         m_pOptions->getComboBox(ui->comboBoxFileBufferSize, XOptions::ID_FEATURE_FILEBUFFERSIZE);
     }
 
+    if (m_pOptions->isIDPresent(XOptions::ID_FEATURE_SSE2)) {
+        m_pOptions->getCheckBox(ui->checkBoxSSE2, XOptions::ID_FEATURE_SSE2);
+    }
+
+    if (m_pOptions->isIDPresent(XOptions::ID_FEATURE_AVX)) {
+        m_pOptions->getCheckBox(ui->checkBoxAVX, XOptions::ID_FEATURE_AVX);
+    }
+
+    if (m_pOptions->isIDPresent(XOptions::ID_FEATURE_AVX2)) {
+        m_pOptions->getCheckBox(ui->checkBoxAVX2, XOptions::ID_FEATURE_AVX2);
+    }
+
     m_pOptions->save();
 }
 
@@ -355,6 +367,39 @@ void XOptionsWidget::reload()
     } else {
         ui->comboBoxFileBufferSize->hide();
     }
+
+    if (m_pOptions->isIDPresent(XOptions::ID_FEATURE_SSE2)) {
+        m_pOptions->setCheckBox(ui->checkBoxSSE2, XOptions::ID_FEATURE_SSE2);
+#ifdef USE_XSIMD
+        if (!xsimd_is_sse2_present()) {
+            ui->checkBoxSSE2->hide();
+        }
+#endif
+    } else {
+        ui->checkBoxSSE2->hide();
+    }
+
+    if (m_pOptions->isIDPresent(XOptions::ID_FEATURE_AVX)) {
+        m_pOptions->setCheckBox(ui->checkBoxAVX, XOptions::ID_FEATURE_AVX);
+#ifdef USE_XSIMD
+        if (!xsimd_is_avx_present()) {
+            ui->checkBoxAVX->hide();
+        }
+#endif
+    } else {
+        ui->checkBoxAVX->hide();
+    }
+
+    if (m_pOptions->isIDPresent(XOptions::ID_FEATURE_AVX2)) {
+        m_pOptions->setCheckBox(ui->checkBoxAVX2, XOptions::ID_FEATURE_AVX2);
+#ifdef USE_XSIMD
+        if (!xsimd_is_avx2_present()) {
+            ui->checkBoxAVX2->hide();
+        }
+#endif
+    } else {
+        ui->checkBoxAVX2->hide();
+    }
 }
 
 void XOptionsWidget::on_listWidgetOptions_currentRowChanged(int nCurrentRow)
@@ -469,4 +514,55 @@ void XOptionsWidget::on_pushButtonCancel_clicked()
 void XOptionsWidget::registerShortcuts(bool bState)
 {
     Q_UNUSED(bState)
+}
+
+void XOptionsWidget::on_checkBoxSSE2_toggled(bool bChecked)
+{
+#ifdef USE_XSIMD
+    if (bChecked) {
+        if (!xsimd_is_sse2_present()) {
+            ui->checkBoxSSE2->setChecked(false);
+            return;
+        }
+        xsimd_set_sse2(1);
+    } else {
+        xsimd_set_sse2(0);
+    }
+#else
+    Q_UNUSED(bChecked)
+#endif
+}
+
+void XOptionsWidget::on_checkBoxAVX_toggled(bool bChecked)
+{
+#ifdef USE_XSIMD
+    if (bChecked) {
+        if (!xsimd_is_avx_present()) {
+            ui->checkBoxAVX->setChecked(false);
+            return;
+        }
+        xsimd_set_avx(1);
+    } else {
+        xsimd_set_avx(0);
+    }
+#else
+    Q_UNUSED(bChecked)
+#endif
+}
+
+void XOptionsWidget::on_checkBoxAVX2_toggled(bool bChecked)
+{
+#ifdef USE_XSIMD
+    if (bChecked) {
+        if (!xsimd_is_avx2_present()) {
+            ui->checkBoxAVX2->setChecked(false);
+            return;
+        }
+        xsimd_set_avx2(1);
+    } else {
+        xsimd_set_avx2(0);
+    }
+#else
+    Q_UNUSED(bChecked)
+#endif
 }

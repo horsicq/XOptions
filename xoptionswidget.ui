@@ -91,8 +91,8 @@
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>117</width>
-             <height>232</height>
+             <width>287</width>
+             <height>384</height>
             </rect>
            </property>
            <layout class="QVBoxLayout" name="verticalLayout_8">
@@ -587,7 +587,7 @@
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>266</width>
+             <width>287</width>
              <height>384</height>
             </rect>
            </property>
@@ -658,6 +658,27 @@
                 </widget>
                </item>
               </layout>
+             </widget>
+            </item>
+            <item>
+             <widget class="QCheckBox" name="checkBoxSSE2">
+              <property name="text">
+               <string notr="true">SSE2</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QCheckBox" name="checkBoxAVX">
+              <property name="text">
+               <string notr="true">AVX</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QCheckBox" name="checkBoxAVX2">
+              <property name="text">
+               <string>AVX2</string>
+              </property>
              </widget>
             </item>
             <item>
