@@ -25,6 +25,8 @@
 DialogViewColors::DialogViewColors(QWidget *pParent) : XShortcutsDialog(pParent, false), ui(new Ui::DialogViewColors)
 {
     ui->setupUi(this);
+    
+    m_pOptions = nullptr;
 }
 
 DialogViewColors::~DialogViewColors()

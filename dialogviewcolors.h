@@ -61,9 +61,6 @@ public:
 
 private slots:
     void on_pushButtonCancel_clicked();
-    void addRecord(qint32 nRow, const QString &sGroup, const QString &sText, XOptions::ID id);
-    void addRecord(qint32 nRow, const RECORD &record);
-    void updateRow(qint32 nRow);
     void on_pushButtonOK_clicked();
     void pushButtonSlot();
 
@@ -71,6 +68,10 @@ protected:
     virtual void registerShortcuts(bool bState);
 
 private:
+    void addRecord(qint32 nRow, const QString &sGroup, const QString &sText, XOptions::ID id);
+    void addRecord(qint32 nRow, const RECORD &record);
+    void updateRow(qint32 nRow);
+
     Ui::DialogViewColors *ui;
     XOptions *m_pOptions;
     QMap<XOptions::ID, QString> m_mapColors;

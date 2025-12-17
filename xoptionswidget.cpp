@@ -76,6 +76,12 @@ void XOptionsWidget::setOptions(XOptions *pOptions, const QString &sApplicationD
         ui->pageFile->setProperty("GROUPID", XOptions::GROUPID_FONTS);
     }
 
+    if (m_pOptions->isIDPresent(XOptions::ID_FEATURE_READBUFFERSIZE) || m_pOptions->isIDPresent(XOptions::ID_FEATURE_FILEBUFFERSIZE) || m_pOptions->isIDPresent(XOptions::ID_FEATURE_SSE2) ||
+        m_pOptions->isIDPresent(XOptions::ID_FEATURE_AVX) || m_pOptions->isIDPresent(XOptions::ID_FEATURE_AVX2)) {
+        addListRecord(tr("Features"), 3);
+        ui->pageFile->setProperty("GROUPID", XOptions::GROUPID_FEATURES);
+    }
+
     reload();
 }
 
@@ -213,6 +219,15 @@ void XOptionsWidget::save()
         }
     }
 #endif
+
+    if (m_pOptions->isIDPresent(XOptions::ID_FEATURE_READBUFFERSIZE)) {
+        m_pOptions->getComboBox(ui->comboBoxReadBufferSize, XOptions::ID_FEATURE_READBUFFERSIZE);
+    }
+
+    if (m_pOptions->isIDPresent(XOptions::ID_FEATURE_FILEBUFFERSIZE)) {
+        m_pOptions->getComboBox(ui->comboBoxFileBufferSize, XOptions::ID_FEATURE_FILEBUFFERSIZE);
+    }
+
     m_pOptions->save();
 }
 
@@ -328,6 +343,18 @@ void XOptionsWidget::reload()
         ui->checkBoxFileContext->hide();
         ui->checkBoxFileSetEnvVar->hide();
     }
+
+    if (m_pOptions->isIDPresent(XOptions::ID_FEATURE_READBUFFERSIZE)) {
+        m_pOptions->setComboBox(ui->comboBoxReadBufferSize, XOptions::ID_FEATURE_READBUFFERSIZE);
+    } else {
+        ui->comboBoxReadBufferSize->hide();
+    }
+
+    if (m_pOptions->isIDPresent(XOptions::ID_FEATURE_FILEBUFFERSIZE)) {
+        m_pOptions->setComboBox(ui->comboBoxFileBufferSize, XOptions::ID_FEATURE_FILEBUFFERSIZE);
+    } else {
+        ui->comboBoxFileBufferSize->hide();
+    }
 }
 
 void XOptionsWidget::on_listWidgetOptions_currentRowChanged(int nCurrentRow)
@@ -370,14 +397,14 @@ void XOptionsWidget::on_checkBoxFileSetEnvVar_toggled(bool bChecked)
     QString appDir = QFileInfo(QCoreApplication::applicationFilePath()).absolutePath();
     QString formattedDir = QDir::toNativeSeparators(appDir);
 
-    bool isCurrentlySet = m_pOptions->isPathInUserEnvironment(formattedDir);
+    bool bIsSet = m_pOptions->isPathInUserEnvironment(formattedDir);
 
     if (bChecked) {
-        if (!isCurrentlySet) {
+        if (!bIsSet) {
             m_pOptions->appendToUserPathVariable(formattedDir);
         }
     } else {
-        if (isCurrentlySet) {
+        if (bIsSet) {
             m_pOptions->removeFromUserPathVariable(formattedDir);
         }
     }

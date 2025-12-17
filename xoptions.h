@@ -75,7 +75,10 @@
 #endif
 #ifdef Q_OS_WIN
 #include <Windows.h>
+#include <WinCon.h>
 #endif
+
+typedef quint64 XVPOS;
 
 class XOptions : public QObject {
     Q_OBJECT
@@ -144,6 +147,7 @@ public:
         GROUPID_EDIT,
         GROUPID_FILE,
         GROUPID_FONTS,
+        GROUPID_FEATURES,
         GROUPID_SCAN,
         GROUPID_SIGNATURES,
         GROUPID_DEBUGGER,
@@ -184,6 +188,13 @@ public:
         ID_FILE_SAVERECENTFILES,
         ID_FILE_SAVEBACKUP,
         ID_FILE_CONTEXT,
+        ID_FEATURE_READBUFFERSIZE,
+        ID_FEATURE_FILEBUFFERSIZE,
+        ID_FEATURE_SSE2,
+        ID_FEATURE_AVX,
+        ID_FEATURE_AVX2,
+        ID_ENGINE_BUFFERSIZE, // Obsolete
+        ID_SCAN_BUFFERSIZE, // Obsolete
         ID_SCAN_SCANAFTEROPEN,
         ID_SCAN_FLAG_RECURSIVE,
         ID_SCAN_FLAG_DEEP,
@@ -194,7 +205,6 @@ public:
         ID_SCAN_USECACHE,
         ID_SCAN_FORMATRESULT,
         ID_SCAN_LOG_PROFILING,
-        ID_SCAN_BUFFERSIZE,
         ID_SCAN_HIGHLIGHT,
         ID_SCAN_SORT,
         ID_SCAN_HIDEUNKNOWN,
