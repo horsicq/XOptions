@@ -1083,6 +1083,11 @@ void XOptions::setComboBox(QComboBox *pComboBox, XOptions::ID id)
         pComboBox->addItem("4 KiB", 4 * 1024);
         pComboBox->addItem("8 KiB", 8 * 1024);
         pComboBox->addItem("16 KiB", 16 * 1024);
+        pComboBox->addItem("32 KiB", 32 * 1024);
+        pComboBox->addItem("64 KiB", 64 * 1024);
+        pComboBox->addItem("128 KiB", 128 * 1024);
+        pComboBox->addItem("256 KiB", 256 * 1024);
+        pComboBox->addItem("512 KiB", 512 * 1024);
     } else if (id == ID_FEATURE_FILEBUFFERSIZE) {
         pComboBox->addItem("", 0);
         pComboBox->addItem("1 MiB", 1 * 1024 * 1024);
