@@ -108,7 +108,8 @@ XOptions::GROUPID XOptions::getGroupID(ID id)
         case ID_FILE_SAVELASTDIRECTORY:
         case ID_FILE_SAVERECENTFILES:
         case ID_FILE_SAVEBACKUP:
-        case ID_FILE_CONTEXT: result = GROUPID_FILE; break;
+        case ID_FILE_CONTEXT:
+        case ID_FILE_PATH: result = GROUPID_FILE; break;
         case ID_SCAN_SCANAFTEROPEN:
         case ID_SCAN_FLAG_RECURSIVE:
         case ID_SCAN_FLAG_DEEP:
@@ -385,6 +386,18 @@ void XOptions::load()
         }
     }
 
+#ifdef USE_XSIMD
+    if (xsimd_is_sse2_present()) {
+        xsimd_set_sse2(m_mapValues.value(ID_FEATURE_SSE2).toBool());
+    }
+    if (xsimd_is_avx_present()) {
+        xsimd_set_avx(m_mapValues.value(ID_FEATURE_AVX).toBool());
+    }
+    if (xsimd_is_avx2_present()) {
+        xsimd_set_avx2(m_mapValues.value(ID_FEATURE_AVX2).toBool());
+    }
+#endif
+
     delete pSettings;
 }
 
@@ -486,6 +499,7 @@ QString XOptions::idToString(ID id)
         case ID_FILE_SAVERECENTFILES: sResult = QString("File/SaveRecentFiles"); break;
         case ID_FILE_SAVEBACKUP: sResult = QString("File/SaveBackup"); break;
         case ID_FILE_CONTEXT: sResult = QString("File/Context"); break;
+        case ID_FILE_PATH: sResult = QString("File/Path"); break;
         case ID_FEATURE_READBUFFERSIZE: sResult = QString("Feature/ReadBufferSize"); break;
         case ID_FEATURE_FILEBUFFERSIZE: sResult = QString("Feature/FileBufferSize"); break;
         case ID_FEATURE_SSE2: sResult = QString("Feature/SSE2"); break;

@@ -78,6 +78,10 @@
 #include <WinCon.h>
 #endif
 
+#ifdef USE_XSIMD
+#include "xsimd.h"
+#endif
+
 typedef quint64 XVPOS;
 
 class XOptions : public QObject {
@@ -188,6 +192,7 @@ public:
         ID_FILE_SAVERECENTFILES,
         ID_FILE_SAVEBACKUP,
         ID_FILE_CONTEXT,
+        ID_FILE_PATH,
         ID_FEATURE_READBUFFERSIZE,
         ID_FEATURE_FILEBUFFERSIZE,
         ID_FEATURE_SSE2,
