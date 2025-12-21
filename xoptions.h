@@ -104,8 +104,6 @@ public:
     // TODO Check other BSD
     // TODO Check Raspberry PI
     // TODO Check Windows ARM
-    // TODO Linux FEDORA
-    // TODO Linux Mint
     enum BUNDLE {
         BUNDLE_UNKNOWN = 0,
         BUNDLE_LINUX_ARCH_X64,
@@ -122,9 +120,8 @@ public:
         BUNDLE_WINDOWS_ARM64,
         BUNDLE_MACOS_X64,
         BUNDLE_MACOS_QT6_ARM64,  // TODO Check
-        BUNDLE_FREEBSD_X64
-        // TODO WIN ARM64
-        // TODO KALI
+        BUNDLE_FREEBSD_X64,
+        BUNDLE_FEDORA_X64
         // TODO more
     };
 

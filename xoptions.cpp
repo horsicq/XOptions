@@ -3048,6 +3048,9 @@ XOptions::BUNDLE XOptions::getBundle()
     // TODO
     // TODO QSysInfo::currentCpuArchitecture();
 #endif
+#ifdef Q_OS_FEDORA
+    result = BUNDLE_FEDORA_X64;
+#endif
 #endif
 
     return result;
