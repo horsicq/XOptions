@@ -152,6 +152,8 @@ XOptions::GROUPID XOptions::getGroupID(ID id)
         case ID_DISASM_COLOR_X86_REGS_FLAGS:
         case ID_DISASM_COLOR_X86_REGS_FPU:
         case ID_DISASM_COLOR_X86_REGS_XMM:
+        case ID_DISASM_COLOR_X86_REGS_YMM:
+        case ID_DISASM_COLOR_X86_REGS_ZMM:
         case ID_DISASM_COLOR_X86_OPCODE_CALL:
         case ID_DISASM_COLOR_X86_OPCODE_RET:
         case ID_DISASM_COLOR_X86_OPCODE_COND_JMP:
@@ -550,6 +552,8 @@ QString XOptions::idToString(ID id)
         case ID_DISASM_COLOR_X86_REGS_FLAGS: sResult = QString("Disasm/Color/x86/Regs/Flags"); break;
         case ID_DISASM_COLOR_X86_REGS_FPU: sResult = QString("Disasm/Color/x86/Regs/Float"); break;
         case ID_DISASM_COLOR_X86_REGS_XMM: sResult = QString("Disasm/Color/x86/Regs/XMM"); break;
+        case ID_DISASM_COLOR_X86_REGS_YMM: sResult = QString("Disasm/Color/x86/Regs/YMM"); break;
+        case ID_DISASM_COLOR_X86_REGS_ZMM: sResult = QString("Disasm/Color/x86/Regs/ZMM"); break;
         case ID_DISASM_COLOR_X86_OPCODE_CALL: sResult = QString("Disasm/Color/x86/Opcode/call"); break;
         case ID_DISASM_COLOR_X86_OPCODE_RET: sResult = QString("Disasm/Color/x86/Opcode/ret"); break;
         case ID_DISASM_COLOR_X86_OPCODE_COND_JMP: sResult = QString("Disasm/Color/x86/Opcode/cond_jmp"); break;
