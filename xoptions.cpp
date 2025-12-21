@@ -338,7 +338,7 @@ void XOptions::load()
         if (m_mapDefaultValues.contains(id)) {
             varDefault = m_mapDefaultValues.value(id);
         } else {
-            // TODO remove,use addID
+            // TODO: remove,use addID
             switch (id) {
                 case ID_ROOTPATH: varDefault = ""; break;
                 case ID_DATAPATH: varDefault = "$data/data"; break;
@@ -476,7 +476,7 @@ QString XOptions::idToString(ID id)
     QString sResult;
 
     switch (id) {
-        // TODO remove
+        // TODO: remove
         case ID_ROOTPATH: sResult = QString("RootPath"); break;
         case ID_DATAPATH: sResult = QString("DataPath"); break;
         case ID_JSON: sResult = QString("Json"); break;
@@ -1572,7 +1572,7 @@ QString XOptions::getTableModelText(QAbstractItemModel *pModel)
             }
         }
 
-        // mb TODO csv,tsv,json,xml,json
+        // mb TODO: csv,tsv,json,xml,json
         qint32 _nNumberOfLines = listListStrings.count();
 
         for (qint32 i = 0; i < _nNumberOfLines; i++) {
@@ -1834,7 +1834,7 @@ qint32 XOptions::getControlWidth(QWidget *pWidget, qint32 nSymbolSize)
 #ifdef QT_GUI_LIB
 void XOptions::showInFolder(const QString &sFileName)
 {
-    // TODO https://github.com/qt-creator/qt-creator/blob/master/src/plugins/coreplugin/fileutils.cpp#L67
+    // TODO: https://github.com/qt-creator/qt-creator/blob/master/src/plugins/coreplugin/fileutils.cpp#L67
     QFileInfo fi = QFileInfo(sFileName);
 
 #if defined(Q_OS_WIN)
@@ -1880,7 +1880,7 @@ void XOptions::showFolder(const QString &sDirectory)
     slParams << "-e";
     slParams << "activate";
     slParams << "-e";
-    slParams << "select POSIX file \"" + sDirectory + "\"";  // TODO Check
+    slParams << "select POSIX file \"" + sDirectory + "\"";  // TODO: Check
     slParams << "-e";
     slParams << "end tell";
     slParams << "-e";
@@ -2087,7 +2087,7 @@ QString XOptions::getTitle(const QString &sName, const QString &sVersion, bool b
 
     if (bShowOS) {
 #if QT_VERSION >= QT_VERSION_CHECK(5, 4, 0)
-        // TODO Check Windows 11 (DiE currently detectes Windows 11 as Windows 10)
+        // TODO: Check Windows 11 (DiE currently detectes Windows 11 as Windows 10)
         QString architecture = QSysInfo::buildCpuArchitecture();
         if (architecture == "x86_64" || architecture == "amd64") {
             architecture = "x64";
@@ -2098,7 +2098,7 @@ QString XOptions::getTitle(const QString &sName, const QString &sVersion, bool b
         }
         sResult += QString(" [%1] (%2)").arg(QSysInfo::prettyProductName(), architecture);
 #else
-        // TODO OS Name // For Windows Arch GetVersionExA
+        // TODO: OS Name // For Windows Arch GetVersionExA
 #endif
     }
 
@@ -2175,9 +2175,9 @@ void XOptions::registerCodecs()
         if (!pCodec) {
             qFatal("Codec failed");
         }
-        // TODO more codecs
+        // TODO: more codecs
 
-        // delete pCodec; // TODO unregisterCodecs
+        // delete pCodec; // TODO: unregisterCodecs
     }
 #endif
 }
@@ -2363,7 +2363,7 @@ void XOptions::printConsole(QString sString, Qt::GlobalColor colorText, Qt::Glob
             printf("\033[0m");
         }
 #ifdef Q_OS_WIN
-        SetConsoleMode(hConsole, dwMode);  // Restore original console mode TODO optimize
+        SetConsoleMode(hConsole, dwMode);  // Restore original console mode TODO: optimize
 #endif
     } else if (bNativeMode) {
 #ifdef Q_OS_WIN
@@ -2482,7 +2482,7 @@ QMenu *XOptions::createCodePagesMenu(QWidget *pParent, bool bAll)
     m_pCodePagesMenu = new QMenu(tr("Code pages"), pParent);
 
     if (m_pCodePagesMenu) {
-        m_pCodePagesMenu->clear();  // TODO Check
+        m_pCodePagesMenu->clear();  // TODO: Check
 
         QList<QString> listCodePages = getCodePages(bAll);
 
@@ -2591,7 +2591,7 @@ bool XOptions::registerContext(const QString &sApplicationName, const QString &s
     QSettings settingsIcon(getClassesPrefix(userRole) + QString("\\%1\\shell\\%2").arg(sType, sApplicationName), QSettings::NativeFormat);
     settingsIcon.setValue("Icon", "\"" + _sApplicationFilePath.replace("/", "\\") + "\"");
 
-    // TODO Check if not send message
+    // TODO: Check if not send message
     return checkContext(sApplicationName, sType);
 }
 #endif
@@ -2601,7 +2601,7 @@ bool XOptions::clearContext(const QString &sApplicationName, const QString &sTyp
     QSettings settings(getClassesPrefix(userRole) + QString("\\%1\\shell\\%2").arg(sType, sApplicationName), QSettings::NativeFormat);
     settings.clear();
 
-    // TODO Check if not send message
+    // TODO: Check if not send message
     return !(checkContext(sApplicationName, sType));
 }
 #endif
@@ -3047,8 +3047,7 @@ XOptions::BUNDLE XOptions::getBundle()
     result = BUNDLE_FREEBSD_X64;
 #endif
 #ifdef Q_OS_MACOS
-    // TODO
-    // TODO QSysInfo::currentCpuArchitecture();
+    // TODO: QSysInfo::currentCpuArchitecture();
 #endif
 #ifdef Q_OS_FEDORA
     result = BUNDLE_FEDORA_X64;
