@@ -2194,9 +2194,9 @@ void XOptions::printConsole(QString sString, Qt::GlobalColor colorText, Qt::Glob
         if (hConsole) {
             GetConsoleMode(hConsole, &dwMode);
 #ifndef _USING_V110_SDK71_
-            #ifndef ENABLE_VIRTUAL_TERMINAL_PROCESSING
-            #define ENABLE_VIRTUAL_TERMINAL_PROCESSING 0x0004
-            #endif
+#ifndef ENABLE_VIRTUAL_TERMINAL_PROCESSING
+#define ENABLE_VIRTUAL_TERMINAL_PROCESSING 0x0004
+#endif
             if (SetConsoleMode(hConsole, dwMode | ENABLE_VIRTUAL_TERMINAL_PROCESSING)) {
                 bEscapeMode = true;
             } else {
@@ -3048,4 +3048,3 @@ XOptions::BUNDLE XOptions::getBundle()
 
     return result;
 }
-

@@ -198,8 +198,8 @@ public:
         ID_FEATURE_SSE2,
         ID_FEATURE_AVX,
         ID_FEATURE_AVX2,
-        ID_ENGINE_BUFFERSIZE, // Obsolete
-        ID_SCAN_BUFFERSIZE, // Obsolete
+        ID_ENGINE_BUFFERSIZE,  // Obsolete
+        ID_SCAN_BUFFERSIZE,    // Obsolete
         ID_SCAN_SCANAFTEROPEN,
         ID_SCAN_FLAG_RECURSIVE,
         ID_SCAN_FLAG_DEEP,
@@ -559,4 +559,3 @@ private:
 };
 
 #endif  // XOPTIONS_H
-
