@@ -2654,6 +2654,8 @@ QString XOptions::getBundleIdToString(BUNDLE bundle)
         sResult = "MacOS x64";
     } else if (bundle == BUNDLE_MACOS_QT6_ARM64) {
         sResult = "MacOS Qt6 ARM64";
+    } else if (bundle == BUNDLE_FEDORA_X64) {
+        sResult = "Fedora x64";
     } else if (bundle == BUNDLE_FREEBSD_X64) {
         sResult = "FreeBSD x64";
     } else {
@@ -3055,4 +3057,3 @@ XOptions::BUNDLE XOptions::getBundle()
 
     return result;
 }
-
