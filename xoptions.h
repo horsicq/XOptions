@@ -454,8 +454,7 @@ public:
     static void adjustListWidgetSize(QListWidget *pListWidget, qint32 nMinimumWidth = 100);
     static qint32 _getTreeWidgetItemSize(QTreeWidget *pTreeWidget, QTreeWidgetItem *pTreeWidgetItem, qint32 nIndent, qint32 nLevel);
     static void adjustTreeWidgetSize(QTreeWidget *pTreeWidget, qint32 nMinimumWidth = 100);
-    //    static void adjustApplicationView(const QString &sApplicationFileName,QString
-    //    sTranslationName);
+    // static void adjustApplicationView(const QString &sApplicationFileName, QString sTranslationName);
     static QWidget *getMainWidget(QWidget *pWidget);
     static QString getTableModelText(QAbstractItemModel *pModel);
     static void _getTreeModelText(QString *psString, QAbstractItemModel *pModel, QModelIndex index, qint32 nLevel);
