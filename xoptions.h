@@ -27,7 +27,7 @@
 #include <QSysInfo>
 #include <QTranslator>
 #include <QAbstractItemModel>
-#if (QT_VERSION_MAJOR < 5)  // TODO Check
+#if (QT_VERSION_MAJOR < 5)  // TODO: Check
 #include <QRegExp>
 #else
 #include <QRegularExpression>
@@ -88,8 +88,8 @@ class XOptions : public QObject {
     Q_OBJECT
 
 public:
-    // TODO Check if update available
-    // TODO Show in dialog all available updates
+    // TODO: Check if update available
+    // TODO: Show in dialog all available updates
     // Ubuntu -> Ubuntu + Debian + appImage
     // Debian -> Debian + appImage
     // Parrot -> Parrot + Debian + appImage
@@ -100,10 +100,10 @@ public:
     // Windows XP -> Windows XP
     // MacOS M1 -> MacOS M1 + MacOS X64
     // MacOS X64 -> MacOS X64
-    // TODO Linux ARM types 32/64, old ARM? Check
-    // TODO Check other BSD
-    // TODO Check Raspberry PI
-    // TODO Check Windows ARM
+    // TODO: Linux ARM types 32/64, old ARM? Check
+    // TODO: Check other BSD
+    // TODO: Check Raspberry PI
+    // TODO: Check Windows ARM
     enum BUNDLE {
         BUNDLE_UNKNOWN = 0,
         BUNDLE_LINUX_ARCH_X64,
@@ -119,10 +119,10 @@ public:
         BUNDLE_WINDOWS_X64,
         BUNDLE_WINDOWS_ARM64,
         BUNDLE_MACOS_X64,
-        BUNDLE_MACOS_QT6_ARM64,  // TODO Check
+        BUNDLE_MACOS_QT6_ARM64,  // TODO: Check
         BUNDLE_FREEBSD_X64,
         BUNDLE_FEDORA_X64
-        // TODO more
+        // TODO: Add more BUNDLES for different operating systems!
     };
 
     enum WIDGETTYPE {
@@ -139,7 +139,7 @@ public:
         CR_CANNOTOPENFILE = 2,
         CR_CANNOTFINDDATABASE = 3,
         CR_INVALIDPARAMETER = 4
-        // TODO more
+        // TODO: Add more CR's
     };
 
     enum GROUPID {
@@ -160,14 +160,14 @@ public:
         GROUPID_STRUCTS,
         GROUPID_ONLINETOOLS,
         GROUPID_INFO
-        // TODO GitHub
+        // TODO: add GitHub to GROUPID
     };
 
     enum ID {
         ID_UNKNOWN = 0,
         ID_ROOTPATH,
-        ID_DATAPATH,  // TODO Create group
-        ID_JSON,      // TODO Create group
+        ID_DATAPATH,  // TODO: Create group
+        ID_JSON,      // TODO: Create group
         ID_STRUCTSPATH,
         ID_AUTHUSER,
         ID_AUTHTOKEN,
@@ -226,7 +226,7 @@ public:
         ID_DISASM_LOCATIONCOLON,
         ID_DISASM_UPPERCASE,
         ID_DISASM_HIGHLIGHT,
-        // TODO more
+        // TODO Add more
         ID_DISASM_COLOR_ARROWS,
         ID_DISASM_COLOR_ARROWS_SELECTED,
         ID_DISASM_COLOR_REGS,
@@ -254,8 +254,8 @@ public:
         ID_DISASM_COLOR_X86_OPCODE_SYSCALL,
         ID_DISASM_COLOR_ARM_REGS_GENERAL,
         ID_DISASM_COLOR_ARM_REGS_STACK,
-        ID_DISASM_COLOR_ARM_OPCODE_B,   // TODO  rename
-        ID_DISASM_COLOR_ARM_OPCODE_BL,  // TODO  rename
+        ID_DISASM_COLOR_ARM_OPCODE_B,   // TODO: rename
+        ID_DISASM_COLOR_ARM_OPCODE_BL,  // TODO: rename
         ID_DISASM_COLOR_ARM_OPCODE_RET,
         ID_DISASM_COLOR_ARM_OPCODE_PUSH,
         ID_DISASM_COLOR_ARM_OPCODE_POP,
@@ -266,8 +266,8 @@ public:
         ID_STACK_LOCATIONCOLON,
         ID_REGISTERS_FONT,
         ID_DEBUGGER_COLOR_BREAKPOINT,
-        // TODO debugger animate timeout
-        // TODO more
+        // TODO: debugger animate timeout
+        // TODO: Add more ID's for DISASM
         ID_IODRIVER_FILENAME,
         ID_IODRIVER_SERVICENAME,
         ID_STRUCTS_PATH,
@@ -411,10 +411,10 @@ public:
     bool isSaveLastDirectory();
     bool isSaveRecentFiles();
     bool isRestartNeeded();
-    bool isStayOnTop();  // TODO remove
+    bool isStayOnTop();  // TODO: remove
     bool isScanAfterOpen();
     bool isSingleApplication();
-    bool isShowLogo();  // TODO remove
+    bool isShowLogo();  // TODO: remove
     QString getSearchSignaturesPath();
     QString getStructsPath();
     QString getApplicationLangPath();
@@ -439,7 +439,7 @@ public:
     static bool _isAjustStayOnTop(QWidget *pWidget);
     static void _adjustApplicationModal(QWidget *pWidget, bool bState);
     static void _adjustFullScreen(QWidget *pWidget, bool bState);
-    // mb TODO max/min
+    // mb TODO: max/min
     QFont adjustFont(QWidget *pWidget, ID id = ID_VIEW_FONT);
     void adjustWindow(QWidget *pWidget);
     void adjustWidget(QWidget *pWidget, ID id = ID_VIEW_FONT);
