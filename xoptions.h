@@ -102,7 +102,6 @@ public:
     // MacOS X64 -> MacOS X64
     // TODO: Linux ARM types 32/64, old ARM? Check
     // TODO: Check other BSD
-    // TODO: Check Raspberry PI
     // TODO: Check Windows ARM
     enum BUNDLE {
         BUNDLE_UNKNOWN = 0,
@@ -110,6 +109,7 @@ public:
         BUNDLE_WINDOWS_QT6_X64,
         BUNDLE_LINUX_APPIMAGE_X64,
         BUNDLE_LINUX_DEBIAN_X64,
+        BUNDLE_LINUX_DEBIAN_X86,
         BUNDLE_LINUX_UBUNTU_X64,
         BUNDLE_LINUX_UBUNTU_ARM64,
         BUNDLE_LINUX_PARROT_X64,

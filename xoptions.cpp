@@ -2636,6 +2636,8 @@ QString XOptions::getBundleIdToString(BUNDLE bundle)
         sResult = "Linux AppImage x64";
     } else if (bundle == BUNDLE_LINUX_DEBIAN_X64) {
         sResult = "Linux Debian x64";
+    } else if (bundle == BUNDLE_LINUX_DEBIAN_X86) {
+        sResult = "Linux Debian x86";
     } else if (bundle == BUNDLE_LINUX_UBUNTU_X64) {
         sResult = "Linux Ubuntu x64";
     } else if (bundle == BUNDLE_LINUX_PARROT_X64) {
@@ -3030,7 +3032,11 @@ XOptions::BUNDLE XOptions::getBundle()
 #endif
 #endif
 #endif
-
+#ifdef Q_PROCESSOR_X86
+#ifdef Q_OS_LINUX
+    result = BUNDLE_LINUX_DEBIAN_X86;
+#endif
+#endif
 #ifdef Q_PROCESSOR_X86_64
 #ifdef Q_OS_LINUX
 #if QT_VERSION == QT_VERSION_CHECK(5, 2, 1)
