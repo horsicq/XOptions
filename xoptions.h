@@ -159,8 +159,8 @@ public:
         GROUPID_IODRIVER,
         GROUPID_STRUCTS,
         GROUPID_ONLINETOOLS,
-        GROUPID_INFO
-        // TODO: add GitHub to GROUPID
+        GROUPID_INFO,
+        GROUPID_GITHUB
     };
 
     enum ID {
