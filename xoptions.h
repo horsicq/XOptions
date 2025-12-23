@@ -33,7 +33,6 @@
 #include <QRegularExpression>
 #include <QRegularExpressionMatch>
 #endif
-// #include <QVector>
 #ifdef QT_GUI_LIB
 #include <QApplication>
 #include <QCheckBox>
@@ -227,7 +226,7 @@ public:
         ID_DISASM_LOCATIONCOLON,
         ID_DISASM_UPPERCASE,
         ID_DISASM_HIGHLIGHT,
-        // TODO Add more
+        // TODO: Add more
         ID_DISASM_COLOR_ARROWS,
         ID_DISASM_COLOR_ARROWS_SELECTED,
         ID_DISASM_COLOR_REGS,
