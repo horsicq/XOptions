@@ -100,7 +100,7 @@ public:
     // Windows XP -> Windows XP
     // MacOS M1 -> MacOS M1 + MacOS X64
     // MacOS X64 -> MacOS X64
-    // TODO: Linux ARM types 32/64, old ARM? Check
+    // TODO: Linux ARM types 32, old ARM? Check
     // TODO: Check other BSD
     // TODO: Check Windows ARM
     enum BUNDLE {
@@ -110,6 +110,7 @@ public:
         BUNDLE_LINUX_APPIMAGE_X64,
         BUNDLE_LINUX_DEBIAN_X64,
         BUNDLE_LINUX_DEBIAN_X86,
+        BUNDLE_LINUX_DEBIAN_ARM64,
         BUNDLE_LINUX_UBUNTU_X64,
         BUNDLE_LINUX_UBUNTU_ARM64,
         BUNDLE_LINUX_PARROT_X64,

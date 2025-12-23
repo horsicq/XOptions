@@ -2638,6 +2638,8 @@ QString XOptions::getBundleIdToString(BUNDLE bundle)
         sResult = "Linux Debian x64";
     } else if (bundle == BUNDLE_LINUX_DEBIAN_X86) {
         sResult = "Linux Debian x86";
+    } else if (bundle == BUNDLE_LINUX_DEBIAN_ARM64) {
+        sResult = "Linux Debian ARM64";
     } else if (bundle == BUNDLE_LINUX_UBUNTU_X64) {
         sResult = "Linux Ubuntu x64";
     } else if (bundle == BUNDLE_LINUX_PARROT_X64) {
