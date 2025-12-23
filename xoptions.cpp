@@ -2511,7 +2511,7 @@ QString XOptions::getClassesPrefix(USERROLE userRole)
 
     if (userRole == USERROLE_ADMIN) {
         sResult = "HKEY_CLASSES_ROOT";
-    } else if (userRole == USERROLE_NORMAL) {
+    } else if (userRole == USERROLE_NORMAL || userRole == USERROLE_GUEST || userRole == USERROLE_CHILD) {
         sResult = "HKEY_CURRENT_USER\\Software\\Classes";
     }
 

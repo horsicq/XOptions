@@ -501,7 +501,9 @@ public:
 #ifdef Q_OS_WIN
     enum USERROLE {
         USERROLE_NORMAL = 0,
-        USERROLE_ADMIN
+        USERROLE_ADMIN,
+        USERROLE_GUEST,
+        USERROLE_CHILD
     };
     QString getClassesPrefix(USERROLE userRole);
     bool registerContext(const QString &sApplicationName, const QString &sType, const QString &sApplicationFilePath, USERROLE userRole = USERROLE_ADMIN);
