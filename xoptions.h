@@ -27,12 +27,8 @@
 #include <QSysInfo>
 #include <QTranslator>
 #include <QAbstractItemModel>
-#if (QT_VERSION_MAJOR < 5)  // TODO: Check
-#include <QRegExp>
-#else
 #include <QRegularExpression>
 #include <QRegularExpressionMatch>
-#endif
 #ifdef QT_GUI_LIB
 #include <QApplication>
 #include <QCheckBox>
