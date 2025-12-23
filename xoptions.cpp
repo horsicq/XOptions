@@ -2091,7 +2091,7 @@ QString XOptions::getTitle(const QString &sName, const QString &sVersion, bool b
         QString architecture = QSysInfo::buildCpuArchitecture();
         if (architecture == "x86_64" || architecture == "amd64") {
             architecture = "x64";
-        } else if (architecture == "arm32" || architecture == "aarch32") {
+        } else if (architecture == "arm32" || architecture == "armhf" || architecture == "aarch32") {
             architecture = "ARM32";
         } else if (architecture == "arm64" || architecture == "aarch64") {
             architecture = "ARM64";
