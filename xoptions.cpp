@@ -392,9 +392,6 @@ void XOptions::load()
     if (xsimd_is_sse2_present()) {
         xsimd_set_sse2(m_mapValues.value(ID_FEATURE_SSE2).toBool());
     }
-    if (xsimd_is_avx_present()) {
-        xsimd_set_avx(m_mapValues.value(ID_FEATURE_AVX).toBool());
-    }
     if (xsimd_is_avx2_present()) {
         xsimd_set_avx2(m_mapValues.value(ID_FEATURE_AVX2).toBool());
     }
@@ -505,7 +502,6 @@ QString XOptions::idToString(ID id)
         case ID_FEATURE_READBUFFERSIZE: sResult = QString("Feature/ReadBufferSize"); break;
         case ID_FEATURE_FILEBUFFERSIZE: sResult = QString("Feature/FileBufferSize"); break;
         case ID_FEATURE_SSE2: sResult = QString("Feature/SSE2"); break;
-        case ID_FEATURE_AVX: sResult = QString("Feature/AVX"); break;
         case ID_FEATURE_AVX2: sResult = QString("Feature/AVX2"); break;
         case ID_ENGINE_BUFFERSIZE: sResult = QString("Engine/BufferSize"); break;
         case ID_SCAN_BUFFERSIZE: sResult = QString("Scan/BufferSize"); break;

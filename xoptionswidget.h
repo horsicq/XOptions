@@ -66,7 +66,6 @@ private slots:
     void on_pushButtonCancel_clicked();
     void on_checkBoxFileSetEnvVar_toggled(bool bChecked);
     void on_checkBoxSSE2_toggled(bool bChecked);
-    void on_checkBoxAVX_toggled(bool bChecked);
     void on_checkBoxAVX2_toggled(bool bChecked);
 
 signals:

@@ -668,13 +668,6 @@
              </widget>
             </item>
             <item>
-             <widget class="QCheckBox" name="checkBoxAVX">
-              <property name="text">
-               <string notr="true">AVX</string>
-              </property>
-             </widget>
-            </item>
-            <item>
              <widget class="QCheckBox" name="checkBoxAVX2">
               <property name="text">
                <string>AVX2</string>

@@ -189,7 +189,6 @@ public:
         ID_FEATURE_READBUFFERSIZE,
         ID_FEATURE_FILEBUFFERSIZE,
         ID_FEATURE_SSE2,
-        ID_FEATURE_AVX,
         ID_FEATURE_AVX2,
         ID_ENGINE_BUFFERSIZE,  // Obsolete
         ID_SCAN_BUFFERSIZE,    // Obsolete
