@@ -21,27 +21,79 @@
 #ifndef XCOLORSTRING_H
 #define XCOLORSTRING_H
 
-#include <QColor>
+#include <QMap>
+#include <QSet>
 #include <QString>
 #include <QVariant>
 #include <QVector>
 
+#ifdef Q_OS_WIN
+#include <Windows.h>
+#include <WinCon.h>
+#endif
+
+// Forward declarations for standalone usage
+#ifndef XOPTIONS_H
+namespace XOptions {
+struct COLOR_RECORD {
+    QString sColorMain;
+    QString sColorBackground;
+};
+}
+#else
+#include "xoptions.h"
+#endif
+
 class XColorString {
 public:
+    struct RGB_COLOR {
+        qint32 nRed;
+        qint32 nGreen;
+        qint32 nBlue;
+        bool bValid;
+    };
     struct PART {
         QString sText;
-        QString sColorMain;
-        QString sColorBackground;
+        XOptions::COLOR_RECORD colorRecord;
+    };
+
+    struct RULE {
+        quint32 nGroupID;
+        QString sString;
+        XOptions::COLOR_RECORD colorRecord;
+        bool bIsCaseSensitive;
+    };
+
+    struct CONSOLE_STATE {
+        quint32 nOriginalMode;
+        quint32 nCurrentMode;
+        bool bIsValid;
+        bool bIsEscapeMode;
+        bool bIsWinNativeMode;
     };
 
     XColorString();
     virtual ~XColorString();
 
+    static CONSOLE_STATE initConsole();
+    static void finishConsole(const CONSOLE_STATE &consoleState);
+
     void addPart(const QString &sText, const QString &sColorMain = "", const QString &sColorBackground = "");
     void addSpace();
+    void addString(quint32 nGroupID, const QString &sString);
+    void addRule(quint32 nGroupID, const QString &sString, const XOptions::COLOR_RECORD &colorRecord, bool bIsCaseSensitive);
+    void addRule(quint32 nGroupID, const QString &sString, const QString &sColorMain, const QString &sColorBackground, bool bIsCaseSensitive);
+    QString toPlainText();
+    void printConsole(CONSOLE_STATE *pConsoleState);
+
+    static qint32 colorToAnsiCode(const RGB_COLOR &color, bool bBackground = false);
+    static QString colorNameToHex(const QString &sColorName);
+    static RGB_COLOR hexToColor(const QString &sHex);
+    static RGB_COLOR parseColor(const QString &sColor);
 
 private:
     QVector<PART> m_vecParts;
+    QList<RULE> m_lstRules;
 };
 
 #endif  // XCOLORSTRING_H
