@@ -333,10 +333,7 @@ QString XColorString::colorNameToHex(const QString &sColorName)
     RGB_COLOR color = parseColor(sColorName);
 
     if (color.bValid) {
-        return QString("#%1%2%3")
-            .arg(color.nRed, 2, 16, QChar('0'))
-            .arg(color.nGreen, 2, 16, QChar('0'))
-            .arg(color.nBlue, 2, 16, QChar('0'));
+        return QString("#%1%2%3").arg(color.nRed, 2, 16, QChar('0')).arg(color.nGreen, 2, 16, QChar('0')).arg(color.nBlue, 2, 16, QChar('0'));
     }
 
     return QString();

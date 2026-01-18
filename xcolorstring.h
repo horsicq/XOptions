@@ -39,7 +39,7 @@ struct COLOR_RECORD {
     QString sColorMain;
     QString sColorBackground;
 };
-}
+}  // namespace XOptions
 #else
 #include "xoptions.h"
 #endif
