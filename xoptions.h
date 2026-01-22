@@ -377,6 +377,7 @@ public:
     GROUPID getGroupID(ID id);
     bool isIDPresent(ID id);
     bool isGroupIDPresent(GROUPID groupID);
+    static bool isMsixPackage();
     static bool isNative();
     static bool isAppImage();
     void setName(const QString &sValue);
@@ -553,5 +554,6 @@ private:
     QMenu *m_pCodePagesMenu;
 #endif
 };
+
 
 #endif  // XOPTIONS_H
