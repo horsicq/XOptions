@@ -221,6 +221,18 @@ bool XOptions::isGroupIDPresent(GROUPID groupID)
     return bResult;
 }
 
+bool XOptions::isMsixPackage()
+{
+#ifdef Q_OS_WIN
+    QString sApplicationDirPath = qApp->applicationDirPath();
+    sApplicationDirPath = QDir::cleanPath(sApplicationDirPath);
+    QString sLowerPath = sApplicationDirPath.toLower();
+    return sLowerPath.contains("\\windowsapps\\") || sLowerPath.contains("/windowsapps/");
+#else
+    return false;
+#endif
+}
+
 bool XOptions::isNative()
 {
 #ifdef X_BUILD_INSTALL
@@ -2066,20 +2078,36 @@ bool XOptions::checkNative(const QString &sIniFileName)
 QString XOptions::getApplicationDataPath()
 {
     QString sResult;
-
 #ifdef Q_OS_MAC
     sResult = sApplicationDirPath + "/../Resources";
 #endif
 #ifdef Q_OS_WIN
-    sResult = qApp->applicationDirPath();
-#endif
-#ifdef Q_OS_LINUX
+    if (isMsixPackage()) {
+        QString appDirPath = qApp->applicationDirPath();
+        QDir appDir(appDirPath);
+
+        if (appDir.cdUp()) {
+            QString packageFolderName = appDir.dirName();
+
+            QStringList parts = packageFolderName.split('_');
+            if (parts.size() >= 4) {
+                QString packageFamilyName = parts[0] + "_" + parts[parts.size() - 1];
+                sResult = QDir::homePath() + "/AppData/Local/Packages/" + packageFamilyName + "/LocalState";
+
+                QDir localStateDir(sResult);
+                if (!localStateDir.exists()) {
+                    localStateDir.mkpath(".");
+                }
+            }
+        }
+    } else {
+        sResult = qApp->applicationDirPath();
+    }
+#elif defined(Q_OS_LINUX)
     if (isNative()) {
         QString sApplicationDirPath = qApp->applicationDirPath();
-
         if (sApplicationDirPath.contains("/usr/local/bin$")) {
             QString sPrefix = sApplicationDirPath.section("/usr/local/bin", 0, 0);
-
             sResult += sPrefix + QString("/usr/local/lib/%1").arg(qApp->applicationName());
         } else if (sApplicationDirPath.startsWith("/app/bin")) {  // Flatpak
             sResult += QString("/app/lib/%1").arg(qApp->applicationName());
@@ -2088,7 +2116,6 @@ QString XOptions::getApplicationDataPath()
             {
                 sResult = sApplicationDirPath.section("/", 0, 2);
             }
-
             sResult += QString("/usr/lib/%1").arg(qApp->applicationName());
         }
     } else {
@@ -2108,7 +2135,7 @@ QString XOptions::getApplicationDataPath()
 #ifdef Q_OS_FREEBSD
     sResult = QStandardPaths::standardLocations(QStandardPaths::GenericDataLocation).at(1) + QDir::separator() + qApp->applicationName();
 #endif
-
+    
     return sResult;
 }
 
@@ -3095,3 +3122,4 @@ XOptions::BUNDLE XOptions::getBundle()
 
     return result;
 }
+
