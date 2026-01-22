@@ -35,6 +35,7 @@
 #include <QComboBox>
 #include <QDesktopServices>
 #include <QFileDialog>
+#include <QFontDatabase>
 #include <QFontDialog>
 #include <QGroupBox>
 #include <QLineEdit>

@@ -960,15 +960,50 @@ QFont XOptions::getMonoFont(qint32 nFontSize)
 #endif
     }
 
+    QFontDatabase fontDatabase;
+    QStringList listFamilies = fontDatabase.families();
+
+    QString sFontFamily;
+
 #ifdef Q_OS_WIN
-    fontResult = QFont("Courier", nFontSize);
+    if (listFamilies.contains("Courier New")) {
+        sFontFamily = "Courier New";
+    } else if (listFamilies.contains("Courier")) {
+        sFontFamily = "Courier";
+    } else if (listFamilies.contains("Consolas")) {
+        sFontFamily = "Consolas";
+    }
 #endif
 #ifdef Q_OS_LINUX
-    fontResult = QFont("DejaVu Sans Mono", nFontSize);
+    if (listFamilies.contains("DejaVu Sans Mono")) {
+        sFontFamily = "DejaVu Sans Mono";
+    } else if (listFamilies.contains("Liberation Mono")) {
+        sFontFamily = "Liberation Mono";
+    } else if (listFamilies.contains("Courier New")) {
+        sFontFamily = "Courier New";
+    } else if (listFamilies.contains("Courier")) {
+        sFontFamily = "Courier";
+    }
 #endif
 #ifdef Q_OS_MACOS
-    fontResult = QFont("Menlo", nFontSize);
+    if (listFamilies.contains("Menlo")) {
+        sFontFamily = "Menlo";
+    } else if (listFamilies.contains("Monaco")) {
+        sFontFamily = "Monaco";
+    } else if (listFamilies.contains("Courier New")) {
+        sFontFamily = "Courier New";
+    } else if (listFamilies.contains("Courier")) {
+        sFontFamily = "Courier";
+    }
 #endif
+
+    if (!sFontFamily.isEmpty()) {
+        fontResult = QFont(sFontFamily, nFontSize);
+    } else {
+        fontResult.setFamily("monospace");
+        fontResult.setStyleHint(QFont::Monospace);
+        fontResult.setPointSize(nFontSize);
+    }
 
     return fontResult;
 }
