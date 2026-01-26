@@ -130,7 +130,11 @@ XOptions::GROUPID XOptions::getGroupID(ID id)
         case ID_SCAN_DATABASE_CUSTOM_PATH:
         case ID_SCAN_DATABASE_EXTRA_ENABLED:
         case ID_SCAN_DATABASE_CUSTOM_ENABLED:
-        case ID_SCAN_YARARULESPATH: result = GROUPID_SCAN; break;
+        case ID_SCAN_YARARULESPATH:
+        case ID_SCAN_TARGET_ALLFILETYPES:
+        case ID_SCAN_TARGET_ALLTYPES:
+        case ID_SCAN_TARGET_FILETYPES:
+        case ID_SCAN_TARGET_TYPES: result = GROUPID_SCAN; break;
         case ID_SIGNATURES_PATH: result = GROUPID_SIGNATURES; break;
         case ID_INFO_PATH: result = GROUPID_INFO; break;
         case ID_DISASM_FONT:
@@ -219,18 +223,6 @@ bool XOptions::isGroupIDPresent(GROUPID groupID)
     }
 
     return bResult;
-}
-
-bool XOptions::isMsixPackage()
-{
-#ifdef Q_OS_WIN
-    QString sApplicationDirPath = qApp->applicationDirPath();
-    sApplicationDirPath = QDir::cleanPath(sApplicationDirPath);
-    QString sLowerPath = sApplicationDirPath.toLower();
-    return sLowerPath.contains("\\windowsapps\\") || sLowerPath.contains("/windowsapps/");
-#else
-    return false;
-#endif
 }
 
 bool XOptions::isNative()
@@ -538,6 +530,10 @@ QString XOptions::idToString(ID id)
         case ID_SCAN_DATABASE_EXTRA_ENABLED: sResult = QString("Scan/Database/Extra/Enabled"); break;
         case ID_SCAN_DATABASE_CUSTOM_ENABLED: sResult = QString("Scan/Database/Custom/Enabled"); break;
         case ID_SCAN_YARARULESPATH: sResult = QString("Scan/YaraRulesPath"); break;
+        case ID_SCAN_TARGET_ALLFILETYPES: sResult = QString("Scan/Target/AllFileTypes"); break;
+        case ID_SCAN_TARGET_ALLTYPES: sResult = QString("Scan/Target/AllTypes"); break;
+        case ID_SCAN_TARGET_FILETYPES: sResult = QString("Scan/Target/FileTypes"); break;
+        case ID_SCAN_TARGET_TYPES: sResult = QString("Scan/Target/Types"); break;
         case ID_SIGNATURES_PATH: sResult = QString("Signatures/Path"); break;
         case ID_INFO_PATH: sResult = QString("Info/Path"); break;
         case ID_ONLINETOOLS_VIRUSTOTAL_APIKEY: sResult = QString("OnlineTools/VirusTotalApi"); break;
@@ -2078,36 +2074,20 @@ bool XOptions::checkNative(const QString &sIniFileName)
 QString XOptions::getApplicationDataPath()
 {
     QString sResult;
+
 #ifdef Q_OS_MAC
     sResult = sApplicationDirPath + "/../Resources";
 #endif
 #ifdef Q_OS_WIN
-    if (isMsixPackage()) {
-        QString appDirPath = qApp->applicationDirPath();
-        QDir appDir(appDirPath);
-
-        if (appDir.cdUp()) {
-            QString packageFolderName = appDir.dirName();
-
-            QStringList parts = packageFolderName.split('_');
-            if (parts.size() >= 4) {
-                QString packageFamilyName = parts[0] + "_" + parts[parts.size() - 1];
-                sResult = QDir::homePath() + "/AppData/Local/Packages/" + packageFamilyName + "/LocalState";
-
-                QDir localStateDir(sResult);
-                if (!localStateDir.exists()) {
-                    localStateDir.mkpath(".");
-                }
-            }
-        }
-    } else {
-        sResult = qApp->applicationDirPath();
-    }
-#elif defined(Q_OS_LINUX)
+    sResult = qApp->applicationDirPath();
+#endif
+#ifdef Q_OS_LINUX
     if (isNative()) {
         QString sApplicationDirPath = qApp->applicationDirPath();
+
         if (sApplicationDirPath.contains("/usr/local/bin$")) {
             QString sPrefix = sApplicationDirPath.section("/usr/local/bin", 0, 0);
+
             sResult += sPrefix + QString("/usr/local/lib/%1").arg(qApp->applicationName());
         } else if (sApplicationDirPath.startsWith("/app/bin")) {  // Flatpak
             sResult += QString("/app/lib/%1").arg(qApp->applicationName());
@@ -2116,6 +2096,7 @@ QString XOptions::getApplicationDataPath()
             {
                 sResult = sApplicationDirPath.section("/", 0, 2);
             }
+
             sResult += QString("/usr/lib/%1").arg(qApp->applicationName());
         }
     } else {
@@ -2135,7 +2116,7 @@ QString XOptions::getApplicationDataPath()
 #ifdef Q_OS_FREEBSD
     sResult = QStandardPaths::standardLocations(QStandardPaths::GenericDataLocation).at(1) + QDir::separator() + qApp->applicationName();
 #endif
-    
+
     return sResult;
 }
 
@@ -3122,4 +3103,3 @@ XOptions::BUNDLE XOptions::getBundle()
 
     return result;
 }
-

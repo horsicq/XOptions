@@ -214,6 +214,10 @@ public:
         ID_SCAN_DATABASE_EXTRA_ENABLED,
         ID_SCAN_DATABASE_CUSTOM_ENABLED,
         ID_SCAN_YARARULESPATH,
+        ID_SCAN_TARGET_ALLFILETYPES,
+        ID_SCAN_TARGET_ALLTYPES,
+        ID_SCAN_TARGET_FILETYPES,
+        ID_SCAN_TARGET_TYPES,
         ID_SIGNATURES_PATH,
         ID_INFO_PATH,
         ID_ONLINETOOLS_VIRUSTOTAL_APIKEY,
@@ -377,7 +381,6 @@ public:
     GROUPID getGroupID(ID id);
     bool isIDPresent(ID id);
     bool isGroupIDPresent(GROUPID groupID);
-    static bool isMsixPackage();
     static bool isNative();
     static bool isAppImage();
     void setName(const QString &sValue);
@@ -554,6 +557,5 @@ private:
     QMenu *m_pCodePagesMenu;
 #endif
 };
-
 
 #endif  // XOPTIONS_H
