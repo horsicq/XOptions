@@ -1119,6 +1119,8 @@ void XOptions::setComboBox(QComboBox *pComboBox, XOptions::ID id)
         pComboBox->addItem(QString("Nauz File Detector (NFD)"), "nfd");
         // TODO: peid
         // TODO: TrID
+        // TODO: EXEInfoPE
+        // TODO: PE Detective
 #ifdef USE_YARA
         pComboBox->addItem(QString("Yara rules"), "yara");
 #endif
