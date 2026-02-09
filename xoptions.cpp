@@ -113,6 +113,8 @@ XOptions::GROUPID XOptions::getGroupID(ID id)
         case ID_SCAN_SCANAFTEROPEN:
         case ID_SCAN_FLAG_RECURSIVE:
         case ID_SCAN_FLAG_OVERLAY:
+        case ID_SCAN_FLAG_RESOURCES:
+        case ID_SCAN_FLAG_ARCHIVES:
         case ID_SCAN_FLAG_DEEP:
         case ID_SCAN_FLAG_HEURISTIC:
         case ID_SCAN_FLAG_AGGRESSIVE:
@@ -512,6 +514,8 @@ QString XOptions::idToString(ID id)
         case ID_SCAN_BUFFERSIZE: sResult = QString("Scan/BufferSize"); break;
         case ID_SCAN_SCANAFTEROPEN: sResult = QString("Scan/ScanAfterOpen"); break;
         case ID_SCAN_FLAG_RECURSIVE: sResult = QString("Scan/Flag/Recursive"); break;
+        case ID_SCAN_FLAG_RESOURCES: sResult = QString("Scan/Flag/Resources"); break;
+        case ID_SCAN_FLAG_ARCHIVES: sResult = QString("Scan/Flag/Archives"); break;
         case ID_SCAN_FLAG_OVERLAY: sResult = QString("Scan/Flag/Overlay"); break;
         case ID_SCAN_FLAG_DEEP: sResult = QString("Scan/Flag/Deep"); break;
         case ID_SCAN_FLAG_HEURISTIC: sResult = QString("Scan/Flag/Heuristic"); break;
