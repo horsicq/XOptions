@@ -2084,48 +2084,114 @@ bool XOptions::checkNative(const QString &sIniFileName)
 QString XOptions::getApplicationDataPath()
 {
     QString sResult;
+    bool bResult = false;
 
-#ifdef Q_OS_MAC
-    sResult = sApplicationDirPath + "/../Resources";
-#endif
-#ifdef Q_OS_WIN
-    sResult = qApp->applicationDirPath();
-#endif
-#ifdef Q_OS_LINUX
-    if (isNative()) {
-        QString sApplicationDirPath = qApp->applicationDirPath();
+    QString sApplicationDirPath = qApp->applicationDirPath();
+    QString sApplicationName = qApp->applicationName();
 
-        if (sApplicationDirPath.contains("/usr/local/bin$")) {
+    if (!bResult) {
+        if (sApplicationDirPath.contains("/usr/local/bin")) {
             QString sPrefix = sApplicationDirPath.section("/usr/local/bin", 0, 0);
 
-            sResult += sPrefix + QString("/usr/local/lib/%1").arg(qApp->applicationName());
-        } else if (sApplicationDirPath.startsWith("/app/bin")) {  // Flatpak
-            sResult += QString("/app/lib/%1").arg(qApp->applicationName());
-        } else {
-            if (sApplicationDirPath.contains("/tmp/.mount_"))  // AppImage
-            {
-                sResult = sApplicationDirPath.section("/", 0, 2);
-            }
+            sResult += sPrefix + QString("/usr/local/lib/%1").arg(sApplicationName);
 
-            sResult += QString("/usr/lib/%1").arg(qApp->applicationName());
+            if (QDir(sResult).exists()) {
+                bResult = true;
+            }
         }
-    } else {
-        sResult = qApp->applicationDirPath();
+    }
+
+    if (!bResult) {
+        if (sApplicationDirPath.contains("/app/bin")) {
+            QString sPrefix = sApplicationDirPath.section("/app/bin", 0, 0);
+
+            sResult += sPrefix + QString("/app/lib/%1").arg(sApplicationName);
+
+            if (QDir(sResult).exists()) {
+                bResult = true;
+            }
+        }
+    }
+
+    if (!bResult) {
+        if (sApplicationDirPath.contains("/tmp/.mount_")) {
+            QString sPrefix = sApplicationDirPath.section("/", 0, 2);
+
+            sResult += sPrefix + QString("/usr/lib/%1").arg(sApplicationName);
+
+            if (QDir(sResult).exists()) {
+                bResult = true;
+            }
+        }
+    }
+
+    if (!bResult) {
+        sResult = QStandardPaths::writableLocation(QStandardPaths::AppDataLocation);;
+
+        if (QDir(sResult).exists()) {
+            bResult = true;
+        }
+    }
+
+#ifdef Q_OS_MAC
+    if (!bResult) {
+        sResult = sApplicationDirPath + "/../Resources";
+        if (QDir(sResult).exists()) {
+            bResult = true;
+        }
     }
 #endif
 #ifdef X_BUILD_APPIMAGE
-    QString sApplicationDirPath = qApp->applicationDirPath();
-    if (sApplicationDirPath.contains("/tmp/.mount_")) {
-        sResult = sApplicationDirPath.section("/", 0, 2);
+    if (!bResult) {
+        if (sApplicationDirPath.contains("/tmp/.mount_")) {
+            QString sPrefix = sApplicationDirPath.section("/", 0, 2);
+
+            sResult += sPrefix + QString("/usr/lib/%1").arg(sApplicationName);
+
+            if (QDir(sResult).exists()) {
+                bResult = true;
+            }
+        }
     }
-    sResult += QString("/usr/lib/%1").arg(qApp->applicationName());
 #endif
 #ifdef X_BUILD_FLATPACK
-    sResult = QString("/app/lib/%1").arg(qApp->applicationName());
+    if (!bResult) {
+        sResult = QString("/app/lib/%1").arg(sApplicationName);
+
+        if (QDir(sResult).exists()) {
+            bResult = true;
+        }
+    }
 #endif
 #ifdef Q_OS_FREEBSD
-    sResult = QStandardPaths::standardLocations(QStandardPaths::GenericDataLocation).at(1) + QDir::separator() + qApp->applicationName();
+    if (!bResult) {
+        sResult = QStandardPaths::standardLocations(QStandardPaths::GenericDataLocation).at(1) + QDir::separator() + sApplicationName;
+
+        if (QDir(sResult).exists()) {
+            bResult = true;
+        }
+    }
 #endif
+
+    // dataPathAlt0 .. dataPathAltN
+    if (!bResult) {
+        qint32 nIndex = 0;
+        while (true) {
+            QString sResult = qApp->property(QString("dataPathAlt%1").arg(nIndex).toUtf8().data()).toString();
+
+            if (QDir(sResult).exists()) {
+                bResult = true;
+                break;
+            }
+
+            nIndex++;
+        }
+    }
+
+    if (!bResult) {
+        bResult = true;
+        sResult = sApplicationDirPath;
+    }
 
     return sResult;
 }

@@ -66,9 +66,7 @@
 #include <QTextCodec>
 #include "codecs/codec_cp437.h"
 #endif
-#if defined(Q_OS_FREEBSD)
 #include <QStandardPaths>
-#endif
 #ifdef Q_OS_WIN
 #include <Windows.h>
 #include <WinCon.h>
