@@ -2126,7 +2126,8 @@ QString XOptions::getApplicationDataPath()
     }
 
     if (!bResult) {
-        sResult = QStandardPaths::writableLocation(QStandardPaths::AppDataLocation);;
+        sResult = QStandardPaths::writableLocation(QStandardPaths::AppDataLocation);
+        ;
 
         if (QDir(sResult).exists()) {
             bResult = true;
