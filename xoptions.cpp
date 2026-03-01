@@ -303,7 +303,7 @@ void XOptions::load()
 
 #ifdef QT_DEBUG
     if (pSettings) {
-        qDebug("XOptions load file %s", pSettings->fileName().toUtf8().data());
+        qDebug("XOptions::load(): Loaded file from %s", pSettings->fileName().toUtf8().data());
     }
 #endif
 
@@ -421,7 +421,7 @@ void XOptions::save()
 
 #ifdef QT_DEBUG
     if (pSettings) {
-        qDebug("XOptions save file %s", pSettings->fileName().toUtf8().data());
+        qDebug("XOptions::save(): Saved file to %s", pSettings->fileName().toUtf8().data());
     }
 #endif
 
