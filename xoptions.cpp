@@ -843,6 +843,26 @@ void XOptions::_adjustFullScreen(QWidget *pWidget, bool bState)
 }
 #endif
 #ifdef QT_GUI_LIB
+void XOptions::_adjustMaximizeScreen(QWidget *pWidget, bool bState)
+{
+    if (bState) {
+        pWidget->showMaximized();
+    } else {
+        pWidget->showNormal();
+    }
+}
+#endif
+#ifdef QT_GUI_LIB
+void XOptions::_adjustMinimizeScreen(QWidget *pWidget, bool bState)
+{
+    if (bState) {
+        pWidget->showMinimized();
+    } else {
+        pWidget->showNormal();
+    }
+}
+#endif
+#ifdef QT_GUI_LIB
 QFont XOptions::adjustFont(QWidget *pWidget, ID id)
 {
     QFont result;

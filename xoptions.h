@@ -440,7 +440,8 @@ public:
     static bool _isAjustStayOnTop(QWidget *pWidget);
     static void _adjustApplicationModal(QWidget *pWidget, bool bState);
     static void _adjustFullScreen(QWidget *pWidget, bool bState);
-    // mb TODO: max/min
+    static void _adjustMaximizeScreen(QWidget *pWidget, bool bState);
+    static void _adjustMinimizeScreen(QWidget *pWidget, bool bState);
     QFont adjustFont(QWidget *pWidget, ID id = ID_VIEW_FONT);
     void adjustWindow(QWidget *pWidget);
     void adjustWidget(QWidget *pWidget, ID id = ID_VIEW_FONT);
