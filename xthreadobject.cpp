@@ -29,6 +29,11 @@ QString XThreadObject::getTitle()
     return tr("Process");
 }
 
+QString XThreadObject::setTitle() 
+{
+    return tr("Process");
+}
+
 void XThreadObject::_connect(XThreadObject *pThreadObject)
 {
     connect(pThreadObject, &XThreadObject::errorMessage, this, &XThreadObject::errorMessage);
