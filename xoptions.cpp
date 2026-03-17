@@ -66,6 +66,11 @@ void XOptions::setValueIDs(const QList<ID> &listVariantIDs)
     m_listValueIDs = listVariantIDs;
 }
 
+QList<XOptions::ID> XOptions::getValueIDs() const
+{
+    return m_listValueIDs;
+}
+
 void XOptions::setDefaultValues(QMap<XOptions::ID, QVariant> mapDefaultValues)
 {
     m_mapDefaultValues = mapDefaultValues;

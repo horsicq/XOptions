@@ -376,6 +376,7 @@ public:
 
     void resetToDefault();
     void setValueIDs(const QList<ID> &listValueIDs);
+    QList<ID> getValueIDs() const;
     void setDefaultValues(QMap<ID, QVariant> mapDefaultValues);
     void addID(ID id, QVariant varDefaultValue = QVariant());
     void removeID(ID id);
