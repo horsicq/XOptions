@@ -362,6 +362,8 @@ void XOptions::load()
                 case ID_NU_RECENTFILES: varDefault = QList<QVariant>(); break;
                 case ID_NU_LASTDIRECTORY: varDefault = ""; break;
                 case ID_ENGINE_BUFFERSIZE: varDefault = 2 * 1024 * 1024; break;
+                case ID_FEATURE_READBUFFERSIZE: varDefault = 4 * 1024; break;
+                case ID_FEATURE_FILEBUFFERSIZE: varDefault = 64 * 1024 * 1024; break;
                 default: varDefault = "";
             }
         }
