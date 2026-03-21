@@ -22,7 +22,7 @@
 #define XPROCESSWATCH_H
 
 #include <QTimer>
-#include "xbinary.h"
+#include "../../Formats/xbinary.h"
 
 class XProcessWatch : public QObject {
     Q_OBJECT
