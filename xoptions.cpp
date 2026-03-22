@@ -139,6 +139,9 @@ XOptions::GROUPID XOptions::getGroupID(ID id)
         case ID_SCAN_DATABASE_EXTRA_ENABLED:
         case ID_SCAN_DATABASE_CUSTOM_ENABLED:
         case ID_SCAN_YARARULESPATH:
+        case ID_SCAN_YARA_DATABASE_PATH:
+        case ID_SCAN_PEID_DATABASE_PATH:
+        case ID_SCAN_TARGET_ALL:
         case ID_SCAN_TARGET_ALLFILETYPES:
         case ID_SCAN_TARGET_ALLTYPES:
         case ID_SCAN_TARGET_FILETYPES:
@@ -371,7 +374,8 @@ void XOptions::load()
         QVariant variant = pSettings->value(sName, varDefault);
 
         if (!variant.toString().contains("$data")) {
-            if ((id == ID_SCAN_DATABASE_MAIN_PATH) || (id == ID_SCAN_DATABASE_EXTRA_PATH) || (id == ID_SCAN_DATABASE_CUSTOM_PATH)) {
+            if ((id == ID_SCAN_DATABASE_MAIN_PATH) || (id == ID_SCAN_DATABASE_EXTRA_PATH) || (id == ID_SCAN_DATABASE_CUSTOM_PATH) ||
+                       (id == ID_SCAN_YARA_DATABASE_PATH) || (id == ID_SCAN_PEID_DATABASE_PATH)) {
                 if ((!QDir(variant.toString()).exists()) && (!QFile(variant.toString()).exists())) {
                     variant = varDefault;
                 }
@@ -543,6 +547,9 @@ QString XOptions::idToString(ID id)
         case ID_SCAN_DATABASE_EXTRA_ENABLED: sResult = QString("Scan/Database/Extra/Enabled"); break;
         case ID_SCAN_DATABASE_CUSTOM_ENABLED: sResult = QString("Scan/Database/Custom/Enabled"); break;
         case ID_SCAN_YARARULESPATH: sResult = QString("Scan/YaraRulesPath"); break;
+        case ID_SCAN_YARA_DATABASE_PATH: sResult = QString("Scan/Yara/Database/Path"); break;
+        case ID_SCAN_PEID_DATABASE_PATH: sResult = QString("Scan/Peid/Database/Path"); break;
+        case ID_SCAN_TARGET_ALL: sResult = QString("Scan/Target/All"); break;
         case ID_SCAN_TARGET_ALLFILETYPES: sResult = QString("Scan/Target/AllFileTypes"); break;
         case ID_SCAN_TARGET_ALLTYPES: sResult = QString("Scan/Target/AllTypes"); break;
         case ID_SCAN_TARGET_FILETYPES: sResult = QString("Scan/Target/FileTypes"); break;
@@ -740,6 +747,16 @@ QString XOptions::getExtraDatabasePath()
 QString XOptions::getCustomDatabasePath()
 {
     return getValue(ID_SCAN_DATABASE_CUSTOM_PATH).toString();
+}
+
+QString XOptions::getYaraDatabasePath()
+{
+    return getValue(ID_SCAN_YARA_DATABASE_PATH).toString();
+}
+
+QString XOptions::getPeidDatabasePath()
+{
+    return getValue(ID_SCAN_PEID_DATABASE_PATH).toString();
 }
 
 QString XOptions::getScanEngine()

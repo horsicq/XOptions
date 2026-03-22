@@ -215,6 +215,9 @@ public:
         ID_SCAN_DATABASE_EXTRA_ENABLED,
         ID_SCAN_DATABASE_CUSTOM_ENABLED,
         ID_SCAN_YARARULESPATH,
+        ID_SCAN_YARA_DATABASE_PATH,
+        ID_SCAN_PEID_DATABASE_PATH,
+        ID_SCAN_TARGET_ALL,
         ID_SCAN_TARGET_ALLFILETYPES,
         ID_SCAN_TARGET_ALLTYPES,
         ID_SCAN_TARGET_FILETYPES,
@@ -401,6 +404,8 @@ public:
     QString getDatabasePath();
     QString getExtraDatabasePath();
     QString getCustomDatabasePath();
+    QString getYaraDatabasePath();
+    QString getPeidDatabasePath();
     QString getScanEngine();
     QString getInfoPath();
     QString getRootPath();
