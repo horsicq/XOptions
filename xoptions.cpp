@@ -133,6 +133,10 @@ XOptions::GROUPID XOptions::getGroupID(ID id)
         case ID_SCAN_HIDEUNKNOWN:
         case ID_SCAN_ENGINE:
         case ID_SCAN_ENGINE_EMPTY:
+        case ID_SCAN_ENGINE_DIE_ENABLED:
+        case ID_SCAN_ENGINE_NFD_ENABLED:
+        case ID_SCAN_ENGINE_PEID_ENABLED:
+        case ID_SCAN_ENGINE_YARA_ENABLED:
         case ID_SCAN_DATABASE_MAIN_PATH:
         case ID_SCAN_DATABASE_EXTRA_PATH:
         case ID_SCAN_DATABASE_CUSTOM_PATH:
@@ -541,6 +545,10 @@ QString XOptions::idToString(ID id)
         case ID_SCAN_HIDEUNKNOWN: sResult = QString("Scan/HideUnknown"); break;
         case ID_SCAN_ENGINE:
         case ID_SCAN_ENGINE_EMPTY: sResult = QString("Scan/Engine"); break;
+        case ID_SCAN_ENGINE_DIE_ENABLED: sResult = QString("Scan/Engine/Die/Enabled"); break;
+        case ID_SCAN_ENGINE_NFD_ENABLED: sResult = QString("Scan/Engine/Nfd/Enabled"); break;
+        case ID_SCAN_ENGINE_PEID_ENABLED: sResult = QString("Scan/Engine/Peid/Enabled"); break;
+        case ID_SCAN_ENGINE_YARA_ENABLED: sResult = QString("Scan/Engine/Yara/Enabled"); break;
         case ID_SCAN_DATABASE_MAIN_PATH: sResult = QString("Scan/Database/Main/Path"); break;
         case ID_SCAN_DATABASE_EXTRA_PATH: sResult = QString("Scan/Database/Extra/Path"); break;
         case ID_SCAN_DATABASE_CUSTOM_PATH: sResult = QString("Scan/Database/Custom/Path"); break;
