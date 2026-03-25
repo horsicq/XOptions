@@ -46,6 +46,9 @@ void DialogViewColors::setOptions(XOptions *pOptions, const QList<RECORD> &listR
 
     qint32 nNumberOfRecords = listRecords.count();
 
+    ui->tableWidgetColors->setUpdatesEnabled(false);
+    ui->tableWidgetColors->setSortingEnabled(false);
+
     ui->tableWidgetColors->clear();
 
     ui->tableWidgetColors->setColumnCount(6);
@@ -66,6 +69,8 @@ void DialogViewColors::setOptions(XOptions *pOptions, const QList<RECORD> &listR
     ui->tableWidgetColors->setColumnWidth(COLUMN_BACKGROUND_COLOR, 100);
     ui->tableWidgetColors->setColumnWidth(COLUMN_BACKGROUND_COLOR_REMOVE, 20);
     ui->tableWidgetColors->horizontalHeader()->setStretchLastSection(true);
+
+    ui->tableWidgetColors->setUpdatesEnabled(true);
 
     setWindowTitle(sTitle);
 }
@@ -93,47 +98,27 @@ void DialogViewColors::on_pushButtonCancel_clicked()
     this->close();
 }
 
+static QPushButton *_createButton(const QString &sText, qint32 nRow, qint32 nColumn, XOptions::ID id, QObject *pReceiver, const char *pSlot)
+{
+    QPushButton *pButton = new QPushButton;
+    pButton->setText(sText);
+    pButton->setProperty("ROW", nRow);
+    pButton->setProperty("COLUMN", nColumn);
+    pButton->setProperty("ID", id);
+    QObject::connect(pButton, SIGNAL(clicked(bool)), pReceiver, pSlot);
+    return pButton;
+}
+
 void DialogViewColors::addRecord(qint32 nRow, const QString &sGroup, const QString &sText, XOptions::ID id)
 {
     if (!m_pOptions) {
         return;
     }
 
-    // Text color button
-    QPushButton *pButtonColor = new QPushButton;
-    pButtonColor->setText(tr("Color"));
-    pButtonColor->setProperty("ROW", nRow);
-    pButtonColor->setProperty("COLUMN", COLUMN_TEXT_COLOR);
-    pButtonColor->setProperty("ID", id);
-    connect(pButtonColor, SIGNAL(clicked(bool)), this, SLOT(pushButtonSlot()));
-    ui->tableWidgetColors->setCellWidget(nRow, COLUMN_TEXT_COLOR, pButtonColor);
-
-    // Text color remove button
-    QPushButton *pButtonColorRemove = new QPushButton;
-    pButtonColorRemove->setText("X");
-    pButtonColorRemove->setProperty("ROW", nRow);
-    pButtonColorRemove->setProperty("COLUMN", COLUMN_TEXT_COLOR_REMOVE);
-    pButtonColorRemove->setProperty("ID", id);
-    connect(pButtonColorRemove, SIGNAL(clicked(bool)), this, SLOT(pushButtonSlot()));
-    ui->tableWidgetColors->setCellWidget(nRow, COLUMN_TEXT_COLOR_REMOVE, pButtonColorRemove);
-
-    // Background color button
-    QPushButton *pButtonBackgroundColor = new QPushButton;
-    pButtonBackgroundColor->setText(tr("Background"));
-    pButtonBackgroundColor->setProperty("ROW", nRow);
-    pButtonBackgroundColor->setProperty("COLUMN", COLUMN_BACKGROUND_COLOR);
-    pButtonBackgroundColor->setProperty("ID", id);
-    connect(pButtonBackgroundColor, SIGNAL(clicked(bool)), this, SLOT(pushButtonSlot()));
-    ui->tableWidgetColors->setCellWidget(nRow, COLUMN_BACKGROUND_COLOR, pButtonBackgroundColor);
-
-    // Background color remove button
-    QPushButton *pButtonBackgroundColorRemove = new QPushButton;
-    pButtonBackgroundColorRemove->setText("X");
-    pButtonBackgroundColorRemove->setProperty("ROW", nRow);
-    pButtonBackgroundColorRemove->setProperty("COLUMN", COLUMN_BACKGROUND_COLOR_REMOVE);
-    pButtonBackgroundColorRemove->setProperty("ID", id);
-    connect(pButtonBackgroundColorRemove, SIGNAL(clicked(bool)), this, SLOT(pushButtonSlot()));
-    ui->tableWidgetColors->setCellWidget(nRow, COLUMN_BACKGROUND_COLOR_REMOVE, pButtonBackgroundColorRemove);
+    ui->tableWidgetColors->setCellWidget(nRow, COLUMN_TEXT_COLOR,            _createButton(tr("Color"),      nRow, COLUMN_TEXT_COLOR,            id, this, SLOT(pushButtonSlot())));
+    ui->tableWidgetColors->setCellWidget(nRow, COLUMN_TEXT_COLOR_REMOVE,     _createButton("X",              nRow, COLUMN_TEXT_COLOR_REMOVE,     id, this, SLOT(pushButtonSlot())));
+    ui->tableWidgetColors->setCellWidget(nRow, COLUMN_BACKGROUND_COLOR,      _createButton(tr("Background"), nRow, COLUMN_BACKGROUND_COLOR,      id, this, SLOT(pushButtonSlot())));
+    ui->tableWidgetColors->setCellWidget(nRow, COLUMN_BACKGROUND_COLOR_REMOVE, _createButton("X",            nRow, COLUMN_BACKGROUND_COLOR_REMOVE, id, this, SLOT(pushButtonSlot())));
 
     // Group item
     ui->tableWidgetColors->setItem(nRow, COLUMN_GROUP, new QTableWidgetItem(sGroup));
@@ -168,8 +153,9 @@ void DialogViewColors::updateRow(qint32 nRow)
     XOptions::ID id = (XOptions::ID)(pWidget->property("ID").toUInt());
 
     const QString sColor = m_mapColors.value(id);
-    const QString sTextColor = sColor.section("|", 0, 0);
-    const QString sBackgroundColor = sColor.section("|", 1, 1);
+    qint32 nSep = sColor.indexOf('|');
+    const QString sTextColor = (nSep >= 0) ? sColor.left(nSep) : sColor;
+    const QString sBackgroundColor = (nSep >= 0) ? sColor.mid(nSep + 1) : QString();
 
     QLineEdit *pLineEdit = qobject_cast<QLineEdit *>(ui->tableWidgetColors->cellWidget(nRow, COLUMN_STRING));
     if (pLineEdit) {
@@ -207,8 +193,9 @@ void DialogViewColors::pushButtonSlot()
     const XOptions::ID id = (XOptions::ID)(pPushButton->property("ID").toUInt());
 
     const QString sColor = m_mapColors.value(id);
-    QString sTextColor = sColor.section("|", 0, 0);
-    QString sBackgroundColor = sColor.section("|", 1, 1);
+    qint32 nSep = sColor.indexOf('|');
+    QString sTextColor = (nSep >= 0) ? sColor.left(nSep) : sColor;
+    QString sBackgroundColor = (nSep >= 0) ? sColor.mid(nSep + 1) : QString();
 
     if (nColumn == COLUMN_TEXT_COLOR) {
         QColor color;
