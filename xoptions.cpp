@@ -149,7 +149,55 @@ XOptions::GROUPID XOptions::getGroupID(ID id)
         case ID_SCAN_TARGET_ALLFILETYPES:
         case ID_SCAN_TARGET_ALLTYPES:
         case ID_SCAN_TARGET_FILETYPES:
-        case ID_SCAN_TARGET_TYPES: result = GROUPID_SCAN; break;
+        case ID_SCAN_TARGET_TYPES:
+        case ID_SCAN_COLOR_INSTALLER:
+        case ID_SCAN_COLOR_SFX:
+        case ID_SCAN_COLOR_ARCHIVE:
+        case ID_SCAN_COLOR_PROTECTION:
+        case ID_SCAN_COLOR_PETOOL:
+        case ID_SCAN_COLOR_APKTOOL:
+        case ID_SCAN_COLOR_OS:
+        case ID_SCAN_COLOR_VM:
+        case ID_SCAN_COLOR_PLATFORM:
+        case ID_SCAN_COLOR_DOSEXTENDER:
+        case ID_SCAN_COLOR_FORMAT:
+        case ID_SCAN_COLOR_SIGNTOOL:
+        case ID_SCAN_COLOR_CERTIFICATE:
+        case ID_SCAN_COLOR_LICENSING:
+        case ID_SCAN_COLOR_LANGUAGE:
+        case ID_SCAN_COLOR_CORRUPTEDDATA:
+        case ID_SCAN_COLOR_PERSONALDATA:
+        case ID_SCAN_COLOR_AUTHOR:
+        case ID_SCAN_COLOR_VIRUS:
+        case ID_SCAN_COLOR_TROJAN:
+        case ID_SCAN_COLOR_MALWARE:
+        case ID_SCAN_COLOR_DEBUG:
+        case ID_SCAN_COLOR_DEBUGDATA:
+        case ID_SCAN_COLOR_GAMEENGINE:
+        case ID_SCAN_COLOR_COMPILER:
+        case ID_SCAN_COLOR_COMPRESSOR:
+        case ID_SCAN_COLOR_CONVERTER:
+        case ID_SCAN_COLOR_CREATOR:
+        case ID_SCAN_COLOR_DATA:
+        case ID_SCAN_COLOR_DATABASE:
+        case ID_SCAN_COLOR_DOCUMENT:
+        case ID_SCAN_COLOR_GENERIC:
+        case ID_SCAN_COLOR_IMAGE:
+        case ID_SCAN_COLOR_INSTALLERDATA:
+        case ID_SCAN_COLOR_LIBRARY:
+        case ID_SCAN_COLOR_LINKER:
+        case ID_SCAN_COLOR_LOADER:
+        case ID_SCAN_COLOR_OBFUSCATOR:
+        case ID_SCAN_COLOR_OVERLAY:
+        case ID_SCAN_COLOR_PACKAGE:
+        case ID_SCAN_COLOR_PLAYER:
+        case ID_SCAN_COLOR_PRODUCER:
+        case ID_SCAN_COLOR_PROTECTORDATA:
+        case ID_SCAN_COLOR_ROM:
+        case ID_SCAN_COLOR_SFXDATA:
+        case ID_SCAN_COLOR_SOURCECODE:
+        case ID_SCAN_COLOR_STUB:
+        case ID_SCAN_COLOR_TOOL: result = GROUPID_SCAN; break;
         case ID_SIGNATURES_PATH: result = GROUPID_SIGNATURES; break;
         case ID_INFO_PATH: result = GROUPID_INFO; break;
         case ID_DISASM_FONT:
@@ -562,6 +610,54 @@ QString XOptions::idToString(ID id)
         case ID_SCAN_TARGET_ALLTYPES: sResult = QString("Scan/Target/AllTypes"); break;
         case ID_SCAN_TARGET_FILETYPES: sResult = QString("Scan/Target/FileTypes"); break;
         case ID_SCAN_TARGET_TYPES: sResult = QString("Scan/Target/Types"); break;
+        case ID_SCAN_COLOR_INSTALLER: sResult = QString("Scan/Color/Installer"); break;
+        case ID_SCAN_COLOR_SFX: sResult = QString("Scan/Color/Sfx"); break;
+        case ID_SCAN_COLOR_ARCHIVE: sResult = QString("Scan/Color/Archive"); break;
+        case ID_SCAN_COLOR_PROTECTION: sResult = QString("Scan/Color/Protection"); break;
+        case ID_SCAN_COLOR_PETOOL: sResult = QString("Scan/Color/PeTool"); break;
+        case ID_SCAN_COLOR_APKTOOL: sResult = QString("Scan/Color/ApkTool"); break;
+        case ID_SCAN_COLOR_OS: sResult = QString("Scan/Color/OS"); break;
+        case ID_SCAN_COLOR_VM: sResult = QString("Scan/Color/VM"); break;
+        case ID_SCAN_COLOR_PLATFORM: sResult = QString("Scan/Color/Platform"); break;
+        case ID_SCAN_COLOR_DOSEXTENDER: sResult = QString("Scan/Color/DosExtender"); break;
+        case ID_SCAN_COLOR_FORMAT: sResult = QString("Scan/Color/Format"); break;
+        case ID_SCAN_COLOR_SIGNTOOL: sResult = QString("Scan/Color/SignTool"); break;
+        case ID_SCAN_COLOR_CERTIFICATE: sResult = QString("Scan/Color/Certificate"); break;
+        case ID_SCAN_COLOR_LICENSING: sResult = QString("Scan/Color/Licensing"); break;
+        case ID_SCAN_COLOR_LANGUAGE: sResult = QString("Scan/Color/Language"); break;
+        case ID_SCAN_COLOR_CORRUPTEDDATA: sResult = QString("Scan/Color/CorruptedData"); break;
+        case ID_SCAN_COLOR_PERSONALDATA: sResult = QString("Scan/Color/PersonalData"); break;
+        case ID_SCAN_COLOR_AUTHOR: sResult = QString("Scan/Color/Author"); break;
+        case ID_SCAN_COLOR_VIRUS: sResult = QString("Scan/Color/Virus"); break;
+        case ID_SCAN_COLOR_TROJAN: sResult = QString("Scan/Color/Trojan"); break;
+        case ID_SCAN_COLOR_MALWARE: sResult = QString("Scan/Color/Malware"); break;
+        case ID_SCAN_COLOR_DEBUG: sResult = QString("Scan/Color/Debug"); break;
+        case ID_SCAN_COLOR_DEBUGDATA: sResult = QString("Scan/Color/DebugData"); break;
+        case ID_SCAN_COLOR_GAMEENGINE: sResult = QString("Scan/Color/GameEngine"); break;
+        case ID_SCAN_COLOR_COMPILER: sResult = QString("Scan/Color/Compiler"); break;
+        case ID_SCAN_COLOR_COMPRESSOR: sResult = QString("Scan/Color/Compressor"); break;
+        case ID_SCAN_COLOR_CONVERTER: sResult = QString("Scan/Color/Converter"); break;
+        case ID_SCAN_COLOR_CREATOR: sResult = QString("Scan/Color/Creator"); break;
+        case ID_SCAN_COLOR_DATA: sResult = QString("Scan/Color/Data"); break;
+        case ID_SCAN_COLOR_DATABASE: sResult = QString("Scan/Color/Database"); break;
+        case ID_SCAN_COLOR_DOCUMENT: sResult = QString("Scan/Color/Document"); break;
+        case ID_SCAN_COLOR_GENERIC: sResult = QString("Scan/Color/Generic"); break;
+        case ID_SCAN_COLOR_IMAGE: sResult = QString("Scan/Color/Image"); break;
+        case ID_SCAN_COLOR_INSTALLERDATA: sResult = QString("Scan/Color/InstallerData"); break;
+        case ID_SCAN_COLOR_LIBRARY: sResult = QString("Scan/Color/Library"); break;
+        case ID_SCAN_COLOR_LINKER: sResult = QString("Scan/Color/Linker"); break;
+        case ID_SCAN_COLOR_LOADER: sResult = QString("Scan/Color/Loader"); break;
+        case ID_SCAN_COLOR_OBFUSCATOR: sResult = QString("Scan/Color/Obfuscator"); break;
+        case ID_SCAN_COLOR_OVERLAY: sResult = QString("Scan/Color/Overlay"); break;
+        case ID_SCAN_COLOR_PACKAGE: sResult = QString("Scan/Color/Package"); break;
+        case ID_SCAN_COLOR_PLAYER: sResult = QString("Scan/Color/Player"); break;
+        case ID_SCAN_COLOR_PRODUCER: sResult = QString("Scan/Color/Producer"); break;
+        case ID_SCAN_COLOR_PROTECTORDATA: sResult = QString("Scan/Color/ProtectorData"); break;
+        case ID_SCAN_COLOR_ROM: sResult = QString("Scan/Color/ROM"); break;
+        case ID_SCAN_COLOR_SFXDATA: sResult = QString("Scan/Color/SfxData"); break;
+        case ID_SCAN_COLOR_SOURCECODE: sResult = QString("Scan/Color/SourceCode"); break;
+        case ID_SCAN_COLOR_STUB: sResult = QString("Scan/Color/Stub"); break;
+        case ID_SCAN_COLOR_TOOL: sResult = QString("Scan/Color/Tool"); break;
         case ID_SIGNATURES_PATH: sResult = QString("Signatures/Path"); break;
         case ID_INFO_PATH: sResult = QString("Info/Path"); break;
         case ID_ONLINETOOLS_VIRUSTOTAL_APIKEY: sResult = QString("OnlineTools/VirusTotalApi"); break;
@@ -2352,7 +2448,7 @@ void XOptions::registerCodecs()
 #endif
 }
 #ifndef QT_GUI_LIB
-void XOptions::printConsole(QString sString, Qt::GlobalColor colorText, Qt::GlobalColor colorBackground)
+void XOptions::printConsole(QString sString, QColor colorText, QColor colorBackground)
 {
     bool bEscapeMode = false;
     bool bNativeMode = false;
@@ -2362,7 +2458,7 @@ void XOptions::printConsole(QString sString, Qt::GlobalColor colorText, Qt::Glob
     WORD wOldAttribute = 0;
     DWORD dwMode = 0;
 
-    if (colorText != Qt::transparent || colorBackground != Qt::transparent) {
+    if (colorText.alpha() > 0 || colorBackground.alpha() > 0) {
         hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
 
         if (hConsole) {
@@ -2386,54 +2482,48 @@ void XOptions::printConsole(QString sString, Qt::GlobalColor colorText, Qt::Glob
         }
     }
 #else
-    if (colorText != Qt::transparent || colorBackground != Qt::transparent) {
+    if (colorText.alpha() > 0 || colorBackground.alpha() > 0) {
         bEscapeMode = true;
     }
 #endif
 
     if (bEscapeMode) {
-        if (colorText != Qt::transparent || colorBackground != Qt::transparent) {
+        if (colorText.alpha() > 0 || colorBackground.alpha() > 0) {
             // Foreground
             int fg = 39, bg = 49;  // Default
-            // Map Qt::GlobalColor to ANSI codes
-            switch (colorText) {
-                case Qt::black: fg = 30; break;
-                case Qt::red: fg = 31; break;
-                case Qt::green: fg = 32; break;
-                case Qt::yellow: fg = 33; break;
-                case Qt::blue: fg = 34; break;
-                case Qt::magenta: fg = 35; break;
-                case Qt::cyan: fg = 36; break;
-                case Qt::gray: fg = 90; break;
-                case Qt::white: fg = 37; break;
-                case Qt::darkRed: fg = 91; break;
-                case Qt::darkGreen: fg = 92; break;
-                case Qt::darkYellow: fg = 93; break;
-                case Qt::darkBlue: fg = 94; break;
-                case Qt::darkMagenta: fg = 95; break;
-                case Qt::darkCyan: fg = 96; break;
-                case Qt::darkGray: fg = 90; break;  // Or 90 as gray
-                default: fg = 39; break;
-            }
-            switch (colorBackground) {
-                case Qt::black: bg = 40; break;
-                case Qt::red: bg = 41; break;
-                case Qt::green: bg = 42; break;
-                case Qt::yellow: bg = 43; break;
-                case Qt::blue: bg = 44; break;
-                case Qt::magenta: bg = 45; break;
-                case Qt::cyan: bg = 46; break;
-                case Qt::gray: bg = 100; break;
-                case Qt::white: bg = 47; break;
-                case Qt::darkRed: bg = 101; break;
-                case Qt::darkGreen: bg = 102; break;
-                case Qt::darkYellow: bg = 103; break;
-                case Qt::darkBlue: bg = 104; break;
-                case Qt::darkMagenta: bg = 105; break;
-                case Qt::darkCyan: bg = 106; break;
-                case Qt::darkGray: bg = 100; break;
-                default: bg = 49; break;
-            }
+            // Map QColor to ANSI codes
+            if (colorText == QColor(Qt::black)) { fg = 30; }
+            else if (colorText == QColor(Qt::red)) { fg = 31; }
+            else if (colorText == QColor(Qt::green)) { fg = 32; }
+            else if (colorText == QColor(Qt::yellow)) { fg = 33; }
+            else if (colorText == QColor(Qt::blue)) { fg = 34; }
+            else if (colorText == QColor(Qt::magenta)) { fg = 35; }
+            else if (colorText == QColor(Qt::cyan)) { fg = 36; }
+            else if (colorText == QColor(Qt::gray)) { fg = 90; }
+            else if (colorText == QColor(Qt::white)) { fg = 37; }
+            else if (colorText == QColor(Qt::darkRed)) { fg = 91; }
+            else if (colorText == QColor(Qt::darkGreen)) { fg = 92; }
+            else if (colorText == QColor(Qt::darkYellow)) { fg = 93; }
+            else if (colorText == QColor(Qt::darkBlue)) { fg = 94; }
+            else if (colorText == QColor(Qt::darkMagenta)) { fg = 95; }
+            else if (colorText == QColor(Qt::darkCyan)) { fg = 96; }
+            else if (colorText == QColor(Qt::darkGray)) { fg = 90; }
+            if (colorBackground == QColor(Qt::black)) { bg = 40; }
+            else if (colorBackground == QColor(Qt::red)) { bg = 41; }
+            else if (colorBackground == QColor(Qt::green)) { bg = 42; }
+            else if (colorBackground == QColor(Qt::yellow)) { bg = 43; }
+            else if (colorBackground == QColor(Qt::blue)) { bg = 44; }
+            else if (colorBackground == QColor(Qt::magenta)) { bg = 45; }
+            else if (colorBackground == QColor(Qt::cyan)) { bg = 46; }
+            else if (colorBackground == QColor(Qt::gray)) { bg = 100; }
+            else if (colorBackground == QColor(Qt::white)) { bg = 47; }
+            else if (colorBackground == QColor(Qt::darkRed)) { bg = 101; }
+            else if (colorBackground == QColor(Qt::darkGreen)) { bg = 102; }
+            else if (colorBackground == QColor(Qt::darkYellow)) { bg = 103; }
+            else if (colorBackground == QColor(Qt::darkBlue)) { bg = 104; }
+            else if (colorBackground == QColor(Qt::darkMagenta)) { bg = 105; }
+            else if (colorBackground == QColor(Qt::darkCyan)) { bg = 106; }
+            else if (colorBackground == QColor(Qt::darkGray)) { bg = 100; }
             printf("\033[%d;%dm", fg, bg);
         }
     } else if (bNativeMode) {
@@ -2447,76 +2537,76 @@ void XOptions::printConsole(QString sString, Qt::GlobalColor colorText, Qt::Glob
         WORD wAttribute = 0;
 
         // Foreground (text) color
-        if (colorText == Qt::black) {
+        if (colorText == QColor(Qt::black)) {
             wAttribute |= 0;
-        } else if (colorText == Qt::white) {
+        } else if (colorText == QColor(Qt::white)) {
             wAttribute |= FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE;
-        } else if (colorText == Qt::blue) {
+        } else if (colorText == QColor(Qt::blue)) {
             wAttribute |= FOREGROUND_BLUE;
-        } else if (colorText == Qt::red) {
+        } else if (colorText == QColor(Qt::red)) {
             wAttribute |= FOREGROUND_RED;
-        } else if (colorText == Qt::green) {
+        } else if (colorText == QColor(Qt::green)) {
             wAttribute |= FOREGROUND_GREEN;
-        } else if (colorText == Qt::yellow) {
+        } else if (colorText == QColor(Qt::yellow)) {
             wAttribute |= FOREGROUND_RED | FOREGROUND_GREEN;
-        } else if (colorText == Qt::magenta) {
+        } else if (colorText == QColor(Qt::magenta)) {
             wAttribute |= FOREGROUND_RED | FOREGROUND_BLUE;
-        } else if (colorText == Qt::cyan) {
+        } else if (colorText == QColor(Qt::cyan)) {
             wAttribute |= FOREGROUND_GREEN | FOREGROUND_BLUE;
-        } else if (colorText == Qt::darkBlue) {
+        } else if (colorText == QColor(Qt::darkBlue)) {
             wAttribute |= FOREGROUND_BLUE | FOREGROUND_INTENSITY;
-        } else if (colorText == Qt::darkRed) {
+        } else if (colorText == QColor(Qt::darkRed)) {
             wAttribute |= FOREGROUND_RED | FOREGROUND_INTENSITY;
-        } else if (colorText == Qt::darkGreen) {
+        } else if (colorText == QColor(Qt::darkGreen)) {
             wAttribute |= FOREGROUND_GREEN | FOREGROUND_INTENSITY;
-        } else if (colorText == Qt::darkYellow) {
+        } else if (colorText == QColor(Qt::darkYellow)) {
             wAttribute |= FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_INTENSITY;
-        } else if (colorText == Qt::darkMagenta) {
+        } else if (colorText == QColor(Qt::darkMagenta)) {
             wAttribute |= FOREGROUND_RED | FOREGROUND_BLUE | FOREGROUND_INTENSITY;
-        } else if (colorText == Qt::darkCyan) {
+        } else if (colorText == QColor(Qt::darkCyan)) {
             wAttribute |= FOREGROUND_GREEN | FOREGROUND_BLUE | FOREGROUND_INTENSITY;
-        } else if (colorText == Qt::gray) {
+        } else if (colorText == QColor(Qt::gray)) {
             wAttribute |= FOREGROUND_INTENSITY;
-        } else if (colorText == Qt::darkGray) {
+        } else if (colorText == QColor(Qt::darkGray)) {
             wAttribute |= FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE | FOREGROUND_INTENSITY;
-        } else if (colorText == Qt::transparent) {
+        } else if (colorText == QColor(Qt::transparent)) {
             wAttribute |= FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE;
         }
 
         // Background color
-        if (colorBackground == Qt::black) {
+        if (colorBackground == QColor(Qt::black)) {
             wAttribute |= 0;
-        } else if (colorBackground == Qt::white) {
+        } else if (colorBackground == QColor(Qt::white)) {
             wAttribute |= BACKGROUND_RED | BACKGROUND_GREEN | BACKGROUND_BLUE;
-        } else if (colorBackground == Qt::blue) {
+        } else if (colorBackground == QColor(Qt::blue)) {
             wAttribute |= BACKGROUND_BLUE;
-        } else if (colorBackground == Qt::red) {
+        } else if (colorBackground == QColor(Qt::red)) {
             wAttribute |= BACKGROUND_RED;
-        } else if (colorBackground == Qt::green) {
+        } else if (colorBackground == QColor(Qt::green)) {
             wAttribute |= BACKGROUND_GREEN;
-        } else if (colorBackground == Qt::yellow) {
+        } else if (colorBackground == QColor(Qt::yellow)) {
             wAttribute |= BACKGROUND_RED | BACKGROUND_GREEN;
-        } else if (colorBackground == Qt::magenta) {
+        } else if (colorBackground == QColor(Qt::magenta)) {
             wAttribute |= BACKGROUND_RED | BACKGROUND_BLUE;
-        } else if (colorBackground == Qt::cyan) {
+        } else if (colorBackground == QColor(Qt::cyan)) {
             wAttribute |= BACKGROUND_GREEN | BACKGROUND_BLUE;
-        } else if (colorBackground == Qt::darkBlue) {
+        } else if (colorBackground == QColor(Qt::darkBlue)) {
             wAttribute |= BACKGROUND_BLUE | BACKGROUND_INTENSITY;
-        } else if (colorBackground == Qt::darkRed) {
+        } else if (colorBackground == QColor(Qt::darkRed)) {
             wAttribute |= BACKGROUND_RED | BACKGROUND_INTENSITY;
-        } else if (colorBackground == Qt::darkGreen) {
+        } else if (colorBackground == QColor(Qt::darkGreen)) {
             wAttribute |= BACKGROUND_GREEN | BACKGROUND_INTENSITY;
-        } else if (colorBackground == Qt::darkYellow) {
+        } else if (colorBackground == QColor(Qt::darkYellow)) {
             wAttribute |= BACKGROUND_RED | BACKGROUND_GREEN | BACKGROUND_INTENSITY;
-        } else if (colorBackground == Qt::darkMagenta) {
+        } else if (colorBackground == QColor(Qt::darkMagenta)) {
             wAttribute |= BACKGROUND_RED | BACKGROUND_BLUE | BACKGROUND_INTENSITY;
-        } else if (colorBackground == Qt::darkCyan) {
+        } else if (colorBackground == QColor(Qt::darkCyan)) {
             wAttribute |= BACKGROUND_GREEN | BACKGROUND_BLUE | BACKGROUND_INTENSITY;
-        } else if (colorBackground == Qt::gray) {
+        } else if (colorBackground == QColor(Qt::gray)) {
             wAttribute |= BACKGROUND_INTENSITY;
-        } else if (colorBackground == Qt::darkGray) {
+        } else if (colorBackground == QColor(Qt::darkGray)) {
             wAttribute |= BACKGROUND_RED | BACKGROUND_GREEN | BACKGROUND_BLUE | BACKGROUND_INTENSITY;
-        } else if (colorBackground == Qt::transparent) {
+        } else if (colorBackground == QColor(Qt::transparent)) {
             // No background bits set (leave as is)
         }
 
@@ -2529,7 +2619,7 @@ void XOptions::printConsole(QString sString, Qt::GlobalColor colorText, Qt::Glob
     printf("%s", sString.toUtf8().data());
 
     if (bEscapeMode) {
-        if (colorText != Qt::transparent || colorBackground != Qt::transparent) {
+        if (colorText.alpha() > 0 || colorBackground.alpha() > 0) {
             printf("\033[0m");
         }
 #ifdef Q_OS_WIN
@@ -2537,7 +2627,7 @@ void XOptions::printConsole(QString sString, Qt::GlobalColor colorText, Qt::Glob
 #endif
     } else if (bNativeMode) {
 #ifdef Q_OS_WIN
-        if (colorText != Qt::transparent || colorBackground != Qt::transparent) {
+        if (colorText.alpha() > 0 || colorBackground.alpha() > 0) {
             if (wOldAttribute) {
                 SetConsoleTextAttribute(hConsole, wOldAttribute);
             }

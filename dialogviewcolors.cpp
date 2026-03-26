@@ -159,7 +159,14 @@ void DialogViewColors::updateRow(qint32 nRow)
 
     QLineEdit *pLineEdit = qobject_cast<QLineEdit *>(ui->tableWidgetColors->cellWidget(nRow, COLUMN_STRING));
     if (pLineEdit) {
-        pLineEdit->setStyleSheet(QString("color: %1; background-color: %2").arg(sTextColor, sBackgroundColor));
+        QString sStyle;
+        if (!sTextColor.isEmpty()) {
+            sStyle += QString("color: %1; ").arg(sTextColor);
+        }
+        if (!sBackgroundColor.isEmpty()) {
+            sStyle += QString("background-color: %1;").arg(sBackgroundColor);
+        }
+        pLineEdit->setStyleSheet(sStyle);
     }
 
     QPushButton *pButtonTextRemove = qobject_cast<QPushButton *>(ui->tableWidgetColors->cellWidget(nRow, COLUMN_TEXT_COLOR_REMOVE));

@@ -226,6 +226,54 @@ public:
         ID_SCAN_TARGET_ALLTYPES,
         ID_SCAN_TARGET_FILETYPES,
         ID_SCAN_TARGET_TYPES,
+        ID_SCAN_COLOR_INSTALLER,
+        ID_SCAN_COLOR_SFX,
+        ID_SCAN_COLOR_ARCHIVE,
+        ID_SCAN_COLOR_PROTECTION,
+        ID_SCAN_COLOR_PETOOL,
+        ID_SCAN_COLOR_APKTOOL,
+        ID_SCAN_COLOR_OS,
+        ID_SCAN_COLOR_VM,
+        ID_SCAN_COLOR_PLATFORM,
+        ID_SCAN_COLOR_DOSEXTENDER,
+        ID_SCAN_COLOR_FORMAT,
+        ID_SCAN_COLOR_SIGNTOOL,
+        ID_SCAN_COLOR_CERTIFICATE,
+        ID_SCAN_COLOR_LICENSING,
+        ID_SCAN_COLOR_LANGUAGE,
+        ID_SCAN_COLOR_CORRUPTEDDATA,
+        ID_SCAN_COLOR_PERSONALDATA,
+        ID_SCAN_COLOR_AUTHOR,
+        ID_SCAN_COLOR_VIRUS,
+        ID_SCAN_COLOR_TROJAN,
+        ID_SCAN_COLOR_MALWARE,
+        ID_SCAN_COLOR_DEBUG,
+        ID_SCAN_COLOR_DEBUGDATA,
+        ID_SCAN_COLOR_GAMEENGINE,
+        ID_SCAN_COLOR_COMPILER,
+        ID_SCAN_COLOR_COMPRESSOR,
+        ID_SCAN_COLOR_CONVERTER,
+        ID_SCAN_COLOR_CREATOR,
+        ID_SCAN_COLOR_DATA,
+        ID_SCAN_COLOR_DATABASE,
+        ID_SCAN_COLOR_DOCUMENT,
+        ID_SCAN_COLOR_GENERIC,
+        ID_SCAN_COLOR_IMAGE,
+        ID_SCAN_COLOR_INSTALLERDATA,
+        ID_SCAN_COLOR_LIBRARY,
+        ID_SCAN_COLOR_LINKER,
+        ID_SCAN_COLOR_LOADER,
+        ID_SCAN_COLOR_OBFUSCATOR,
+        ID_SCAN_COLOR_OVERLAY,
+        ID_SCAN_COLOR_PACKAGE,
+        ID_SCAN_COLOR_PLAYER,
+        ID_SCAN_COLOR_PRODUCER,
+        ID_SCAN_COLOR_PROTECTORDATA,
+        ID_SCAN_COLOR_ROM,
+        ID_SCAN_COLOR_SFXDATA,
+        ID_SCAN_COLOR_SOURCECODE,
+        ID_SCAN_COLOR_STUB,
+        ID_SCAN_COLOR_TOOL,
         ID_SIGNATURES_PATH,
         ID_INFO_PATH,
         ID_ONLINETOOLS_VIRUSTOTAL_APIKEY,
@@ -375,8 +423,8 @@ public:
     };
 
     struct GLOBAL_COLOR_RECORD {
-        Qt::GlobalColor colorMain;
-        Qt::GlobalColor colorBackground;
+        QColor colorMain;
+        QColor colorBackground;
     };
 
     explicit XOptions(QObject *pParent = nullptr);
@@ -536,7 +584,7 @@ public:
     static void registerCodecs();
 
 #ifndef QT_GUI_LIB
-    static void printConsole(QString sString, Qt::GlobalColor colorText = Qt::transparent, Qt::GlobalColor colorBackground = Qt::transparent);
+    static void printConsole(QString sString, QColor colorText = Qt::transparent, QColor colorBackground = Qt::transparent);
     static void printModel(QAbstractItemModel *pModel);
 #endif
 
