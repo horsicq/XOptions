@@ -422,10 +422,10 @@ public:
         QString sColorBackground;
     };
 
-    struct GLOBAL_COLOR_RECORD {
-        QColor colorMain;
-        QColor colorBackground;
-    };
+    // struct GLOBAL_COLOR_RECORD {
+    //     QColor colorMain;
+    //     QColor colorBackground;
+    // };
 
     explicit XOptions(QObject *pParent = nullptr);
 
@@ -584,7 +584,8 @@ public:
     static void registerCodecs();
 
 #ifndef QT_GUI_LIB
-    static void printConsole(QString sString, QColor colorText = Qt::transparent, QColor colorBackground = Qt::transparent);
+    static Qt::GlobalColor hexToGlobalColor(const QString &sHex);
+    static void printConsole(const QString &sString, const QString &colorText = "", const QString &colorBackground = "");
     static void printModel(QAbstractItemModel *pModel);
 #endif
 

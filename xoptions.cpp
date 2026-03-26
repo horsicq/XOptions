@@ -2448,8 +2448,76 @@ void XOptions::registerCodecs()
 #endif
 }
 #ifndef QT_GUI_LIB
-void XOptions::printConsole(QString sString, QColor colorText, QColor colorBackground)
+Qt::GlobalColor XOptions::hexToGlobalColor(const QString &sHex)
 {
+    if (sHex.isEmpty() || !sHex.startsWith("#") || sHex.length() != 7) {
+        return Qt::color0;
+    }
+
+    bool bOk;
+    qint32 nR = sHex.mid(1, 2).toInt(&bOk, 16);
+
+    if (!bOk) return Qt::color0;
+
+    qint32 nG = sHex.mid(3, 2).toInt(&bOk, 16);
+
+    if (!bOk) return Qt::color0;
+
+    qint32 nB = sHex.mid(5, 2).toInt(&bOk, 16);
+
+    if (!bOk) return Qt::color0;
+
+    struct ColorEntry {
+        qint32 nR;
+        qint32 nG;
+        qint32 nB;
+        Qt::GlobalColor color;
+    };
+
+    static const ColorEntry table[] = {
+        {   0,   0,   0, Qt::black       },
+        { 255, 255, 255, Qt::white       },
+        { 128, 128, 128, Qt::darkGray    },
+        { 160, 160, 164, Qt::gray        },
+        { 255,   0,   0, Qt::red         },
+        {   0, 255,   0, Qt::green       },
+        {   0,   0, 255, Qt::blue        },
+        {   0, 255, 255, Qt::cyan        },
+        { 255,   0, 255, Qt::magenta     },
+        { 255, 255,   0, Qt::yellow      },
+        { 128,   0,   0, Qt::darkRed     },
+        {   0, 128,   0, Qt::darkGreen   },
+        {   0,   0, 128, Qt::darkBlue    },
+        {   0, 128, 128, Qt::darkCyan    },
+        { 128,   0, 128, Qt::darkMagenta },
+        { 128, 128,   0, Qt::darkYellow  },
+    };
+
+    Qt::GlobalColor bestColor = Qt::black;
+    qint32 nBestDist = 0x7FFFFFFF;
+    qint32 nCount = sizeof(table) / sizeof(ColorEntry);
+
+    for (qint32 i = 0; i < nCount; i++) {
+        qint32 nDR = nR - table[i].nR;
+        qint32 nDG = nG - table[i].nG;
+        qint32 nDB = nB - table[i].nB;
+        qint32 nDist = nDR * nDR + nDG * nDG + nDB * nDB;
+
+        if (nDist < nBestDist) {
+            nBestDist = nDist;
+            bestColor = table[i].color;
+        }
+    }
+
+    return bestColor;
+}
+#endif
+#ifndef QT_GUI_LIB
+void XOptions::printConsole(const QString &sString, const QString &sColorText, const QString &sColorBackground)
+{
+    Qt::GlobalColor colorText = hexToGlobalColor(sColorText);
+    Qt::GlobalColor colorBackground = hexToGlobalColor(sColorBackground);
+
     bool bEscapeMode = false;
     bool bNativeMode = false;
 
@@ -2458,7 +2526,7 @@ void XOptions::printConsole(QString sString, QColor colorText, QColor colorBackg
     WORD wOldAttribute = 0;
     DWORD dwMode = 0;
 
-    if (colorText.alpha() > 0 || colorBackground.alpha() > 0) {
+    if (colorText != Qt::transparent || colorBackground != Qt::transparent) {
         hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
 
         if (hConsole) {
@@ -2482,48 +2550,54 @@ void XOptions::printConsole(QString sString, QColor colorText, QColor colorBackg
         }
     }
 #else
-    if (colorText.alpha() > 0 || colorBackground.alpha() > 0) {
+    if (colorText != Qt::transparent || colorBackground != Qt::transparent) {
         bEscapeMode = true;
     }
 #endif
 
     if (bEscapeMode) {
-        if (colorText.alpha() > 0 || colorBackground.alpha() > 0) {
+        if (colorText != Qt::transparent || colorBackground != Qt::transparent) {
             // Foreground
             int fg = 39, bg = 49;  // Default
-            // Map QColor to ANSI codes
-            if (colorText == QColor(Qt::black)) { fg = 30; }
-            else if (colorText == QColor(Qt::red)) { fg = 31; }
-            else if (colorText == QColor(Qt::green)) { fg = 32; }
-            else if (colorText == QColor(Qt::yellow)) { fg = 33; }
-            else if (colorText == QColor(Qt::blue)) { fg = 34; }
-            else if (colorText == QColor(Qt::magenta)) { fg = 35; }
-            else if (colorText == QColor(Qt::cyan)) { fg = 36; }
-            else if (colorText == QColor(Qt::gray)) { fg = 90; }
-            else if (colorText == QColor(Qt::white)) { fg = 37; }
-            else if (colorText == QColor(Qt::darkRed)) { fg = 91; }
-            else if (colorText == QColor(Qt::darkGreen)) { fg = 92; }
-            else if (colorText == QColor(Qt::darkYellow)) { fg = 93; }
-            else if (colorText == QColor(Qt::darkBlue)) { fg = 94; }
-            else if (colorText == QColor(Qt::darkMagenta)) { fg = 95; }
-            else if (colorText == QColor(Qt::darkCyan)) { fg = 96; }
-            else if (colorText == QColor(Qt::darkGray)) { fg = 90; }
-            if (colorBackground == QColor(Qt::black)) { bg = 40; }
-            else if (colorBackground == QColor(Qt::red)) { bg = 41; }
-            else if (colorBackground == QColor(Qt::green)) { bg = 42; }
-            else if (colorBackground == QColor(Qt::yellow)) { bg = 43; }
-            else if (colorBackground == QColor(Qt::blue)) { bg = 44; }
-            else if (colorBackground == QColor(Qt::magenta)) { bg = 45; }
-            else if (colorBackground == QColor(Qt::cyan)) { bg = 46; }
-            else if (colorBackground == QColor(Qt::gray)) { bg = 100; }
-            else if (colorBackground == QColor(Qt::white)) { bg = 47; }
-            else if (colorBackground == QColor(Qt::darkRed)) { bg = 101; }
-            else if (colorBackground == QColor(Qt::darkGreen)) { bg = 102; }
-            else if (colorBackground == QColor(Qt::darkYellow)) { bg = 103; }
-            else if (colorBackground == QColor(Qt::darkBlue)) { bg = 104; }
-            else if (colorBackground == QColor(Qt::darkMagenta)) { bg = 105; }
-            else if (colorBackground == QColor(Qt::darkCyan)) { bg = 106; }
-            else if (colorBackground == QColor(Qt::darkGray)) { bg = 100; }
+            // Map Qt::GlobalColor to ANSI codes
+            switch (colorText) {
+            case Qt::black: fg = 30; break;
+            case Qt::red: fg = 31; break;
+            case Qt::green: fg = 32; break;
+            case Qt::yellow: fg = 33; break;
+            case Qt::blue: fg = 34; break;
+            case Qt::magenta: fg = 35; break;
+            case Qt::cyan: fg = 36; break;
+            case Qt::gray: fg = 90; break;
+            case Qt::white: fg = 37; break;
+            case Qt::darkRed: fg = 91; break;
+            case Qt::darkGreen: fg = 92; break;
+            case Qt::darkYellow: fg = 93; break;
+            case Qt::darkBlue: fg = 94; break;
+            case Qt::darkMagenta: fg = 95; break;
+            case Qt::darkCyan: fg = 96; break;
+            case Qt::darkGray: fg = 90; break;  // Or 90 as gray
+            default: fg = 39; break;
+            }
+            switch (colorBackground) {
+            case Qt::black: bg = 40; break;
+            case Qt::red: bg = 41; break;
+            case Qt::green: bg = 42; break;
+            case Qt::yellow: bg = 43; break;
+            case Qt::blue: bg = 44; break;
+            case Qt::magenta: bg = 45; break;
+            case Qt::cyan: bg = 46; break;
+            case Qt::gray: bg = 100; break;
+            case Qt::white: bg = 47; break;
+            case Qt::darkRed: bg = 101; break;
+            case Qt::darkGreen: bg = 102; break;
+            case Qt::darkYellow: bg = 103; break;
+            case Qt::darkBlue: bg = 104; break;
+            case Qt::darkMagenta: bg = 105; break;
+            case Qt::darkCyan: bg = 106; break;
+            case Qt::darkGray: bg = 100; break;
+            default: bg = 49; break;
+            }
             printf("\033[%d;%dm", fg, bg);
         }
     } else if (bNativeMode) {
@@ -2537,76 +2611,76 @@ void XOptions::printConsole(QString sString, QColor colorText, QColor colorBackg
         WORD wAttribute = 0;
 
         // Foreground (text) color
-        if (colorText == QColor(Qt::black)) {
+        if (colorText == Qt::black) {
             wAttribute |= 0;
-        } else if (colorText == QColor(Qt::white)) {
+        } else if (colorText == Qt::white) {
             wAttribute |= FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE;
-        } else if (colorText == QColor(Qt::blue)) {
+        } else if (colorText == Qt::blue) {
             wAttribute |= FOREGROUND_BLUE;
-        } else if (colorText == QColor(Qt::red)) {
+        } else if (colorText == Qt::red) {
             wAttribute |= FOREGROUND_RED;
-        } else if (colorText == QColor(Qt::green)) {
+        } else if (colorText == Qt::green) {
             wAttribute |= FOREGROUND_GREEN;
-        } else if (colorText == QColor(Qt::yellow)) {
+        } else if (colorText == Qt::yellow) {
             wAttribute |= FOREGROUND_RED | FOREGROUND_GREEN;
-        } else if (colorText == QColor(Qt::magenta)) {
+        } else if (colorText == Qt::magenta) {
             wAttribute |= FOREGROUND_RED | FOREGROUND_BLUE;
-        } else if (colorText == QColor(Qt::cyan)) {
+        } else if (colorText == Qt::cyan) {
             wAttribute |= FOREGROUND_GREEN | FOREGROUND_BLUE;
-        } else if (colorText == QColor(Qt::darkBlue)) {
+        } else if (colorText == Qt::darkBlue) {
             wAttribute |= FOREGROUND_BLUE | FOREGROUND_INTENSITY;
-        } else if (colorText == QColor(Qt::darkRed)) {
+        } else if (colorText == Qt::darkRed) {
             wAttribute |= FOREGROUND_RED | FOREGROUND_INTENSITY;
-        } else if (colorText == QColor(Qt::darkGreen)) {
+        } else if (colorText == Qt::darkGreen) {
             wAttribute |= FOREGROUND_GREEN | FOREGROUND_INTENSITY;
-        } else if (colorText == QColor(Qt::darkYellow)) {
+        } else if (colorText == Qt::darkYellow) {
             wAttribute |= FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_INTENSITY;
-        } else if (colorText == QColor(Qt::darkMagenta)) {
+        } else if (colorText == Qt::darkMagenta) {
             wAttribute |= FOREGROUND_RED | FOREGROUND_BLUE | FOREGROUND_INTENSITY;
-        } else if (colorText == QColor(Qt::darkCyan)) {
+        } else if (colorText == Qt::darkCyan) {
             wAttribute |= FOREGROUND_GREEN | FOREGROUND_BLUE | FOREGROUND_INTENSITY;
-        } else if (colorText == QColor(Qt::gray)) {
+        } else if (colorText == Qt::gray) {
             wAttribute |= FOREGROUND_INTENSITY;
-        } else if (colorText == QColor(Qt::darkGray)) {
+        } else if (colorText == Qt::darkGray) {
             wAttribute |= FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE | FOREGROUND_INTENSITY;
-        } else if (colorText == QColor(Qt::transparent)) {
+        } else if (colorText == Qt::transparent) {
             wAttribute |= FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE;
         }
 
         // Background color
-        if (colorBackground == QColor(Qt::black)) {
+        if (colorBackground == Qt::black) {
             wAttribute |= 0;
-        } else if (colorBackground == QColor(Qt::white)) {
+        } else if (colorBackground == Qt::white) {
             wAttribute |= BACKGROUND_RED | BACKGROUND_GREEN | BACKGROUND_BLUE;
-        } else if (colorBackground == QColor(Qt::blue)) {
+        } else if (colorBackground == Qt::blue) {
             wAttribute |= BACKGROUND_BLUE;
-        } else if (colorBackground == QColor(Qt::red)) {
+        } else if (colorBackground == Qt::red) {
             wAttribute |= BACKGROUND_RED;
-        } else if (colorBackground == QColor(Qt::green)) {
+        } else if (colorBackground == Qt::green) {
             wAttribute |= BACKGROUND_GREEN;
-        } else if (colorBackground == QColor(Qt::yellow)) {
+        } else if (colorBackground == Qt::yellow) {
             wAttribute |= BACKGROUND_RED | BACKGROUND_GREEN;
-        } else if (colorBackground == QColor(Qt::magenta)) {
+        } else if (colorBackground == Qt::magenta) {
             wAttribute |= BACKGROUND_RED | BACKGROUND_BLUE;
-        } else if (colorBackground == QColor(Qt::cyan)) {
+        } else if (colorBackground == Qt::cyan) {
             wAttribute |= BACKGROUND_GREEN | BACKGROUND_BLUE;
-        } else if (colorBackground == QColor(Qt::darkBlue)) {
+        } else if (colorBackground == Qt::darkBlue) {
             wAttribute |= BACKGROUND_BLUE | BACKGROUND_INTENSITY;
-        } else if (colorBackground == QColor(Qt::darkRed)) {
+        } else if (colorBackground == Qt::darkRed) {
             wAttribute |= BACKGROUND_RED | BACKGROUND_INTENSITY;
-        } else if (colorBackground == QColor(Qt::darkGreen)) {
+        } else if (colorBackground == Qt::darkGreen) {
             wAttribute |= BACKGROUND_GREEN | BACKGROUND_INTENSITY;
-        } else if (colorBackground == QColor(Qt::darkYellow)) {
+        } else if (colorBackground == Qt::darkYellow) {
             wAttribute |= BACKGROUND_RED | BACKGROUND_GREEN | BACKGROUND_INTENSITY;
-        } else if (colorBackground == QColor(Qt::darkMagenta)) {
+        } else if (colorBackground == Qt::darkMagenta) {
             wAttribute |= BACKGROUND_RED | BACKGROUND_BLUE | BACKGROUND_INTENSITY;
-        } else if (colorBackground == QColor(Qt::darkCyan)) {
+        } else if (colorBackground == Qt::darkCyan) {
             wAttribute |= BACKGROUND_GREEN | BACKGROUND_BLUE | BACKGROUND_INTENSITY;
-        } else if (colorBackground == QColor(Qt::gray)) {
+        } else if (colorBackground == Qt::gray) {
             wAttribute |= BACKGROUND_INTENSITY;
-        } else if (colorBackground == QColor(Qt::darkGray)) {
+        } else if (colorBackground == Qt::darkGray) {
             wAttribute |= BACKGROUND_RED | BACKGROUND_GREEN | BACKGROUND_BLUE | BACKGROUND_INTENSITY;
-        } else if (colorBackground == QColor(Qt::transparent)) {
+        } else if (colorBackground == Qt::transparent) {
             // No background bits set (leave as is)
         }
 
@@ -2619,7 +2693,7 @@ void XOptions::printConsole(QString sString, QColor colorText, QColor colorBackg
     printf("%s", sString.toUtf8().data());
 
     if (bEscapeMode) {
-        if (colorText.alpha() > 0 || colorBackground.alpha() > 0) {
+        if (colorText != Qt::transparent || colorBackground != Qt::transparent) {
             printf("\033[0m");
         }
 #ifdef Q_OS_WIN
@@ -2627,7 +2701,7 @@ void XOptions::printConsole(QString sString, QColor colorText, QColor colorBackg
 #endif
     } else if (bNativeMode) {
 #ifdef Q_OS_WIN
-        if (colorText.alpha() > 0 || colorBackground.alpha() > 0) {
+        if (colorText != Qt::transparent || colorBackground != Qt::transparent) {
             if (wOldAttribute) {
                 SetConsoleTextAttribute(hConsole, wOldAttribute);
             }
@@ -2692,7 +2766,7 @@ void XOptions::printModel(QAbstractItemModel *pModel)
                     sString.append(sEmpty);
                 }
 
-                printConsole(sString, Qt::red);
+                printConsole(sString, "#ff0000");
 
                 if (i == (nNumberOfColumns - 1)) {
                     printConsole("|\n");
@@ -2838,6 +2912,7 @@ void XOptions::removeFromUserPathVariable(const QString &targetPath)
     }
 }
 #endif
+
 #ifdef Q_OS_WIN
 bool XOptions::registerContext(const QString &sApplicationName, const QString &sType, const QString &sApplicationFilePath, USERROLE userRole)
 {
