@@ -189,8 +189,6 @@ public:
         ID_FEATURE_FILEBUFFERSIZE,
         ID_FEATURE_SSE2,
         ID_FEATURE_AVX2,
-        ID_ENGINE_BUFFERSIZE,  // Obsolete
-        ID_SCAN_BUFFERSIZE,    // Obsolete
         ID_SCAN_SCANAFTEROPEN,
         ID_SCAN_FLAG_RECURSIVE,
         ID_SCAN_FLAG_OVERLAY,
@@ -213,12 +211,11 @@ public:
         ID_SCAN_ENGINE_NFD_ENABLED,
         ID_SCAN_ENGINE_PEID_ENABLED,
         ID_SCAN_ENGINE_YARA_ENABLED,
-        ID_SCAN_DATABASE_MAIN_PATH,
-        ID_SCAN_DATABASE_EXTRA_PATH,
-        ID_SCAN_DATABASE_CUSTOM_PATH,
-        ID_SCAN_DATABASE_EXTRA_ENABLED,
-        ID_SCAN_DATABASE_CUSTOM_ENABLED,
-        ID_SCAN_YARARULESPATH,
+        ID_SCAN_DIE_DATABASE_MAIN_PATH,
+        ID_SCAN_DIE_DATABASE_EXTRA_PATH,
+        ID_SCAN_DIE_DATABASE_CUSTOM_PATH,
+        ID_SCAN_DIE_DATABASE_EXTRA_ENABLED,
+        ID_SCAN_DIE_DATABASE_CUSTOM_ENABLED,
         ID_SCAN_YARA_DATABASE_PATH,
         ID_SCAN_PEID_DATABASE_PATH,
         ID_SCAN_TARGET_ALL,
@@ -453,11 +450,6 @@ public:
     void setLastDirectory(const QString &sPathName);
     void setLastFileName(const QString &sFileName);
     QList<QString> getRecentFiles();
-    QString getDatabasePath();
-    QString getExtraDatabasePath();
-    QString getCustomDatabasePath();
-    QString getYaraDatabasePath();
-    QString getPeidDatabasePath();
     QString getScanEngine();
     QString getInfoPath();
     QString getRootPath();
@@ -481,6 +473,8 @@ public:
     static QList<QString> getAllFilesFromDirectory(const QString &sDirectory, const QString &sExtension);
     static bool checkNative(const QString &sIniFileName);
     QString getApplicationDataPath();
+    static QString convertPathName(const QString &sPathName);
+    static bool isPathExists(const QString &sPathName);
     static QString getTitle(const QString &sName, const QString &sVersion, bool bShowOS = true);
     bool isWritable();
     static void adjustApplicationInitAttributes();

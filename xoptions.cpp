@@ -127,7 +127,6 @@ XOptions::GROUPID XOptions::getGroupID(ID id)
         case ID_SCAN_FLAG_ALLTYPES:
         case ID_SCAN_FORMATRESULT:
         case ID_SCAN_LOG_PROFILING:
-        case ID_ENGINE_BUFFERSIZE:
         case ID_SCAN_HIGHLIGHT:
         case ID_SCAN_SORT:
         case ID_SCAN_HIDEUNKNOWN:
@@ -137,12 +136,11 @@ XOptions::GROUPID XOptions::getGroupID(ID id)
         case ID_SCAN_ENGINE_NFD_ENABLED:
         case ID_SCAN_ENGINE_PEID_ENABLED:
         case ID_SCAN_ENGINE_YARA_ENABLED:
-        case ID_SCAN_DATABASE_MAIN_PATH:
-        case ID_SCAN_DATABASE_EXTRA_PATH:
-        case ID_SCAN_DATABASE_CUSTOM_PATH:
-        case ID_SCAN_DATABASE_EXTRA_ENABLED:
-        case ID_SCAN_DATABASE_CUSTOM_ENABLED:
-        case ID_SCAN_YARARULESPATH:
+        case ID_SCAN_DIE_DATABASE_MAIN_PATH:
+        case ID_SCAN_DIE_DATABASE_EXTRA_PATH:
+        case ID_SCAN_DIE_DATABASE_CUSTOM_PATH:
+        case ID_SCAN_DIE_DATABASE_EXTRA_ENABLED:
+        case ID_SCAN_DIE_DATABASE_CUSTOM_ENABLED:
         case ID_SCAN_YARA_DATABASE_PATH:
         case ID_SCAN_PEID_DATABASE_PATH:
         case ID_SCAN_TARGET_ALL:
@@ -416,7 +414,6 @@ void XOptions::load()
                 case ID_AUTHTOKEN: varDefault = ""; break;
                 case ID_NU_RECENTFILES: varDefault = QList<QVariant>(); break;
                 case ID_NU_LASTDIRECTORY: varDefault = ""; break;
-                case ID_ENGINE_BUFFERSIZE: varDefault = 2 * 1024 * 1024; break;
                 case ID_FEATURE_READBUFFERSIZE: varDefault = 4 * 1024; break;
                 case ID_FEATURE_FILEBUFFERSIZE: varDefault = 64 * 1024 * 1024; break;
                 default: varDefault = "";
@@ -426,24 +423,15 @@ void XOptions::load()
         QVariant variant = pSettings->value(sName, varDefault);
 
         if (!variant.toString().contains("$data")) {
-            if ((id == ID_SCAN_DATABASE_MAIN_PATH) || (id == ID_SCAN_DATABASE_EXTRA_PATH) || (id == ID_SCAN_DATABASE_CUSTOM_PATH) ||
+            if ((id == ID_SCAN_DIE_DATABASE_MAIN_PATH) || (id == ID_SCAN_DIE_DATABASE_EXTRA_PATH) || (id == ID_SCAN_DIE_DATABASE_CUSTOM_PATH) ||
                        (id == ID_SCAN_YARA_DATABASE_PATH) || (id == ID_SCAN_PEID_DATABASE_PATH)) {
                 if ((!QDir(variant.toString()).exists()) && (!QFile(variant.toString()).exists())) {
                     variant = varDefault;
                 }
-            } else if ((id == ID_DATAPATH) || (id == ID_SIGNATURES_PATH) || (id == ID_STRUCTS_PATH) || (id == ID_STRUCTSPATH) || (id == ID_INFO_PATH) ||
-                       (id == ID_SCAN_YARARULESPATH)) {
+            } else if ((id == ID_DATAPATH) || (id == ID_SIGNATURES_PATH) || (id == ID_STRUCTS_PATH) || (id == ID_STRUCTSPATH) || (id == ID_INFO_PATH)) {
                 if (!QDir(variant.toString()).exists()) {
                     variant = varDefault;
                 }
-            }
-        }
-
-        if (bIsNative) {
-            if (variant.toString().contains("$data")) {
-                QString sValue = variant.toString();
-                sValue = sValue.replace("$data", getApplicationDataPath());
-                variant = sValue;
             }
         }
 
@@ -573,8 +561,6 @@ QString XOptions::idToString(ID id)
         case ID_FEATURE_FILEBUFFERSIZE: sResult = QString("Feature/FileBufferSize"); break;
         case ID_FEATURE_SSE2: sResult = QString("Feature/SSE2"); break;
         case ID_FEATURE_AVX2: sResult = QString("Feature/AVX2"); break;
-        case ID_ENGINE_BUFFERSIZE: sResult = QString("Engine/BufferSize"); break;
-        case ID_SCAN_BUFFERSIZE: sResult = QString("Scan/BufferSize"); break;
         case ID_SCAN_SCANAFTEROPEN: sResult = QString("Scan/ScanAfterOpen"); break;
         case ID_SCAN_FLAG_RECURSIVE: sResult = QString("Scan/Flag/Recursive"); break;
         case ID_SCAN_FLAG_RESOURCES: sResult = QString("Scan/Flag/Resources"); break;
@@ -597,12 +583,11 @@ QString XOptions::idToString(ID id)
         case ID_SCAN_ENGINE_NFD_ENABLED: sResult = QString("Scan/Engine/Nfd/Enabled"); break;
         case ID_SCAN_ENGINE_PEID_ENABLED: sResult = QString("Scan/Engine/Peid/Enabled"); break;
         case ID_SCAN_ENGINE_YARA_ENABLED: sResult = QString("Scan/Engine/Yara/Enabled"); break;
-        case ID_SCAN_DATABASE_MAIN_PATH: sResult = QString("Scan/Database/Main/Path"); break;
-        case ID_SCAN_DATABASE_EXTRA_PATH: sResult = QString("Scan/Database/Extra/Path"); break;
-        case ID_SCAN_DATABASE_CUSTOM_PATH: sResult = QString("Scan/Database/Custom/Path"); break;
-        case ID_SCAN_DATABASE_EXTRA_ENABLED: sResult = QString("Scan/Database/Extra/Enabled"); break;
-        case ID_SCAN_DATABASE_CUSTOM_ENABLED: sResult = QString("Scan/Database/Custom/Enabled"); break;
-        case ID_SCAN_YARARULESPATH: sResult = QString("Scan/YaraRulesPath"); break;
+        case ID_SCAN_DIE_DATABASE_MAIN_PATH: sResult = QString("Scan/Die/Database/Main/Path"); break;
+        case ID_SCAN_DIE_DATABASE_EXTRA_PATH: sResult = QString("Scan/Die/Database/Extra/Path"); break;
+        case ID_SCAN_DIE_DATABASE_CUSTOM_PATH: sResult = QString("Scan/Die/Database/Custom/Path"); break;
+        case ID_SCAN_DIE_DATABASE_EXTRA_ENABLED: sResult = QString("Scan/Die/Database/Extra/Enabled"); break;
+        case ID_SCAN_DIE_DATABASE_CUSTOM_ENABLED: sResult = QString("Scan/Die/Database/Custom/Enabled"); break;
         case ID_SCAN_YARA_DATABASE_PATH: sResult = QString("Scan/Yara/Database/Path"); break;
         case ID_SCAN_PEID_DATABASE_PATH: sResult = QString("Scan/Peid/Database/Path"); break;
         case ID_SCAN_TARGET_ALL: sResult = QString("Scan/Target/All"); break;
@@ -836,31 +821,6 @@ QList<QString> XOptions::getRecentFiles()
     }
 
     return listResult;
-}
-
-QString XOptions::getDatabasePath()
-{
-    return getValue(ID_SCAN_DATABASE_MAIN_PATH).toString();
-}
-
-QString XOptions::getExtraDatabasePath()
-{
-    return getValue(ID_SCAN_DATABASE_EXTRA_PATH).toString();
-}
-
-QString XOptions::getCustomDatabasePath()
-{
-    return getValue(ID_SCAN_DATABASE_CUSTOM_PATH).toString();
-}
-
-QString XOptions::getYaraDatabasePath()
-{
-    return getValue(ID_SCAN_YARA_DATABASE_PATH).toString();
-}
-
-QString XOptions::getPeidDatabasePath()
-{
-    return getValue(ID_SCAN_PEID_DATABASE_PATH).toString();
 }
 
 QString XOptions::getScanEngine()
@@ -2178,20 +2138,12 @@ void XOptions::deleteQObjectList(QList<QObject *> *pList)
 
 QString XOptions::getApplicationLangPath()
 {
-    QString sResult;
-
-    sResult = getApplicationDataPath() + QDir::separator() + "lang";
-
-    return sResult;
+    return "$data/lang";
 }
 
 QString XOptions::getApplicationQssPath()
 {
-    QString sResult;
-
-    sResult = getApplicationDataPath() + QDir::separator() + "qss";
-
-    return sResult;
+    return "$data/qss";
 }
 
 QList<QString> XOptions::getAllFilesFromDirectory(const QString &sDirectory, const QString &sExtension)
@@ -2275,7 +2227,6 @@ QString XOptions::getApplicationDataPath()
 
     if (!bResult) {
         sResult = QStandardPaths::writableLocation(QStandardPaths::AppDataLocation);
-        ;
 
         if (QDir(sResult).exists()) {
             bResult = true;
@@ -2343,6 +2294,99 @@ QString XOptions::getApplicationDataPath()
     }
 
     return sResult;
+}
+
+QString XOptions::convertPathName(const QString &sPathName)
+{
+    QString sResult = sPathName;
+
+    if (sPathName.contains("$data")) {
+        bool bSuccess = false;
+        QString _sPathName;
+        QString sApplicationDirPath = qApp->applicationDirPath();
+        QString sApplicationName = qApp->applicationName();
+
+#ifdef Q_OS_MAC
+        if (!bResult) {
+            _sPathName = sPathName;
+            QString _sApplicationDirPath = sApplicationDirPath + "/../Resources";
+
+            _sPathName = _sPathName.replace("$data", _sApplicationDirPath);
+
+            bSuccess = isPathExists(_sPathName);
+        }
+#endif
+
+        if (!bSuccess) {
+            _sPathName = sPathName;
+            _sPathName = _sPathName.replace("$data", sApplicationDirPath);
+
+            bSuccess = isPathExists(_sPathName);
+        }
+
+        if (!bSuccess) {
+            _sPathName = sPathName;
+            QString sAppData = QStandardPaths::writableLocation(QStandardPaths::AppDataLocation);
+
+            _sPathName = _sPathName.replace("$data", sAppData);
+
+            bSuccess = isPathExists(_sPathName);
+        }
+
+        if (!bSuccess) {
+            if (sApplicationDirPath.contains("/usr/local/bin")) {
+                QString sPrefix = sApplicationDirPath.section("/usr/local/bin", 0, 0);
+                QString sPath = sPrefix + QString("/usr/local/lib/%1").arg(sApplicationName);
+
+                _sPathName = _sPathName.replace("$data", sPath);
+
+                bSuccess = isPathExists(_sPathName);
+            }
+        }
+
+        if (!bSuccess) {
+            if (sApplicationDirPath.contains("/app/bin")) {
+                QString sPrefix = sApplicationDirPath.section("/app/bin", 0, 0);
+                QString sPath = sPrefix + QString("/app/lib/%1").arg(sApplicationName);
+
+                _sPathName = _sPathName.replace("$data", sPath);
+
+                bSuccess = isPathExists(_sPathName);
+            }
+        }
+
+        if (!bSuccess) {
+            if (sApplicationDirPath.contains("/tmp/.mount_")) {
+                QString sPrefix = sApplicationDirPath.section("/", 0, 2);
+
+                QString sPath = sPrefix + QString("/app/lib/%1").arg(sApplicationName);
+
+                _sPathName = _sPathName.replace("$data", sPath);
+
+                bSuccess = isPathExists(_sPathName);
+            }
+        }
+
+        if (bSuccess) {
+            sResult = _sPathName;
+        }
+    }
+
+    // QString sApplicationDirPath = qApp->applicationDirPath();
+    // QString sApplicationName = qApp->applicationName();
+
+    return sResult;
+}
+
+bool XOptions::isPathExists(const QString &sPathName)
+{
+    QFileInfo fileInfo(sPathName);
+
+    if (fileInfo.isDir()) {
+        return QDir(sPathName).exists();
+    } else {
+        return QFile(sPathName).exists();
+    }
 }
 
 QString XOptions::getTitle(const QString &sName, const QString &sVersion, bool bShowOS)
