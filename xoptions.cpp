@@ -424,7 +424,7 @@ void XOptions::load()
 
         if (!variant.toString().contains("$data")) {
             if ((id == ID_SCAN_DIE_DATABASE_MAIN_PATH) || (id == ID_SCAN_DIE_DATABASE_EXTRA_PATH) || (id == ID_SCAN_DIE_DATABASE_CUSTOM_PATH) ||
-                       (id == ID_SCAN_YARA_DATABASE_PATH) || (id == ID_SCAN_PEID_DATABASE_PATH)) {
+                (id == ID_SCAN_YARA_DATABASE_PATH) || (id == ID_SCAN_PEID_DATABASE_PATH)) {
                 if ((!QDir(variant.toString()).exists()) && (!QFile(variant.toString()).exists())) {
                     variant = varDefault;
                 }
@@ -2519,22 +2519,10 @@ Qt::GlobalColor XOptions::hexToGlobalColor(const QString &sHex)
     };
 
     static const ColorEntry table[] = {
-        {   0,   0,   0, Qt::black       },
-        { 255, 255, 255, Qt::white       },
-        { 128, 128, 128, Qt::darkGray    },
-        { 160, 160, 164, Qt::gray        },
-        { 255,   0,   0, Qt::red         },
-        {   0, 255,   0, Qt::green       },
-        {   0,   0, 255, Qt::blue        },
-        {   0, 255, 255, Qt::cyan        },
-        { 255,   0, 255, Qt::magenta     },
-        { 255, 255,   0, Qt::yellow      },
-        { 128,   0,   0, Qt::darkRed     },
-        {   0, 128,   0, Qt::darkGreen   },
-        {   0,   0, 128, Qt::darkBlue    },
-        {   0, 128, 128, Qt::darkCyan    },
-        { 128,   0, 128, Qt::darkMagenta },
-        { 128, 128,   0, Qt::darkYellow  },
+        {0, 0, 0, Qt::black},       {255, 255, 255, Qt::white},  {128, 128, 128, Qt::darkGray},  {160, 160, 164, Qt::gray},
+        {255, 0, 0, Qt::red},       {0, 255, 0, Qt::green},      {0, 0, 255, Qt::blue},          {0, 255, 255, Qt::cyan},
+        {255, 0, 255, Qt::magenta}, {255, 255, 0, Qt::yellow},   {128, 0, 0, Qt::darkRed},       {0, 128, 0, Qt::darkGreen},
+        {0, 0, 128, Qt::darkBlue},  {0, 128, 128, Qt::darkCyan}, {128, 0, 128, Qt::darkMagenta}, {128, 128, 0, Qt::darkYellow},
     };
 
     Qt::GlobalColor bestColor = Qt::black;
@@ -2605,42 +2593,42 @@ void XOptions::printConsole(const QString &sString, const QString &sColorText, c
             int fg = 39, bg = 49;  // Default
             // Map Qt::GlobalColor to ANSI codes
             switch (colorText) {
-            case Qt::black: fg = 30; break;
-            case Qt::red: fg = 31; break;
-            case Qt::green: fg = 32; break;
-            case Qt::yellow: fg = 33; break;
-            case Qt::blue: fg = 34; break;
-            case Qt::magenta: fg = 35; break;
-            case Qt::cyan: fg = 36; break;
-            case Qt::gray: fg = 90; break;
-            case Qt::white: fg = 37; break;
-            case Qt::darkRed: fg = 91; break;
-            case Qt::darkGreen: fg = 92; break;
-            case Qt::darkYellow: fg = 93; break;
-            case Qt::darkBlue: fg = 94; break;
-            case Qt::darkMagenta: fg = 95; break;
-            case Qt::darkCyan: fg = 96; break;
-            case Qt::darkGray: fg = 90; break;  // Or 90 as gray
-            default: fg = 39; break;
+                case Qt::black: fg = 30; break;
+                case Qt::red: fg = 31; break;
+                case Qt::green: fg = 32; break;
+                case Qt::yellow: fg = 33; break;
+                case Qt::blue: fg = 34; break;
+                case Qt::magenta: fg = 35; break;
+                case Qt::cyan: fg = 36; break;
+                case Qt::gray: fg = 90; break;
+                case Qt::white: fg = 37; break;
+                case Qt::darkRed: fg = 91; break;
+                case Qt::darkGreen: fg = 92; break;
+                case Qt::darkYellow: fg = 93; break;
+                case Qt::darkBlue: fg = 94; break;
+                case Qt::darkMagenta: fg = 95; break;
+                case Qt::darkCyan: fg = 96; break;
+                case Qt::darkGray: fg = 90; break;  // Or 90 as gray
+                default: fg = 39; break;
             }
             switch (colorBackground) {
-            case Qt::black: bg = 40; break;
-            case Qt::red: bg = 41; break;
-            case Qt::green: bg = 42; break;
-            case Qt::yellow: bg = 43; break;
-            case Qt::blue: bg = 44; break;
-            case Qt::magenta: bg = 45; break;
-            case Qt::cyan: bg = 46; break;
-            case Qt::gray: bg = 100; break;
-            case Qt::white: bg = 47; break;
-            case Qt::darkRed: bg = 101; break;
-            case Qt::darkGreen: bg = 102; break;
-            case Qt::darkYellow: bg = 103; break;
-            case Qt::darkBlue: bg = 104; break;
-            case Qt::darkMagenta: bg = 105; break;
-            case Qt::darkCyan: bg = 106; break;
-            case Qt::darkGray: bg = 100; break;
-            default: bg = 49; break;
+                case Qt::black: bg = 40; break;
+                case Qt::red: bg = 41; break;
+                case Qt::green: bg = 42; break;
+                case Qt::yellow: bg = 43; break;
+                case Qt::blue: bg = 44; break;
+                case Qt::magenta: bg = 45; break;
+                case Qt::cyan: bg = 46; break;
+                case Qt::gray: bg = 100; break;
+                case Qt::white: bg = 47; break;
+                case Qt::darkRed: bg = 101; break;
+                case Qt::darkGreen: bg = 102; break;
+                case Qt::darkYellow: bg = 103; break;
+                case Qt::darkBlue: bg = 104; break;
+                case Qt::darkMagenta: bg = 105; break;
+                case Qt::darkCyan: bg = 106; break;
+                case Qt::darkGray: bg = 100; break;
+                default: bg = 49; break;
             }
             printf("\033[%d;%dm", fg, bg);
         }

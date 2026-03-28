@@ -115,10 +115,11 @@ void DialogViewColors::addRecord(qint32 nRow, const QString &sGroup, const QStri
         return;
     }
 
-    ui->tableWidgetColors->setCellWidget(nRow, COLUMN_TEXT_COLOR,            _createButton(tr("Color"),      nRow, COLUMN_TEXT_COLOR,            id, this, SLOT(pushButtonSlot())));
-    ui->tableWidgetColors->setCellWidget(nRow, COLUMN_TEXT_COLOR_REMOVE,     _createButton("X",              nRow, COLUMN_TEXT_COLOR_REMOVE,     id, this, SLOT(pushButtonSlot())));
-    ui->tableWidgetColors->setCellWidget(nRow, COLUMN_BACKGROUND_COLOR,      _createButton(tr("Background"), nRow, COLUMN_BACKGROUND_COLOR,      id, this, SLOT(pushButtonSlot())));
-    ui->tableWidgetColors->setCellWidget(nRow, COLUMN_BACKGROUND_COLOR_REMOVE, _createButton("X",            nRow, COLUMN_BACKGROUND_COLOR_REMOVE, id, this, SLOT(pushButtonSlot())));
+    ui->tableWidgetColors->setCellWidget(nRow, COLUMN_TEXT_COLOR, _createButton(tr("Color"), nRow, COLUMN_TEXT_COLOR, id, this, SLOT(pushButtonSlot())));
+    ui->tableWidgetColors->setCellWidget(nRow, COLUMN_TEXT_COLOR_REMOVE, _createButton("X", nRow, COLUMN_TEXT_COLOR_REMOVE, id, this, SLOT(pushButtonSlot())));
+    ui->tableWidgetColors->setCellWidget(nRow, COLUMN_BACKGROUND_COLOR, _createButton(tr("Background"), nRow, COLUMN_BACKGROUND_COLOR, id, this, SLOT(pushButtonSlot())));
+    ui->tableWidgetColors->setCellWidget(nRow, COLUMN_BACKGROUND_COLOR_REMOVE,
+                                         _createButton("X", nRow, COLUMN_BACKGROUND_COLOR_REMOVE, id, this, SLOT(pushButtonSlot())));
 
     // Group item
     ui->tableWidgetColors->setItem(nRow, COLUMN_GROUP, new QTableWidgetItem(sGroup));
