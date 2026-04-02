@@ -2289,7 +2289,6 @@ QString XOptions::getApplicationDataPath()
     }
 
     if (!bResult) {
-        bResult = true;
         sResult = sApplicationDirPath;
     }
 
