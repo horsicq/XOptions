@@ -22,6 +22,7 @@
 #define XOPTIONS_H
 
 #include <QDir>
+#include <QCommandLineOption>
 #include <QMap>
 #include <QSettings>
 #include <QSysInfo>
@@ -330,6 +331,45 @@ public:
         ID_FILE_SETENV
     };
 
+    enum CONSOLE_OPTION_ID {
+        CONSOLE_OPTION_ID_UNKNOWN = 0,
+        CONSOLE_OPTION_ID_RECURSIVESCAN,
+        CONSOLE_OPTION_ID_DEEPSCAN,
+        CONSOLE_OPTION_ID_HEURISTICSCAN,
+        CONSOLE_OPTION_ID_VERBOSE,
+        CONSOLE_OPTION_ID_AGGRESSIVESCAN,
+        CONSOLE_OPTION_ID_ALLTYPES,
+        CONSOLE_OPTION_ID_FORMAT,
+        CONSOLE_OPTION_ID_PROFILING,
+        CONSOLE_OPTION_ID_MESSAGES,
+        CONSOLE_OPTION_ID_HIDEUNKNOWN,
+        CONSOLE_OPTION_ID_ENTROPY,
+        CONSOLE_OPTION_ID_INFO,
+        CONSOLE_OPTION_ID_XML,
+        CONSOLE_OPTION_ID_JSON,
+        CONSOLE_OPTION_ID_CSV,
+        CONSOLE_OPTION_ID_TSV,
+        CONSOLE_OPTION_ID_PLAINTEXT,
+        CONSOLE_OPTION_ID_DATABASE,
+        CONSOLE_OPTION_ID_EXTRADATABASE,
+        CONSOLE_OPTION_ID_CUSTOMDATABASE,
+        CONSOLE_OPTION_ID_SHOWDATABASE,
+        CONSOLE_OPTION_ID_SPECIAL,
+        CONSOLE_OPTION_ID_SHOWMETHODS,
+        CONSOLE_OPTION_ID_TEST,
+        CONSOLE_OPTION_ID_ADDTEST,
+        CONSOLE_OPTION_ID_SORT,
+        CONSOLE_OPTION_ID_NOHIGHLIGHT,
+        CONSOLE_OPTION_ID_USECACHE
+    };
+
+    struct CONSOLE_OPTION {
+        CONSOLE_OPTION_ID nId;
+        const char *pszShort;
+        const char *pszLong;
+        const char *pszDescription;
+    };
+
     enum ICONTYPE {
         ICONTYPE_NONE = 0,
         ICONTYPE_ACTION,
@@ -446,6 +486,7 @@ public:
     bool isValuePresent(ID id);
     QVariant getDefaultValue(ID id);
     static QString idToString(ID id);
+    static QCommandLineOption getCommandLineOption(CONSOLE_OPTION_ID nId);
     QString getLastDirectory();
     void setLastDirectory(const QString &sPathName);
     void setLastFileName(const QString &sFileName);
