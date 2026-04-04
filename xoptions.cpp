@@ -364,16 +364,16 @@ void XOptions::setName(const QString &sValue)
 #ifdef QT_DEBUG
 #ifdef Q_OS_WIN
 #ifndef Q_OS_WIN64
-    m_sName += "win32.debug.ini";
+    m_sName += ".win32.debug.ini";
 #else
-    m_sName += "win64.debug.ini";
+    m_sName += ".win64.debug.ini";
 #endif
 #endif
 #ifdef Q_OS_LINUX
-    m_sName += "linux.debug.ini";
+    m_sName += ".linux.debug.ini";
 #endif
 #ifdef Q_OS_MACOS
-    m_sName += "macos.debug.ini";
+    m_sName += ".macos.debug.ini";
 #endif
 #endif
 }
