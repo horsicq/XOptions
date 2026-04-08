@@ -49,6 +49,9 @@ static const XOptions::CONSOLE_OPTION g_consoleOptions[] = {
     {XOptions::CONSOLE_OPTION_ID_SORT, "", "sort", "Sort scan results"},
     {XOptions::CONSOLE_OPTION_ID_NOHIGHLIGHT, "", "nohighlight", "Do not highlight scan results"},
     {XOptions::CONSOLE_OPTION_ID_USECACHE, "", "usecache", "Use database cache for faster loading"},
+    {XOptions::CONSOLE_OPTION_ID_OVERLAYSCAN, "O", "overlayscan", "Scan file overlay"},
+    {XOptions::CONSOLE_OPTION_ID_RESOURCESSCAN, "R", "resourcesscan", "Scan file resources"},
+    {XOptions::CONSOLE_OPTION_ID_ARCHIVESSCAN, "A", "archivesscan", "Scan file archives"},
 };
 
 XOptions::XOptions(QObject *pParent) : QObject(pParent)
@@ -364,16 +367,16 @@ void XOptions::setName(const QString &sValue)
 #ifdef QT_DEBUG
 #ifdef Q_OS_WIN
 #ifndef Q_OS_WIN64
-    m_sName += "win32.debug.ini";
+    m_sName += ".win32.debug.ini";
 #else
-    m_sName += "win64.debug.ini";
+    m_sName += ".win64.debug.ini";
 #endif
 #endif
 #ifdef Q_OS_LINUX
-    m_sName += "linux.debug.ini";
+    m_sName += ".linux.debug.ini";
 #endif
 #ifdef Q_OS_MACOS
-    m_sName += "macos.debug.ini";
+    m_sName += ".macos.debug.ini";
 #endif
 #endif
 }
@@ -559,7 +562,7 @@ QVariant XOptions::getDefaultValue(ID id)
 
 QCommandLineOption XOptions::getCommandLineOption(CONSOLE_OPTION_ID nId)
 {
-    if ((nId > CONSOLE_OPTION_ID_UNKNOWN) && (nId <= CONSOLE_OPTION_ID_USECACHE)) {
+    if ((nId > CONSOLE_OPTION_ID_UNKNOWN) && (nId <= CONSOLE_OPTION_ID_ARCHIVESSCAN)) {
         const CONSOLE_OPTION *pOption = &g_consoleOptions[nId - 1];
 
         QStringList listOptions;
