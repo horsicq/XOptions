@@ -52,6 +52,7 @@ static const XOptions::CONSOLE_OPTION g_consoleOptions[] = {
     {XOptions::CONSOLE_OPTION_ID_OVERLAYSCAN, "O", "overlayscan", "Scan file overlay"},
     {XOptions::CONSOLE_OPTION_ID_RESOURCESSCAN, "R", "resourcesscan", "Scan file resources"},
     {XOptions::CONSOLE_OPTION_ID_ARCHIVESSCAN, "A", "archivesscan", "Scan file archives"},
+    {XOptions::CONSOLE_OPTION_ID_FILETYPE, "F", "filetype", "Force file type (e.g. PE, ELF, DEX)"},
 };
 
 XOptions::XOptions(QObject *pParent) : QObject(pParent)
@@ -562,7 +563,7 @@ QVariant XOptions::getDefaultValue(ID id)
 
 QCommandLineOption XOptions::getCommandLineOption(CONSOLE_OPTION_ID nId)
 {
-    if ((nId > CONSOLE_OPTION_ID_UNKNOWN) && (nId <= CONSOLE_OPTION_ID_ARCHIVESSCAN)) {
+    if ((nId > CONSOLE_OPTION_ID_UNKNOWN) && (nId <= CONSOLE_OPTION_ID_FILETYPE)) {
         const CONSOLE_OPTION *pOption = &g_consoleOptions[nId - 1];
 
         QStringList listOptions;
@@ -581,6 +582,8 @@ QCommandLineOption XOptions::getCommandLineOption(CONSOLE_OPTION_ID nId)
             return QCommandLineOption(listOptions, pOption->pszDescription, "directory");
         } else if (nId == CONSOLE_OPTION_ID_ADDTEST) {
             return QCommandLineOption(listOptions, pOption->pszDescription, "filename", "");
+        } else if (nId == CONSOLE_OPTION_ID_FILETYPE) {
+            return QCommandLineOption(listOptions, pOption->pszDescription, "filetype");
         } else {
             return QCommandLineOption(listOptions, pOption->pszDescription);
         }
