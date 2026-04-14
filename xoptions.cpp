@@ -42,8 +42,8 @@ static const XOptions::CONSOLE_OPTION g_consoleOptions[] = {
     {XOptions::CONSOLE_OPTION_ID_EXTRADATABASE, "E", "extradatabase", "Set extra database path"},
     {XOptions::CONSOLE_OPTION_ID_CUSTOMDATABASE, "C", "customdatabase", "Set custom database path"},
     {XOptions::CONSOLE_OPTION_ID_SHOWDATABASE, "s", "showdatabase", "Show database information"},
-    {XOptions::CONSOLE_OPTION_ID_SPECIAL, "S", "special", "Show special file information using specified method (e.g., 'Hash' or 'Hash#MD5')"},
-    {XOptions::CONSOLE_OPTION_ID_SHOWMETHODS, "m", "showmethods", "Display all available special methods for the file"},
+    {XOptions::CONSOLE_OPTION_ID_STRUCT, "S", "struct", "Show special file information using specified structure (e.g., 'Hash' or 'Hash#MD5')"},
+    {XOptions::CONSOLE_OPTION_ID_SHOWSTRUCTS, "w", "showstructs", "Display all available special structures for the file"},
     {XOptions::CONSOLE_OPTION_ID_TEST, "", "test", "Test signatures in specified directory"},
     {XOptions::CONSOLE_OPTION_ID_ADDTEST, "", "addtest", "Add test case with filename, detect string, and directory"},
     {XOptions::CONSOLE_OPTION_ID_SORT, "", "sort", "Sort scan results"},
@@ -326,31 +326,15 @@ bool XOptions::isNative()
 #ifdef X_BUILD_INSTALL
     return true;
 #else
-    QString sApplicationDirPath = qApp->applicationDirPath();
-    sApplicationDirPath = QDir::cleanPath(sApplicationDirPath);
-
-    bool bResult = false;
-#if defined(Q_OS_MAC)
-    bResult = true;
-#elif defined(Q_OS_LINUX) || defined(Q_OS_FREEBSD)
-    if ((sApplicationDirPath == "/bin") || (sApplicationDirPath == "/usr/bin") || (sApplicationDirPath == "/usr/local/bin") || (sApplicationDirPath == "/app/bin") ||
-        (sApplicationDirPath.contains("/usr/local/bin$")) || isAppImage()) {
-        bResult = true;
-    } else {
-        bResult = false;
-    }
-#elif defined(Q_OS_WIN)
-    QString sLowerPath = sApplicationDirPath.toLower();
-    bool bWindowsApps = sLowerPath.contains("\\windowsapps\\");
-    bool bProgramFiles = sLowerPath.contains(":\\program files");
-
-    if (bWindowsApps || bProgramFiles) {
-        bResult = true;
-    }
+    return !isPortable();
 #endif
-    bResult = bResult || (!QFileInfo(sApplicationDirPath).isWritable());
-    return bResult;
-#endif
+}
+
+bool XOptions::isPortable()
+{
+    QString sApplicationDirPath = QDir::cleanPath(qApp->applicationDirPath());
+    QString sPortableFileName = sApplicationDirPath + QDir::separator() + "portable";
+    return QFileInfo(sPortableFileName).exists();
 }
 
 bool XOptions::isAppImage()
@@ -576,8 +560,8 @@ QCommandLineOption XOptions::getCommandLineOption(CONSOLE_OPTION_ID nId)
 
         if ((nId == CONSOLE_OPTION_ID_DATABASE) || (nId == CONSOLE_OPTION_ID_EXTRADATABASE) || (nId == CONSOLE_OPTION_ID_CUSTOMDATABASE)) {
             return QCommandLineOption(listOptions, pOption->pszDescription, "path");
-        } else if (nId == CONSOLE_OPTION_ID_SPECIAL) {
-            return QCommandLineOption(listOptions, pOption->pszDescription, "method");
+        } else if (nId == CONSOLE_OPTION_ID_STRUCT) {
+            return QCommandLineOption(listOptions, pOption->pszDescription, "struct");
         } else if (nId == CONSOLE_OPTION_ID_TEST) {
             return QCommandLineOption(listOptions, pOption->pszDescription, "directory");
         } else if (nId == CONSOLE_OPTION_ID_ADDTEST) {
@@ -1255,7 +1239,7 @@ void XOptions::setComboBox(QComboBox *pComboBox, XOptions::ID id)
         pComboBox->addItem("English", "");
         pComboBox->addItem("System", "System");
 
-        QList<QString> listFileNames = getAllFilesFromDirectory(getApplicationLangPath(), "*.qm");
+        QList<QString> listFileNames = getAllFilesFromDirectory(convertPathName("$data/lang"), "*.qm");
 
         qint32 nNumberOfRecords = listFileNames.count();
 
@@ -1282,7 +1266,7 @@ void XOptions::setComboBox(QComboBox *pComboBox, XOptions::ID id)
     } else if (id == ID_VIEW_QSS) {
         pComboBox->addItem("Default", "");
 
-        QList<QString> listFileNames = getAllFilesFromDirectory(getApplicationQssPath(), "*.qss");
+        QList<QString> listFileNames = getAllFilesFromDirectory(convertPathName("$data/qss"), "*.qss");
 
         qint32 nNumberOfRecords = listFileNames.count();
 
@@ -1625,7 +1609,7 @@ void XOptions::adjustApplicationView(const QString &sTranslationName, XOptions *
     if (pOptions->isIDPresent(XOptions::ID_VIEW_LANG)) {
         QTranslator *pTranslator = new QTranslator;  // Important
         QString sLang = pOptions->getValue(XOptions::ID_VIEW_LANG).toString();
-        QString sLangsPath = pOptions->getApplicationLangPath();
+        QString sLangsPath = convertPathName("$data/lang");
 
         bool bLoad = false;
 
@@ -1647,7 +1631,7 @@ void XOptions::adjustApplicationView(const QString &sTranslationName, XOptions *
         QString sQss = pOptions->getValue(XOptions::ID_VIEW_QSS).toString();
 
         if (sQss != "") {
-            QString sQssFileName = pOptions->getApplicationQssPath() + QDir::separator() + QString("%1.qss").arg(sQss);
+            QString sQssFileName = convertPathName(QString("$data/qss/%1.qss").arg(sQss));
 
             if (QFile::exists(sQssFileName)) {
                 QFile file;
@@ -2202,16 +2186,6 @@ void XOptions::deleteQObjectList(QList<QObject *> *pList)
     }
 }
 
-QString XOptions::getApplicationLangPath()
-{
-    return "$data/lang";
-}
-
-QString XOptions::getApplicationQssPath()
-{
-    return "$data/qss";
-}
-
 QList<QString> XOptions::getAllFilesFromDirectory(const QString &sDirectory, const QString &sExtension)
 {
     QDir directory(sDirectory);
@@ -2223,28 +2197,7 @@ bool XOptions::checkNative(const QString &sIniFileName)
 {
     Q_UNUSED(sIniFileName)
 
-    QString sApplicationDirPath = qApp->applicationDirPath();
-    sApplicationDirPath = QDir::cleanPath(sApplicationDirPath);
-
-    bool bResult = false;
-#if defined(Q_OS_MAC)
-    bResult = true;
-#elif defined(Q_OS_LINUX) || defined(Q_OS_FREEBSD)
-    if ((sApplicationDirPath == "/bin") || (sApplicationDirPath == "/usr/bin") || (sApplicationDirPath == "/usr/local/bin") || (sApplicationDirPath == "/app/bin") ||
-        (sApplicationDirPath.contains("/usr/local/bin$")) || isAppImage()) {
-        bResult = true;
-    } else {
-        bResult = false;
-    }
-#elif defined(Q_OS_WIN)
-    if (sApplicationDirPath.toLower().contains(":\\program files")) {
-        bResult = true;
-    }
-#endif
-
-    bResult = bResult || (!QFileInfo(sApplicationDirPath).isWritable());
-
-    return bResult;
+    return isNative();
 }
 
 QString XOptions::getApplicationDataPath()
@@ -2356,6 +2309,17 @@ QString XOptions::getApplicationDataPath()
 
     if (!bResult) {
         sResult = sApplicationDirPath;
+    }
+
+    if (!bResult) {
+        sResult = QStandardPaths::writableLocation(QStandardPaths::AppDataLocation);
+
+        if (QDir().mkpath(sResult)) {
+            bResult = true;
+        } else {
+            sResult = sApplicationDirPath;
+            bResult = true;
+        }
     }
 
     return sResult;
@@ -2556,7 +2520,7 @@ void XOptions::registerCodecs()
     }
 #endif
 }
-#ifndef QT_GUI_LIB
+
 Qt::GlobalColor XOptions::hexToGlobalColor(const QString &sHex)
 {
     if (sHex.isEmpty() || !sHex.startsWith("#") || sHex.length() != 7) {
@@ -2608,8 +2572,7 @@ Qt::GlobalColor XOptions::hexToGlobalColor(const QString &sHex)
 
     return bestColor;
 }
-#endif
-#ifndef QT_GUI_LIB
+
 void XOptions::printConsole(const QString &sString, const QString &sColorText, const QString &sColorBackground)
 {
     Qt::GlobalColor colorText = hexToGlobalColor(sColorText);
@@ -2806,8 +2769,7 @@ void XOptions::printConsole(const QString &sString, const QString &sColorText, c
 #endif
     }
 }
-#endif
-#ifndef QT_GUI_LIB
+
 void XOptions::printModel(QAbstractItemModel *pModel)
 {
     if (pModel) {
@@ -2904,7 +2866,6 @@ void XOptions::printModel(QAbstractItemModel *pModel)
         }
     }
 }
-#endif
 
 #if (QT_VERSION_MAJOR < 6) || defined(QT_CORE5COMPAT_LIB)
 #ifdef QT_GUI_LIB

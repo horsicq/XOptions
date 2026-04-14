@@ -354,8 +354,8 @@ public:
         CONSOLE_OPTION_ID_EXTRADATABASE,
         CONSOLE_OPTION_ID_CUSTOMDATABASE,
         CONSOLE_OPTION_ID_SHOWDATABASE,
-        CONSOLE_OPTION_ID_SPECIAL,
-        CONSOLE_OPTION_ID_SHOWMETHODS,
+        CONSOLE_OPTION_ID_STRUCT,
+        CONSOLE_OPTION_ID_SHOWSTRUCTS,
         CONSOLE_OPTION_ID_TEST,
         CONSOLE_OPTION_ID_ADDTEST,
         CONSOLE_OPTION_ID_SORT,
@@ -480,6 +480,7 @@ public:
     bool isIDPresent(ID id);
     bool isGroupIDPresent(GROUPID groupID);
     static bool isNative();
+    static bool isPortable();
     static bool isAppImage();
     void setName(const QString &sValue);
     void load();
@@ -513,8 +514,6 @@ public:
     bool isShowLogo();  // TODO: remove
     QString getSearchSignaturesPath();
     QString getStructsPath();
-    QString getApplicationLangPath();
-    QString getApplicationQssPath();
     static QList<QString> getAllFilesFromDirectory(const QString &sDirectory, const QString &sExtension);
     static bool checkNative(const QString &sIniFileName);
     QString getApplicationDataPath();
@@ -622,11 +621,9 @@ public:
     static QString getBundleIdToString(BUNDLE bundle);
     static void registerCodecs();
 
-#ifndef QT_GUI_LIB
     static Qt::GlobalColor hexToGlobalColor(const QString &sHex);
     static void printConsole(const QString &sString, const QString &colorText = "", const QString &colorBackground = "");
     static void printModel(QAbstractItemModel *pModel);
-#endif
 
 public slots:
     void clearRecentFiles();
