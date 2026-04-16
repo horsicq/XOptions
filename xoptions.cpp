@@ -332,6 +332,10 @@ bool XOptions::isNative()
 
 bool XOptions::isPortable()
 {
+#ifdef QT_DEBUG
+    return true;
+#endif
+
     QString sApplicationDirPath = QDir::cleanPath(qApp->applicationDirPath());
     QString sPortableFileName = sApplicationDirPath + QDir::separator() + "portable";
     return QFileInfo(sPortableFileName).exists();
@@ -375,7 +379,7 @@ void XOptions::load()
     if (bIsNative) {
         pSettings = new QSettings;
     } else {
-        pSettings = new QSettings(getApplicationDataPath() + QDir::separator() + QString("%1").arg(m_sName), QSettings::IniFormat);
+        pSettings = new QSettings(qApp->applicationDirPath() + QDir::separator() + QString("%1").arg(m_sName), QSettings::IniFormat);
     }
 
 #ifdef QT_DEBUG
@@ -486,7 +490,7 @@ void XOptions::save()
     if (bIsNative) {
         pSettings = new QSettings;
     } else {
-        pSettings = new QSettings(getApplicationDataPath() + QDir::separator() + QString("%1").arg(m_sName), QSettings::IniFormat);
+        pSettings = new QSettings(qApp->applicationDirPath() + QDir::separator() + QString("%1").arg(m_sName), QSettings::IniFormat);
     }
 
 #ifdef QT_DEBUG
@@ -2454,7 +2458,7 @@ bool XOptions::isWritable()
     if (bIsNative) {
         pSettings = new QSettings;
     } else {
-        pSettings = new QSettings(getApplicationDataPath() + QDir::separator() + QString("%1").arg(m_sName), QSettings::IniFormat);
+        pSettings = new QSettings(qApp->applicationDirPath() + QDir::separator() + QString("%1").arg(m_sName), QSettings::IniFormat);
     }
 
     bResult = pSettings->isWritable();
