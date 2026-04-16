@@ -178,6 +178,7 @@ XOptions::GROUPID XOptions::getGroupID(ID id)
         case ID_SCAN_DIE_DATABASE_CUSTOM_ENABLED:
         case ID_SCAN_YARA_DATABASE_PATH:
         case ID_SCAN_PEID_DATABASE_PATH:
+        case ID_SCAN_DIRECTORY_PATH:
         case ID_SCAN_TARGET_ALL:
         case ID_SCAN_TARGET_ALLFILETYPES:
         case ID_SCAN_TARGET_ALLTYPES:
@@ -451,7 +452,8 @@ void XOptions::load()
                 if ((!QDir(variant.toString()).exists()) && (!QFile(variant.toString()).exists())) {
                     variant = varDefault;
                 }
-            } else if ((id == ID_DATAPATH) || (id == ID_SIGNATURES_PATH) || (id == ID_STRUCTS_PATH) || (id == ID_STRUCTSPATH) || (id == ID_INFO_PATH)) {
+            } else if ((id == ID_DATAPATH) || (id == ID_SIGNATURES_PATH) || (id == ID_STRUCTS_PATH) || (id == ID_STRUCTSPATH) || (id == ID_INFO_PATH) ||
+                       (id == ID_SCAN_DIRECTORY_PATH)) {
                 if (!QDir(variant.toString()).exists()) {
                     variant = varDefault;
                 }
@@ -644,6 +646,7 @@ QString XOptions::idToString(ID id)
         case ID_SCAN_DIE_DATABASE_CUSTOM_ENABLED: sResult = QString("Scan/Die/Database/Custom/Enabled"); break;
         case ID_SCAN_YARA_DATABASE_PATH: sResult = QString("Scan/Yara/Database/Path"); break;
         case ID_SCAN_PEID_DATABASE_PATH: sResult = QString("Scan/Peid/Database/Path"); break;
+        case ID_SCAN_DIRECTORY_PATH: sResult = QString("Scan/Directory/Path"); break;
         case ID_SCAN_TARGET_ALL: sResult = QString("Scan/Target/All"); break;
         case ID_SCAN_TARGET_ALLFILETYPES: sResult = QString("Scan/Target/AllFileTypes"); break;
         case ID_SCAN_TARGET_ALLTYPES: sResult = QString("Scan/Target/AllTypes"); break;
