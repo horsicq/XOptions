@@ -135,6 +135,7 @@ XOptions::GROUPID XOptions::getGroupID(ID id)
         case ID_VIEW_STAYONTOP:
         case ID_VIEW_STYLE:
         case ID_VIEW_QSS:
+        case ID_VIEW_QSS_DATABASE_UPDATE_URL:
         case ID_VIEW_LANG:
         case ID_VIEW_SINGLEAPPLICATION:
         case ID_VIEW_SHOWLOGO:
@@ -172,12 +173,16 @@ XOptions::GROUPID XOptions::getGroupID(ID id)
         case ID_SCAN_ENGINE_PEID_ENABLED:
         case ID_SCAN_ENGINE_YARA_ENABLED:
         case ID_SCAN_DIE_DATABASE_MAIN_PATH:
+        case ID_SCAN_DIE_DATABASE_MAIN_UPDATE_URL:
         case ID_SCAN_DIE_DATABASE_EXTRA_PATH:
+        case ID_SCAN_DIE_DATABASE_EXTRA_UPDATE_URL:
         case ID_SCAN_DIE_DATABASE_CUSTOM_PATH:
         case ID_SCAN_DIE_DATABASE_EXTRA_ENABLED:
         case ID_SCAN_DIE_DATABASE_CUSTOM_ENABLED:
         case ID_SCAN_YARA_DATABASE_PATH:
+        case ID_SCAN_YARA_DATABASE_UPDATE_URL:
         case ID_SCAN_PEID_DATABASE_PATH:
+        case ID_SCAN_PEID_DATABASE_UPDATE_URL:
         case ID_SCAN_DIRECTORY_PATH:
         case ID_SCAN_TARGET_ALL:
         case ID_SCAN_TARGET_ALLFILETYPES:
@@ -233,7 +238,8 @@ XOptions::GROUPID XOptions::getGroupID(ID id)
         case ID_SCAN_COLOR_STUB:
         case ID_SCAN_COLOR_TOOL: result = GROUPID_SCAN; break;
         case ID_SIGNATURES_PATH: result = GROUPID_SIGNATURES; break;
-        case ID_INFO_PATH: result = GROUPID_INFO; break;
+        case ID_INFO_DATABASE_PATH:
+        case ID_INFO_DATABASE_UPDATE_URL: result = GROUPID_INFO; break;
         case ID_DISASM_FONT:
         case ID_DISASM_SYNTAX:
         case ID_DISASM_LOCATIONCOLON:
@@ -452,7 +458,7 @@ void XOptions::load()
                 if ((!QDir(variant.toString()).exists()) && (!QFile(variant.toString()).exists())) {
                     variant = varDefault;
                 }
-            } else if ((id == ID_DATAPATH) || (id == ID_SIGNATURES_PATH) || (id == ID_STRUCTS_PATH) || (id == ID_STRUCTSPATH) || (id == ID_INFO_PATH) ||
+            } else if ((id == ID_DATAPATH) || (id == ID_SIGNATURES_PATH) || (id == ID_STRUCTS_PATH) || (id == ID_STRUCTSPATH) || (id == ID_INFO_DATABASE_PATH) ||
                        (id == ID_SCAN_DIRECTORY_PATH)) {
                 if (!QDir(variant.toString()).exists()) {
                     variant = varDefault;
@@ -598,6 +604,7 @@ QString XOptions::idToString(ID id)
         case ID_VIEW_STAYONTOP: sResult = QString("View/StayOnTop"); break;
         case ID_VIEW_STYLE: sResult = QString("View/Style"); break;
         case ID_VIEW_QSS: sResult = QString("View/Qss"); break;
+        case ID_VIEW_QSS_DATABASE_UPDATE_URL: sResult = QString("View/Qss/Database/UpdateUrl"); break;
         case ID_VIEW_LANG: sResult = QString("View/Lang"); break;
         case ID_VIEW_SINGLEAPPLICATION: sResult = QString("View/SingleApplication"); break;
         case ID_VIEW_SHOWLOGO: sResult = QString("View/ShowLogo"); break;
@@ -640,12 +647,16 @@ QString XOptions::idToString(ID id)
         case ID_SCAN_ENGINE_PEID_ENABLED: sResult = QString("Scan/Engine/Peid/Enabled"); break;
         case ID_SCAN_ENGINE_YARA_ENABLED: sResult = QString("Scan/Engine/Yara/Enabled"); break;
         case ID_SCAN_DIE_DATABASE_MAIN_PATH: sResult = QString("Scan/Die/Database/Main/Path"); break;
+        case ID_SCAN_DIE_DATABASE_MAIN_UPDATE_URL: sResult = QString("Scan/Die/Database/Main/UpdateUrl"); break;
         case ID_SCAN_DIE_DATABASE_EXTRA_PATH: sResult = QString("Scan/Die/Database/Extra/Path"); break;
+        case ID_SCAN_DIE_DATABASE_EXTRA_UPDATE_URL: sResult = QString("Scan/Die/Database/Extra/UpdateUrl"); break;
         case ID_SCAN_DIE_DATABASE_CUSTOM_PATH: sResult = QString("Scan/Die/Database/Custom/Path"); break;
         case ID_SCAN_DIE_DATABASE_EXTRA_ENABLED: sResult = QString("Scan/Die/Database/Extra/Enabled"); break;
         case ID_SCAN_DIE_DATABASE_CUSTOM_ENABLED: sResult = QString("Scan/Die/Database/Custom/Enabled"); break;
         case ID_SCAN_YARA_DATABASE_PATH: sResult = QString("Scan/Yara/Database/Path"); break;
+        case ID_SCAN_YARA_DATABASE_UPDATE_URL: sResult = QString("Scan/Yara/Database/UpdateUrl"); break;
         case ID_SCAN_PEID_DATABASE_PATH: sResult = QString("Scan/Peid/Database/Path"); break;
+        case ID_SCAN_PEID_DATABASE_UPDATE_URL: sResult = QString("Scan/Peid/Database/UpdateUrl"); break;
         case ID_SCAN_DIRECTORY_PATH: sResult = QString("Scan/Directory/Path"); break;
         case ID_SCAN_TARGET_ALL: sResult = QString("Scan/Target/All"); break;
         case ID_SCAN_TARGET_ALLFILETYPES: sResult = QString("Scan/Target/AllFileTypes"); break;
@@ -701,7 +712,8 @@ QString XOptions::idToString(ID id)
         case ID_SCAN_COLOR_STUB: sResult = QString("Scan/Color/Stub"); break;
         case ID_SCAN_COLOR_TOOL: sResult = QString("Scan/Color/Tool"); break;
         case ID_SIGNATURES_PATH: sResult = QString("Signatures/Path"); break;
-        case ID_INFO_PATH: sResult = QString("Info/Path"); break;
+        case ID_INFO_DATABASE_PATH: sResult = QString("Info/Path"); break;
+        case ID_INFO_DATABASE_UPDATE_URL: sResult = QString("Info/Database/UpdateUrl"); break;
         case ID_ONLINETOOLS_VIRUSTOTAL_APIKEY: sResult = QString("OnlineTools/VirusTotalApi"); break;
         case ID_DISASM_FONT: sResult = QString("Disasm/Font"); break;
         case ID_DISASM_LOCATIONCOLON: sResult = QString("Disasm/LocationColon"); break;
@@ -895,7 +907,7 @@ QString XOptions::getScanEngine()
 
 QString XOptions::getInfoPath()
 {
-    return getValue(ID_INFO_PATH).toString();
+    return getValue(ID_INFO_DATABASE_PATH).toString();
 }
 
 QString XOptions::getRootPath()
