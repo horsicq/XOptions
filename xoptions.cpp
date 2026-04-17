@@ -1300,7 +1300,7 @@ void XOptions::setComboBox(QComboBox *pComboBox, XOptions::ID id)
         pComboBox->addItem(tr("Automatic"), "auto");
         pComboBox->addItem(QString("Detect It Easy (DiE)"), "die");
         pComboBox->addItem(QString("Nauz File Detector (NFD)"), "nfd");
-        // TODO: peid
+        pComboBox->addItem(QString("PEiD"), "peid");
         // TODO: TrID
         // TODO: EXEInfoPE
         // TODO: PE Detective
@@ -1311,6 +1311,7 @@ void XOptions::setComboBox(QComboBox *pComboBox, XOptions::ID id)
         pComboBox->addItem("", "");
         pComboBox->addItem(QString("Detect It Easy (DiE)"), "die");
         pComboBox->addItem(QString("Nauz File Detector (NFD)"), "nfd");
+        pComboBox->addItem(QString("PEiD"), "peid");
 #ifdef USE_YARA
         pComboBox->addItem(QString("Yara rules"), "yara");
 #endif
