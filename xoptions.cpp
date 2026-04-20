@@ -2384,6 +2384,7 @@ QString XOptions::convertPathName(const QString &sPathName)
 
         if (!bSuccess) {
             if (sApplicationDirPath.contains("/usr/local/bin")) {
+                _sPathName = sPathName;
                 QString sPrefix = sApplicationDirPath.section("/usr/local/bin", 0, 0);
                 QString sPath = sPrefix + QString("/usr/local/lib/%1").arg(sApplicationName);
 
@@ -2395,6 +2396,7 @@ QString XOptions::convertPathName(const QString &sPathName)
 
         if (!bSuccess) {
             if (sApplicationDirPath.contains("/app/bin")) {
+                _sPathName = sPathName;
                 QString sPrefix = sApplicationDirPath.section("/app/bin", 0, 0);
                 QString sPath = sPrefix + QString("/app/lib/%1").arg(sApplicationName);
 
@@ -2406,6 +2408,7 @@ QString XOptions::convertPathName(const QString &sPathName)
 
         if (!bSuccess) {
             if (sApplicationDirPath.contains("/tmp/.mount_")) {
+                _sPathName = sPathName;
                 QString sPrefix = sApplicationDirPath.section("/", 0, 2);
 
                 QString sPath = sPrefix + QString("/app/lib/%1").arg(sApplicationName);
@@ -2413,6 +2416,23 @@ QString XOptions::convertPathName(const QString &sPathName)
                 _sPathName = _sPathName.replace("$data", sPath);
 
                 bSuccess = isPathExists(_sPathName);
+            }
+        }
+
+        if (!bSuccess) {
+            qint32 nIndex = 0;
+            while (true) {
+                _sPathName = sPathName;
+                QString sPath = qApp->property(QString("dataPathAlt%1").arg(nIndex).toUtf8().data()).toString();
+
+                _sPathName = _sPathName.replace("$data", sPath);
+
+                if (QDir(sResult).exists()) {
+                    bSuccess = true;
+                    break;
+                }
+
+                nIndex++;
             }
         }
 
