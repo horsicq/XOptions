@@ -2420,8 +2420,7 @@ QString XOptions::convertPathName(const QString &sPathName)
         }
 
         if (!bSuccess) {
-            qint32 nIndex = 0;
-            while (true) {
+            for (qint32 nIndex = 0; nIndex < 10; nIndex++) {
                 _sPathName = sPathName;
                 QString sPath = qApp->property(QString("dataPathAlt%1").arg(nIndex).toUtf8().data()).toString();
 
@@ -2431,9 +2430,25 @@ QString XOptions::convertPathName(const QString &sPathName)
                     bSuccess = true;
                     break;
                 }
-
-                nIndex++;
             }
+        }
+
+        if (!bSuccess) {
+             _sPathName = sPathName;
+            QString sPath = QString("/usr/local/lib/%1").arg(sApplicationName);
+
+            _sPathName = _sPathName.replace("$data", sPath);
+
+            bSuccess = isPathExists(_sPathName);
+        }
+
+        if (!bSuccess) {
+             _sPathName = sPathName;
+            QString sPath = QString("/usr/lib/%1").arg(sApplicationName);
+
+            _sPathName = _sPathName.replace("$data", sPath);
+
+            bSuccess = isPathExists(_sPathName);
         }
 
         if (bSuccess) {
