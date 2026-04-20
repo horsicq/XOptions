@@ -2356,7 +2356,7 @@ QString XOptions::convertPathName(const QString &sPathName)
         QString sApplicationName = qApp->applicationName();
 
 #ifdef Q_OS_MAC
-        if (!bResult) {
+        if (!bSuccess) {
             _sPathName = sPathName;
             QString _sApplicationDirPath = sApplicationDirPath + "/../Resources";
 
