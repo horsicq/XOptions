@@ -184,11 +184,10 @@ XOptions::GROUPID XOptions::getGroupID(ID id)
         case ID_SCAN_PEID_DATABASE_PATH:
         case ID_SCAN_PEID_DATABASE_UPDATE_URL:
         case ID_SCAN_DIRECTORY_PATH:
-        case ID_SCAN_TARGET_ALL:
-        case ID_SCAN_TARGET_ALLFILETYPES:
-        case ID_SCAN_TARGET_ALLTYPES:
-        case ID_SCAN_TARGET_FILETYPES:
-        case ID_SCAN_TARGET_TYPES:
+        case ID_SCAN_COLLECTION_ALLFILETYPES:
+        case ID_SCAN_COLLECTION_ALLTYPES:
+        case ID_SCAN_COLLECTION_FILETYPES:
+        case ID_SCAN_COLLECTION_TYPES:
         case ID_SCAN_COLOR_INSTALLER:
         case ID_SCAN_COLOR_SFX:
         case ID_SCAN_COLOR_ARCHIVE:
@@ -658,11 +657,10 @@ QString XOptions::idToString(ID id)
         case ID_SCAN_PEID_DATABASE_PATH: sResult = QString("Scan/Peid/Database/Path"); break;
         case ID_SCAN_PEID_DATABASE_UPDATE_URL: sResult = QString("Scan/Peid/Database/UpdateUrl"); break;
         case ID_SCAN_DIRECTORY_PATH: sResult = QString("Scan/Directory/Path"); break;
-        case ID_SCAN_TARGET_ALL: sResult = QString("Scan/Target/All"); break;
-        case ID_SCAN_TARGET_ALLFILETYPES: sResult = QString("Scan/Target/AllFileTypes"); break;
-        case ID_SCAN_TARGET_ALLTYPES: sResult = QString("Scan/Target/AllTypes"); break;
-        case ID_SCAN_TARGET_FILETYPES: sResult = QString("Scan/Target/FileTypes"); break;
-        case ID_SCAN_TARGET_TYPES: sResult = QString("Scan/Target/Types"); break;
+        case ID_SCAN_COLLECTION_ALLFILETYPES: sResult = QString("Scan/Collection/AllFileTypes"); break;
+        case ID_SCAN_COLLECTION_ALLTYPES: sResult = QString("Scan/Collection/AllTypes"); break;
+        case ID_SCAN_COLLECTION_FILETYPES: sResult = QString("Scan/Collection/FileTypes"); break;
+        case ID_SCAN_COLLECTION_TYPES: sResult = QString("Scan/Collection/Types"); break;
         case ID_SCAN_COLOR_INSTALLER: sResult = QString("Scan/Color/Installer"); break;
         case ID_SCAN_COLOR_SFX: sResult = QString("Scan/Color/Sfx"); break;
         case ID_SCAN_COLOR_ARCHIVE: sResult = QString("Scan/Color/Archive"); break;
