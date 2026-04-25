@@ -2432,7 +2432,7 @@ QString XOptions::convertPathName(const QString &sPathName)
         }
 
         if (!bSuccess) {
-             _sPathName = sPathName;
+            _sPathName = sPathName;
             QString sPath = QString("/usr/local/lib/%1").arg(sApplicationName);
 
             _sPathName = _sPathName.replace("$data", sPath);
@@ -2441,7 +2441,7 @@ QString XOptions::convertPathName(const QString &sPathName)
         }
 
         if (!bSuccess) {
-             _sPathName = sPathName;
+            _sPathName = sPathName;
             QString sPath = QString("/usr/lib/%1").arg(sApplicationName);
 
             _sPathName = _sPathName.replace("$data", sPath);
