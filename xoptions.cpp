@@ -188,6 +188,11 @@ XOptions::GROUPID XOptions::getGroupID(ID id)
         case ID_SCAN_COLLECTION_ALLTYPES:
         case ID_SCAN_COLLECTION_FILETYPES:
         case ID_SCAN_COLLECTION_TYPES:
+        case ID_SCAN_COLLECTION_RESULT_PATH:
+        case ID_SCAN_COLLECTION_CATALOG_ENABLED:
+        case ID_SCAN_COLLECTION_CATALOG_FORMAT:
+        case ID_SCAN_COLLECTION_COPY_ENABLED:
+        case ID_SCAN_COLLECTION_COPY_FORMAT:
         case ID_SCAN_COLOR_INSTALLER:
         case ID_SCAN_COLOR_SFX:
         case ID_SCAN_COLOR_ARCHIVE:
@@ -661,6 +666,11 @@ QString XOptions::idToString(ID id)
         case ID_SCAN_COLLECTION_ALLTYPES: sResult = QString("Scan/Collection/AllTypes"); break;
         case ID_SCAN_COLLECTION_FILETYPES: sResult = QString("Scan/Collection/FileTypes"); break;
         case ID_SCAN_COLLECTION_TYPES: sResult = QString("Scan/Collection/Types"); break;
+        case ID_SCAN_COLLECTION_RESULT_PATH: sResult = QString("Scan/Collection/ResultPath"); break;
+        case ID_SCAN_COLLECTION_CATALOG_ENABLED: sResult = QString("Scan/Collection/CatalogEnabled"); break;
+        case ID_SCAN_COLLECTION_CATALOG_FORMAT: sResult = QString("Scan/Collection/CatalogFormat"); break;
+        case ID_SCAN_COLLECTION_COPY_ENABLED: sResult = QString("Scan/Collection/CopyEnabled"); break;
+        case ID_SCAN_COLLECTION_COPY_FORMAT: sResult = QString("Scan/Collection/CopyFormat"); break;
         case ID_SCAN_COLOR_INSTALLER: sResult = QString("Scan/Color/Installer"); break;
         case ID_SCAN_COLOR_SFX: sResult = QString("Scan/Color/Sfx"); break;
         case ID_SCAN_COLOR_ARCHIVE: sResult = QString("Scan/Color/Archive"); break;
