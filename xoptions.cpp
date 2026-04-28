@@ -53,7 +53,20 @@ static const XOptions::CONSOLE_OPTION g_consoleOptions[] = {
     {XOptions::CONSOLE_OPTION_ID_RESOURCESSCAN, "R", "resourcesscan", "Scan file resources"},
     {XOptions::CONSOLE_OPTION_ID_ARCHIVESSCAN, "A", "archivesscan", "Scan file archives"},
     {XOptions::CONSOLE_OPTION_ID_FILETYPE, "F", "filetype", "Force file type (e.g. PE, ELF, DEX)"},
+    {XOptions::CONSOLE_OPTION_ID_NOCOLOR, "", "nocolor", "Disable color output"},
 };
+
+static bool s_bNoColor = false;
+
+void XOptions::setNoColor(bool bNoColor)
+{
+    s_bNoColor = bNoColor;
+}
+
+bool XOptions::isNoColor()
+{
+    return s_bNoColor;
+}
 
 XOptions::XOptions(QObject *pParent) : QObject(pParent)
 {
@@ -565,7 +578,7 @@ QVariant XOptions::getDefaultValue(ID id)
 
 QCommandLineOption XOptions::getCommandLineOption(CONSOLE_OPTION_ID nId)
 {
-    if ((nId > CONSOLE_OPTION_ID_UNKNOWN) && (nId <= CONSOLE_OPTION_ID_FILETYPE)) {
+    if ((nId > CONSOLE_OPTION_ID_UNKNOWN) && (nId <= CONSOLE_OPTION_ID_NOCOLOR)) {
         const CONSOLE_OPTION *pOption = &g_consoleOptions[nId - 1];
 
         QStringList listOptions;
@@ -2642,6 +2655,11 @@ Qt::GlobalColor XOptions::hexToGlobalColor(const QString &sHex)
 
 void XOptions::printConsole(const QString &sString, const QString &sColorText, const QString &sColorBackground)
 {
+    if (s_bNoColor) {
+        printf("%s", sString.toUtf8().data());
+        return;
+    }
+
     Qt::GlobalColor colorText = hexToGlobalColor(sColorText);
     Qt::GlobalColor colorBackground = hexToGlobalColor(sColorBackground);
 

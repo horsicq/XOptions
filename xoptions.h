@@ -377,7 +377,8 @@ public:
         CONSOLE_OPTION_ID_OVERLAYSCAN,
         CONSOLE_OPTION_ID_RESOURCESSCAN,
         CONSOLE_OPTION_ID_ARCHIVESSCAN,
-        CONSOLE_OPTION_ID_FILETYPE
+        CONSOLE_OPTION_ID_FILETYPE,
+        CONSOLE_OPTION_ID_NOCOLOR
     };
 
     struct CONSOLE_OPTION {
@@ -636,6 +637,8 @@ public:
 
     static Qt::GlobalColor hexToGlobalColor(const QString &sHex);
     static void printConsole(const QString &sString, const QString &colorText = "", const QString &colorBackground = "");
+    static void setNoColor(bool bNoColor);
+    static bool isNoColor();
     static void printModel(QAbstractItemModel *pModel);
 
 public slots:
