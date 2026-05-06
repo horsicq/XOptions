@@ -45,13 +45,14 @@ static const XOptions::CONSOLE_OPTION g_consoleOptions[] = {
     {XOptions::CONSOLE_OPTION_ID_STRUCT, "S", "struct", "Show special file information using specified structure (e.g., 'Hash' or 'Hash#MD5')"},
     {XOptions::CONSOLE_OPTION_ID_SHOWSTRUCTS, "w", "showstructs", "Display all available special structures for the file"},
     {XOptions::CONSOLE_OPTION_ID_TEST, "", "test", "Test signatures in specified directory"},
-    {XOptions::CONSOLE_OPTION_ID_ADDTEST, "", "addtest", "Add test case with filename, detect string, and directory"},
+    {XOptions::CONSOLE_OPTION_ID_CREATETEST, "", "createtest", "Create test case with filename, detect string, and directory"},
     {XOptions::CONSOLE_OPTION_ID_SORT, "", "sort", "Sort scan results"},
-    {XOptions::CONSOLE_OPTION_ID_NOHIGHLIGHT, "", "nohighlight", "Do not highlight scan results"},
     {XOptions::CONSOLE_OPTION_ID_USECACHE, "", "usecache", "Use database cache for faster loading"},
     {XOptions::CONSOLE_OPTION_ID_OVERLAYSCAN, "O", "overlayscan", "Scan file overlay"},
     {XOptions::CONSOLE_OPTION_ID_RESOURCESSCAN, "R", "resourcesscan", "Scan file resources"},
     {XOptions::CONSOLE_OPTION_ID_ARCHIVESSCAN, "A", "archivesscan", "Scan file archives"},
+    {XOptions::CONSOLE_OPTION_ID_LISTARCHIVE, "listarchive", "showarchive", "Show archive content"},
+    {XOptions::CONSOLE_OPTION_ID_EXTRACTARCHIVE, "", "extractarchive", "Extract all archive entries to directory"},
     {XOptions::CONSOLE_OPTION_ID_FILETYPE, "F", "filetype", "Force file type (e.g. PE, ELF, DEX)"},
     {XOptions::CONSOLE_OPTION_ID_NOCOLOR, "", "nocolor", "Disable color output"},
 };
@@ -605,9 +606,11 @@ QCommandLineOption XOptions::getCommandLineOption(CONSOLE_OPTION_ID nId)
             return QCommandLineOption(listOptions, pOption->pszDescription, "path");
         } else if (nId == CONSOLE_OPTION_ID_STRUCT) {
             return QCommandLineOption(listOptions, pOption->pszDescription, "struct");
+        } else if (nId == CONSOLE_OPTION_ID_EXTRACTARCHIVE) {
+            return QCommandLineOption(listOptions, pOption->pszDescription, "directory");
         } else if (nId == CONSOLE_OPTION_ID_TEST) {
             return QCommandLineOption(listOptions, pOption->pszDescription, "directory");
-        } else if (nId == CONSOLE_OPTION_ID_ADDTEST) {
+        } else if (nId == CONSOLE_OPTION_ID_CREATETEST) {
             return QCommandLineOption(listOptions, pOption->pszDescription, "filename", "");
         } else if (nId == CONSOLE_OPTION_ID_FILETYPE) {
             return QCommandLineOption(listOptions, pOption->pszDescription, "filetype");
