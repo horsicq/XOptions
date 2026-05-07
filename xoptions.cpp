@@ -54,6 +54,7 @@ static const XOptions::CONSOLE_OPTION g_consoleOptions[] = {
     {XOptions::CONSOLE_OPTION_ID_LISTARCHIVE, "listarchive", "showarchive", "Show archive content"},
     {XOptions::CONSOLE_OPTION_ID_EXTRACTARCHIVE, "", "extractarchive", "Extract all archive entries to directory"},
     {XOptions::CONSOLE_OPTION_ID_FILETYPE, "F", "filetype", "Force file type (e.g. PE, ELF, DEX)"},
+    {XOptions::CONSOLE_OPTION_ID_FIRSTWRAPPERONLY, "W", "firstwrapperonly", "Stop after the first wrapper detection"},
     {XOptions::CONSOLE_OPTION_ID_NOCOLOR, "", "nocolor", "Disable color output"},
 };
 
