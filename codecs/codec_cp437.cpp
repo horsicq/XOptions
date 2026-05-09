@@ -51,14 +51,6 @@ static quint8 const cp437FromUnicode[256] = {
     '?',  0xa5, '?',  '?',  '?',  '?',  0x99, '?',  '?',  '?',  '?',  '?',  0x9a, '?',  '?',  0xe1, 0x85, 0xa0, 0x83, '?',  0x84, 0x86, 0x91, 0x87, 0x8a, 0x82,
     0x88, 0x89, 0x8d, 0xa1, 0x8c, 0x8b, '?',  0xa4, 0x95, 0xa2, 0x93, '?',  0x94, 0xf6, '?',  0x97, 0xa3, 0x96, 0x81, '?',  '?',  0x98};
 
-codec_cp437::codec_cp437()
-{
-}
-
-codec_cp437::~codec_cp437()
-{
-}
-
 QByteArray codec_cp437::name() const
 {
     return "IBM437";
@@ -66,10 +58,7 @@ QByteArray codec_cp437::name() const
 
 QList<QByteArray> codec_cp437::aliases() const
 {
-    QList<QByteArray> list;
-    list << "CP437";
-
-    return list;
+    return {"CP437"};
 }
 
 int codec_cp437::mibEnum() const
@@ -98,7 +87,7 @@ QString codec_cp437::convertToUnicode(const char *in, int length, ConverterState
             value = value * 16 + digit;
             ++nibble;
             if (nibble >= 4) {
-                str += QChar((ushort)value);
+                str += QChar(static_cast<ushort>(value));
                 nibble = 0;
                 value = 0;
             }
@@ -106,7 +95,7 @@ QString codec_cp437::convertToUnicode(const char *in, int length, ConverterState
 
     } else {
         // Regular 437-encoded string.
-        while (length-- > 0) str += QChar((quint32)cp437ToUnicode[*in++ & 0xFF]);
+        while (length-- > 0) str += QChar(static_cast<quint32>(cp437ToUnicode[*in++ & 0xFF]));
     }
     return str;
 }
@@ -152,7 +141,7 @@ QByteArray codec_cp437::convertFromUnicode(const QChar *in, int length, Converte
     result.resize(length);
     out = result.data();
     while (length-- > 0) {
-        *out++ = (char)cp437FromUnicode[in->unicode()];
+        *out++ = static_cast<char>(cp437FromUnicode[in->unicode()]);
         ++in;
     }
     return result;

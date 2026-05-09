@@ -26,8 +26,7 @@
 
 class codec_cp437 : public QTextCodec {
 public:
-    codec_cp437();
-    ~codec_cp437();
+    codec_cp437() = default;
 
     QByteArray name() const;
     QList<QByteArray> aliases() const;
