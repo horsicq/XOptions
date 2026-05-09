@@ -54,7 +54,7 @@ public:
     explicit DialogViewColors(QWidget *pParent = nullptr);
     ~DialogViewColors();
 
-    virtual void adjustView();
+    void adjustView() override;
 
     void setOptions(XOptions *pOptions, const QList<RECORD> &listRecords, const QString &sTitle);
     void save();
@@ -65,7 +65,7 @@ private slots:
     void pushButtonSlot();
 
 protected:
-    virtual void registerShortcuts(bool bState);
+    void registerShortcuts(bool bState) override;
 
 private:
     void addRecord(qint32 nRow, const QString &sGroup, const QString &sText, XOptions::ID id);

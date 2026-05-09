@@ -28,7 +28,6 @@ XOptionsWidget::XOptionsWidget(QWidget *pParent) : XShortcutsWidget(pParent), ui
 
     m_pParent = pParent;
     m_pOptions = nullptr;
-    m_sApplicationDisplayName = "";
 
     connect(this, SIGNAL(saveSignal()), this, SLOT(save()), Qt::DirectConnection);
     connect(this, SIGNAL(reloadSignal()), this, SLOT(reload()), Qt::DirectConnection);
@@ -429,15 +428,10 @@ void XOptionsWidget::on_checkBoxFileSetEnvVar_toggled(bool bChecked)
 
     bool bIsSet = m_pOptions->isPathInUserEnvironment(formattedDir);
 
-    if (bChecked) {
-        if (!bIsSet) {
-            m_pOptions->appendToUserPathVariable(formattedDir);
-        }
-    } else {
-        if (bIsSet) {
-            m_pOptions->removeFromUserPathVariable(formattedDir);
-        }
-    }
+    if (bChecked && !bIsSet)
+        m_pOptions->appendToUserPathVariable(formattedDir);
+    else if (!bChecked && bIsSet)
+        m_pOptions->removeFromUserPathVariable(formattedDir);
 #else
     Q_UNUSED(bChecked)
 #endif

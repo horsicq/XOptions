@@ -95,7 +95,7 @@ void DialogViewColors::save()
 
 void DialogViewColors::on_pushButtonCancel_clicked()
 {
-    this->close();
+    close();
 }
 
 static QPushButton *_createButton(const QString &sText, qint32 nRow, qint32 nColumn, XOptions::ID id, QObject *pReceiver, const char *pSlot)
@@ -151,7 +151,7 @@ void DialogViewColors::updateRow(qint32 nRow)
         return;
     }
 
-    XOptions::ID id = (XOptions::ID)(pWidget->property("ID").toUInt());
+    XOptions::ID id = static_cast<XOptions::ID>(pWidget->property("ID").toUInt());
 
     const QString sColor = m_mapColors.value(id);
     qint32 nSep = sColor.indexOf('|');
@@ -185,7 +185,7 @@ void DialogViewColors::on_pushButtonOK_clicked()
 {
     save();
 
-    this->close();
+    close();
 }
 
 void DialogViewColors::pushButtonSlot()
@@ -198,7 +198,7 @@ void DialogViewColors::pushButtonSlot()
 
     const qint32 nRow = pPushButton->property("ROW").toInt();
     const qint32 nColumn = pPushButton->property("COLUMN").toInt();
-    const XOptions::ID id = (XOptions::ID)(pPushButton->property("ID").toUInt());
+    const XOptions::ID id = static_cast<XOptions::ID>(pPushButton->property("ID").toUInt());
 
     const QString sColor = m_mapColors.value(id);
     qint32 nSep = sColor.indexOf('|');
