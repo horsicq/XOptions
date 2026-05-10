@@ -20,6 +20,8 @@
  */
 #include "xthreadobject.h"
 
+#include <QCoreApplication>
+
 XThreadObject::XThreadObject(QObject *pParent) : QObject(pParent)
 {
 }
@@ -44,4 +46,11 @@ void XThreadObject::_process()
     process();
 
     emit completed(scanTimer.elapsed());
+}
+
+void XThreadObject::moveToGuiThread()
+{
+    if (QCoreApplication::instance()) {
+        moveToThread(QCoreApplication::instance()->thread());
+    }
 }

@@ -232,7 +232,7 @@ void DialogViewColors::pushButtonSlot()
     // Build color string
     QString sNewColor;
     if (!sTextColor.isEmpty() || !sBackgroundColor.isEmpty()) {
-        sNewColor = QString("%1|%2").arg(sTextColor, sBackgroundColor);
+        sNewColor = QString("%1|%2").arg(sTextColor).arg(sBackgroundColor);
     }
 
     m_mapColors.insert(id, sNewColor);

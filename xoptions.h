@@ -167,7 +167,6 @@ public:
         ID_STRUCTSPATH,
         ID_AUTHUSER,
         ID_AUTHTOKEN,
-        // new
         ID_VIEW_STAYONTOP,
         ID_VIEW_STYLE,
         ID_VIEW_QSS,
@@ -344,7 +343,6 @@ public:
         ID_IODRIVER_FILENAME,
         ID_IODRIVER_SERVICENAME,
         ID_STRUCTS_PATH,
-        // for internal use.
         ID_NU_LASTDIRECTORY,  // Using if ID_SAVELASTDIRECTORY
         ID_NU_RECENTFILES,    // Using if ID_SAVERECENTFILES
         ID_FILE_SETENV
@@ -485,11 +483,6 @@ public:
         QString sColorBackground;
     };
 
-    // struct GLOBAL_COLOR_RECORD {
-    //     QColor colorMain;
-    //     QColor colorBackground;
-    // };
-
     explicit XOptions(QObject *pParent = nullptr);
 
     void resetToDefault();
@@ -574,7 +567,6 @@ public:
     static void adjustListWidgetSize(QListWidget *pListWidget, qint32 nMinimumWidth = 100);
     static qint32 _getTreeWidgetItemSize(QTreeWidget *pTreeWidget, QTreeWidgetItem *pTreeWidgetItem, qint32 nIndent, qint32 nLevel);
     static void adjustTreeWidgetSize(QTreeWidget *pTreeWidget, qint32 nMinimumWidth = 100);
-    // static void adjustApplicationView(const QString &sApplicationFileName, QString sTranslationName);
     static QWidget *getMainWidget(QWidget *pWidget);
     static QString getTableModelText(QAbstractItemModel *pModel);
     static void _getTreeModelText(QString *psString, QAbstractItemModel *pModel, QModelIndex index, qint32 nLevel);

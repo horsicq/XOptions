@@ -20,6 +20,8 @@
  */
 #include "xoptions.h"
 
+#include <QtGlobal>
+
 static const XOptions::CONSOLE_OPTION g_consoleOptions[] = {
     {XOptions::CONSOLE_OPTION_ID_RECURSIVESCAN, "r", "recursivescan", "Scan directories recursively"},
     {XOptions::CONSOLE_OPTION_ID_DEEPSCAN, "d", "deepscan", "Enable deep scanning for thorough analysis"},
@@ -60,6 +62,25 @@ static const XOptions::CONSOLE_OPTION g_consoleOptions[] = {
 
 static bool s_bNoColor = false;
 
+#ifdef QT_GUI_LIB
+static QTranslator *s_pApplicationTranslator = nullptr;
+
+static bool saveUtf8TextToFile(const QString &sText, const QString &sFileName)
+{
+    QFile file(sFileName);
+
+    if (!file.open(QIODevice::WriteOnly | QIODevice::Truncate)) {
+        return false;
+    }
+
+    QByteArray baText = sText.toUtf8();
+    bool bResult = (file.write(baText.constData(), baText.size()) == baText.size()) && file.flush();
+    file.close();
+
+    return bResult;
+}
+#endif
+
 void XOptions::setNoColor(bool bNoColor)
 {
     s_bNoColor = bNoColor;
@@ -78,7 +99,7 @@ XOptions::XOptions(QObject *pParent) : QObject(pParent)
 #endif
     m_bIsNeedRestart = false;
     m_nMaxRecentFilesCount = N_MAX_RECENT_FILES_COUNT;
-    m_sName = QString("%1.ini").arg(qApp->applicationName());  // default name
+    m_sName = QString("%1.ini").arg(qApp->applicationName());
 }
 
 void XOptions::resetToDefault()
@@ -325,34 +346,18 @@ XOptions::GROUPID XOptions::getGroupID(ID id)
 
 bool XOptions::isIDPresent(ID id)
 {
-    bool bResult = false;
-
-    qint32 nNumberOfRecords = m_listValueIDs.count();
-
-    for (qint32 i = 0; i < nNumberOfRecords; i++) {
-        if (m_listValueIDs.at(i) == id) {
-            bResult = true;
-            break;
-        }
-    }
-
-    return bResult;
+    return m_listValueIDs.contains(id);
 }
 
 bool XOptions::isGroupIDPresent(GROUPID groupID)
 {
-    bool bResult = false;
-
-    qint32 nNumberOfRecords = m_listValueIDs.count();
-
-    for (qint32 i = 0; i < nNumberOfRecords; i++) {
-        if (getGroupID(m_listValueIDs.at(i)) == groupID) {
-            bResult = true;
-            break;
+    for (const ID id : qAsConst(m_listValueIDs)) {
+        if (getGroupID(id) == groupID) {
+            return true;
         }
     }
 
-    return bResult;
+    return false;
 }
 
 bool XOptions::isNative()
@@ -504,7 +509,7 @@ void XOptions::load()
 
     QString sLastDirectory = m_mapValues.value(ID_NU_LASTDIRECTORY).toString();
 
-    if (sLastDirectory != "") {
+    if (!sLastDirectory.isEmpty()) {
         if (!QDir(sLastDirectory).exists()) {
             m_mapValues.insert(ID_NU_LASTDIRECTORY, "");
         }
@@ -635,7 +640,6 @@ QString XOptions::idToString(ID id)
         case ID_STRUCTSPATH: sResult = QString("StructsPath"); break;
         case ID_AUTHUSER: sResult = QString("AuthUser"); break;
         case ID_AUTHTOKEN: sResult = QString("AuthToken"); break;
-        // new
         case ID_VIEW_STAYONTOP: sResult = QString("View/StayOnTop"); break;
         case ID_VIEW_STYLE: sResult = QString("View/Style"); break;
         case ID_VIEW_QSS: sResult = QString("View/Qss"); break;
@@ -824,7 +828,7 @@ QString XOptions::getLastDirectory()
     bool bSaveLastDirectory = getValue(ID_FILE_SAVELASTDIRECTORY).toBool();
     QString sLastDirectory = getValue(ID_NU_LASTDIRECTORY).toString();
 
-    if (bSaveLastDirectory && (sLastDirectory != "") && QDir().exists(sLastDirectory)) {
+    if (bSaveLastDirectory && !sLastDirectory.isEmpty() && QDir().exists(sLastDirectory)) {
         sResult = sLastDirectory;
     }
 
@@ -865,7 +869,7 @@ void XOptions::setLastFileName(const QString &sFileName)
     if (getValue(ID_FILE_SAVERECENTFILES).toBool()) {
         QString _sFileName = fi.absoluteFilePath();
 
-        if (_sFileName != "") {
+        if (!_sFileName.isEmpty()) {
             QList<QVariant> listFiles = getValue(ID_NU_RECENTFILES).toList();
 
             listFiles.removeAll(_sFileName);
@@ -905,7 +909,7 @@ void XOptions::openRecentFile()
         if (QFile::exists(sFileName)) {
             emit openFile(sFileName);
         } else {
-            emit errorMessage(QString("%1: %2").arg(tr("Cannot find file"), sFileName));
+            emit errorMessage(QString("%1: %2").arg(tr("Cannot find file")).arg(sFileName));
         }
     }
 #endif
@@ -930,10 +934,8 @@ QList<QString> XOptions::getRecentFiles()
 
     QList<QVariant> listFiles = getValue(ID_NU_RECENTFILES).toList();
 
-    qint32 nNumberOfFiles = listFiles.size();
-
-    for (qint32 i = 0; i < nNumberOfFiles; i++) {
-        listResult.append(listFiles.at(i).toString());
+    for (const QVariant &var : listFiles) {
+        listResult.append(var.toString());
     }
 
     return listResult;
@@ -1072,7 +1074,7 @@ QFont XOptions::adjustFont(QWidget *pWidget, ID id)
     QFont result;
     QString sFont = getValue(id).toString();
 
-    if ((sFont != "") && result.fromString(sFont)) {
+    if (!sFont.isEmpty() && result.fromString(sFont)) {
         QFont fontOld = pWidget->font();
 
         result.setBold(fontOld.bold());
@@ -1321,7 +1323,7 @@ void XOptions::setComboBox(QComboBox *pComboBox, XOptions::ID id)
                 sLocale += QString("(%1)").arg(locale.nativeCountryName());
             }
 
-            if (sLocale != "") {
+            if (!sLocale.isEmpty()) {
                 sLocale.replace(0, 1, sLocale[0].toUpper());
             }
 
@@ -1517,27 +1519,22 @@ QIcon XOptions::createIcon(QChar unicode, qint32 nWidth, qint32 nHeight)
 
 QIcon XOptions::createIcon(quint32 codepoint, qint32 nWidth, qint32 nHeight)
 {
-    // Create a pixmap with the specified dimensions
     QPixmap pixmap(nWidth, nHeight);
     pixmap.fill(Qt::transparent);
 
-    // Setup painter
     QPainter painter(&pixmap);
     painter.setRenderHint(QPainter::Antialiasing);
     painter.setRenderHint(QPainter::TextAntialiasing);
 
-    // Setup font - try multiple emoji fonts
     QFont font;
-    font.setPixelSize(qMin(nWidth, nHeight) * 0.8);  // 80% of size for better fit
+    font.setPixelSize(qMin(nWidth, nHeight) * 0.8);
 
     font.setFamily("Segoe UI Emoji");
 
     painter.setFont(font);
 
-    // Draw the Unicode character centered
     painter.setPen(Qt::black);
 
-    // Convert codepoint to QString properly
     QString text;
     if (codepoint <= 0xFFFF) {
         text = QString(QChar(codepoint));
@@ -1549,20 +1546,6 @@ QIcon XOptions::createIcon(quint32 codepoint, qint32 nWidth, qint32 nHeight)
     painter.drawText(pixmap.rect(), Qt::AlignCenter, text);
 
     painter.end();
-
-    //     // Debug: Save icon to C:\tmp
-    //     static bool debugDumpEnabled = true;
-    //     if (debugDumpEnabled) {
-    //         QString filename = QString("C:/tmp/icon_%1_%2x%3_U%4.png")
-    //             .arg(QDateTime::currentMSecsSinceEpoch())
-    //             .arg(nWidth)
-    //             .arg(nHeight)
-    //             .arg(codepoint, 4, 16, QChar('0'));
-    //         pixmap.save(filename);
-    // #ifdef QT_DEBUG
-    //         qDebug() << "Saved icon:" << filename << "text:" << text << "code:" << QString("U+%1").arg(codepoint, 4, 16, QChar('0'));
-    // #endif
-    //     }
 
     return QIcon(pixmap);
 }
@@ -1655,7 +1638,7 @@ quint32 XOptions::iconTypeToUnicodeSymbol(ICONTYPE iconType)
 
         case ICONTYPE_NONE:
         default:
-            result = 0;  // Null character for unmapped types
+            result = 0;
             break;
     }
 
@@ -1668,7 +1651,7 @@ void XOptions::adjustApplicationView(const QString &sTranslationName, XOptions *
     if (pOptions->isIDPresent(XOptions::ID_VIEW_STYLE)) {
         QString sStyle = pOptions->getValue(XOptions::ID_VIEW_STYLE).toString();
 
-        if (sStyle != "") {
+        if (!sStyle.isEmpty()) {
             qApp->setStyle(QStyleFactory::create(sStyle));
         }
     }
@@ -1685,19 +1668,27 @@ void XOptions::adjustApplicationView(const QString &sTranslationName, XOptions *
             if (locale != QLocale::English) {
                 bLoad = pTranslator->load(locale, sTranslationName, "_", sLangsPath, ".qm");
             }
-        } else if (sLang != "") {
+        } else if (!sLang.isEmpty()) {
             bLoad = pTranslator->load(sLang, sLangsPath);
         }
 
         if (bLoad) {
+            if (s_pApplicationTranslator) {
+                qApp->removeTranslator(s_pApplicationTranslator);
+                delete s_pApplicationTranslator;
+            }
+
             qApp->installTranslator(pTranslator);
+            s_pApplicationTranslator = pTranslator;
+        } else {
+            delete pTranslator;
         }
     }
 
     if (pOptions->isIDPresent(XOptions::ID_VIEW_QSS)) {
         QString sQss = pOptions->getValue(XOptions::ID_VIEW_QSS).toString();
 
-        if (sQss != "") {
+        if (!sQss.isEmpty()) {
             QString sQssFileName = convertPathName(QString("$data/qss/%1.qss").arg(sQss));
 
             if (QFile::exists(sQssFileName)) {
@@ -1716,7 +1707,7 @@ void XOptions::adjustApplicationView(const QString &sTranslationName, XOptions *
     if (pOptions->isIDPresent(XOptions::ID_VIEW_FONT)) {
         QString sFont = pOptions->getValue(XOptions::ID_VIEW_FONT).toString();
 
-        if (sFont != "") {
+        if (!sFont.isEmpty()) {
             qApp->setFont(sFont);
         }
     }
@@ -1746,7 +1737,6 @@ qint32 XOptions::_getTreeWidgetItemSize(QTreeWidget *pTreeWidget, QTreeWidgetIte
     QString sText = pTreeWidgetItem->text(0) + "WW";
 
     QFont _font = pTreeWidget->font();
-    QString sFont = _font.toString();
 
     nResult = QFontMetrics(_font).size(Qt::TextSingleLine, sText).width() + ((nIndent + 16) * nLevel);  // 16 size of icon
 
@@ -1774,26 +1764,6 @@ void XOptions::adjustTreeWidgetSize(QTreeWidget *pTreeWidget, qint32 nMinimumWid
     pTreeWidget->setMaximumWidth(nWidth);
 }
 #endif
-// #ifdef QT_GUI_LIB
-//  void XOptions::adjustApplicationView(QString sApplicationFileName,QString
-//  sTranslationName)
-//{
-//     XOptions xOptions;
-
-//    xOptions.setName(sApplicationFileName);
-
-//    QList<XOptions::ID> listIDs;
-
-//    listIDs.append(XOptions::ID_VIEW_STYLE);
-//    listIDs.append(XOptions::ID_VIEW_LANG);
-//    listIDs.append(XOptions::ID_VIEW_QSS);
-
-//    xOptions.setValueIDs(listIDs);
-//    xOptions.load();
-
-//    xOptions.adjustApplicationView(sTranslationName,&xOptions);
-//}
-// #endif
 #ifdef QT_GUI_LIB
 QWidget *XOptions::getMainWidget(QWidget *pWidget)
 {
@@ -1846,7 +1816,6 @@ QString XOptions::getTableModelText(QAbstractItemModel *pModel)
             }
         }
 
-        // mb TODO: csv,tsv,json,xml,json
         qint32 _nNumberOfLines = listListStrings.count();
 
         for (qint32 i = 0; i < _nNumberOfLines; i++) {
@@ -1910,85 +1879,25 @@ QString XOptions::getTreeModelText(QAbstractItemModel *pModel)
 #ifdef QT_GUI_LIB
 bool XOptions::saveTableModel(QAbstractItemModel *pModel, const QString &sFileName)
 {
-    bool bResult = false;
-
-    QFile file;
-    file.setFileName(sFileName);
-
-    if (file.open(QIODevice::ReadWrite)) {
-        QString sText = getTableModelText(pModel);
-
-        file.resize(0);
-        file.write(sText.toUtf8().data());
-        file.close();
-
-        bResult = true;
-    }
-
-    return bResult;
+    return saveUtf8TextToFile(getTableModelText(pModel), sFileName);
 }
 #endif
 #ifdef QT_GUI_LIB
 bool XOptions::saveTreeModel(QAbstractItemModel *pModel, const QString &sFileName)
 {
-    bool bResult = false;
-
-    QFile file;
-    file.setFileName(sFileName);
-
-    if (file.open(QIODevice::ReadWrite)) {
-        QString sText = getTreeModelText(pModel);
-
-        file.resize(0);
-        file.write(sText.toUtf8().data());
-        file.close();
-
-        bResult = true;
-    }
-
-    return bResult;
+    return saveUtf8TextToFile(getTreeModelText(pModel), sFileName);
 }
 #endif
 #ifdef QT_GUI_LIB
 bool XOptions::saveTextEdit(QTextEdit *pTextEdit, const QString &sFileName)
 {
-    bool bResult = false;
-
-    QFile file;
-    file.setFileName(sFileName);
-
-    if (file.open(QIODevice::ReadWrite)) {
-        QString sResult = pTextEdit->toPlainText();
-
-        file.resize(0);
-        file.write(sResult.toUtf8().data());
-        file.close();
-
-        bResult = true;
-    }
-
-    return bResult;
+    return pTextEdit && saveUtf8TextToFile(pTextEdit->toPlainText(), sFileName);
 }
 #endif
 #ifdef QT_GUI_LIB
 bool XOptions::savePlainTextEdit(QPlainTextEdit *pPlainTextEdit, const QString &sFileName)
 {
-    bool bResult = false;
-
-    QFile file;
-    file.setFileName(sFileName);
-
-    if (file.open(QIODevice::ReadWrite)) {
-        QString sResult = pPlainTextEdit->toPlainText();
-
-        file.resize(0);
-        file.write(sResult.toUtf8().data());
-        file.close();
-
-        bResult = true;
-    }
-
-    return bResult;
+    return pPlainTextEdit && saveUtf8TextToFile(pPlainTextEdit->toPlainText(), sFileName);
 }
 #endif
 #ifdef QT_GUI_LIB
@@ -2030,43 +1939,13 @@ bool XOptions::saveTreeWidget(QTreeWidget *pTreeWidget, const QString &sFileName
 #ifdef QT_GUI_LIB
 bool XOptions::saveTextBrowser(QTextBrowser *pTextBrowser, const QString &sFileName)
 {
-    bool bResult = false;
-
-    QFile file;
-    file.setFileName(sFileName);
-
-    if (file.open(QIODevice::ReadWrite)) {
-        QString sResult = pTextBrowser->toPlainText();
-
-        file.resize(0);
-        file.write(sResult.toUtf8().data());
-        file.close();
-
-        bResult = true;
-    }
-
-    return bResult;
+    return pTextBrowser && saveUtf8TextToFile(pTextBrowser->toPlainText(), sFileName);
 }
 #endif
 #ifdef QT_GUI_LIB
 bool XOptions::saveTextBrowserHtml(QTextBrowser *pTextBrowser, const QString &sFileName)
 {
-    bool bResult = false;
-
-    QFile file;
-    file.setFileName(sFileName);
-
-    if (file.open(QIODevice::ReadWrite)) {
-        QString sResult = pTextBrowser->toHtml();
-
-        file.resize(0);
-        file.write(sResult.toUtf8().data());
-        file.close();
-
-        bResult = true;
-    }
-
-    return bResult;
+    return pTextBrowser && saveUtf8TextToFile(pTextBrowser->toHtml(), sFileName);
 }
 #endif
 #ifdef QT_GUI_LIB
@@ -2184,20 +2063,18 @@ void XOptions::setModelTextAlignment(QStandardItemModel *pModel, qint32 nColumn,
 {
     qint32 nNumberOfRows = pModel->rowCount();
 
-    pModel->setHeaderData(nColumn, Qt::Horizontal, (qint32)flag, Qt::TextAlignmentRole);
+    pModel->setHeaderData(nColumn, Qt::Horizontal, static_cast<int>(flag), Qt::TextAlignmentRole);
 
     for (qint32 i = 0; i < nNumberOfRows; i++) {
         QStandardItem *pItem = pModel->item(i, nColumn);
 
         if (pItem) {
             pItem->setTextAlignment(flag);
-            // pModel->setData(pModel->index(i, nColumn), (qint32)flag, Qt::TextAlignmentRole);
-
-            QModelIndex index = pModel->index(i, 0);
+                QModelIndex index = pModel->index(i, 0);
             qint32 _nNumberOfRows = pModel->rowCount(index);
 
             for (qint32 j = 0; j < _nNumberOfRows; j++) {
-                pModel->setData(pModel->index(j, nColumn, index), (qint32)flag, Qt::TextAlignmentRole);
+                pModel->setData(pModel->index(j, nColumn, index), static_cast<int>(flag), Qt::TextAlignmentRole);
             }
         }
     }
@@ -2215,7 +2092,7 @@ void XOptions::setTableViewHeaderWidth(QTableView *pTableView, qint32 nColumn, q
 
     qreal rWidth = fm.boundingRect(sTitle + "  ").width();
 
-    nContentWidth = qMax(nContentWidth, (qint32)(rWidth));
+    nContentWidth = qMax(nContentWidth, static_cast<qint32>(rWidth));
 
     pTableView->setColumnWidth(nColumn, nContentWidth);
 }
@@ -2232,7 +2109,7 @@ void XOptions::setTreeViewHeaderWidth(QTreeView *pTreeView, qint32 nColumn, qint
 
     qreal rWidth = fm.boundingRect(sTitle + "  ").width();
 
-    nContentWidth = qMax(nContentWidth, (qint32)(rWidth));
+    nContentWidth = qMax(nContentWidth, static_cast<qint32>(rWidth));
 
     pTreeView->setColumnWidth(nColumn, nContentWidth);
 }
@@ -2240,16 +2117,14 @@ void XOptions::setTreeViewHeaderWidth(QTreeView *pTreeView, qint32 nColumn, qint
 #ifdef QT_GUI_LIB
 void XOptions::setTableWidgetHeaderAlignment(QTableWidget *pTableWidget, qint32 nColumn, Qt::Alignment flag)
 {
-    pTableWidget->model()->setHeaderData(nColumn, Qt::Horizontal, (qint32)flag, Qt::TextAlignmentRole);
+    pTableWidget->model()->setHeaderData(nColumn, Qt::Horizontal, static_cast<int>(flag), Qt::TextAlignmentRole);
 }
 #endif
 
 void XOptions::deleteQObjectList(QList<QObject *> *pList)
 {
-    qint32 nNumberOfRecords = pList->count();
-
-    for (qint32 i = 0; i < nNumberOfRecords; i++) {
-        delete pList->at(i);
+    for (QObject *pObj : *pList) {
+        delete pObj;
     }
 }
 
@@ -2503,9 +2378,6 @@ QString XOptions::convertPathName(const QString &sPathName)
         }
     }
 
-    // QString sApplicationDirPath = qApp->applicationDirPath();
-    // QString sApplicationName = qApp->applicationName();
-
     return sResult;
 }
 
@@ -2522,7 +2394,7 @@ bool XOptions::isPathExists(const QString &sPathName)
 
 QString XOptions::getTitle(const QString &sName, const QString &sVersion, bool bShowOS)
 {
-    QString sResult = QString("%1 v%2").arg(sName, sVersion);
+    QString sResult = QString("%1 v%2").arg(sName).arg(sVersion);
 
     if (bShowOS) {
 #if QT_VERSION >= QT_VERSION_CHECK(5, 4, 0)
@@ -2587,8 +2459,6 @@ QList<QString> XOptions::getCodePages(bool bAll)
 
     for (qint32 i = 0; i < nNumberOfRecords; i++) {
         qint32 nMIB = list.at(i);
-
-        //        qDebug("%s",QTextCodec::codecForMib(nMIB)->name().data());
 
         bool bAdd = true;
 
@@ -2689,7 +2559,7 @@ void XOptions::printConsole(const QString &sString, const QString &sColorText, c
     bool bNativeMode = false;
 
 #ifdef Q_OS_WIN
-    HANDLE hConsole = 0;
+    HANDLE hConsole = nullptr;
     WORD wOldAttribute = 0;
     DWORD dwMode = 0;
 
@@ -2724,9 +2594,7 @@ void XOptions::printConsole(const QString &sString, const QString &sColorText, c
 
     if (bEscapeMode) {
         if (colorText != Qt::transparent || colorBackground != Qt::transparent) {
-            // Foreground
-            int fg = 39, bg = 49;  // Default
-            // Map Qt::GlobalColor to ANSI codes
+            int fg = 39, bg = 49;
             switch (colorText) {
                 case Qt::black: fg = 30; break;
                 case Qt::red: fg = 31; break;
@@ -2777,7 +2645,6 @@ void XOptions::printConsole(const QString &sString, const QString &sColorText, c
 
         WORD wAttribute = 0;
 
-        // Foreground (text) color
         if (colorText == Qt::black) {
             wAttribute |= 0;
         } else if (colorText == Qt::white) {
@@ -2814,7 +2681,6 @@ void XOptions::printConsole(const QString &sString, const QString &sColorText, c
             wAttribute |= FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE;
         }
 
-        // Background color
         if (colorBackground == Qt::black) {
             wAttribute |= 0;
         } else if (colorBackground == Qt::white) {
@@ -2864,7 +2730,7 @@ void XOptions::printConsole(const QString &sString, const QString &sColorText, c
             printf("\033[0m");
         }
 #ifdef Q_OS_WIN
-        SetConsoleMode(hConsole, dwMode);  // Restore original console mode TODO: optimize
+        SetConsoleMode(hConsole, dwMode);
 #endif
     } else if (bNativeMode) {
 #ifdef Q_OS_WIN
@@ -2924,7 +2790,7 @@ void XOptions::printModel(QAbstractItemModel *pModel)
                 qint32 nColumnSize = listColumnSymbolSize[i];
                 QString sEmpty = QString(nColumnSize - sString.size(), ' ');
 
-                Qt::AlignmentFlag flag = (Qt::AlignmentFlag)(pModel->headerData(i, Qt::Horizontal, Qt::TextAlignmentRole).toInt());
+                Qt::AlignmentFlag flag = static_cast<Qt::AlignmentFlag>(pModel->headerData(i, Qt::Horizontal, Qt::TextAlignmentRole).toInt());
 
                 if (flag & Qt::AlignRight) {
                     sString.prepend(sEmpty);
@@ -2953,7 +2819,7 @@ void XOptions::printModel(QAbstractItemModel *pModel)
                     qint32 nColumnSize = listColumnSymbolSize[j];
                     QString sEmpty = QString(nColumnSize - sString.size(), ' ');
 
-                    Qt::AlignmentFlag flag = (Qt::AlignmentFlag)(pModel->data(index, Qt::TextAlignmentRole).toInt());
+                    Qt::AlignmentFlag flag = static_cast<Qt::AlignmentFlag>(pModel->data(index, Qt::TextAlignmentRole).toInt());
 
                     if (flag & Qt::AlignRight) {
                         sString.prepend(sEmpty);
@@ -3047,10 +2913,6 @@ void XOptions::appendToUserPathVariable(const QString &newPath)
     if (!pathEntries.contains(formattedPath, Qt::CaseInsensitive)) {
         pathEntries.append(formattedPath);
         settings.setValue("Path", pathEntries.join(';'));
-
-#ifdef QT_GUI_LIB
-// SendMessageTimeout(HWND_BROADCAST, WM_SETTINGCHANGE, 0, (LPARAM)L"Environment", SMTO_ABORTIFHUNG, 5000, nullptr);
-#endif
     }
 }
 #endif
@@ -3070,10 +2932,6 @@ void XOptions::removeFromUserPathVariable(const QString &targetPath)
     if (pathEntries.contains(formattedPath, Qt::CaseInsensitive)) {
         pathEntries.removeAll(formattedPath);
         settings.setValue("Path", pathEntries.join(';'));
-
-#ifdef QT_GUI_LIB
-// SendMessageTimeout(HWND_BROADCAST, WM_SETTINGCHANGE, 0, (LPARAM)L"Environment", SMTO_ABORTIFHUNG, 5000, nullptr);
-#endif
     }
 }
 #endif
@@ -3108,7 +2966,7 @@ bool XOptions::checkContext(const QString &sApplicationName, const QString &sTyp
 {
     QSettings settings(getClassesPrefix(userRole) + QString("\\%1\\shell").arg(sType), QSettings::NativeFormat);
 
-    return (settings.value(QString("%1/command/Default").arg(sApplicationName)).toString() != "");
+    return !settings.value(QString("%1/command/Default").arg(sApplicationName)).toString().isEmpty();
 }
 #endif
 
@@ -3256,7 +3114,7 @@ void XOptions::adjustToolButton(QToolButton *pToolButton, ICONTYPE iconType, Qt:
 {
     QString sIconName = getIconPath(iconType);
 
-    if (sIconName != "") {
+    if (!sIconName.isEmpty()) {
         QIcon icon;
         icon.addFile(sIconName, QSize(), QIcon::Normal, QIcon::Off);
         pToolButton->setIcon(icon);
@@ -3274,7 +3132,7 @@ void XOptions::adjustTreeWidgetItem(QTreeWidgetItem *pTreeWidgetItem, ICONTYPE i
 {
     QString sIconName = getIconPath(iconType);
 
-    if (sIconName != "") {
+    if (!sIconName.isEmpty()) {
         QIcon icon;
         icon.addFile(sIconName, QSize(), QIcon::Normal, QIcon::Off);
         pTreeWidgetItem->setIcon(0, icon);
@@ -3454,7 +3312,7 @@ QString XOptions::getIconPath(ICONTYPE iconType)
         sResult = ":/XStyles/icons/BreakpointDisabled.16.16.png";
     }
 
-    if (sResult != "") {
+    if (!sResult.isEmpty()) {
         if (!QFile::exists(sResult)) {
             sResult = "";
         }
@@ -3470,7 +3328,7 @@ void XOptions::adjustMenu(QMenu *pParentMenu, QMenu *pMenu, const QString &sText
 
     QString sIconPath = XOptions::getIconPath(iconType);
 
-    if (sIconPath != "") {
+    if (!sIconPath.isEmpty()) {
         QIcon icon;
         icon.addFile(sIconPath, QSize(), QIcon::Normal, QIcon::Off);
         pMenu->setIcon(icon);
@@ -3490,7 +3348,7 @@ void XOptions::adjustAction(QMenu *pParentMenu, QAction *pAction, const QString 
 
     QString sIconPath = XOptions::getIconPath(iconType);
 
-    if (sIconPath != "") {
+    if (!sIconPath.isEmpty()) {
         QIcon icon;
         icon.addFile(sIconPath, QSize(), QIcon::Normal, QIcon::Off);
         pAction->setIcon(icon);

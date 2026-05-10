@@ -37,6 +37,7 @@ public:
 
 public slots:
     void _process();
+    void moveToGuiThread();
 
 signals:
     void completed(qint64 nElapsedTime);
