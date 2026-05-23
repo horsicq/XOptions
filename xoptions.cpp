@@ -1639,9 +1639,7 @@ quint32 XOptions::iconTypeToUnicodeSymbol(ICONTYPE iconType)
         case ICONTYPE_CONVERTOR: result = 0x21C4; break;       // ⇄ - Rightwards Arrow Over Leftwards Arrow
 
         case ICONTYPE_NONE:
-        default:
-            result = 0;
-            break;
+        default: result = 0; break;
     }
 
     return result;
@@ -2072,7 +2070,7 @@ void XOptions::setModelTextAlignment(QStandardItemModel *pModel, qint32 nColumn,
 
         if (pItem) {
             pItem->setTextAlignment(flag);
-                QModelIndex index = pModel->index(i, 0);
+            QModelIndex index = pModel->index(i, 0);
             qint32 _nNumberOfRows = pModel->rowCount(index);
 
             for (qint32 j = 0; j < _nNumberOfRows; j++) {

@@ -428,10 +428,8 @@ void XOptionsWidget::on_checkBoxFileSetEnvVar_toggled(bool bChecked)
 
     bool bIsSet = m_pOptions->isPathInUserEnvironment(formattedDir);
 
-    if (bChecked && !bIsSet)
-        m_pOptions->appendToUserPathVariable(formattedDir);
-    else if (!bChecked && bIsSet)
-        m_pOptions->removeFromUserPathVariable(formattedDir);
+    if (bChecked && !bIsSet) m_pOptions->appendToUserPathVariable(formattedDir);
+    else if (!bChecked && bIsSet) m_pOptions->removeFromUserPathVariable(formattedDir);
 #else
     Q_UNUSED(bChecked)
 #endif
