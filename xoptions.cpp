@@ -224,6 +224,7 @@ XOptions::GROUPID XOptions::getGroupID(ID id)
         case ID_SCAN_SUBDIRECTORIES:
         case ID_SCAN_COLLECTION_ALLFILETYPES:
         case ID_SCAN_COLLECTION_ALLTYPES:
+        case ID_SCAN_COLLECTION_UNKNOWN:
         case ID_SCAN_COLLECTION_FILETYPES:
         case ID_SCAN_COLLECTION_TYPES:
         case ID_SCAN_COLLECTION_RESULT_PATH:
@@ -702,6 +703,7 @@ QString XOptions::idToString(ID id)
         case ID_SCAN_SUBDIRECTORIES: sResult = QString("Scan/Subdirectories"); break;
         case ID_SCAN_COLLECTION_ALLFILETYPES: sResult = QString("Scan/Collection/AllFileTypes"); break;
         case ID_SCAN_COLLECTION_ALLTYPES: sResult = QString("Scan/Collection/AllTypes"); break;
+        case ID_SCAN_COLLECTION_UNKNOWN: sResult = QString("Scan/Collection/Unknown"); break;
         case ID_SCAN_COLLECTION_FILETYPES: sResult = QString("Scan/Collection/FileTypes"); break;
         case ID_SCAN_COLLECTION_TYPES: sResult = QString("Scan/Collection/Types"); break;
         case ID_SCAN_COLLECTION_RESULT_PATH: sResult = QString("Scan/Collection/ResultPath"); break;
