@@ -181,6 +181,7 @@ XOptions::GROUPID XOptions::getGroupID(ID id)
         case ID_VIEW_FONT_TREEVIEWS:
         case ID_VIEW_FONT_TEXTEDITS:
         case ID_VIEW_COLUMNS:
+        case ID_VIEW_COLUMN_SIZES:
         case ID_VIEW_ADVANCED:
         case ID_VIEW_SELECTSTYLE: result = GROUPID_VIEW; break;
         case ID_FILE_SAVELASTDIRECTORY:
@@ -655,6 +656,7 @@ QString XOptions::idToString(ID id)
         case ID_VIEW_FONT_TREEVIEWS: sResult = QString("View/Font/TreeViews"); break;
         case ID_VIEW_FONT_TEXTEDITS: sResult = QString("View/Font/TextEdits"); break;
         case ID_VIEW_COLUMNS: sResult = QString("View/Columns"); break;
+        case ID_VIEW_COLUMN_SIZES: sResult = QString("View/ColumnSizes"); break;
         case ID_VIEW_ADVANCED: sResult = QString("View/Advanced"); break;
         case ID_VIEW_SELECTSTYLE: sResult = QString("View/SelectStyle"); break;
         case ID_FILE_SAVELASTDIRECTORY: sResult = QString("File/SaveLastDirectory"); break;
