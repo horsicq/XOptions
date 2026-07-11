@@ -96,7 +96,6 @@ public:
     // MacOS M1 -> MacOS M1 + MacOS X64
     // MacOS X64 -> MacOS X64
     // TODO: Linux ARM types 32, old ARM? Check
-    // TODO: Check other BSD
     // TODO: Check Windows ARM
     enum BUNDLE {
         BUNDLE_UNKNOWN = 0,
@@ -117,8 +116,10 @@ public:
         BUNDLE_MACOS_X64,
         BUNDLE_MACOS_QT6_ARM64,  // TODO: Check
         BUNDLE_FREEBSD_X64,
-        BUNDLE_FEDORA_X64
-        // TODO: Add more BUNDLES for different operating systems!
+        BUNDLE_OPENBSD_X64,
+        BUNDLE_FEDORA_X64,
+        BUNDLE_LINUX_ALPHINE_X64,
+        BUNDLE_LINUX_NIXOS,
     };
 
     enum WIDGETTYPE {
