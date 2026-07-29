@@ -72,13 +72,13 @@ void XOptionsWidget::setOptions(XOptions *pOptions, const QString &sApplicationD
     if (m_pOptions->isIDPresent(XOptions::ID_VIEW_FONT_CONTROLS) || m_pOptions->isIDPresent(XOptions::ID_VIEW_FONT_TABLEVIEWS) ||
         m_pOptions->isIDPresent(XOptions::ID_VIEW_FONT_TREEVIEWS) || m_pOptions->isIDPresent(XOptions::ID_VIEW_FONT_TEXTEDITS)) {
         addListRecord(tr("Fonts"), 2);
-        ui->pageFile->setProperty("GROUPID", XOptions::GROUPID_FONTS);
+        ui->pageFonts->setProperty("GROUPID", XOptions::GROUPID_FONTS);
     }
 
     if (m_pOptions->isIDPresent(XOptions::ID_FEATURE_READBUFFERSIZE) || m_pOptions->isIDPresent(XOptions::ID_FEATURE_FILEBUFFERSIZE) ||
         m_pOptions->isIDPresent(XOptions::ID_FEATURE_SSE2) || m_pOptions->isIDPresent(XOptions::ID_FEATURE_AVX2)) {
         addListRecord(tr("Features"), 3);
-        ui->pageFile->setProperty("GROUPID", XOptions::GROUPID_FEATURES);
+        ui->pageFeatures->setProperty("GROUPID", XOptions::GROUPID_FEATURES);
     }
 
     reload();
