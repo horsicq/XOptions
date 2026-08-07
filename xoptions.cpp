@@ -328,7 +328,55 @@ XOptions::GROUPID XOptions::getGroupID(ID id)
         case ID_DISASM_COLOR_ARM_OPCODE_RET:
         case ID_DISASM_COLOR_ARM_OPCODE_PUSH:
         case ID_DISASM_COLOR_ARM_OPCODE_POP:
-        case ID_DISASM_COLOR_ARM_OPCODE_NOP: result = GROUPID_DISASM; break;
+        case ID_DISASM_COLOR_ARM_OPCODE_NOP:
+        case ID_DISASM_COLOR_MIPS_REGS_GENERAL:
+        case ID_DISASM_COLOR_MIPS_OPCODE_CALL:
+        case ID_DISASM_COLOR_MIPS_OPCODE_RET:
+        case ID_DISASM_COLOR_MIPS_OPCODE_JMP:
+        case ID_DISASM_COLOR_MIPS_OPCODE_COND_JMP:
+        case ID_DISASM_COLOR_MIPS_OPCODE_PUSH:
+        case ID_DISASM_COLOR_MIPS_OPCODE_POP:
+        case ID_DISASM_COLOR_MIPS_OPCODE_NOP:
+        case ID_DISASM_COLOR_PPC_REGS_GENERAL:
+        case ID_DISASM_COLOR_PPC_OPCODE_CALL:
+        case ID_DISASM_COLOR_PPC_OPCODE_RET:
+        case ID_DISASM_COLOR_PPC_OPCODE_JMP:
+        case ID_DISASM_COLOR_PPC_OPCODE_COND_JMP:
+        case ID_DISASM_COLOR_PPC_OPCODE_PUSH:
+        case ID_DISASM_COLOR_PPC_OPCODE_POP:
+        case ID_DISASM_COLOR_PPC_OPCODE_NOP:
+        case ID_DISASM_COLOR_SPARC_REGS_GENERAL:
+        case ID_DISASM_COLOR_SPARC_OPCODE_CALL:
+        case ID_DISASM_COLOR_SPARC_OPCODE_RET:
+        case ID_DISASM_COLOR_SPARC_OPCODE_JMP:
+        case ID_DISASM_COLOR_SPARC_OPCODE_COND_JMP:
+        case ID_DISASM_COLOR_SPARC_OPCODE_PUSH:
+        case ID_DISASM_COLOR_SPARC_OPCODE_POP:
+        case ID_DISASM_COLOR_SPARC_OPCODE_NOP:
+        case ID_DISASM_COLOR_M68K_REGS_GENERAL:
+        case ID_DISASM_COLOR_M68K_OPCODE_CALL:
+        case ID_DISASM_COLOR_M68K_OPCODE_RET:
+        case ID_DISASM_COLOR_M68K_OPCODE_JMP:
+        case ID_DISASM_COLOR_M68K_OPCODE_COND_JMP:
+        case ID_DISASM_COLOR_M68K_OPCODE_PUSH:
+        case ID_DISASM_COLOR_M68K_OPCODE_POP:
+        case ID_DISASM_COLOR_M68K_OPCODE_NOP:
+        case ID_DISASM_COLOR_MOS65XX_REGS_GENERAL:
+        case ID_DISASM_COLOR_MOS65XX_OPCODE_CALL:
+        case ID_DISASM_COLOR_MOS65XX_OPCODE_RET:
+        case ID_DISASM_COLOR_MOS65XX_OPCODE_JMP:
+        case ID_DISASM_COLOR_MOS65XX_OPCODE_COND_JMP:
+        case ID_DISASM_COLOR_MOS65XX_OPCODE_PUSH:
+        case ID_DISASM_COLOR_MOS65XX_OPCODE_POP:
+        case ID_DISASM_COLOR_MOS65XX_OPCODE_NOP:
+        case ID_DISASM_COLOR_BPF_REGS_GENERAL:
+        case ID_DISASM_COLOR_BPF_OPCODE_CALL:
+        case ID_DISASM_COLOR_BPF_OPCODE_RET:
+        case ID_DISASM_COLOR_BPF_OPCODE_JMP:
+        case ID_DISASM_COLOR_BPF_OPCODE_COND_JMP:
+        case ID_DISASM_COLOR_BPF_OPCODE_PUSH:
+        case ID_DISASM_COLOR_BPF_OPCODE_POP:
+        case ID_DISASM_COLOR_BPF_OPCODE_NOP: result = GROUPID_DISASM; break;
         case ID_DEBUGGER_COLOR_BREAKPOINT: result = GROUPID_DEBUGGER; break;
         case ID_HEX_FONT:
         case ID_HEX_LOCATIONCOLON: result = GROUPID_HEX; break;
@@ -810,6 +858,54 @@ QString XOptions::idToString(ID id)
         case ID_DISASM_COLOR_ARM_OPCODE_PUSH: sResult = QString("Disasm/Color/arm/Opcode/push"); break;
         case ID_DISASM_COLOR_ARM_OPCODE_POP: sResult = QString("Disasm/Color/arm/Opcode/pop"); break;
         case ID_DISASM_COLOR_ARM_OPCODE_NOP: sResult = QString("Disasm/Color/arm/Opcode/nop"); break;
+        case ID_DISASM_COLOR_MIPS_REGS_GENERAL: sResult = QString("Disasm/Color/mips/Regs/General"); break;
+        case ID_DISASM_COLOR_MIPS_OPCODE_CALL: sResult = QString("Disasm/Color/mips/Opcode/call"); break;
+        case ID_DISASM_COLOR_MIPS_OPCODE_RET: sResult = QString("Disasm/Color/mips/Opcode/ret"); break;
+        case ID_DISASM_COLOR_MIPS_OPCODE_JMP: sResult = QString("Disasm/Color/mips/Opcode/jmp"); break;
+        case ID_DISASM_COLOR_MIPS_OPCODE_COND_JMP: sResult = QString("Disasm/Color/mips/Opcode/cond_jmp"); break;
+        case ID_DISASM_COLOR_MIPS_OPCODE_PUSH: sResult = QString("Disasm/Color/mips/Opcode/push"); break;
+        case ID_DISASM_COLOR_MIPS_OPCODE_POP: sResult = QString("Disasm/Color/mips/Opcode/pop"); break;
+        case ID_DISASM_COLOR_MIPS_OPCODE_NOP: sResult = QString("Disasm/Color/mips/Opcode/nop"); break;
+        case ID_DISASM_COLOR_PPC_REGS_GENERAL: sResult = QString("Disasm/Color/ppc/Regs/General"); break;
+        case ID_DISASM_COLOR_PPC_OPCODE_CALL: sResult = QString("Disasm/Color/ppc/Opcode/call"); break;
+        case ID_DISASM_COLOR_PPC_OPCODE_RET: sResult = QString("Disasm/Color/ppc/Opcode/ret"); break;
+        case ID_DISASM_COLOR_PPC_OPCODE_JMP: sResult = QString("Disasm/Color/ppc/Opcode/jmp"); break;
+        case ID_DISASM_COLOR_PPC_OPCODE_COND_JMP: sResult = QString("Disasm/Color/ppc/Opcode/cond_jmp"); break;
+        case ID_DISASM_COLOR_PPC_OPCODE_PUSH: sResult = QString("Disasm/Color/ppc/Opcode/push"); break;
+        case ID_DISASM_COLOR_PPC_OPCODE_POP: sResult = QString("Disasm/Color/ppc/Opcode/pop"); break;
+        case ID_DISASM_COLOR_PPC_OPCODE_NOP: sResult = QString("Disasm/Color/ppc/Opcode/nop"); break;
+        case ID_DISASM_COLOR_SPARC_REGS_GENERAL: sResult = QString("Disasm/Color/sparc/Regs/General"); break;
+        case ID_DISASM_COLOR_SPARC_OPCODE_CALL: sResult = QString("Disasm/Color/sparc/Opcode/call"); break;
+        case ID_DISASM_COLOR_SPARC_OPCODE_RET: sResult = QString("Disasm/Color/sparc/Opcode/ret"); break;
+        case ID_DISASM_COLOR_SPARC_OPCODE_JMP: sResult = QString("Disasm/Color/sparc/Opcode/jmp"); break;
+        case ID_DISASM_COLOR_SPARC_OPCODE_COND_JMP: sResult = QString("Disasm/Color/sparc/Opcode/cond_jmp"); break;
+        case ID_DISASM_COLOR_SPARC_OPCODE_PUSH: sResult = QString("Disasm/Color/sparc/Opcode/push"); break;
+        case ID_DISASM_COLOR_SPARC_OPCODE_POP: sResult = QString("Disasm/Color/sparc/Opcode/pop"); break;
+        case ID_DISASM_COLOR_SPARC_OPCODE_NOP: sResult = QString("Disasm/Color/sparc/Opcode/nop"); break;
+        case ID_DISASM_COLOR_M68K_REGS_GENERAL: sResult = QString("Disasm/Color/m68k/Regs/General"); break;
+        case ID_DISASM_COLOR_M68K_OPCODE_CALL: sResult = QString("Disasm/Color/m68k/Opcode/call"); break;
+        case ID_DISASM_COLOR_M68K_OPCODE_RET: sResult = QString("Disasm/Color/m68k/Opcode/ret"); break;
+        case ID_DISASM_COLOR_M68K_OPCODE_JMP: sResult = QString("Disasm/Color/m68k/Opcode/jmp"); break;
+        case ID_DISASM_COLOR_M68K_OPCODE_COND_JMP: sResult = QString("Disasm/Color/m68k/Opcode/cond_jmp"); break;
+        case ID_DISASM_COLOR_M68K_OPCODE_PUSH: sResult = QString("Disasm/Color/m68k/Opcode/push"); break;
+        case ID_DISASM_COLOR_M68K_OPCODE_POP: sResult = QString("Disasm/Color/m68k/Opcode/pop"); break;
+        case ID_DISASM_COLOR_M68K_OPCODE_NOP: sResult = QString("Disasm/Color/m68k/Opcode/nop"); break;
+        case ID_DISASM_COLOR_MOS65XX_REGS_GENERAL: sResult = QString("Disasm/Color/mos65xx/Regs/General"); break;
+        case ID_DISASM_COLOR_MOS65XX_OPCODE_CALL: sResult = QString("Disasm/Color/mos65xx/Opcode/call"); break;
+        case ID_DISASM_COLOR_MOS65XX_OPCODE_RET: sResult = QString("Disasm/Color/mos65xx/Opcode/ret"); break;
+        case ID_DISASM_COLOR_MOS65XX_OPCODE_JMP: sResult = QString("Disasm/Color/mos65xx/Opcode/jmp"); break;
+        case ID_DISASM_COLOR_MOS65XX_OPCODE_COND_JMP: sResult = QString("Disasm/Color/mos65xx/Opcode/cond_jmp"); break;
+        case ID_DISASM_COLOR_MOS65XX_OPCODE_PUSH: sResult = QString("Disasm/Color/mos65xx/Opcode/push"); break;
+        case ID_DISASM_COLOR_MOS65XX_OPCODE_POP: sResult = QString("Disasm/Color/mos65xx/Opcode/pop"); break;
+        case ID_DISASM_COLOR_MOS65XX_OPCODE_NOP: sResult = QString("Disasm/Color/mos65xx/Opcode/nop"); break;
+        case ID_DISASM_COLOR_BPF_REGS_GENERAL: sResult = QString("Disasm/Color/bpf/Regs/General"); break;
+        case ID_DISASM_COLOR_BPF_OPCODE_CALL: sResult = QString("Disasm/Color/bpf/Opcode/call"); break;
+        case ID_DISASM_COLOR_BPF_OPCODE_RET: sResult = QString("Disasm/Color/bpf/Opcode/ret"); break;
+        case ID_DISASM_COLOR_BPF_OPCODE_JMP: sResult = QString("Disasm/Color/bpf/Opcode/jmp"); break;
+        case ID_DISASM_COLOR_BPF_OPCODE_COND_JMP: sResult = QString("Disasm/Color/bpf/Opcode/cond_jmp"); break;
+        case ID_DISASM_COLOR_BPF_OPCODE_PUSH: sResult = QString("Disasm/Color/bpf/Opcode/push"); break;
+        case ID_DISASM_COLOR_BPF_OPCODE_POP: sResult = QString("Disasm/Color/bpf/Opcode/pop"); break;
+        case ID_DISASM_COLOR_BPF_OPCODE_NOP: sResult = QString("Disasm/Color/bpf/Opcode/nop"); break;
         case ID_HEX_FONT: sResult = QString("Hex/Font"); break;
         case ID_HEX_LOCATIONCOLON: sResult = QString("Hex/LocationColon"); break;
         case ID_STACK_FONT: sResult = QString("Stack/Font"); break;
