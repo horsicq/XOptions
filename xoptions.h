@@ -539,12 +539,12 @@ public:
 
     void resetToDefault();
     void setValueIDs(const QList<ID> &listValueIDs);
-    QList<ID> getValueIDs() const;
+    [[nodiscard]] QList<ID> getValueIDs() const;
     void setDefaultValues(QMap<ID, QVariant> mapDefaultValues);
-    void addID(ID id, QVariant varDefaultValue = QVariant());
+    void addID(ID id, const QVariant& varDefaultValue = QVariant());
     void removeID(ID id);
-    GROUPID getGroupID(ID id);
-    bool isIDPresent(ID id);
+    static GROUPID getGroupID(ID id);
+    [[nodiscard]] bool isIDPresent(ID id) const;
     bool isGroupIDPresent(GROUPID groupID);
     static bool isNative();
     static bool isPortable();
@@ -552,42 +552,42 @@ public:
     void setName(const QString &sValue);
     void load();
     void save();
-    QVariant getValue(ID id);
-    void setValue(ID id, QVariant varValue);
+    [[nodiscard]] QVariant getValue(ID id) const;
+    void setValue(ID id, const QVariant& varValue);
     void clearValue(ID id);
-    bool isValuePresent(ID id);
-    QVariant getDefaultValue(ID id);
+    [[nodiscard]] bool isValuePresent(ID id) const;
+    [[nodiscard]] QVariant getDefaultValue(ID id) const;
     static QString idToString(ID id);
     static QCommandLineOption getCommandLineOption(CONSOLE_OPTION_ID nId);
-    QString getLastDirectory();
+    [[nodiscard]] QString getLastDirectory() const;
     void setLastDirectory(const QString &sPathName);
     void setLastFileName(const QString &sFileName);
-    QList<QString> getRecentFiles();
-    QString getScanEngine();
-    QString getInfoPath();
-    QString getRootPath();
-    QString getDataPath();
-    QString getJson();
-    QString getAuthUser();
-    QString getAuthToken();
-    QString getVirusTotalApiKey();
-    bool isSaveBackup();
-    bool isSaveLastDirectory();
-    bool isSaveRecentFiles();
-    bool isRestartNeeded();
-    bool isStayOnTop();  // TODO: remove
-    bool isScanAfterOpen();
-    bool isSingleApplication();
-    bool isShowLogo();  // TODO: remove
-    QString getSearchSignaturesPath();
-    QString getStructsPath();
+    [[nodiscard]] QList<QString> getRecentFiles() const;
+    [[nodiscard]] QString getScanEngine() const;
+    [[nodiscard]] QString getInfoPath() const;
+    [[nodiscard]] QString getRootPath() const;
+    [[nodiscard]] QString getDataPath() const;
+    [[nodiscard]] QString getJson() const;
+    [[nodiscard]] QString getAuthUser() const;
+    [[nodiscard]] QString getAuthToken() const;
+    [[nodiscard]] QString getVirusTotalApiKey() const;
+    [[nodiscard]] bool isSaveBackup() const;
+    [[nodiscard]] bool isSaveLastDirectory() const;
+    [[nodiscard]] bool isSaveRecentFiles() const;
+    [[nodiscard]] bool isRestartNeeded() const;
+    [[nodiscard]] bool isStayOnTop() const;  // TODO: remove
+    [[nodiscard]] bool isScanAfterOpen() const;
+    [[nodiscard]] bool isSingleApplication() const;
+    [[nodiscard]] bool isShowLogo() const;  // TODO: remove
+    [[nodiscard]] QString getSearchSignaturesPath() const;
+    [[nodiscard]] QString getStructsPath() const;
     static QList<QString> getAllFilesFromDirectory(const QString &sDirectory, const QString &sExtension);
     static bool checkNative(const QString &sIniFileName);
-    QString getApplicationDataPath();
+    static QString getApplicationDataPath();
     static QString convertPathName(const QString &sPathName);
     static bool isPathExists(const QString &sPathName);
     static QString getTitle(const QString &sName, const QString &sVersion, bool bShowOS = true);
-    bool isWritable();
+    [[nodiscard]] bool isWritable() const;
     static void adjustApplicationInitAttributes();
 #ifdef QT_GUI_LIB
     void setCheckBox(QCheckBox *pCheckBox, ID id);
@@ -682,7 +682,7 @@ public:
     void removeFromUserPathVariable(const QString &targetPath);
 #endif
     void setMaxRecentFilesCount(qint32 nValue);
-    qint32 getMaxRecentFilesCount();
+    [[nodiscard]] qint32 getMaxRecentFilesCount() const;
     static BUNDLE getBundle();
     static QString getBundleIdToString(BUNDLE bundle);
     static void registerCodecs();
@@ -691,7 +691,7 @@ public:
     static void printConsole(const QString &sString, const QString &colorText = "", const QString &colorBackground = "");
     static void setNoColor(bool bNoColor);
     static bool isNoColor();
-    static void printModel(QAbstractItemModel *pModel);
+    static void printModel(const QAbstractItemModel *pModel);
 
 public slots:
     void clearRecentFiles();
@@ -710,7 +710,7 @@ signals:
     void setCodePage(const QString &sCodePage);
 
 private:
-    static const qint32 N_MAX_RECENT_FILES_COUNT = 25;
+    static constexpr qint32 N_MAX_RECENT_FILES_COUNT = 25;
     QString m_sName;
     QList<ID> m_listValueIDs;
     QMap<ID, QVariant> m_mapValues;
