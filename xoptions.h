@@ -575,10 +575,10 @@ public:
     [[nodiscard]] bool isSaveLastDirectory() const;
     [[nodiscard]] bool isSaveRecentFiles() const;
     [[nodiscard]] bool isRestartNeeded() const;
-    [[nodiscard]] bool isStayOnTop() const;  // TODO: remove
+    [[nodiscard, deprecated]] bool isStayOnTop() const;
     [[nodiscard]] bool isScanAfterOpen() const;
     [[nodiscard]] bool isSingleApplication() const;
-    [[nodiscard]] bool isShowLogo() const;  // TODO: remove
+    [[nodiscard, deprecated]] bool isShowLogo() const;
     [[nodiscard]] QString getSearchSignaturesPath() const;
     [[nodiscard]] QString getStructsPath() const;
     static QList<QString> getAllFilesFromDirectory(const QString &sDirectory, const QString &sExtension);
