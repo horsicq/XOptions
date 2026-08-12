@@ -28,7 +28,15 @@ XThreadObject::XThreadObject(QObject *pParent) : QObject(pParent)
 
 QString XThreadObject::getTitle() const
 {
+    if (!m_sTitle.isEmpty()) {
+        return m_sTitle;
+    }
+
     return tr("Process");
+}
+
+void XThreadObject::setTitle(const QString &sTitle) {
+    m_sTitle = sTitle;
 }
 
 void XThreadObject::_connect(const XThreadObject *pThreadObject) const

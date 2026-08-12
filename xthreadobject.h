@@ -31,7 +31,8 @@ public:
     explicit XThreadObject(QObject *pParent = nullptr);
 
     virtual void process() = 0;
-    [[nodiscard]] virtual QString getTitle() const;  // TODO setTitle
+    [[nodiscard]] virtual QString getTitle() const;
+    virtual void setTitle(const QString &sTitle);
 
     void _connect(const XThreadObject *pThreadObject) const;
 
@@ -44,6 +45,9 @@ signals:
     void errorMessage(const QString &sErrorMessage);
     void warningMessage(const QString &sWarningMessage);
     void infoMessage(const QString &sInfoMessage);
+
+private:
+    QString m_sTitle;
 };
 
 #endif  // XTHREADOBJECT_H
