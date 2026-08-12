@@ -2726,76 +2726,108 @@ void XOptions::printConsole(const QString &sString, const QString &sColorText, c
 
         WORD wAttribute = 0;
 
-        if (colorText == Qt::black) {
-            wAttribute |= 0;
-        } else if (colorText == Qt::white) {
-            wAttribute |= FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE;
-        } else if (colorText == Qt::blue) {
-            wAttribute |= FOREGROUND_BLUE;
-        } else if (colorText == Qt::red) {
-            wAttribute |= FOREGROUND_RED;
-        } else if (colorText == Qt::green) {
-            wAttribute |= FOREGROUND_GREEN;
-        } else if (colorText == Qt::yellow) {
-            wAttribute |= FOREGROUND_RED | FOREGROUND_GREEN;
-        } else if (colorText == Qt::magenta) {
-            wAttribute |= FOREGROUND_RED | FOREGROUND_BLUE;
-        } else if (colorText == Qt::cyan) {
-            wAttribute |= FOREGROUND_GREEN | FOREGROUND_BLUE;
-        } else if (colorText == Qt::darkBlue) {
-            wAttribute |= FOREGROUND_BLUE | FOREGROUND_INTENSITY;
-        } else if (colorText == Qt::darkRed) {
-            wAttribute |= FOREGROUND_RED | FOREGROUND_INTENSITY;
-        } else if (colorText == Qt::darkGreen) {
-            wAttribute |= FOREGROUND_GREEN | FOREGROUND_INTENSITY;
-        } else if (colorText == Qt::darkYellow) {
-            wAttribute |= FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_INTENSITY;
-        } else if (colorText == Qt::darkMagenta) {
-            wAttribute |= FOREGROUND_RED | FOREGROUND_BLUE | FOREGROUND_INTENSITY;
-        } else if (colorText == Qt::darkCyan) {
-            wAttribute |= FOREGROUND_GREEN | FOREGROUND_BLUE | FOREGROUND_INTENSITY;
-        } else if (colorText == Qt::gray) {
-            wAttribute |= FOREGROUND_INTENSITY;
-        } else if (colorText == Qt::darkGray) {
-            wAttribute |= FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE | FOREGROUND_INTENSITY;
-        } else if (colorText == Qt::transparent) {
-            wAttribute |= FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE;
+        switch (colorText) {
+            case Qt::white:
+            case Qt::transparent:
+                wAttribute |= FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE;
+                break;
+            case Qt::blue:
+                wAttribute |= FOREGROUND_BLUE;
+                break;
+            case Qt::red:
+                wAttribute |= FOREGROUND_RED;
+                break;
+            case Qt::green:
+                wAttribute |= FOREGROUND_GREEN;
+                break;
+            case Qt::yellow:
+                wAttribute |= FOREGROUND_RED | FOREGROUND_GREEN;
+                break;
+            case Qt::magenta:
+                wAttribute |= FOREGROUND_RED | FOREGROUND_BLUE;
+                break;
+            case Qt::cyan:
+                wAttribute |= FOREGROUND_GREEN | FOREGROUND_BLUE;
+                break;
+            case Qt::darkBlue:
+                wAttribute |= FOREGROUND_BLUE | FOREGROUND_INTENSITY;
+                break;
+            case Qt::darkRed:
+                wAttribute |= FOREGROUND_RED | FOREGROUND_INTENSITY;
+                break;
+            case Qt::darkGreen:
+                wAttribute |= FOREGROUND_GREEN | FOREGROUND_INTENSITY;
+                break;
+            case Qt::darkYellow:
+                wAttribute |= FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_INTENSITY;
+                break;
+            case Qt::darkMagenta:
+                wAttribute |= FOREGROUND_RED | FOREGROUND_BLUE | FOREGROUND_INTENSITY;
+                break;
+            case Qt::darkCyan:
+                wAttribute |= FOREGROUND_GREEN | FOREGROUND_BLUE | FOREGROUND_INTENSITY;
+                break;
+            case Qt::gray:
+                wAttribute |= FOREGROUND_INTENSITY;
+                break;
+            case Qt::darkGray:
+                wAttribute |= FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE | FOREGROUND_INTENSITY;
+                break;
+            case Qt::black:
+            default:
+                break;
         }
 
-        if (colorBackground == Qt::black) {
-            wAttribute |= 0;
-        } else if (colorBackground == Qt::white) {
-            wAttribute |= BACKGROUND_RED | BACKGROUND_GREEN | BACKGROUND_BLUE;
-        } else if (colorBackground == Qt::blue) {
-            wAttribute |= BACKGROUND_BLUE;
-        } else if (colorBackground == Qt::red) {
-            wAttribute |= BACKGROUND_RED;
-        } else if (colorBackground == Qt::green) {
-            wAttribute |= BACKGROUND_GREEN;
-        } else if (colorBackground == Qt::yellow) {
-            wAttribute |= BACKGROUND_RED | BACKGROUND_GREEN;
-        } else if (colorBackground == Qt::magenta) {
-            wAttribute |= BACKGROUND_RED | BACKGROUND_BLUE;
-        } else if (colorBackground == Qt::cyan) {
-            wAttribute |= BACKGROUND_GREEN | BACKGROUND_BLUE;
-        } else if (colorBackground == Qt::darkBlue) {
-            wAttribute |= BACKGROUND_BLUE | BACKGROUND_INTENSITY;
-        } else if (colorBackground == Qt::darkRed) {
-            wAttribute |= BACKGROUND_RED | BACKGROUND_INTENSITY;
-        } else if (colorBackground == Qt::darkGreen) {
-            wAttribute |= BACKGROUND_GREEN | BACKGROUND_INTENSITY;
-        } else if (colorBackground == Qt::darkYellow) {
-            wAttribute |= BACKGROUND_RED | BACKGROUND_GREEN | BACKGROUND_INTENSITY;
-        } else if (colorBackground == Qt::darkMagenta) {
-            wAttribute |= BACKGROUND_RED | BACKGROUND_BLUE | BACKGROUND_INTENSITY;
-        } else if (colorBackground == Qt::darkCyan) {
-            wAttribute |= BACKGROUND_GREEN | BACKGROUND_BLUE | BACKGROUND_INTENSITY;
-        } else if (colorBackground == Qt::gray) {
-            wAttribute |= BACKGROUND_INTENSITY;
-        } else if (colorBackground == Qt::darkGray) {
-            wAttribute |= BACKGROUND_RED | BACKGROUND_GREEN | BACKGROUND_BLUE | BACKGROUND_INTENSITY;
-        } else if (colorBackground == Qt::transparent) {
-            // No background bits set (leave as is)
+        switch (colorBackground) {
+            case Qt::white:
+                wAttribute |= BACKGROUND_RED | BACKGROUND_GREEN | BACKGROUND_BLUE;
+                break;
+            case Qt::blue:
+                wAttribute |= BACKGROUND_BLUE;
+                break;
+            case Qt::red:
+                wAttribute |= BACKGROUND_RED;
+                break;
+            case Qt::green:
+                wAttribute |= BACKGROUND_GREEN;
+                break;
+            case Qt::yellow:
+                wAttribute |= BACKGROUND_RED | BACKGROUND_GREEN;
+                break;
+            case Qt::magenta:
+                wAttribute |= BACKGROUND_RED | BACKGROUND_BLUE;
+                break;
+            case Qt::cyan:
+                wAttribute |= BACKGROUND_GREEN | BACKGROUND_BLUE;
+                break;
+            case Qt::darkBlue:
+                wAttribute |= BACKGROUND_BLUE | BACKGROUND_INTENSITY;
+                break;
+            case Qt::darkRed:
+                wAttribute |= BACKGROUND_RED | BACKGROUND_INTENSITY;
+                break;
+            case Qt::darkGreen:
+                wAttribute |= BACKGROUND_GREEN | BACKGROUND_INTENSITY;
+                break;
+            case Qt::darkYellow:
+                wAttribute |= BACKGROUND_RED | BACKGROUND_GREEN | BACKGROUND_INTENSITY;
+                break;
+            case Qt::darkMagenta:
+                wAttribute |= BACKGROUND_RED | BACKGROUND_BLUE | BACKGROUND_INTENSITY;
+                break;
+            case Qt::darkCyan:
+                wAttribute |= BACKGROUND_GREEN | BACKGROUND_BLUE | BACKGROUND_INTENSITY;
+                break;
+            case Qt::gray:
+                wAttribute |= BACKGROUND_INTENSITY;
+                break;
+            case Qt::darkGray:
+                wAttribute |= BACKGROUND_RED | BACKGROUND_GREEN | BACKGROUND_BLUE | BACKGROUND_INTENSITY;
+                break;
+            case Qt::black:
+            case Qt::transparent:
+            default:
+                break;
         }
 
         if (wAttribute) {
