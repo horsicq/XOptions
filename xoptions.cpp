@@ -925,7 +925,7 @@ QString XOptions::getLastDirectory() const
 
     const bool bSaveLastDirectory = getValue(ID_FILE_SAVELASTDIRECTORY).toBool();
 
-    if (QString sLastDirectory = getValue(ID_NU_LASTDIRECTORY).toString();
+    if (const QString sLastDirectory = getValue(ID_NU_LASTDIRECTORY).toString();
         bSaveLastDirectory && !sLastDirectory.isEmpty() && QDir().exists(sLastDirectory)) {
         sResult = sLastDirectory;
     }
