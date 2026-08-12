@@ -26,12 +26,12 @@ XThreadObject::XThreadObject(QObject *pParent) : QObject(pParent)
 {
 }
 
-QString XThreadObject::getTitle()
+QString XThreadObject::getTitle() const
 {
     return tr("Process");
 }
 
-void XThreadObject::_connect(XThreadObject *pThreadObject)
+void XThreadObject::_connect(const XThreadObject *pThreadObject) const
 {
     connect(pThreadObject, &XThreadObject::errorMessage, this, &XThreadObject::errorMessage);
     connect(pThreadObject, &XThreadObject::warningMessage, this, &XThreadObject::warningMessage);
