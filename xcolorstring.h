@@ -83,8 +83,8 @@ public:
     void addString(quint32 nGroupID, const QString &sString);
     void addRule(quint32 nGroupID, const QString &sString, const XOptions::COLOR_RECORD &colorRecord, bool bIsCaseSensitive);
     void addRule(quint32 nGroupID, const QString &sString, const QString &sColorMain, const QString &sColorBackground, bool bIsCaseSensitive);
-    QString toPlainText();
-    void printConsole(CONSOLE_STATE *pConsoleState);
+    QString toPlainText() const;
+    void printConsole(const CONSOLE_STATE *pConsoleState);
 
     static qint32 colorToAnsiCode(const RGB_COLOR &color, bool bBackground = false);
     static QString colorNameToHex(const QString &sColorName);

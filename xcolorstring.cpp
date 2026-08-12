@@ -20,13 +20,9 @@
  */
 #include "xcolorstring.h"
 
-XColorString::XColorString()
-{
-}
+XColorString::XColorString() = default;
 
-XColorString::~XColorString()
-{
-}
+XColorString::~XColorString() = default;
 
 XColorString::CONSOLE_STATE XColorString::initConsole()
 {
@@ -101,14 +97,14 @@ void XColorString::addSpace()
     addPart(" ");
 }
 
-void XColorString::addString(quint32 nGroupID, const QString &sString)
+void XColorString::addString(const quint32 nGroupID, const QString &sString)
 {
     XOptions::COLOR_RECORD colorRecord = {};
     bool bFound = false;
 
-    qint32 nNumberOfRules = m_lstRules.count();
+    const auto nNumberOfRules = m_lstRules.count();
 
-    for (qint32 i = 0; i < nNumberOfRules; i++) {
+    for (qsizetype i = 0; i < nNumberOfRules; i++) {
         if (m_lstRules.at(i).nGroupID == nGroupID) {
             bool bMatch = false;
 
@@ -135,7 +131,8 @@ void XColorString::addString(quint32 nGroupID, const QString &sString)
     }
 }
 
-void XColorString::addRule(quint32 nGroupID, const QString &sString, const XOptions::COLOR_RECORD &colorRecord, bool bIsCaseSensitive)
+void XColorString::addRule(const quint32 nGroupID, const QString &sString, const XOptions::COLOR_RECORD &colorRecord,
+                           const bool bIsCaseSensitive)
 {
     RULE rule = {};
     rule.nGroupID = nGroupID;
@@ -146,7 +143,7 @@ void XColorString::addRule(quint32 nGroupID, const QString &sString, const XOpti
     m_lstRules.append(rule);
 }
 
-void XColorString::addRule(quint32 nGroupID, const QString &sString, const QString &sColorMain, const QString &sColorBackground, bool bIsCaseSensitive)
+void XColorString::addRule(const quint32 nGroupID, const QString &sString, const QString &sColorMain, const QString &sColorBackground, const bool bIsCaseSensitive)
 {
     XOptions::COLOR_RECORD colorRecord = {};
     colorRecord.sColorMain = sColorMain;
@@ -155,28 +152,27 @@ void XColorString::addRule(quint32 nGroupID, const QString &sString, const QStri
     addRule(nGroupID, sString, colorRecord, bIsCaseSensitive);
 }
 
-QString XColorString::toPlainText()
-{
+QString XColorString::toPlainText() const {
     QString sResult;
 
-    qint32 nNumberOfParts = m_vecParts.count();
+    const auto nNumberOfParts = m_vecParts.count();
 
-    for (qint32 i = 0; i < nNumberOfParts; i++) {
+    for (qsizetype i = 0; i < nNumberOfParts; i++) {
         sResult += m_vecParts.at(i).sText;
     }
 
     return sResult;
 }
 
-void XColorString::printConsole(CONSOLE_STATE *pConsoleState)
+void XColorString::printConsole(const CONSOLE_STATE *pConsoleState)
 {
     if (!pConsoleState) {
         return;
     }
 
-    qint32 nNumberOfParts = m_vecParts.count();
+    const auto nNumberOfParts = m_vecParts.count();
 
-    for (qint32 i = 0; i < nNumberOfParts; i++) {
+    for (qsizetype i = 0; i < nNumberOfParts; i++) {
         QString sColorMain = m_vecParts.at(i).colorRecord.sColorMain;
         QString sColorBackground = m_vecParts.at(i).colorRecord.sColorBackground;
 
@@ -185,13 +181,11 @@ void XColorString::printConsole(CONSOLE_STATE *pConsoleState)
                 qint32 nFg = 39;
                 qint32 nBg = 49;
 
-                RGB_COLOR colorMain = parseColor(sColorMain);
-                if (colorMain.bValid) {
+                if (RGB_COLOR colorMain = parseColor(sColorMain); colorMain.bValid) {
                     nFg = colorToAnsiCode(colorMain, false);
                 }
 
-                RGB_COLOR colorBg = parseColor(sColorBackground);
-                if (colorBg.bValid) {
+                if (RGB_COLOR colorBg = parseColor(sColorBackground); colorBg.bValid) {
                     nBg = colorToAnsiCode(colorBg, true);
                 }
 
@@ -262,7 +256,7 @@ XColorString::RGB_COLOR XColorString::parseColor(const QString &sColor)
         return result;
     }
 
-    QString sColorLower = sColor.toLower().trimmed();
+    const QString sColorLower = sColor.toLower().trimmed();
 
     if (sColorLower.startsWith("#")) {
         return hexToColor(sColorLower);
@@ -292,20 +286,20 @@ XColorString::RGB_COLOR XColorString::parseColor(const QString &sColor)
     return result;
 }
 
-qint32 XColorString::colorToAnsiCode(const RGB_COLOR &color, bool bBackground)
+qint32 XColorString::colorToAnsiCode(const RGB_COLOR &color, const bool bBackground)
 {
     if (!color.bValid) {
         return bBackground ? 49 : 39;
     }
 
-    qint32 nBase = bBackground ? 40 : 30;
-    qint32 nBrightBase = bBackground ? 100 : 90;
+    const qint32 nBase = bBackground ? 40 : 30;
+    const qint32 nBrightBase = bBackground ? 100 : 90;
 
-    qint32 nRed = color.nRed;
-    qint32 nGreen = color.nGreen;
-    qint32 nBlue = color.nBlue;
+    const qint32 nRed = color.nRed;
+    const qint32 nGreen = color.nGreen;
+    const qint32 nBlue = color.nBlue;
 
-    bool bIsBright = (nRed + nGreen + nBlue) > 384;
+    const bool bIsBright = (nRed + nGreen + nBlue) > 384;
 
     if (nRed > 200 && nGreen < 100 && nBlue < 100) {
         return bIsBright ? (nBrightBase + 1) : (nBase + 1);
@@ -336,7 +330,7 @@ QString XColorString::colorNameToHex(const QString &sColorName)
         return QString("#%1%2%3").arg(color.nRed, 2, 16, QChar('0')).arg(color.nGreen, 2, 16, QChar('0')).arg(color.nBlue, 2, 16, QChar('0'));
     }
 
-    return QString();
+    return{};
 }
 
 XColorString::RGB_COLOR XColorString::hexToColor(const QString &sHex)
