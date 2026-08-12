@@ -3094,42 +3094,60 @@ QString XOptions::getBundleIdToString(const BUNDLE bundle)
 {
     QString sResult;
 
-    if (bundle == BUNDLE_LINUX_ARCH_X64) {
-        sResult = "Linux Arch x64";
-    } else if (bundle == BUNDLE_WINDOWS_QT6_X64) {
-        sResult = "Windows Qt6 x64";
-    } else if (bundle == BUNDLE_LINUX_APPIMAGE_X64) {
-        sResult = "Linux AppImage x64";
-    } else if (bundle == BUNDLE_LINUX_DEBIAN_X64) {
-        sResult = "Linux Debian x64";
-    } else if (bundle == BUNDLE_LINUX_DEBIAN_X86) {
-        sResult = "Linux Debian x86";
-    } else if (bundle == BUNDLE_LINUX_DEBIAN_ARM64) {
-        sResult = "Linux Debian ARM64";
-    } else if (bundle == BUNDLE_LINUX_UBUNTU_X64) {
-        sResult = "Linux Ubuntu x64";
-    } else if (bundle == BUNDLE_LINUX_PARROT_X64) {
-        sResult = "Linux Parrot x64";
-    } else if (bundle == BUNDLE_LINUX_KALI_X64) {
-        sResult = "Linux Kali x64";
-    } else if (bundle == BUNDLE_WINDOWS_XP_X86) {
-        sResult = "Windows XP x86";
-    } else if (bundle == BUNDLE_WINDOWS_X86) {
-        sResult = "Windows x86";
-    } else if (bundle == BUNDLE_WINDOWS_X64) {
-        sResult = "Windows x64";
-    } else if (bundle == BUNDLE_WINDOWS_ARM64) {
-        sResult = "Windows ARM64";
-    } else if (bundle == BUNDLE_MACOS_X64) {
-        sResult = "MacOS x64";
-    } else if (bundle == BUNDLE_MACOS_QT6_ARM64) {
-        sResult = "MacOS Qt6 ARM64";
-    } else if (bundle == BUNDLE_FEDORA_X64) {
-        sResult = "Fedora x64";
-    } else if (bundle == BUNDLE_FREEBSD_X64) {
-        sResult = "FreeBSD x64";
-    } else {
-        sResult = tr("Unknown");
+    switch (bundle) {
+        case BUNDLE_LINUX_ARCH_X64:
+            sResult = "Linux Arch x64";
+            break;
+        case BUNDLE_WINDOWS_QT6_X64:
+            sResult = "Windows Qt6 x64";
+            break;
+        case BUNDLE_LINUX_APPIMAGE_X64:
+            sResult = "Linux AppImage x64";
+            break;
+        case BUNDLE_LINUX_DEBIAN_X64:
+            sResult = "Linux Debian x64";
+            break;
+        case BUNDLE_LINUX_DEBIAN_X86:
+            sResult = "Linux Debian x86";
+            break;
+        case BUNDLE_LINUX_DEBIAN_ARM64:
+            sResult = "Linux Debian ARM64";
+            break;
+        case BUNDLE_LINUX_UBUNTU_X64:
+            sResult = "Linux Ubuntu x64";
+            break;
+        case BUNDLE_LINUX_PARROT_X64:
+            sResult = "Linux Parrot x64";
+            break;
+        case BUNDLE_LINUX_KALI_X64:
+            sResult = "Linux Kali x64";
+            break;
+        case BUNDLE_WINDOWS_XP_X86:
+            sResult = "Windows XP x86";
+            break;
+        case BUNDLE_WINDOWS_X86:
+            sResult = "Windows x86";
+            break;
+        case BUNDLE_WINDOWS_X64:
+            sResult = "Windows x64";
+            break;
+        case BUNDLE_WINDOWS_ARM64:
+            sResult = "Windows ARM64";
+            break;
+        case BUNDLE_MACOS_X64:
+            sResult = "MacOS x64";
+            break;
+        case BUNDLE_MACOS_QT6_ARM64:
+            sResult = "MacOS Qt6 ARM64";
+            break;
+        case BUNDLE_FEDORA_X64:
+            sResult = "Fedora x64";
+            break;
+        case BUNDLE_FREEBSD_X64:
+            sResult = "FreeBSD x64";
+            break;
+        default:
+            sResult = tr("Unknown");
     }
 
     return sResult;
@@ -3258,168 +3276,246 @@ QString XOptions::getIconPath(ICONTYPE iconType)
 {
     QString sResult;
 
-    if (iconType == ICONTYPE_NONE) {
-        sResult = "";
-    } else if (iconType == ICONTYPE_GENERIC) {
-        sResult = ":/XStyles/icons/BreakpointEnabled.16.16.png";
-    } else if (iconType == ICONTYPE_ACTION) {
-        sResult = ":/XStyles/icons/Action.16.16.png";
-    } else if (iconType == ICONTYPE_HEX) {
-        sResult = ":/XStyles/icons/Binary.16.16.png";
-    } else if (iconType == ICONTYPE_DISASM) {
-        sResult = ":/XStyles/icons/Disasm.16.16.png";
-    } else if (iconType == ICONTYPE_ENTROPY) {
-        sResult = ":/XStyles/icons/Entropy.16.16.png";
-    } else if (iconType == ICONTYPE_STRING) {
-        sResult = ":/XStyles/icons/String.16.16.png";
-    } else if (iconType == ICONTYPE_SIGNATURE) {
-        sResult = ":/XStyles/icons/Signature.16.16.png";
-    } else if (iconType == ICONTYPE_SIZE) {
-        sResult = ":/XStyles/icons/Size.16.16.png";
-    } else if (iconType == ICONTYPE_VALUE) {
-        sResult = ":/XStyles/icons/Value.16.16.png";
-    } else if (iconType == ICONTYPE_MEMORYMAP) {
-        sResult = ":/XStyles/icons/MemoryMap.16.16.png";
-    } else if (iconType == ICONTYPE_INFO) {
-        sResult = ":/XStyles/icons/Info.16.16.png";
-    } else if (iconType == ICONTYPE_HASH) {
-        sResult = ":/XStyles/icons/Hash.16.16.png";
-    } else if (iconType == ICONTYPE_VISUALIZATION) {
-        sResult = ":/XStyles/icons/Image.16.16.png";
-    } else if (iconType == ICONTYPE_SEARCH) {
-        sResult = ":/XStyles/icons/Search.16.16.png";
-    } else if (iconType == ICONTYPE_EXTRACTOR) {
-        sResult = ":/XStyles/icons/Extract.16.16.png";
-    } else if (iconType == ICONTYPE_FILE) {
-        sResult = ":/XStyles/icons/File.16.16.png";
-    } else if (iconType == ICONTYPE_SAVE) {
-        sResult = ":/XStyles/icons/Save.16.16.png";
-    } else if (iconType == ICONTYPE_COPY) {
-        sResult = ":/XStyles/icons/Copy.16.16.png";
-    } else if (iconType == ICONTYPE_EDIT) {
-        sResult = ":/XStyles/icons/Edit.16.16.png";
-    } else if (iconType == ICONTYPE_OVERLAY) {
-        sResult = ":/XStyles/icons/Overlay.16.16.png";
-    } else if (iconType == ICONTYPE_RELOAD) {
-        sResult = ":/XStyles/icons/Refresh.16.16.png";
-    } else if (iconType == ICONTYPE_SCAN) {
-        sResult = ":/XStyles/icons/Search.16.16.png";
-    } else if (iconType == ICONTYPE_DUMPTOFILE) {
-        sResult = ":/XStyles/icons/Download.16.16.png";
-    } else if (iconType == ICONTYPE_ENTRY) {
-        sResult = ":/XStyles/icons/Entry.16.16.png";
-    } else if (iconType == ICONTYPE_BACKWARD) {
-        sResult = ":/XStyles/icons/Backward.16.16.png";
-    } else if (iconType == ICONTYPE_FORWARD) {
-        sResult = ":/XStyles/icons/Forward.16.16.png";
-    } else if (iconType == ICONTYPE_ADD) {
-        sResult = ":/XStyles/icons/Add.16.16.png";
-    } else if (iconType == ICONTYPE_OPEN) {
-        sResult = ":/XStyles/icons/Open.16.16.png";
-    } else if (iconType == ICONTYPE_LIST) {
-        sResult = ":/XStyles/icons/List.16.16.png";
-    } else if (iconType == ICONTYPE_NEW) {
-        sResult = ":/XStyles/icons/Add.16.16.png";
-    } else if (iconType == ICONTYPE_OPTION) {
-        sResult = ":/XStyles/icons/Option.16.16.png";
-    } else if (iconType == ICONTYPE_YARA) {
-        sResult = ":/XStyles/icons/Yara.16.16.png";
-    } else if (iconType == ICONTYPE_MIME) {
-        sResult = ":/XStyles/icons/Mime.16.16.png";
-    } else if (iconType == ICONTYPE_VIRUSTOTAL) {
-        sResult = ":/XStyles/icons/Virustotal.16.16.png";
-    } else if (iconType == ICONTYPE_TOOL) {
-        sResult = ":/XStyles/icons/Tool.16.16.png";
-    } else if (iconType == ICONTYPE_EXIT) {
-        sResult = ":/XStyles/icons/Exit.16.16.png";
-    } else if (iconType == ICONTYPE_DEMANGLE) {
-        sResult = ":/XStyles/icons/Demangle.16.16.png";
-    } else if (iconType == ICONTYPE_SHORTCUT) {
-        sResult = ":/XStyles/icons/Shortcut.16.16.png";
-    } else if (iconType == ICONTYPE_GOTO) {
-        sResult = ":/XStyles/icons/Goto.16.16.png";
-    } else if (iconType == ICONTYPE_SECTION) {
-        sResult = ":/XStyles/icons/Section.16.16.png";
-    } else if (iconType == ICONTYPE_SEGMENT) {
-        sResult = ":/XStyles/icons/Segment.16.16.png";
-    } else if (iconType == ICONTYPE_EXCEPTION) {
-        sResult = ":/XStyles/icons/Exception.16.16.png";
-    } else if (iconType == ICONTYPE_CERTIFICATE) {
-        sResult = ":/XStyles/icons/Certificate.16.16.png";
-    } else if (iconType == ICONTYPE_RELOC) {
-        sResult = ":/XStyles/icons/Reloc.16.16.png";
-    } else if (iconType == ICONTYPE_DEBUG) {
-        sResult = ":/XStyles/icons/Debug.16.16.png";
-    } else if (iconType == ICONTYPE_HEADER) {
-        sResult = ":/XStyles/icons/Header.16.16.png";
-    } else if (iconType == ICONTYPE_LIBRARY) {
-        sResult = ":/XStyles/icons/Library.16.16.png";
-    } else if (iconType == ICONTYPE_SYMBOL) {
-        sResult = ":/XStyles/icons/Symbol.16.16.png";
-    } else if (iconType == ICONTYPE_TABLE) {
-        sResult = ":/XStyles/icons/Table.16.16.png";
-    } else if (iconType == ICONTYPE_DOTNET) {
-        sResult = ":/XStyles/icons/DotNet.16.16.png";
-    } else if (iconType == ICONTYPE_METADATA) {
-        sResult = ":/XStyles/icons/Metadata.16.16.png";
-    } else if (iconType == ICONTYPE_RESOURCE) {
-        sResult = ":/XStyles/icons/Resource.16.16.png";
-    } else if (iconType == ICONTYPE_TLS) {
-        sResult = ":/XStyles/icons/TLS.16.16.png";
-    } else if (iconType == ICONTYPE_SELECT) {
-        sResult = ":/XStyles/icons/Select.16.16.png";
-    } else if (iconType == ICONTYPE_ADDRESS) {
-        sResult = ":/XStyles/icons/Address.16.16.png";
-    } else if (iconType == ICONTYPE_OFFSET) {
-        sResult = ":/XStyles/icons/Offset.16.16.png";
-    } else if (iconType == ICONTYPE_IMPORT) {
-        sResult = ":/XStyles/icons/Import.16.16.png";
-    } else if (iconType == ICONTYPE_EXPORT) {
-        sResult = ":/XStyles/icons/Export.16.16.png";
-    } else if (iconType == ICONTYPE_DATA) {
-        sResult = ":/XStyles/icons/Data.16.16.png";
-    } else if (iconType == ICONTYPE_DIE) {
-        sResult = ":/XStyles/icons/DIE.16.16.png";
-    } else if (iconType == ICONTYPE_NFD) {
-        sResult = ":/XStyles/icons/NFD.16.16.png";
-    } else if (iconType == ICONTYPE_VERSION) {
-        sResult = ":/XStyles/icons/Version.16.16.png";
-    } else if (iconType == ICONTYPE_MANIFEST) {
-        sResult = ":/XStyles/icons/Manifest.16.16.png";
-    } else if (iconType == ICONTYPE_FOLLOW) {
-        sResult = ":/XStyles/icons/Follow.16.16.png";
-    } else if (iconType == ICONTYPE_NEXT) {
-        sResult = ":/XStyles/icons/Next.16.16.png";
-    } else if (iconType == ICONTYPE_ALL) {
-        sResult = ":/XStyles/icons/All.16.16.png";
-    } else if (iconType == ICONTYPE_PATH) {
-        sResult = ":/XStyles/icons/Path.16.16.png";
-    } else if (iconType == ICONTYPE_NOTE) {
-        sResult = ":/XStyles/icons/Note.16.16.png";
-    } else if (iconType == ICONTYPE_FUNCTION) {
-        sResult = ":/XStyles/icons/Function.16.16.png";
-    } else if (iconType == ICONTYPE_SCRIPT) {
-        sResult = ":/XStyles/icons/Script.16.16.png";
-    } else if (iconType == ICONTYPE_PATCH) {
-        sResult = ":/XStyles/icons/Patch.16.16.png";
-    } else if (iconType == ICONTYPE_REMOVE) {
-        sResult = ":/XStyles/icons/Remove.16.16.png";
-    } else if (iconType == ICONTYPE_RESIZE) {
-        sResult = ":/XStyles/icons/Resize.16.16.png";
-    } else if (iconType == ICONTYPE_CODE) {
-        sResult = ":/XStyles/icons/Code.16.16.png";
-    } else if (iconType == ICONTYPE_REFERENCE) {
-        sResult = ":/XStyles/icons/Reference.16.16.png";
-    } else if (iconType == ICONTYPE_BOOKMARK) {
-        sResult = ":/XStyles/icons/Bookmark.16.16.png";
-    } else if (iconType == ICONTYPE_INSPECTOR) {
-        sResult = ":/XStyles/icons/Inspector.16.16.png";
-    } else if (iconType == ICONTYPE_CONVERTOR) {
-        sResult = ":/XStyles/icons/Convertor.16.16.png";
-    } else if (iconType == ICONTYPE_STRUCTS) {
-        sResult = ":/XStyles/icons/Structs.16.16.png";
-    } else {
-        sResult = ":/XStyles/icons/BreakpointDisabled.16.16.png";
+switch (iconType) {
+        case ICONTYPE_NONE:
+            sResult = "";
+            break;
+        case ICONTYPE_GENERIC:
+            sResult = ":/XStyles/icons/BreakpointEnabled.16.16.png";
+            break;
+        case ICONTYPE_ACTION:
+            sResult = ":/XStyles/icons/Action.16.16.png";
+            break;
+        case ICONTYPE_HEX:
+            sResult = ":/XStyles/icons/Binary.16.16.png";
+            break;
+        case ICONTYPE_DISASM:
+            sResult = ":/XStyles/icons/Disasm.16.16.png";
+            break;
+        case ICONTYPE_ENTROPY:
+            sResult = ":/XStyles/icons/Entropy.16.16.png";
+            break;
+        case ICONTYPE_STRING:
+            sResult = ":/XStyles/icons/String.16.16.png";
+            break;
+        case ICONTYPE_SIGNATURE:
+            sResult = ":/XStyles/icons/Signature.16.16.png";
+            break;
+        case ICONTYPE_SIZE:
+            sResult = ":/XStyles/icons/Size.16.16.png";
+            break;
+        case ICONTYPE_VALUE:
+            sResult = ":/XStyles/icons/Value.16.16.png";
+            break;
+        case ICONTYPE_MEMORYMAP:
+            sResult = ":/XStyles/icons/MemoryMap.16.16.png";
+            break;
+        case ICONTYPE_INFO:
+            sResult = ":/XStyles/icons/Info.16.16.png";
+            break;
+        case ICONTYPE_HASH:
+            sResult = ":/XStyles/icons/Hash.16.16.png";
+            break;
+        case ICONTYPE_VISUALIZATION:
+            sResult = ":/XStyles/icons/Image.16.16.png";
+            break;
+        case ICONTYPE_SEARCH:
+        case ICONTYPE_SCAN:
+            sResult = ":/XStyles/icons/Search.16.16.png";
+            break;
+        case ICONTYPE_EXTRACTOR:
+            sResult = ":/XStyles/icons/Extract.16.16.png";
+            break;
+        case ICONTYPE_FILE:
+            sResult = ":/XStyles/icons/File.16.16.png";
+            break;
+        case ICONTYPE_SAVE:
+            sResult = ":/XStyles/icons/Save.16.16.png";
+            break;
+        case ICONTYPE_COPY:
+            sResult = ":/XStyles/icons/Copy.16.16.png";
+            break;
+        case ICONTYPE_EDIT:
+            sResult = ":/XStyles/icons/Edit.16.16.png";
+            break;
+        case ICONTYPE_OVERLAY:
+            sResult = ":/XStyles/icons/Overlay.16.16.png";
+            break;
+        case ICONTYPE_RELOAD:
+            sResult = ":/XStyles/icons/Refresh.16.16.png";
+            break;
+        case ICONTYPE_DUMPTOFILE:
+            sResult = ":/XStyles/icons/Download.16.16.png";
+            break;
+        case ICONTYPE_ENTRY:
+            sResult = ":/XStyles/icons/Entry.16.16.png";
+            break;
+        case ICONTYPE_BACKWARD:
+            sResult = ":/XStyles/icons/Backward.16.16.png";
+            break;
+        case ICONTYPE_FORWARD:
+            sResult = ":/XStyles/icons/Forward.16.16.png";
+            break;
+        case ICONTYPE_ADD:
+        case ICONTYPE_NEW:
+            sResult = ":/XStyles/icons/Add.16.16.png";
+            break;
+        case ICONTYPE_OPEN:
+            sResult = ":/XStyles/icons/Open.16.16.png";
+            break;
+        case ICONTYPE_LIST:
+            sResult = ":/XStyles/icons/List.16.16.png";
+            break;
+        case ICONTYPE_OPTION:
+            sResult = ":/XStyles/icons/Option.16.16.png";
+            break;
+        case ICONTYPE_YARA:
+            sResult = ":/XStyles/icons/Yara.16.16.png";
+            break;
+        case ICONTYPE_MIME:
+            sResult = ":/XStyles/icons/Mime.16.16.png";
+            break;
+        case ICONTYPE_VIRUSTOTAL:
+            sResult = ":/XStyles/icons/Virustotal.16.16.png";
+            break;
+        case ICONTYPE_TOOL:
+            sResult = ":/XStyles/icons/Tool.16.16.png";
+            break;
+        case ICONTYPE_EXIT:
+            sResult = ":/XStyles/icons/Exit.16.16.png";
+            break;
+        case ICONTYPE_DEMANGLE:
+            sResult = ":/XStyles/icons/Demangle.16.16.png";
+            break;
+        case ICONTYPE_SHORTCUT:
+            sResult = ":/XStyles/icons/Shortcut.16.16.png";
+            break;
+        case ICONTYPE_GOTO:
+            sResult = ":/XStyles/icons/Goto.16.16.png";
+            break;
+        case ICONTYPE_SECTION:
+            sResult = ":/XStyles/icons/Section.16.16.png";
+            break;
+        case ICONTYPE_SEGMENT:
+            sResult = ":/XStyles/icons/Segment.16.16.png";
+            break;
+        case ICONTYPE_EXCEPTION:
+            sResult = ":/XStyles/icons/Exception.16.16.png";
+            break;
+        case ICONTYPE_CERTIFICATE:
+            sResult = ":/XStyles/icons/Certificate.16.16.png";
+            break;
+        case ICONTYPE_RELOC:
+            sResult = ":/XStyles/icons/Reloc.16.16.png";
+            break;
+        case ICONTYPE_DEBUG:
+            sResult = ":/XStyles/icons/Debug.16.16.png";
+            break;
+        case ICONTYPE_HEADER:
+            sResult = ":/XStyles/icons/Header.16.16.png";
+            break;
+        case ICONTYPE_LIBRARY:
+            sResult = ":/XStyles/icons/Library.16.16.png";
+            break;
+        case ICONTYPE_SYMBOL:
+            sResult = ":/XStyles/icons/Symbol.16.16.png";
+            break;
+        case ICONTYPE_TABLE:
+            sResult = ":/XStyles/icons/Table.16.16.png";
+            break;
+        case ICONTYPE_DOTNET:
+            sResult = ":/XStyles/icons/DotNet.16.16.png";
+            break;
+        case ICONTYPE_METADATA:
+            sResult = ":/XStyles/icons/Metadata.16.16.png";
+            break;
+        case ICONTYPE_RESOURCE:
+            sResult = ":/XStyles/icons/Resource.16.16.png";
+            break;
+        case ICONTYPE_TLS:
+            sResult = ":/XStyles/icons/TLS.16.16.png";
+            break;
+        case ICONTYPE_SELECT:
+            sResult = ":/XStyles/icons/Select.16.16.png";
+            break;
+        case ICONTYPE_ADDRESS:
+            sResult = ":/XStyles/icons/Address.16.16.png";
+            break;
+        case ICONTYPE_OFFSET:
+            sResult = ":/XStyles/icons/Offset.16.16.png";
+            break;
+        case ICONTYPE_IMPORT:
+            sResult = ":/XStyles/icons/Import.16.16.png";
+            break;
+        case ICONTYPE_EXPORT:
+            sResult = ":/XStyles/icons/Export.16.16.png";
+            break;
+        case ICONTYPE_DATA:
+            sResult = ":/XStyles/icons/Data.16.16.png";
+            break;
+        case ICONTYPE_DIE:
+            sResult = ":/XStyles/icons/DIE.16.16.png";
+            break;
+        case ICONTYPE_NFD:
+            sResult = ":/XStyles/icons/NFD.16.16.png";
+            break;
+        case ICONTYPE_VERSION:
+            sResult = ":/XStyles/icons/Version.16.16.png";
+            break;
+        case ICONTYPE_MANIFEST:
+            sResult = ":/XStyles/icons/Manifest.16.16.png";
+            break;
+        case ICONTYPE_FOLLOW:
+            sResult = ":/XStyles/icons/Follow.16.16.png";
+            break;
+        case ICONTYPE_NEXT:
+            sResult = ":/XStyles/icons/Next.16.16.png";
+            break;
+        case ICONTYPE_ALL:
+            sResult = ":/XStyles/icons/All.16.16.png";
+            break;
+        case ICONTYPE_PATH:
+            sResult = ":/XStyles/icons/Path.16.16.png";
+            break;
+        case ICONTYPE_NOTE:
+            sResult = ":/XStyles/icons/Note.16.16.png";
+            break;
+        case ICONTYPE_FUNCTION:
+            sResult = ":/XStyles/icons/Function.16.16.png";
+            break;
+        case ICONTYPE_SCRIPT:
+            sResult = ":/XStyles/icons/Script.16.16.png";
+            break;
+        case ICONTYPE_PATCH:
+            sResult = ":/XStyles/icons/Patch.16.16.png";
+            break;
+        case ICONTYPE_REMOVE:
+            sResult = ":/XStyles/icons/Remove.16.16.png";
+            break;
+        case ICONTYPE_RESIZE:
+            sResult = ":/XStyles/icons/Resize.16.16.png";
+            break;
+        case ICONTYPE_CODE:
+            sResult = ":/XStyles/icons/Code.16.16.png";
+            break;
+        case ICONTYPE_REFERENCE:
+            sResult = ":/XStyles/icons/Reference.16.16.png";
+            break;
+        case ICONTYPE_BOOKMARK:
+            sResult = ":/XStyles/icons/Bookmark.16.16.png";
+            break;
+        case ICONTYPE_INSPECTOR:
+            sResult = ":/XStyles/icons/Inspector.16.16.png";
+            break;
+        case ICONTYPE_CONVERTOR:
+            sResult = ":/XStyles/icons/Convertor.16.16.png";
+            break;
+        case ICONTYPE_STRUCTS:
+            sResult = ":/XStyles/icons/Structs.16.16.png";
+            break;
+        default:
+            sResult = ":/XStyles/icons/BreakpointDisabled.16.16.png";
+            break;
     }
 
     if (!sResult.isEmpty()) {
