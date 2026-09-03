@@ -105,14 +105,14 @@ XOptions::XOptions(QObject *pParent) : QObject(pParent)
 
 void XOptions::resetToDefault()
 {
-    const auto nCount = m_listValueIDs.count();
+    const qint32 nCount = m_listValueIDs.count();
     if (!nCount) {
         return;
     }
 
     const QMap<ID, QVariant>::const_iterator itEnd = m_mapDefaultValues.constEnd();
 
-    for (qsizetype i = 0; i < nCount; ++i) {
+    for (qint32 i = 0; i < nCount; ++i) {
         const ID id = m_listValueIDs.at(i);
 
         // Skip non-user (runtime) entries
@@ -121,7 +121,8 @@ void XOptions::resetToDefault()
         }
 
         QVariant varDefault;  // invalid by default
-        if (QMap<ID, QVariant>::const_iterator it = m_mapDefaultValues.constFind(id); it != itEnd) {
+        QMap<ID, QVariant>::const_iterator it = m_mapDefaultValues.constFind(id);
+        if (it != itEnd) {
             varDefault = it.value();
         }
 
@@ -142,12 +143,12 @@ QList<XOptions::ID> XOptions::getValueIDs() const
     return m_listValueIDs;
 }
 
-void XOptions::setDefaultValues(const QMap<XOptions::ID, QVariant> &mapDefaultValues)
+void XOptions::setDefaultValues(QMap<XOptions::ID, QVariant> mapDefaultValues)
 {
     m_mapDefaultValues = mapDefaultValues;
 }
 
-void XOptions::addID(const ID id, const QVariant& varDefaultValue)
+void XOptions::addID(ID id, QVariant varDefaultValue)
 {
     m_listValueIDs.append(id);
 
@@ -156,14 +157,14 @@ void XOptions::addID(const ID id, const QVariant& varDefaultValue)
     }
 }
 
-void XOptions::removeID(const ID id)
+void XOptions::removeID(ID id)
 {
     m_listValueIDs.removeOne(id);
     m_mapDefaultValues.remove(id);
     m_mapValues.remove(id);
 }
 
-XOptions::GROUPID XOptions::getGroupID(const ID id)
+XOptions::GROUPID XOptions::getGroupID(ID id)
 {
     GROUPID result = GROUPID_UNKNOWN;
 
@@ -394,11 +395,12 @@ XOptions::GROUPID XOptions::getGroupID(const ID id)
     return result;
 }
 
-bool XOptions::isIDPresent(const ID id) const {
+bool XOptions::isIDPresent(ID id)
+{
     return m_listValueIDs.contains(id);
 }
 
-bool XOptions::isGroupIDPresent(const GROUPID groupID)
+bool XOptions::isGroupIDPresent(GROUPID groupID)
 {
     for (const ID id : qAsConst(m_listValueIDs)) {
         if (getGroupID(id) == groupID) {
@@ -426,7 +428,7 @@ bool XOptions::isPortable()
 
     QString sApplicationDirPath = QDir::cleanPath(qApp->applicationDirPath());
     QString sPortableFileName = sApplicationDirPath + QDir::separator() + "portable";
-    return QFileInfo::exists(sPortableFileName);
+    return QFileInfo(sPortableFileName).exists();
 }
 
 bool XOptions::isAppImage()
@@ -462,7 +464,9 @@ void XOptions::load()
 {
     QSettings *pSettings = nullptr;
 
-    if (isNative()) {
+    bool bIsNative = isNative();
+
+    if (bIsNative) {
         pSettings = new QSettings;
     } else {
         pSettings = new QSettings(qApp->applicationDirPath() + QDir::separator() + QString("%1").arg(m_sName), QSettings::IniFormat);
@@ -474,14 +478,14 @@ void XOptions::load()
     }
 #endif
 
-    auto nNumberOfIDs = m_listValueIDs.count();
+    qint32 nNumberOfIDs = m_listValueIDs.count();
 
     bool bSaveLastDirectory = false;
     bool bLastDirectory = false;
     bool bSaveRecentFiles = false;
     bool bRecentFiles = false;
 
-    for (qsizetype i = 0; i < nNumberOfIDs; i++) {
+    for (qint32 i = 0; i < nNumberOfIDs; i++) {
         if (m_listValueIDs.at(i) == ID_FILE_SAVELASTDIRECTORY) {
             bSaveLastDirectory = true;
         } else if (m_listValueIDs.at(i) == ID_NU_LASTDIRECTORY) {
@@ -503,7 +507,7 @@ void XOptions::load()
 
     nNumberOfIDs = m_listValueIDs.count();
 
-    for (qsizetype i = 0; i < nNumberOfIDs; i++) {
+    for (qint32 i = 0; i < nNumberOfIDs; i++) {
         ID id = m_listValueIDs.at(i);
         QString sName = idToString(id);
 
@@ -517,9 +521,9 @@ void XOptions::load()
                 case ID_ROOTPATH: varDefault = ""; break;
                 case ID_DATAPATH: varDefault = "$data/data"; break;
                 case ID_JSON: varDefault = ""; break;
-                case ID_STRUCTSPATH:
+                case ID_STRUCTSPATH: varDefault = "$data/structs"; break;
                 case ID_STRUCTS_PATH: varDefault = "$data/structs"; break;
-                case ID_AUTHUSER:
+                case ID_AUTHUSER: varDefault = ""; break;
                 case ID_AUTHTOKEN: varDefault = ""; break;
                 case ID_NU_RECENTFILES: varDefault = QList<QVariant>(); break;
                 case ID_NU_LASTDIRECTORY: varDefault = ""; break;
@@ -527,9 +531,9 @@ void XOptions::load()
                 case ID_FEATURE_FILEBUFFERSIZE: varDefault = 64 * 1024 * 1024; break;
                 case ID_SCAN_COLLECTION_FEATURE_READBUFFERSIZE: varDefault = 4 * 1024; break;
                 case ID_SCAN_COLLECTION_FEATURE_FILEBUFFERSIZE: varDefault = 64 * 1024 * 1024; break;
-                case ID_SCAN_COLLECTION_FEATURE_SSE2:
+                case ID_SCAN_COLLECTION_FEATURE_SSE2: varDefault = true; break;
                 case ID_SCAN_COLLECTION_FEATURE_AVX2: varDefault = true; break;
-                case ID_SCAN_COLLECTION_COPY_REMOVE:
+                case ID_SCAN_COLLECTION_COPY_REMOVE: varDefault = false; break;
                 case ID_SCAN_COLLECTION_COPY_MOVETOFIRST: varDefault = false; break;
                 default: varDefault = "";
             }
@@ -578,7 +582,9 @@ void XOptions::save()
 {
     QSettings *pSettings = nullptr;
 
-    if (isNative()) {
+    bool bIsNative = isNative();
+
+    if (bIsNative) {
         pSettings = new QSettings;
     } else {
         pSettings = new QSettings(qApp->applicationDirPath() + QDir::separator() + QString("%1").arg(m_sName), QSettings::IniFormat);
@@ -590,9 +596,9 @@ void XOptions::save()
     }
 #endif
 
-    const auto nNumberOfIDs = m_listValueIDs.count();
+    qint32 nNumberOfIDs = m_listValueIDs.count();
 
-    for (qsizetype i = 0; i < nNumberOfIDs; i++) {
+    for (qint32 i = 0; i < nNumberOfIDs; i++) {
         ID id = m_listValueIDs.at(i);
         QString sName = idToString(id);
         pSettings->setValue(sName, m_mapValues.value(id));
@@ -607,11 +613,12 @@ void XOptions::save()
     delete pSettings;
 }
 
-QVariant XOptions::getValue(const XOptions::ID id) const {
+QVariant XOptions::getValue(XOptions::ID id)
+{
     return m_mapValues.value(id);
 }
 
-void XOptions::setValue(const XOptions::ID id, const QVariant& varValue)
+void XOptions::setValue(XOptions::ID id, QVariant varValue)
 {
     if ((id == ID_VIEW_STYLE) || (id == ID_VIEW_LANG) || (id == ID_VIEW_QSS)) {
         QVariant varOld = m_mapValues.value(id);
@@ -624,12 +631,13 @@ void XOptions::setValue(const XOptions::ID id, const QVariant& varValue)
     m_mapValues.insert(id, varValue);
 }
 
-void XOptions::clearValue(const XOptions::ID id)
+void XOptions::clearValue(XOptions::ID id)
 {
     m_mapValues.insert(id, "");
 }
 
-bool XOptions::isValuePresent(const ID id) const {
+bool XOptions::isValuePresent(ID id)
+{
     return m_mapValues.contains(id);
 }
 
@@ -639,12 +647,13 @@ QMap<QString, QString> XOptions::_parseSizeRecords(const QString &sValue)
     // collides because we split on the first ':' only and names carry neither.
     QMap<QString, QString> mapResult;
 
-    const QStringList listEntries = sValue.split(";", Qt::SkipEmptyParts);
+    QStringList listEntries = sValue.split(";", Qt::SkipEmptyParts);
 
     for (qint32 i = 0; i < listEntries.count(); i++) {
         const QString &sEntry = listEntries.at(i);
+        qint32 nSep = sEntry.indexOf(":");
 
-        if (const auto nSep = sEntry.indexOf(":"); nSep > 0) {
+        if (nSep > 0) {
             mapResult.insert(sEntry.left(nSep), sEntry.mid(nSep + 1));
         }
     }
@@ -676,14 +685,15 @@ void XOptions::setSizeRecord(const QString &sName, const QByteArray &baValue)
     setValue(ID_VIEW_SIZES, _serializeSizeRecords(mapRecords));
 }
 
-QByteArray XOptions::getSizeRecord(const QString &sName) const
+QByteArray XOptions::getSizeRecord(const QString &sName)
 {
-    const QMap<QString, QString> mapRecords = _parseSizeRecords(getValue(ID_VIEW_SIZES).toString());
+    QMap<QString, QString> mapRecords = _parseSizeRecords(getValue(ID_VIEW_SIZES).toString());
 
     return QByteArray::fromBase64(mapRecords.value(sName).toLatin1());
 }
 
-QVariant XOptions::getDefaultValue(const ID id) const {
+QVariant XOptions::getDefaultValue(ID id)
+{
     return m_mapDefaultValues.value(id);
 }
 
@@ -701,21 +711,23 @@ QCommandLineOption XOptions::getCommandLineOption(CONSOLE_OPTION_ID nId)
         listOptions << pOption->pszLong;
 
         if ((nId == CONSOLE_OPTION_ID_DATABASE) || (nId == CONSOLE_OPTION_ID_CUSTOMDATABASE)) {
-            return {listOptions, pOption->pszDescription, "path"};
+            return QCommandLineOption(listOptions, pOption->pszDescription, "path");
         } else if (nId == CONSOLE_OPTION_ID_STRUCT) {
-            return {listOptions, pOption->pszDescription, "struct"};
-        } else if (nId == CONSOLE_OPTION_ID_EXTRACTARCHIVE || nId == CONSOLE_OPTION_ID_TEST) {
-            return {listOptions, pOption->pszDescription, "directory"};
+            return QCommandLineOption(listOptions, pOption->pszDescription, "struct");
+        } else if (nId == CONSOLE_OPTION_ID_EXTRACTARCHIVE) {
+            return QCommandLineOption(listOptions, pOption->pszDescription, "directory");
+        } else if (nId == CONSOLE_OPTION_ID_TEST) {
+            return QCommandLineOption(listOptions, pOption->pszDescription, "directory");
         } else if (nId == CONSOLE_OPTION_ID_CREATETEST) {
-            return {listOptions, pOption->pszDescription, "filename", ""};
+            return QCommandLineOption(listOptions, pOption->pszDescription, "filename", "");
         } else if (nId == CONSOLE_OPTION_ID_FILETYPE) {
-            return {listOptions, pOption->pszDescription, "filetype"};
+            return QCommandLineOption(listOptions, pOption->pszDescription, "filetype");
         } else {
-            return {listOptions, pOption->pszDescription};
+            return QCommandLineOption(listOptions, pOption->pszDescription);
         }
     }
 
-    return {QStringList() << "error", "Invalid option ID"};
+    return QCommandLineOption(QStringList() << "error", "Invalid option ID");
 }
 
 QString XOptions::idToString(ID id)
@@ -961,11 +973,11 @@ QString XOptions::idToString(ID id)
     return sResult;
 }
 
-QString XOptions::getLastDirectory() const
+QString XOptions::getLastDirectory()
 {
     QString sResult;
 
-    const bool bSaveLastDirectory = getValue(ID_FILE_SAVELASTDIRECTORY).toBool();
+    bool bSaveLastDirectory = getValue(ID_FILE_SAVELASTDIRECTORY).toBool();
     QString sLastDirectory = getValue(ID_NU_LASTDIRECTORY).toString();
 
     if (bSaveLastDirectory && !sLastDirectory.isEmpty() && QDir().exists(sLastDirectory)) {
@@ -980,8 +992,9 @@ void XOptions::setLastDirectory(const QString &sPathName)
     QString _sPathName = sPathName;
 
     if (getValue(ID_FILE_SAVELASTDIRECTORY).toBool()) {
+        QFileInfo fi(_sPathName);
 
-        if (const QFileInfo fi(_sPathName); fi.isFile()) {
+        if (fi.isFile()) {
             _sPathName = fi.absolutePath();
         } else if (fi.isDir()) {
             _sPathName = fi.absoluteFilePath();
@@ -993,7 +1006,7 @@ void XOptions::setLastDirectory(const QString &sPathName)
 
 void XOptions::setLastFileName(const QString &sFileName)
 {
-    const QFileInfo fi(sFileName);
+    QFileInfo fi(sFileName);
 
     QString sDirectory;
 
@@ -1067,7 +1080,7 @@ void XOptions::setCodePageSlot()
 #endif
 }
 
-QList<QString> XOptions::getRecentFiles() const
+QList<QString> XOptions::getRecentFiles()
 {
     QList<QString> listResult;
 
@@ -1080,7 +1093,7 @@ QList<QString> XOptions::getRecentFiles() const
     return listResult;
 }
 
-QString XOptions::getScanEngine() const
+QString XOptions::getScanEngine()
 {
     QString sResult;
 
@@ -1093,37 +1106,37 @@ QString XOptions::getScanEngine() const
     return sResult;
 }
 
-QString XOptions::getInfoPath() const
+QString XOptions::getInfoPath()
 {
     return getValue(ID_INFO_DATABASE_PATH).toString();
 }
 
-QString XOptions::getRootPath() const
+QString XOptions::getRootPath()
 {
     return getValue(ID_ROOTPATH).toString();
 }
 
-QString XOptions::getDataPath() const
+QString XOptions::getDataPath()
 {
     return getValue(ID_DATAPATH).toString();
 }
 
-QString XOptions::getJson() const
+QString XOptions::getJson()
 {
     return getValue(ID_JSON).toString();
 }
 
-QString XOptions::getAuthUser() const
+QString XOptions::getAuthUser()
 {
     return getValue(ID_AUTHUSER).toString();
 }
 
-QString XOptions::getAuthToken() const
+QString XOptions::getAuthToken()
 {
     return getValue(ID_AUTHTOKEN).toString();
 }
 
-QString XOptions::getVirusTotalApiKey() const
+QString XOptions::getVirusTotalApiKey()
 {
     return getValue(ID_ONLINETOOLS_VIRUSTOTAL_APIKEY).toString();
 }
@@ -1589,52 +1602,52 @@ void XOptions::getLineEdit(QLineEdit *pLineEdit, XOptions::ID id)
     setValue(id, pLineEdit->text());
 }
 #endif
-bool XOptions::isSaveBackup() const
+bool XOptions::isSaveBackup()
 {
     return getValue(XOptions::ID_FILE_SAVEBACKUP).toBool();
 }
 
-bool XOptions::isSaveLastDirectory() const
+bool XOptions::isSaveLastDirectory()
 {
     return getValue(XOptions::ID_FILE_SAVELASTDIRECTORY).toBool();
 }
 
-bool XOptions::isSaveRecentFiles() const
+bool XOptions::isSaveRecentFiles()
 {
     return getValue(XOptions::ID_FILE_SAVERECENTFILES).toBool();
 }
 
-bool XOptions::isRestartNeeded() const
+bool XOptions::isRestartNeeded()
 {
     return m_bIsNeedRestart;
 }
 
-bool XOptions::isStayOnTop() const
+bool XOptions::isStayOnTop()
 {
     return getValue(XOptions::ID_VIEW_STAYONTOP).toBool();
 }
 
-bool XOptions::isScanAfterOpen() const
+bool XOptions::isScanAfterOpen()
 {
     return getValue(XOptions::ID_SCAN_SCANAFTEROPEN).toBool();
 }
 
-bool XOptions::isSingleApplication() const
+bool XOptions::isSingleApplication()
 {
     return getValue(XOptions::ID_VIEW_SINGLEAPPLICATION).toBool();
 }
 
-bool XOptions::isShowLogo() const
+bool XOptions::isShowLogo()
 {
     return getValue(XOptions::ID_VIEW_SHOWLOGO).toBool();
 }
 
-QString XOptions::getSearchSignaturesPath() const
+QString XOptions::getSearchSignaturesPath()
 {
     return getValue(XOptions::ID_SIGNATURES_PATH).toString();
 }
 
-QString XOptions::getStructsPath() const
+QString XOptions::getStructsPath()
 {
     return getValue(XOptions::ID_STRUCTS_PATH).toString();
 }
@@ -2281,14 +2294,14 @@ void XOptions::setTableWidgetHeaderAlignment(QTableWidget *pTableWidget, qint32 
 
 void XOptions::deleteQObjectList(QList<QObject *> *pList)
 {
-    for (const QObject *pObj : *pList) {
+    for (QObject *pObj : *pList) {
         delete pObj;
     }
 }
 
 QList<QString> XOptions::getAllFilesFromDirectory(const QString &sDirectory, const QString &sExtension)
 {
-    const QDir directory(sDirectory);
+    QDir directory(sDirectory);
 
     return directory.entryList(QStringList() << sExtension, QDir::Files);
 }
@@ -2305,12 +2318,12 @@ QString XOptions::getApplicationDataPath()
     QString sResult;
     bool bResult = false;
 
-    const QString sApplicationDirPath = qApp->applicationDirPath();
-    const QString sApplicationName = qApp->applicationName();
+    QString sApplicationDirPath = qApp->applicationDirPath();
+    QString sApplicationName = qApp->applicationName();
 
     if (!bResult) {
         if (sApplicationDirPath.contains("/usr/local/bin")) {
-            const QString sPrefix = sApplicationDirPath.section("/usr/local/bin", 0, 0);
+            QString sPrefix = sApplicationDirPath.section("/usr/local/bin", 0, 0);
 
             sResult += sPrefix + QString("/usr/local/lib/%1").arg(sApplicationName);
 
@@ -2322,7 +2335,7 @@ QString XOptions::getApplicationDataPath()
 
     if (!bResult) {
         if (sApplicationDirPath.contains("/app/bin")) {
-            const QString sPrefix = sApplicationDirPath.section("/app/bin", 0, 0);
+            QString sPrefix = sApplicationDirPath.section("/app/bin", 0, 0);
 
             sResult += sPrefix + QString("/app/lib/%1").arg(sApplicationName);
 
@@ -2334,7 +2347,7 @@ QString XOptions::getApplicationDataPath()
 
     if (!bResult) {
         if (sApplicationDirPath.contains("/tmp/.mount_")) {
-            const QString sPrefix = sApplicationDirPath.section("/", 0, 2);
+            QString sPrefix = sApplicationDirPath.section("/", 0, 2);
 
             sResult += sPrefix + QString("/usr/lib/%1").arg(sApplicationName);
 
@@ -2430,75 +2443,132 @@ QString XOptions::getApplicationDataPath()
 
 QString XOptions::convertPathName(const QString &sPathName)
 {
-    if (!sPathName.contains("$data")) {
-        return sPathName;
-    }
+    QString sResult = sPathName;
 
-    const QString sAppDir = qApp->applicationDirPath();
-    const QString sAppName = qApp->applicationName();
-
-    QList<QString> listPaths;
+    if (sPathName.contains("$data")) {
+        bool bSuccess = false;
+        QString _sPathName;
+        QString sApplicationDirPath = qApp->applicationDirPath();
+        QString sApplicationName = qApp->applicationName();
 
 #ifdef Q_OS_MAC
-    listPaths.append(sAppDir + "/../Resources");
+        if (!bSuccess) {
+            _sPathName = sPathName;
+            QString _sApplicationDirPath = sApplicationDirPath + "/../Resources";
+
+            _sPathName = _sPathName.replace("$data", _sApplicationDirPath);
+
+            bSuccess = isPathExists(_sPathName);
+        }
 #endif
 
-    listPaths.append(sAppDir);
+        if (!bSuccess) {
+            _sPathName = sPathName;
+            _sPathName = _sPathName.replace("$data", sApplicationDirPath);
 
-    listPaths.append(QStandardPaths::writableLocation(QStandardPaths::AppDataLocation));
+            bSuccess = isPathExists(_sPathName);
+        }
 
-    if (sAppDir.contains("/usr/local/bin")) {
-        const QString sPrefix = sAppDir.section("/usr/local/bin", 0, 0);
-        listPaths.append(sPrefix + QString("/usr/local/lib/%1").arg(sAppName));
-    }
+        if (!bSuccess) {
+            _sPathName = sPathName;
+            QString sAppData = QStandardPaths::writableLocation(QStandardPaths::AppDataLocation);
 
-    if (sAppDir.contains("/app/bin")) {
-        const QString sPrefix = sAppDir.section("/app/bin", 0, 0);
-        listPaths.append(sPrefix + QString("/app/lib/%1").arg(sAppName));
-    }
+            _sPathName = _sPathName.replace("$data", sAppData);
 
-    if (sAppDir.contains("/tmp/.mount_")) {
-        const QString sPrefix = sAppDir.section("/", 0, 2);
-        listPaths.append(sPrefix + QString("/app/lib/%1").arg(sAppName));
-        listPaths.append(sPrefix + QString("/usr/share/%1").arg(sAppName));
-    }
+            bSuccess = isPathExists(_sPathName);
+        }
 
-    for (quint8 i = 0; i < 10; ++i) {
-        QString sAltPath = qApp->property(QString("dataPathAlt%1").arg(i).toUtf8().data()).toString();
-        if (!sAltPath.isEmpty()) {
-            listPaths.append(sAltPath);
+        if (!bSuccess) {
+            if (sApplicationDirPath.contains("/usr/local/bin")) {
+                _sPathName = sPathName;
+                QString sPrefix = sApplicationDirPath.section("/usr/local/bin", 0, 0);
+                QString sPath = sPrefix + QString("/usr/local/lib/%1").arg(sApplicationName);
+
+                _sPathName = _sPathName.replace("$data", sPath);
+
+                bSuccess = isPathExists(_sPathName);
+            }
+        }
+
+        if (!bSuccess) {
+            if (sApplicationDirPath.contains("/app/bin")) {
+                _sPathName = sPathName;
+                QString sPrefix = sApplicationDirPath.section("/app/bin", 0, 0);
+                QString sPath = sPrefix + QString("/app/lib/%1").arg(sApplicationName);
+
+                _sPathName = _sPathName.replace("$data", sPath);
+
+                bSuccess = isPathExists(_sPathName);
+            }
+        }
+
+        if (!bSuccess) {
+            if (sApplicationDirPath.contains("/tmp/.mount_")) {
+                _sPathName = sPathName;
+                QString sPrefix = sApplicationDirPath.section("/", 0, 2);
+
+                QString sPath = sPrefix + QString("/app/lib/%1").arg(sApplicationName);
+
+                _sPathName = _sPathName.replace("$data", sPath);
+
+                bSuccess = isPathExists(_sPathName);
+            }
+        }
+
+        if (!bSuccess) {
+            for (qint32 nIndex = 0; nIndex < 10; nIndex++) {
+                _sPathName = sPathName;
+                QString sPath = qApp->property(QString("dataPathAlt%1").arg(nIndex).toUtf8().data()).toString();
+
+                _sPathName = _sPathName.replace("$data", sPath);
+
+                if (!sPath.isEmpty() && isPathExists(_sPathName)) {
+                    bSuccess = true;
+                    break;
+                }
+            }
+        }
+
+        if (!bSuccess) {
+            _sPathName = sPathName;
+            QString sPath = QString("/usr/local/lib/%1").arg(sApplicationName);
+
+            _sPathName = _sPathName.replace("$data", sPath);
+
+            bSuccess = isPathExists(_sPathName);
+        }
+
+        if (!bSuccess) {
+            _sPathName = sPathName;
+            QString sPath = QString("/usr/lib/%1").arg(sApplicationName);
+
+            _sPathName = _sPathName.replace("$data", sPath);
+
+            bSuccess = isPathExists(_sPathName);
+        }
+
+        if (bSuccess) {
+            sResult = _sPathName;
         }
     }
 
-    listPaths.append(QString("/usr/local/lib/%1").arg(sAppName));
-    listPaths.append(QString("/usr/lib/%1").arg(sAppName));
-    listPaths.append(QString("/usr/local/share/%1").arg(sAppName));
-    listPaths.append(QString("/usr/share/%1").arg(sAppName));
-
-    for (const QString &sPath : listPaths) {
-        if (sPath.isEmpty()) {
-            continue;
-        }
-
-        QString sTestPath = sPathName;
-        sTestPath.replace("$data", sPath);
-
-        if (isPathExists(sTestPath)) {
-            return sTestPath;
-        }
-    }
-
-    return sPathName;
+    return sResult;
 }
 
 bool XOptions::isPathExists(const QString &sPathName)
 {
-    return QFileInfo::exists(sPathName);
+    QFileInfo fileInfo(sPathName);
+
+    if (fileInfo.isDir()) {
+        return QDir(sPathName).exists();
+    } else {
+        return QFile(sPathName).exists();
+    }
 }
 
 QString XOptions::getTitle(const QString &sName, const QString &sVersion, bool bShowOS)
 {
-    QString sResult = QString("%1 v%2").arg(sName, sVersion);
+    QString sResult = QString("%1 v%2").arg(sName).arg(sVersion);
 
     if (bShowOS) {
 #if QT_VERSION >= QT_VERSION_CHECK(5, 4, 0)
@@ -2522,11 +2592,14 @@ QString XOptions::getTitle(const QString &sName, const QString &sVersion, bool b
     return sResult;
 }
 
-bool XOptions::isWritable() const {
+bool XOptions::isWritable()
+{
     bool bResult = false;
-    const QSettings *pSettings = nullptr;
+    QSettings *pSettings = nullptr;
 
-    if (isNative()) {
+    bool bIsNative = isNative();
+
+    if (bIsNative) {
         pSettings = new QSettings;
     } else {
         pSettings = new QSettings(qApp->applicationDirPath() + QDir::separator() + QString("%1").arg(m_sName), QSettings::IniFormat);
@@ -2607,15 +2680,15 @@ Qt::GlobalColor XOptions::hexToGlobalColor(const QString &sHex)
     }
 
     bool bOk;
-    const qint32 nR = sHex.mid(1, 2).toInt(&bOk, 16);
+    qint32 nR = sHex.mid(1, 2).toInt(&bOk, 16);
 
     if (!bOk) return Qt::color0;
 
-    const qint32 nG = sHex.mid(3, 2).toInt(&bOk, 16);
+    qint32 nG = sHex.mid(3, 2).toInt(&bOk, 16);
 
     if (!bOk) return Qt::color0;
 
-    const qint32 nB = sHex.mid(5, 2).toInt(&bOk, 16);
+    qint32 nB = sHex.mid(5, 2).toInt(&bOk, 16);
 
     if (!bOk) return Qt::color0;
 
@@ -2635,16 +2708,17 @@ Qt::GlobalColor XOptions::hexToGlobalColor(const QString &sHex)
 
     Qt::GlobalColor bestColor = Qt::black;
     qint32 nBestDist = 0x7FFFFFFF;
+    qint32 nCount = sizeof(table) / sizeof(ColorEntry);
 
-    for (auto i : table) {
-        qint32 nDR = nR - i.nR;
-        qint32 nDG = nG - i.nG;
-        qint32 nDB = nB - i.nB;
+    for (qint32 i = 0; i < nCount; i++) {
+        qint32 nDR = nR - table[i].nR;
+        qint32 nDG = nG - table[i].nG;
+        qint32 nDB = nB - table[i].nB;
         qint32 nDist = nDR * nDR + nDG * nDG + nDB * nDB;
 
         if (nDist < nBestDist) {
             nBestDist = nDist;
-            bestColor = i.color;
+            bestColor = table[i].color;
         }
     }
 
@@ -2658,8 +2732,8 @@ void XOptions::printConsole(const QString &sString, const QString &sColorText, c
         return;
     }
 
-    const Qt::GlobalColor colorText = hexToGlobalColor(sColorText);
-    const Qt::GlobalColor colorBackground = hexToGlobalColor(sColorBackground);
+    Qt::GlobalColor colorText = hexToGlobalColor(sColorText);
+    Qt::GlobalColor colorBackground = hexToGlobalColor(sColorBackground);
 
     bool bEscapeMode = false;
     bool bNativeMode = false;
@@ -2849,20 +2923,21 @@ void XOptions::printConsole(const QString &sString, const QString &sColorText, c
     }
 }
 
-void XOptions::printModel(const QAbstractItemModel *pModel)
+void XOptions::printModel(QAbstractItemModel *pModel)
 {
     if (pModel) {
-        const auto nNumberOfRows = pModel->rowCount();
-        const auto nNumberOfColumns = pModel->columnCount();
+        qint32 nNumberOfRows = pModel->rowCount();
+        qint32 nNumberOfColumns = pModel->columnCount();
 
-        QList<qsizetype> listColumnSymbolSize;
+        QList<qint32> listColumnSymbolSize;
         listColumnSymbolSize.reserve(nNumberOfColumns);
+        QChar charSpace(' ');
 
-        for (qsizetype i = 0; i < nNumberOfColumns; i++) {
-            qsizetype nSymbolSize = 0;
+        for (qint32 i = 0; i < nNumberOfColumns; i++) {
+            qint32 nSymbolSize = 0;
             nSymbolSize = qMax(nSymbolSize, pModel->headerData(i, Qt::Horizontal).toString().length());
 
-            for (qsizetype j = 0; j < nNumberOfRows; j++) {
+            for (qint32 j = 0; j < nNumberOfRows; j++) {
                 QModelIndex index = pModel->index(j, i);
                 QString sData = pModel->data(index, Qt::DisplayRole).toString();
 
@@ -2875,10 +2950,10 @@ void XOptions::printModel(const QAbstractItemModel *pModel)
         QString sTableLine;
 
         {
-            for (qsizetype i = 0; i < nNumberOfColumns; i++) {
+            for (qint32 i = 0; i < nNumberOfColumns; i++) {
                 sTableLine += "+";
 
-                for (qsizetype j = 0; j < listColumnSymbolSize[i]; j++) {
+                for (int j = 0; j < listColumnSymbolSize[i]; j++) {
                     sTableLine += "-";
                 }
             }
@@ -2889,13 +2964,13 @@ void XOptions::printModel(const QAbstractItemModel *pModel)
         {
             printConsole(sTableLine);
 
-            for (qsizetype i = 0; i < nNumberOfColumns; i++) {
+            for (qint32 i = 0; i < nNumberOfColumns; i++) {
                 printConsole("|");
                 QString sString = pModel->headerData(i, Qt::Horizontal, Qt::DisplayRole).toString();
-                const auto nColumnSize = listColumnSymbolSize[i];
+                qint32 nColumnSize = listColumnSymbolSize[i];
                 QString sEmpty = QString(nColumnSize - sString.size(), ' ');
 
-                auto flag = static_cast<Qt::AlignmentFlag>(pModel->headerData(i, Qt::Horizontal, Qt::TextAlignmentRole).toInt());
+                Qt::AlignmentFlag flag = static_cast<Qt::AlignmentFlag>(pModel->headerData(i, Qt::Horizontal, Qt::TextAlignmentRole).toInt());
 
                 if (flag & Qt::AlignRight) {
                     sString.prepend(sEmpty);
@@ -2914,17 +2989,17 @@ void XOptions::printModel(const QAbstractItemModel *pModel)
         }
 
         {
-            for (qsizetype i = 0; i < nNumberOfRows; i++) {
-                for (qsizetype j = 0; j < nNumberOfColumns; j++) {
+            for (qint32 i = 0; i < nNumberOfRows; i++) {
+                for (qint32 j = 0; j < nNumberOfColumns; j++) {
                     printConsole("|");
 
                     QModelIndex index = pModel->index(i, j);
                     QString sString = pModel->data(index, Qt::DisplayRole).toString();
 
-                    const auto nColumnSize = listColumnSymbolSize[j];
+                    qint32 nColumnSize = listColumnSymbolSize[j];
                     QString sEmpty = QString(nColumnSize - sString.size(), ' ');
 
-                    auto flag = static_cast<Qt::AlignmentFlag>(pModel->data(index, Qt::TextAlignmentRole).toInt());
+                    Qt::AlignmentFlag flag = static_cast<Qt::AlignmentFlag>(pModel->data(index, Qt::TextAlignmentRole).toInt());
 
                     if (flag & Qt::AlignRight) {
                         sString.prepend(sEmpty);
@@ -2956,9 +3031,9 @@ QMenu *XOptions::createCodePagesMenu(QWidget *pParent, bool bAll)
 
         QList<QString> listCodePages = getCodePages(bAll);
 
-        auto nNumberOfRecords = listCodePages.count();
+        qint32 nNumberOfRecords = listCodePages.count();
 
-        for (qsizetype i = 0; i < nNumberOfRecords; i++) {
+        for (qint32 i = 0; i < nNumberOfRecords; i++) {
             QAction *pAction = new QAction(listCodePages.at(i), m_pCodePagesMenu);
             pAction->setData(listCodePages.at(i));
 
@@ -3075,74 +3150,56 @@ bool XOptions::checkContext(const QString &sApplicationName, const QString &sTyp
 }
 #endif
 
-void XOptions::setMaxRecentFilesCount(const qint32 nValue)
+void XOptions::setMaxRecentFilesCount(qint32 nValue)
 {
     m_nMaxRecentFilesCount = nValue;
 }
 
-qint32 XOptions::getMaxRecentFilesCount() const
+qint32 XOptions::getMaxRecentFilesCount()
 {
     return m_nMaxRecentFilesCount;
 }
 
-QString XOptions::getBundleIdToString(const BUNDLE bundle)
+QString XOptions::getBundleIdToString(BUNDLE bundle)
 {
     QString sResult;
 
-    switch (bundle) {
-        case BUNDLE_LINUX_ARCH_X64:
-            sResult = "Linux Arch x64";
-            break;
-        case BUNDLE_WINDOWS_QT6_X64:
-            sResult = "Windows Qt6 x64";
-            break;
-        case BUNDLE_LINUX_APPIMAGE_X64:
-            sResult = "Linux AppImage x64";
-            break;
-        case BUNDLE_LINUX_DEBIAN_X64:
-            sResult = "Linux Debian x64";
-            break;
-        case BUNDLE_LINUX_DEBIAN_X86:
-            sResult = "Linux Debian x86";
-            break;
-        case BUNDLE_LINUX_DEBIAN_ARM64:
-            sResult = "Linux Debian ARM64";
-            break;
-        case BUNDLE_LINUX_UBUNTU_X64:
-            sResult = "Linux Ubuntu x64";
-            break;
-        case BUNDLE_LINUX_PARROT_X64:
-            sResult = "Linux Parrot x64";
-            break;
-        case BUNDLE_LINUX_KALI_X64:
-            sResult = "Linux Kali x64";
-            break;
-        case BUNDLE_WINDOWS_XP_X86:
-            sResult = "Windows XP x86";
-            break;
-        case BUNDLE_WINDOWS_X86:
-            sResult = "Windows x86";
-            break;
-        case BUNDLE_WINDOWS_X64:
-            sResult = "Windows x64";
-            break;
-        case BUNDLE_WINDOWS_ARM64:
-            sResult = "Windows ARM64";
-            break;
-        case BUNDLE_MACOS_X64:
-            sResult = "MacOS x64";
-            break;
-        case BUNDLE_MACOS_QT6_ARM64:
-            sResult = "MacOS Qt6 ARM64";
-            break;
-        case BUNDLE_FEDORA_X64:
-            sResult = "Fedora x64";
-            break;
-        case BUNDLE_FREEBSD_X64:
-            sResult = "FreeBSD x64";
-            break;
-        default:
-            sResult = tr("Unknown");
+    if (bundle == BUNDLE_LINUX_ARCH_X64) {
+        sResult = "Linux Arch x64";
+    } else if (bundle == BUNDLE_WINDOWS_QT6_X64) {
+        sResult = "Windows Qt6 x64";
+    } else if (bundle == BUNDLE_LINUX_APPIMAGE_X64) {
+        sResult = "Linux AppImage x64";
+    } else if (bundle == BUNDLE_LINUX_DEBIAN_X64) {
+        sResult = "Linux Debian x64";
+    } else if (bundle == BUNDLE_LINUX_DEBIAN_X86) {
+        sResult = "Linux Debian x86";
+    } else if (bundle == BUNDLE_LINUX_DEBIAN_ARM64) {
+        sResult = "Linux Debian ARM64";
+    } else if (bundle == BUNDLE_LINUX_UBUNTU_X64) {
+        sResult = "Linux Ubuntu x64";
+    } else if (bundle == BUNDLE_LINUX_PARROT_X64) {
+        sResult = "Linux Parrot x64";
+    } else if (bundle == BUNDLE_LINUX_KALI_X64) {
+        sResult = "Linux Kali x64";
+    } else if (bundle == BUNDLE_WINDOWS_XP_X86) {
+        sResult = "Windows XP x86";
+    } else if (bundle == BUNDLE_WINDOWS_X86) {
+        sResult = "Windows x86";
+    } else if (bundle == BUNDLE_WINDOWS_X64) {
+        sResult = "Windows x64";
+    } else if (bundle == BUNDLE_WINDOWS_ARM64) {
+        sResult = "Windows ARM64";
+    } else if (bundle == BUNDLE_MACOS_X64) {
+        sResult = "MacOS x64";
+    } else if (bundle == BUNDLE_MACOS_QT6_ARM64) {
+        sResult = "MacOS Qt6 ARM64";
+    } else if (bundle == BUNDLE_FEDORA_X64) {
+        sResult = "Fedora x64";
+    } else if (bundle == BUNDLE_FREEBSD_X64) {
+        sResult = "FreeBSD x64";
+    } else {
+        sResult = tr("Unknown");
     }
 
     return sResult;
@@ -3523,8 +3580,9 @@ XOptions::BUNDLE XOptions::getBundle()
 #if QT_VERSION == QT_VERSION_CHECK(5, 2, 1)
     result = BUNDLE_LINUX_APPIMAGE_X64;
 #elif QT_VERSION >= QT_VERSION_CHECK(5, 4, 0)
+    QString sProductType = QSysInfo::productType();
 
-    if (const QString sProductType = QSysInfo::productType(); sProductType == "ubuntu") {
+    if (sProductType == "ubuntu") {
         result = BUNDLE_LINUX_UBUNTU_X64;
     }
 #endif

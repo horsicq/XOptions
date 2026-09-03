@@ -540,11 +540,11 @@ public:
     void resetToDefault();
     void setValueIDs(const QList<ID> &listValueIDs);
     QList<ID> getValueIDs() const;
-    void setDefaultValues(const QMap<ID, QVariant> &mapDefaultValues);
-    void addID(ID id, const QVariant& varDefaultValue = QVariant());
+    void setDefaultValues(QMap<ID, QVariant> mapDefaultValues);
+    void addID(ID id, QVariant varDefaultValue = QVariant());
     void removeID(ID id);
-    static GROUPID getGroupID(ID id);
-    bool isIDPresent(ID id) const;
+    GROUPID getGroupID(ID id);
+    bool isIDPresent(ID id);
     bool isGroupIDPresent(GROUPID groupID);
     static bool isNative();
     static bool isPortable();
@@ -552,11 +552,11 @@ public:
     void setName(const QString &sValue);
     void load();
     void save();
-    QVariant getValue(ID id) const;
-    void setValue(ID id, const QVariant& varValue);
+    QVariant getValue(ID id);
+    void setValue(ID id, QVariant varValue);
     void clearValue(ID id);
-    bool isValuePresent(ID id) const;
-    QVariant getDefaultValue(ID id) const;
+    bool isValuePresent(ID id);
+    QVariant getDefaultValue(ID id);
 
     // Named UI size/state records (window geometry, splitter state, ...), all
     // serialized into the single ID_VIEW_SIZES string so an app can persist
@@ -564,38 +564,38 @@ public:
     // (e.g. QWidget::saveGeometry()/QSplitter::saveState()). Requires the app
     // to addID(ID_VIEW_SIZES, "").
     void setSizeRecord(const QString &sName, const QByteArray &baValue);
-    QByteArray getSizeRecord(const QString &sName) const;
+    QByteArray getSizeRecord(const QString &sName);
     static QString idToString(ID id);
     static QCommandLineOption getCommandLineOption(CONSOLE_OPTION_ID nId);
-    QString getLastDirectory() const;
+    QString getLastDirectory();
     void setLastDirectory(const QString &sPathName);
     void setLastFileName(const QString &sFileName);
-    QList<QString> getRecentFiles() const;
-    QString getScanEngine() const;
-    QString getInfoPath() const;
-    QString getRootPath() const;
-    QString getDataPath() const;
-    QString getJson() const;
-    QString getAuthUser() const;
-    QString getAuthToken() const;
-    QString getVirusTotalApiKey() const;
-    bool isSaveBackup() const;
-    bool isSaveLastDirectory() const;
-    bool isSaveRecentFiles() const;
-    bool isRestartNeeded() const;
-    bool isStayOnTop() const;  // TODO: remove
-    bool isScanAfterOpen() const;
-    bool isSingleApplication() const;
-    bool isShowLogo() const;  // TODO: remove
-    QString getSearchSignaturesPath() const;
-    QString getStructsPath() const;
+    QList<QString> getRecentFiles();
+    QString getScanEngine();
+    QString getInfoPath();
+    QString getRootPath();
+    QString getDataPath();
+    QString getJson();
+    QString getAuthUser();
+    QString getAuthToken();
+    QString getVirusTotalApiKey();
+    bool isSaveBackup();
+    bool isSaveLastDirectory();
+    bool isSaveRecentFiles();
+    bool isRestartNeeded();
+    bool isStayOnTop();  // TODO: remove
+    bool isScanAfterOpen();
+    bool isSingleApplication();
+    bool isShowLogo();  // TODO: remove
+    QString getSearchSignaturesPath();
+    QString getStructsPath();
     static QList<QString> getAllFilesFromDirectory(const QString &sDirectory, const QString &sExtension);
     static bool checkNative(const QString &sIniFileName);
-    static QString getApplicationDataPath();
+    QString getApplicationDataPath();
     static QString convertPathName(const QString &sPathName);
     static bool isPathExists(const QString &sPathName);
     static QString getTitle(const QString &sName, const QString &sVersion, bool bShowOS = true);
-    bool isWritable() const;
+    bool isWritable();
     static void adjustApplicationInitAttributes();
 #ifdef QT_GUI_LIB
     void setCheckBox(QCheckBox *pCheckBox, ID id);
@@ -690,7 +690,7 @@ public:
     void removeFromUserPathVariable(const QString &targetPath);
 #endif
     void setMaxRecentFilesCount(qint32 nValue);
-    qint32 getMaxRecentFilesCount() const;
+    qint32 getMaxRecentFilesCount();
     static BUNDLE getBundle();
     static QString getBundleIdToString(BUNDLE bundle);
     static void registerCodecs();
@@ -699,7 +699,7 @@ public:
     static void printConsole(const QString &sString, const QString &colorText = "", const QString &colorBackground = "");
     static void setNoColor(bool bNoColor);
     static bool isNoColor();
-    static void printModel(const QAbstractItemModel *pModel);
+    static void printModel(QAbstractItemModel *pModel);
 
 public slots:
     void clearRecentFiles();
