@@ -31,7 +31,6 @@ static const XOptions::CONSOLE_OPTION g_consoleOptions[] = {
     {XOptions::CONSOLE_OPTION_ID_VERBOSE, "b", "verbose", "Show verbose output with detailed information"},
     {XOptions::CONSOLE_OPTION_ID_AGGRESSIVESCAN, "g", "aggressivecscan", "Enable aggressive scanning mode"},
     {XOptions::CONSOLE_OPTION_ID_ALLTYPES, "a", "alltypes", "Scan all file types"},
-    {XOptions::CONSOLE_OPTION_ID_FORMAT, "", "format", "Format the output result"},
     {XOptions::CONSOLE_OPTION_ID_PROFILING, "", "profiling", "Profile signatures during scan"},
     {XOptions::CONSOLE_OPTION_ID_MESSAGES, "M", "messages", "Display scan messages and warnings"},
     {XOptions::CONSOLE_OPTION_ID_HIDEUNKNOWN, "U", "hideunknown", "Hide unknown file types from results"},
@@ -201,6 +200,7 @@ XOptions::GROUPID XOptions::getGroupID(ID id)
         case ID_SCAN_FLAG_AGGRESSIVE:
         case ID_SCAN_FLAG_VERBOSE:
         case ID_SCAN_FLAG_ALLTYPES:
+        case ID_SCAN_FLAG_FIRSTWRAPPERONLY:
         case ID_SCAN_FORMATRESULT:
         case ID_SCAN_LOG_PROFILING:
         case ID_SCAN_HIGHLIGHT:
@@ -402,7 +402,9 @@ bool XOptions::isIDPresent(ID id)
 
 bool XOptions::isGroupIDPresent(GROUPID groupID)
 {
-    for (const ID id : qAsConst(m_listValueIDs)) {
+    const QList<ID> &listValueIDs = m_listValueIDs;
+
+    for (const ID id : listValueIDs) {
         if (getGroupID(id) == groupID) {
             return true;
         }
@@ -778,6 +780,7 @@ QString XOptions::idToString(ID id)
         case ID_SCAN_FLAG_AGGRESSIVE: sResult = QString("Scan/Flag/Aggressive"); break;
         case ID_SCAN_FLAG_VERBOSE: sResult = QString("Scan/Flag/Verbose"); break;
         case ID_SCAN_FLAG_ALLTYPES: sResult = QString("Scan/Flag/AllTypes"); break;
+        case ID_SCAN_FLAG_FIRSTWRAPPERONLY: sResult = QString("Scan/Flag/FirstWrapperOnly"); break;
         case ID_SCAN_USECACHE: sResult = QString("Scan/UseCache"); break;
         case ID_SCAN_FORMATRESULT: sResult = QString("Scan/FormatResult"); break;
         case ID_SCAN_LOG_PROFILING: sResult = QString("Scan/Log/Profiling"); break;
@@ -1160,8 +1163,18 @@ void XOptions::_adjustStayOnTop(QWidget *pWidget, bool bState)
         wf &= ~(Qt::WindowStaysOnTopHint);
     }
 
+    // setWindowFlags() hides a visible window, so re-show it; a window that was
+    // still hidden must stay hidden: showing a dialog here, right before its
+    // exec(), registers it as non-modal (Qt only enters a window into the modal
+    // list when it becomes visible), so it neither blocks its parent nor shows
+    // up in QApplication::activeModalWidget().
+    bool bWasVisible = pWidget->isVisible();
+
     pWidget->setWindowFlags(wf);
-    pWidget->show();
+
+    if (bWasVisible) {
+        pWidget->show();
+    }
 }
 #endif
 #ifdef QT_GUI_LIB
@@ -1472,7 +1485,11 @@ void XOptions::setComboBox(QComboBox *pComboBox, XOptions::ID id)
             QString sLocale = locale.nativeLanguageName();
 
             if (sRecord.count("_") == 2) {
+#if QT_VERSION >= QT_VERSION_CHECK(6, 2, 0)
+                sLocale += QString("(%1)").arg(locale.nativeTerritoryName());
+#else
                 sLocale += QString("(%1)").arg(locale.nativeCountryName());
+#endif
             }
 
             if (!sLocale.isEmpty()) {
@@ -1713,7 +1730,8 @@ QIcon XOptions::createIcon(quint32 codepoint, qint32 nWidth, qint32 nHeight)
         text = QString(QChar(codepoint));
     } else {
         // Handle surrogate pairs for codepoints > U+FFFF
-        text = QString::fromUcs4(&codepoint, 1);
+        const char32_t nUcs4 = (char32_t)codepoint;
+        text = QString::fromUcs4(&nUcs4, 1);
     }
 
     painter.drawText(pixmap.rect(), Qt::AlignCenter, text);

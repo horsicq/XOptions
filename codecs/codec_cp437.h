@@ -20,7 +20,24 @@
  */
 #ifndef CODEC_CP437_H
 #define CODEC_CP437_H
+#include <QByteArray>
 #include <QObject>
+#include <QString>
+
+// The IBM437 -> Unicode mapping, available in every build.  The QTextCodec
+// below exists only where QTextCodec does (Qt 5, or Qt 6 with Core5Compat),
+// but format parsers need the mapping regardless: ZIP stores a member name
+// that is not flagged UTF-8 in CP437.
+quint16 codec_cp437_toUnicode(quint8 nByte);
+
+// Decode a whole buffer.
+//
+// bStrictAscii keeps 0x00-0x7F exactly as they are, which is what a stored
+// file name needs.  The table deliberately remaps 0x1A, 0x1C and 0x7F the way
+// a DOS terminal displayed them, and rewriting those bytes inside a name would
+// corrupt it.
+QString codec_cp437_decode(const QByteArray &baData, bool bStrictAscii = true);
+
 #if (QT_VERSION_MAJOR < 6) || defined(QT_CORE5COMPAT_LIB)
 #include <QTextCodec>
 

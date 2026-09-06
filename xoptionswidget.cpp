@@ -38,7 +38,8 @@ XOptionsWidget::XOptionsWidget(QWidget *pParent) : XShortcutsWidget(pParent), ui
     ui->pushButtonDefault->setToolTip(tr("Restore every option to its default value"));
     ui->pushButtonOK->setDefault(true);
 
-    connect(this, SIGNAL(saveSignal()), this, SLOT(save()), Qt::DirectConnection);
+    // save() is called explicitly from on_pushButtonOK_clicked() AFTER saveSignal(), so the
+    // addPage() widgets store their values before save() writes the options file.
     connect(this, SIGNAL(reloadSignal()), this, SLOT(reload()), Qt::DirectConnection);
 
 #ifdef Q_OS_WIN
@@ -516,7 +517,10 @@ void XOptionsWidget::on_pushButtonDefault_clicked()
 
 void XOptionsWidget::on_pushButtonOK_clicked()
 {
+    // Let every addPage() widget store its values into XOptions first; save() then stores this
+    // widget's own pages and writes the file, so the INI on disk is never stale until exit.
     emit saveSignal();
+    save();
 
     if (m_pOptions && m_pOptions->isRestartNeeded()) {
         QMessageBox::information(this, tr("Information"), tr("Please restart the application"));
