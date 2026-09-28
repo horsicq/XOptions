@@ -19,6 +19,7 @@
  * SOFTWARE.
  */
 #include "xcolorstring.h"
+#include <cstdio>
 
 #ifdef QT_GUI_LIB
 #include <QColor>
@@ -35,60 +36,25 @@ XColorString::~XColorString()
 
 XColorString::CONSOLE_STATE XColorString::initConsole()
 {
+    return initConsole(XX_TERMINAL_STDOUT);
+}
+
+XColorString::CONSOLE_STATE XColorString::initConsole(xx_terminal_stream_t stream)
+{
     CONSOLE_STATE state = {};
-    state.bIsValid = false;
-    state.bIsEscapeMode = false;
-    state.bIsWinNativeMode = false;
-
-#ifdef Q_OS_WIN
-    HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
-
-    if (hConsole && hConsole != INVALID_HANDLE_VALUE) {
-        DWORD dwMode = 0;
-
-        if (GetConsoleMode(hConsole, &dwMode)) {
-            state.nOriginalMode = (quint32)dwMode;
-            state.bIsValid = true;
-
-#ifndef _USING_V110_SDK71_
-#ifndef ENABLE_VIRTUAL_TERMINAL_PROCESSING
-#define ENABLE_VIRTUAL_TERMINAL_PROCESSING 0x0004
-#endif
-            DWORD dwNewMode = dwMode | ENABLE_VIRTUAL_TERMINAL_PROCESSING;
-
-            if (SetConsoleMode(hConsole, dwNewMode)) {
-                state.nCurrentMode = (quint32)dwNewMode;
-                state.bIsEscapeMode = true;
-            } else {
-                state.nCurrentMode = state.nOriginalMode;
-                state.bIsWinNativeMode = true;
-            }
-#else
-            state.nCurrentMode = state.nOriginalMode;
-            state.bIsWinNativeMode = true;
-#endif
-        }
-    }
-#else
-    state.bIsEscapeMode = true;
-#endif
-
+    state.terminalState = xx_terminal_init(stream);
+    state.nOriginalMode = state.terminalState.original_mode;
+    state.nCurrentMode = state.terminalState.current_mode;
+    state.bIsValid = state.terminalState.valid;
+    state.bIsEscapeMode = state.terminalState.type == XX_TERMINAL_TYPE_ANSI;
+    state.bIsWinNativeMode = state.terminalState.type == XX_TERMINAL_TYPE_WINDOWS;
     return state;
 }
 
 void XColorString::finishConsole(const CONSOLE_STATE &consoleState)
 {
-#ifdef Q_OS_WIN
-    if (consoleState.bIsValid) {
-        HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
-
-        if (hConsole && hConsole != INVALID_HANDLE_VALUE) {
-            SetConsoleMode(hConsole, (DWORD)consoleState.nOriginalMode);
-        }
-    }
-#else
-    Q_UNUSED(consoleState)
-#endif
+    std::fflush(consoleState.terminalState.stream == XX_TERMINAL_STDERR ? stderr : stdout);
+    xx_terminal_finish(&consoleState.terminalState);
 }
 
 void XColorString::addPart(const QString &sText, const QString &sColorMain, const QString &sColorBackground)
@@ -179,83 +145,55 @@ void XColorString::printConsole(CONSOLE_STATE *pConsoleState)
         return;
     }
 
+    const xx_terminal_state *pTerminalState = &pConsoleState->terminalState;
+    // The C backend writes directly on Windows. Keep earlier CRT output in order.
+    std::fflush(pTerminalState->stream == XX_TERMINAL_STDERR ? stderr : stdout);
+    bool bColorOutput = xx_is_color_output_enabled();
     qint32 nNumberOfParts = m_vecParts.count();
 
     for (qint32 i = 0; i < nNumberOfParts; i++) {
-        QString sColorMain = m_vecParts.at(i).colorRecord.sColorMain;
-        QString sColorBackground = m_vecParts.at(i).colorRecord.sColorBackground;
+        const PART &part = m_vecParts.at(i);
+        RGB_COLOR colorMain = parseColor(part.colorRecord.sColorMain);
+        RGB_COLOR colorBg = parseColor(part.colorRecord.sColorBackground);
+        bool bHasColor = bColorOutput && (colorMain.bValid || colorBg.bValid);
+        bool bEscapeColor = bHasColor && pConsoleState->bIsEscapeMode;
+        bool bNativeColor = false;
+        uint16_t nOriginalAttributes = 0;
 
-        if (pConsoleState->bIsEscapeMode) {
-            if (!sColorMain.isEmpty() || !sColorBackground.isEmpty()) {
-                qint32 nFg = 39;
-                qint32 nBg = 49;
-
-                RGB_COLOR colorMain = parseColor(sColorMain);
-                if (colorMain.bValid) {
-                    nFg = colorToAnsiCode(colorMain, false);
-                }
-
-                RGB_COLOR colorBg = parseColor(sColorBackground);
-                if (colorBg.bValid) {
-                    nBg = colorToAnsiCode(colorBg, true);
-                }
-
-                printf("\033[%d;%dm", nFg, nBg);
+        if (bEscapeColor) {
+            QByteArray baEscape = QString("\033[%1;%2m").arg(colorToAnsiCode(colorMain, false)).arg(colorToAnsiCode(colorBg, true)).toLatin1();
+            xx_terminal_write(pTerminalState, baEscape.constData(), (size_t)baEscape.size());
+        } else if (bHasColor && pConsoleState->bIsWinNativeMode && xx_terminal_get_attributes(pTerminalState, &nOriginalAttributes)) {
+            quint16 nAttributes = nOriginalAttributes;
+            if (colorMain.bValid) {
+                nAttributes = (nAttributes & ~0x000F) | colorToConsoleAttribute(colorMain, false);
             }
-        } else if (pConsoleState->bIsWinNativeMode) {
-#ifdef Q_OS_WIN
-            HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
-
-            if (hConsole && hConsole != INVALID_HANDLE_VALUE) {
-                WORD wOldAttribute = 0;
-                CONSOLE_SCREEN_BUFFER_INFO csbi = {};
-
-                if (GetConsoleScreenBufferInfo(hConsole, &csbi)) {
-                    wOldAttribute = csbi.wAttributes;
-                }
-
-                WORD wAttribute = 0;
-                RGB_COLOR colorMain = parseColor(sColorMain);
-
-                if (colorMain.bValid) {
-                    if (colorMain.nRed > 127) wAttribute |= FOREGROUND_RED;
-                    if (colorMain.nGreen > 127) wAttribute |= FOREGROUND_GREEN;
-                    if (colorMain.nBlue > 127) wAttribute |= FOREGROUND_BLUE;
-                    if ((colorMain.nRed + colorMain.nGreen + colorMain.nBlue) / 3 > 192) wAttribute |= FOREGROUND_INTENSITY;
-                }
-
-                RGB_COLOR colorBg = parseColor(sColorBackground);
-
-                if (colorBg.bValid) {
-                    if (colorBg.nRed > 127) wAttribute |= BACKGROUND_RED;
-                    if (colorBg.nGreen > 127) wAttribute |= BACKGROUND_GREEN;
-                    if (colorBg.nBlue > 127) wAttribute |= BACKGROUND_BLUE;
-                    if ((colorBg.nRed + colorBg.nGreen + colorBg.nBlue) / 3 > 192) wAttribute |= BACKGROUND_INTENSITY;
-                }
-
-                bool bChanged = false;
-
-                if (wAttribute || colorMain.bValid || colorBg.bValid) {
-                    SetConsoleTextAttribute(hConsole, wAttribute ? wAttribute : wOldAttribute);
-                    bChanged = true;
-                }
-
-                printf("%s", m_vecParts.at(i).sText.toUtf8().data());
-
-                if (bChanged) {
-                    SetConsoleTextAttribute(hConsole, wOldAttribute);
-                }
-            } else {
-                // Fallback if console handle is invalid
-                printf("%s", m_vecParts.at(i).sText.toUtf8().data());
+            if (colorBg.bValid) {
+                nAttributes = (nAttributes & ~0x00F0) | colorToConsoleAttribute(colorBg, true);
             }
-#else
-            printf("%s", m_vecParts.at(i).sText.toUtf8().data());
-#endif
-        } else {
-            printf("%s", m_vecParts.at(i).sText.toUtf8().data());
+            bNativeColor = xx_terminal_set_attributes(pTerminalState, nAttributes);
+        }
+
+        QByteArray baText = part.sText.toUtf8();
+        xx_terminal_write(pTerminalState, baText.constData(), (size_t)baText.size());
+
+        if (bEscapeColor) {
+            xx_terminal_print(pTerminalState, "\033[0m");
+        } else if (bNativeColor) {
+            xx_terminal_set_attributes(pTerminalState, nOriginalAttributes);
         }
     }
+    xx_terminal_flush(pTerminalState);
+}
+
+quint16 XColorString::colorToConsoleAttribute(const RGB_COLOR &color, bool bBackground)
+{
+    quint16 nAttribute = 0;
+    if (color.nRed > 127) nAttribute |= 0x0004;
+    if (color.nGreen > 127) nAttribute |= 0x0002;
+    if (color.nBlue > 127) nAttribute |= 0x0001;
+    if ((color.nRed + color.nGreen + color.nBlue) / 3 > 192) nAttribute |= 0x0008;
+    return bBackground ? nAttribute << 4 : nAttribute;
 }
 
 #ifdef QT_GUI_LIB

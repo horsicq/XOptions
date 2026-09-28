@@ -26,15 +26,11 @@
 #include <QString>
 #include <QVariant>
 #include <QVector>
+#include "xxfclib/terminal/xx_terminal.h"
 
 #ifdef QT_GUI_LIB
 #include <QPainter>
 #include <QTextOption>
-#endif
-
-#ifdef Q_OS_WIN
-#include <Windows.h>
-#include <WinCon.h>
 #endif
 
 // Forward declarations for standalone usage
@@ -75,12 +71,14 @@ public:
         bool bIsValid;
         bool bIsEscapeMode;
         bool bIsWinNativeMode;
+        xx_terminal_state terminalState;
     };
 
     XColorString();
     virtual ~XColorString();
 
     static CONSOLE_STATE initConsole();
+    static CONSOLE_STATE initConsole(xx_terminal_stream_t stream);
     static void finishConsole(const CONSOLE_STATE &consoleState);
 
     void addPart(const QString &sText, const QString &sColorMain = "", const QString &sColorBackground = "");
@@ -101,6 +99,7 @@ public:
     static RGB_COLOR parseColor(const QString &sColor);
 
 private:
+    static quint16 colorToConsoleAttribute(const RGB_COLOR &color, bool bBackground);
     QVector<PART> m_vecParts;
     QList<RULE> m_lstRules;
 };
