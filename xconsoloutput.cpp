@@ -19,19 +19,7 @@
  * SOFTWARE.
  */
 #include "xconsoloutput.h"
-#include "xcolorstring.h"
-
-static void printMessage(xx_terminal_stream_t stream, const QString &sLabel, const QString &sColor, const QString &sMessage)
-{
-    XColorString::CONSOLE_STATE state = XColorString::initConsole(stream);
-    XColorString colorString;
-    colorString.addPart(sLabel, sColor);
-    colorString.addSpace();
-    colorString.addPart(sMessage);
-    colorString.addPart("\n");
-    colorString.printConsole(&state);
-    XColorString::finishConsole(state);
-}
+#include <cstdio>
 
 XConsoleOutput::XConsoleOutput(QObject *pParent) : QObject(pParent)
 {
@@ -39,15 +27,15 @@ XConsoleOutput::XConsoleOutput(QObject *pParent) : QObject(pParent)
 
 void XConsoleOutput::errorMessage(const QString &sMessage)
 {
-    printMessage(XX_TERMINAL_STDERR, "[ERROR]", "red", sMessage);
+    fprintf(stderr, "[ERROR] %s\n", sMessage.toUtf8().data());
 }
 
 void XConsoleOutput::warningMessage(const QString &sMessage)
 {
-    printMessage(XX_TERMINAL_STDOUT, "[WARNING]", "yellow", sMessage);
+    fprintf(stdout, "[WARNING] %s\n", sMessage.toUtf8().data());
 }
 
 void XConsoleOutput::infoMessage(const QString &sMessage)
 {
-    printMessage(XX_TERMINAL_STDOUT, "[INFO]", "green", sMessage);
+    fprintf(stdout, "[INFO] %s\n", sMessage.toUtf8().data());
 }

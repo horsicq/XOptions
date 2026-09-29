@@ -30,7 +30,6 @@
 #include <QAbstractItemModel>
 #include <QRegularExpression>
 #include <QRegularExpressionMatch>
-#include "xxfclib/settings/xx_settings.h"
 #ifdef QT_GUI_LIB
 #include <QApplication>
 #include <QCheckBox>
@@ -537,13 +536,6 @@ public:
     };
 
     explicit XOptions(QObject *pParent = nullptr);
-    ~XOptions() override;
-
-    // The global pointer starts null: defaults work, persistence is disabled.
-    // Attach a caller-owned store, or explicitly initialize an XOptions-owned store.
-    static void setSettings(xx_settings *pSettings);
-    static xx_settings *getSettings();
-    bool initializeSettings();
 
     void resetToDefault();
     void setValueIDs(const QList<ID> &listValueIDs);
@@ -718,9 +710,6 @@ private slots:
 
 private:
     void _updateRecentFilesMenu();
-    void _loadSettings();
-    QVariant _readSettingsValue(const QString &sKey, const QVariant &varDefault);
-    bool _storeSettingsValue(const QString &sKey, const QVariant &varValue);
     static QMap<QString, QString> _parseSizeRecords(const QString &sValue);
     static QString _serializeSizeRecords(const QMap<QString, QString> &mapRecords);
 
@@ -733,7 +722,6 @@ signals:
 private:
     static const qint32 N_MAX_RECENT_FILES_COUNT = 25;
     QString m_sName;
-    xx_settings *m_pOwnedSettings = nullptr;
     QList<ID> m_listValueIDs;
     QMap<ID, QVariant> m_mapValues;
     QMap<ID, QVariant> m_mapDefaultValues;

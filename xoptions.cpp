@@ -464,7 +464,21 @@ void XOptions::setName(const QString &sValue)
 
 void XOptions::load()
 {
-    _loadSettings();
+    QSettings *pSettings = nullptr;
+
+    bool bIsNative = isNative();
+
+    if (bIsNative) {
+        pSettings = new QSettings;
+    } else {
+        pSettings = new QSettings(qApp->applicationDirPath() + QDir::separator() + QString("%1").arg(m_sName), QSettings::IniFormat);
+    }
+
+#ifdef QT_DEBUG
+    if (pSettings) {
+        qDebug("XOptions::load(): Loaded file from %s", pSettings->fileName().toUtf8().data());
+    }
+#endif
 
     qint32 nNumberOfIDs = m_listValueIDs.count();
 
@@ -527,7 +541,7 @@ void XOptions::load()
             }
         }
 
-        QVariant variant = _readSettingsValue(sName, varDefault);
+        QVariant variant = pSettings->value(sName, varDefault);
 
         if (!variant.toString().contains("$data")) {
             if ((id == ID_SCAN_DIE_DATABASE_MAIN_PATH) || (id == ID_SCAN_DIE_DATABASE_CUSTOM_PATH) || (id == ID_SCAN_YARA_DATABASE_PATH) ||
@@ -563,28 +577,42 @@ void XOptions::load()
     }
 #endif
 
+    delete pSettings;
 }
 
 void XOptions::save()
 {
-    xx_settings *pSettings = getSettings();
-    if (!pSettings) return;
-    const bool bClearLastDirectory = isIDPresent(ID_FILE_SAVELASTDIRECTORY) && !m_mapValues.value(ID_FILE_SAVELASTDIRECTORY).toBool();
-    const bool bClearRecentFiles = isIDPresent(ID_FILE_SAVERECENTFILES) && !m_mapValues.value(ID_FILE_SAVERECENTFILES).toBool();
-    if (bClearRecentFiles) clearRecentFiles();
+    QSettings *pSettings = nullptr;
+
+    bool bIsNative = isNative();
+
+    if (bIsNative) {
+        pSettings = new QSettings;
+    } else {
+        pSettings = new QSettings(qApp->applicationDirPath() + QDir::separator() + QString("%1").arg(m_sName), QSettings::IniFormat);
+    }
+
+#ifdef QT_DEBUG
+    if (pSettings) {
+        qDebug("XOptions::save(): Saved file to %s", pSettings->fileName().toUtf8().data());
+    }
+#endif
 
     qint32 nNumberOfIDs = m_listValueIDs.count();
 
     for (qint32 i = 0; i < nNumberOfIDs; i++) {
         ID id = m_listValueIDs.at(i);
         QString sName = idToString(id);
-        const QVariant value = id == ID_NU_LASTDIRECTORY && bClearLastDirectory ? QVariant(QString()) : m_mapValues.value(id);
-        if (!_storeSettingsValue(sName, value)) { emit errorMessage(tr("Cannot store setting %1").arg(sName)); return; }
+        pSettings->setValue(sName, m_mapValues.value(id));
+
+        if ((id == ID_FILE_SAVELASTDIRECTORY) && (m_mapValues.value(id).toBool() == false)) {
+            pSettings->setValue(idToString(ID_NU_LASTDIRECTORY), "");
+        } else if ((id == ID_FILE_SAVERECENTFILES) && (m_mapValues.value(id).toBool() == false)) {
+            clearRecentFiles();
+        }
     }
-    if (bClearLastDirectory && !_storeSettingsValue(idToString(ID_NU_LASTDIRECTORY), QString())) return;
-    if (bClearRecentFiles && !_storeSettingsValue(idToString(ID_NU_RECENTFILES), QVariantList())) return;
-    if (xx_settings_save(pSettings) != XXFC_OK)
-        emit errorMessage(tr("Cannot save settings to %1").arg(QString::fromUtf8(xx_settings_get_location(pSettings))));
+
+    delete pSettings;
 }
 
 QVariant XOptions::getValue(XOptions::ID id)
@@ -2584,7 +2612,22 @@ QString XOptions::getTitle(const QString &sName, const QString &sVersion, bool b
 
 bool XOptions::isWritable()
 {
-    return xx_settings_is_writable(getSettings());
+    bool bResult = false;
+    QSettings *pSettings = nullptr;
+
+    bool bIsNative = isNative();
+
+    if (bIsNative) {
+        pSettings = new QSettings;
+    } else {
+        pSettings = new QSettings(qApp->applicationDirPath() + QDir::separator() + QString("%1").arg(m_sName), QSettings::IniFormat);
+    }
+
+    bResult = pSettings->isWritable();
+
+    delete pSettings;
+
+    return bResult;
 }
 
 #if (QT_VERSION_MAJOR < 6) || defined(QT_CORE5COMPAT_LIB)
