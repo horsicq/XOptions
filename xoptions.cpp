@@ -58,6 +58,7 @@ static const XOptions::CONSOLE_OPTION g_consoleOptions[] = {
     {XOptions::CONSOLE_OPTION_ID_FILETYPE, "F", "filetype", "Force file type (e.g. PE, ELF, DEX)"},
     {XOptions::CONSOLE_OPTION_ID_FIRSTWRAPPERONLY, "W", "firstwrapperonly", "Stop after the first wrapper detection"},
     {XOptions::CONSOLE_OPTION_ID_NOCOLOR, "", "nocolor", "Disable color output"},
+    {XOptions::CONSOLE_OPTION_ID_CREATETAR, "", "createtar", "Create TAR archive from database"},
 };
 
 static bool s_bNoColor = false;
@@ -701,7 +702,7 @@ QVariant XOptions::getDefaultValue(ID id)
 
 QCommandLineOption XOptions::getCommandLineOption(CONSOLE_OPTION_ID nId)
 {
-    if ((nId > CONSOLE_OPTION_ID_UNKNOWN) && (nId <= CONSOLE_OPTION_ID_NOCOLOR)) {
+    if ((nId > CONSOLE_OPTION_ID_UNKNOWN) && (nId <= CONSOLE_OPTION_ID_CREATETAR)) {
         const CONSOLE_OPTION *pOption = &g_consoleOptions[nId - 1];
 
         QStringList listOptions;
@@ -712,7 +713,7 @@ QCommandLineOption XOptions::getCommandLineOption(CONSOLE_OPTION_ID nId)
 
         listOptions << pOption->pszLong;
 
-        if ((nId == CONSOLE_OPTION_ID_DATABASE) || (nId == CONSOLE_OPTION_ID_CUSTOMDATABASE)) {
+        if ((nId == CONSOLE_OPTION_ID_DATABASE) || (nId == CONSOLE_OPTION_ID_CUSTOMDATABASE) || (nId == CONSOLE_OPTION_ID_CREATETAR)) {
             return QCommandLineOption(listOptions, pOption->pszDescription, "path");
         } else if (nId == CONSOLE_OPTION_ID_STRUCT) {
             return QCommandLineOption(listOptions, pOption->pszDescription, "struct");
